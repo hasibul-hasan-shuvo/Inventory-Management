@@ -1,4 +1,4 @@
-package com.hellohasan.flutter_getx_template
+package no.inventorymanagement.android
 
 import io.flutter.embedding.android.FlutterActivity
 
