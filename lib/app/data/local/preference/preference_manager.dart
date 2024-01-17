@@ -1,5 +1,5 @@
 abstract class PreferenceManager {
-  static const DATABASE_NAME = "flutter_getx_template";
+  static const DATABASE_NAME = "dental_inventory";
   static const KEY_TOKEN = "token";
   static const THEME = "theme";
   static const LANGUAGE = "language";

@@ -1,11 +1,11 @@
 {
-    "name": "flutter_getx_template",
-    "short_name": "flutter_getx_template",
+    "name": "dental_inventory",
+    "short_name": "dental_inventory",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A dental inventory management project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
