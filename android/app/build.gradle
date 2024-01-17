@@ -97,10 +97,12 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
+            resValue "string", "app_name", "Dental Inventory Dev"
             dimension "default"
             applicationIdSuffix ".dev"
         }
         prod {
+            resValue "string", "app_name", "Dental Inventory"
             dimension "default"
         }
     }
