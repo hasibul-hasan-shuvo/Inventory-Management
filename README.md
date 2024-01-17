@@ -26,7 +26,7 @@ this pattern separates the User interface from business logic and data logic. So
 into three layers: The model layer,
 the View layer and the View model layer. Let's explore it more deeply.
 
-![mvvm](repo_data/mvvm_flow.png)
+![mvvm](https://user-images.githubusercontent.com/3769029/137336079-1f3384d0-b9d6-4462-a2c4-4a3d2cc77e8a.png)
 
 <b>ViewModel:</b> At first let's talk about ViewModel. Actually view model is a controller where we
 implement our business logic. It receives the data from the model then processes the data according
