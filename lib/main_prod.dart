@@ -9,7 +9,7 @@ import '/flavors/environment.dart';
 
 void main() async {
   EnvConfig prodConfig = EnvConfig(
-    appName: "Flutter GetX Template Prod",
+    appName: "Dental Inventory",
     baseUrl: "https://api.github.com",
     shouldCollectCrashLog: true,
   );
