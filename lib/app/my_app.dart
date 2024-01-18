@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:dental_inventory/app/core/base/app_theme_data.dart';
@@ -7,6 +8,7 @@ import 'package:dental_inventory/app/core/model/theme.dart';
 import 'package:dental_inventory/app/core/values/app_languages.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager_impl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '/app/bindings/initial_binding.dart';
@@ -31,15 +33,23 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     _localizeApp();
 
-    return GetMaterialApp(
-      title: _envConfig.appName,
-      initialRoute: AppPages.INITIAL,
-      initialBinding: InitialBinding(),
-      getPages: AppPages.routes,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: _getSupportedLocal(),
-      theme: _getTheme(),
-      debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      designSize: const Size(
+        AppValues.draftLayoutWidth,
+        AppValues.draftLayoutHeight,
+      ),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (BuildContext context, Widget? widget) => GetMaterialApp(
+        title: _envConfig.appName,
+        initialRoute: AppPages.INITIAL,
+        initialBinding: InitialBinding(),
+        getPages: AppPages.routes,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: _getSupportedLocal(),
+        theme: _getTheme(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 

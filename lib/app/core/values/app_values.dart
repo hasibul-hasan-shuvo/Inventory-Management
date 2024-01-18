@@ -1,4 +1,7 @@
 abstract class AppValues {
+  static const double draftLayoutHeight = 850;
+  static const double draftLayoutWidth = 390;
+
   static const double padding = 16;
   static const double padding_zero = 0;
   static const double halfPadding = 8;

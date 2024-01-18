@@ -1,210 +1,211 @@
 import 'package:flutter/material.dart';
 import 'package:dental_inventory/app/core/values/font_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/app/core/values/app_colors.dart';
 
-const TextStyle appBarTextStyle = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle appBarTextStyle = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.appBarTextLight,
 );
 
-const TextStyle appBarTextStyleDark = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle appBarTextStyleDark = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.appBarTextDark,
 );
 
-const TextStyle primaryButtonTextStyle = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle primaryButtonTextStyle = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryButton,
 );
 
-const TextStyle secondaryButtonTextStyle = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle secondaryButtonTextStyle = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.primary,
 );
 
-const TextStyle bodySmallTextStyle = TextStyle(
-  fontSize: FontSize.bodySmall,
+final TextStyle bodySmallTextStyle = TextStyle(
+  fontSize: FontSize.bodySmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle bodySmallTextStyleDark = TextStyle(
-  fontSize: FontSize.bodySmall,
+final TextStyle bodySmallTextStyleDark = TextStyle(
+  fontSize: FontSize.bodySmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle bodyMediumTextStyle = TextStyle(
-  fontSize: FontSize.bodyMedium,
+final TextStyle bodyMediumTextStyle = TextStyle(
+  fontSize: FontSize.bodyMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle bodyMediumTextStyleDark = TextStyle(
-  fontSize: FontSize.bodyMedium,
+final TextStyle bodyMediumTextStyleDark = TextStyle(
+  fontSize: FontSize.bodyMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle bodyLargeTextStyle = TextStyle(
-  fontSize: FontSize.bodyLarge,
+final TextStyle bodyLargeTextStyle = TextStyle(
+  fontSize: FontSize.bodyLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle bodyLargeTextStyleDark = TextStyle(
-  fontSize: FontSize.bodyLarge,
+final TextStyle bodyLargeTextStyleDark = TextStyle(
+  fontSize: FontSize.bodyLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle displaySmallTextStyle = TextStyle(
-  fontSize: FontSize.displaySmall,
+final TextStyle displaySmallTextStyle = TextStyle(
+  fontSize: FontSize.displaySmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle displaySmallTextStyleDark = TextStyle(
-  fontSize: FontSize.displaySmall,
+final TextStyle displaySmallTextStyleDark = TextStyle(
+  fontSize: FontSize.displaySmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle displayMediumTextStyle = TextStyle(
-  fontSize: FontSize.displayMedium,
+final TextStyle displayMediumTextStyle = TextStyle(
+  fontSize: FontSize.displayMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle displayMediumTextStyleDark = TextStyle(
-  fontSize: FontSize.displayMedium,
+final TextStyle displayMediumTextStyleDark = TextStyle(
+  fontSize: FontSize.displayMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle displayLargeTextStyle = TextStyle(
-  fontSize: FontSize.displayLarge,
+final TextStyle displayLargeTextStyle = TextStyle(
+  fontSize: FontSize.displayLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle displayLargeTextStyleDark = TextStyle(
-  fontSize: FontSize.displayLarge,
+final TextStyle displayLargeTextStyleDark = TextStyle(
+  fontSize: FontSize.displayLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle headlineSmallTextStyle = TextStyle(
-  fontSize: FontSize.headlineSmall,
+final TextStyle headlineSmallTextStyle = TextStyle(
+  fontSize: FontSize.headlineSmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle headlineSmallTextStyleDark = TextStyle(
-  fontSize: FontSize.headlineSmall,
+final TextStyle headlineSmallTextStyleDark = TextStyle(
+  fontSize: FontSize.headlineSmall.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle headlineMediumTextStyle = TextStyle(
-  fontSize: FontSize.headlineMedium,
+final TextStyle headlineMediumTextStyle = TextStyle(
+  fontSize: FontSize.headlineMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle headlineMediumTextStyleDark = TextStyle(
-  fontSize: FontSize.headlineMedium,
+final TextStyle headlineMediumTextStyleDark = TextStyle(
+  fontSize: FontSize.headlineMedium.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle headlineLargeTextStyle = TextStyle(
-  fontSize: FontSize.headlineLarge,
+final TextStyle headlineLargeTextStyle = TextStyle(
+  fontSize: FontSize.headlineLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle headlineLargeTextStyleDark = TextStyle(
-  fontSize: FontSize.headlineLarge,
+final TextStyle headlineLargeTextStyleDark = TextStyle(
+  fontSize: FontSize.headlineLarge.sp,
   fontWeight: FontWeight.w500,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle titleSmallTextStyle = TextStyle(
-  fontSize: FontSize.titleSmall,
+final TextStyle titleSmallTextStyle = TextStyle(
+  fontSize: FontSize.titleSmall.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle titleSmallTextStyleDark = TextStyle(
-  fontSize: FontSize.titleSmall,
+final TextStyle titleSmallTextStyleDark = TextStyle(
+  fontSize: FontSize.titleSmall.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle titleMediumTextStyle = TextStyle(
-  fontSize: FontSize.titleMedium,
+final TextStyle titleMediumTextStyle = TextStyle(
+  fontSize: FontSize.titleMedium.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle titleMediumTextStyleDark = TextStyle(
-  fontSize: FontSize.titleMedium,
+final TextStyle titleMediumTextStyleDark = TextStyle(
+  fontSize: FontSize.titleMedium.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle titleLargeTextStyle = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle titleLargeTextStyle = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle titleLargeTextStyleDark = TextStyle(
-  fontSize: FontSize.titleLarge,
+final TextStyle titleLargeTextStyleDark = TextStyle(
+  fontSize: FontSize.titleLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
   letterSpacing: 0.0,
 );
 
-const TextStyle labelSmallTextStyle = TextStyle(
-  fontSize: FontSize.labelSmall,
+final TextStyle labelSmallTextStyle = TextStyle(
+  fontSize: FontSize.labelSmall.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
   letterSpacing: 0.0,
 );
 
-const TextStyle labelSmallTextStyleDark = TextStyle(
-  fontSize: FontSize.labelSmall,
+final TextStyle labelSmallTextStyleDark = TextStyle(
+  fontSize: FontSize.labelSmall.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle labelMediumTextStyle = TextStyle(
-  fontSize: FontSize.labelMedium,
+final TextStyle labelMediumTextStyle = TextStyle(
+  fontSize: FontSize.labelMedium.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle labelMediumTextStyleDark = TextStyle(
-  fontSize: FontSize.labelMedium,
+final TextStyle labelMediumTextStyleDark = TextStyle(
+  fontSize: FontSize.labelMedium.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
 );
 
-const TextStyle labelLargeTextStyle = TextStyle(
-  fontSize: FontSize.labelLarge,
+final TextStyle labelLargeTextStyle = TextStyle(
+  fontSize: FontSize.labelLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryLight,
 );
 
-const TextStyle labelLargeTextStyleDark = TextStyle(
-  fontSize: FontSize.labelLarge,
+final TextStyle labelLargeTextStyleDark = TextStyle(
+  fontSize: FontSize.labelLarge.sp,
   fontWeight: FontWeight.w700,
   color: AppColors.textPrimaryDark,
 );

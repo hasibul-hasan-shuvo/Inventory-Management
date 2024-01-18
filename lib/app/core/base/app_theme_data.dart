@@ -64,7 +64,7 @@ class AppThemeData {
   }
 
   static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
-      const BottomNavigationBarThemeData(
+      BottomNavigationBarThemeData(
         backgroundColor: AppColors.bgCardDark,
         selectedItemColor: AppColors.colorWhite,
         unselectedItemColor: AppColors.lightGreyColor,
@@ -73,7 +73,7 @@ class AppThemeData {
       );
 
   static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataLight =>
-      const BottomNavigationBarThemeData(
+      BottomNavigationBarThemeData(
         backgroundColor: AppColors.bgCardLight,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.lightGreyColor,
@@ -123,7 +123,7 @@ class AppThemeData {
         errorContainer: AppColors.errorContainerLight,
       );
 
-  static TextTheme get _textThemeDark => const TextTheme(
+  static TextTheme get _textThemeDark => TextTheme(
         displaySmall: displaySmallTextStyleDark,
         displayMedium: displayMediumTextStyleDark,
         displayLarge: displayLargeTextStyleDark,
@@ -141,7 +141,7 @@ class AppThemeData {
         labelLarge: labelLargeTextStyleDark,
       );
 
-  static TextTheme get _textThemeLight => const TextTheme(
+  static TextTheme get _textThemeLight => TextTheme(
         displaySmall: displaySmallTextStyle,
         displayMedium: displayMediumTextStyle,
         displayLarge: displayLargeTextStyle,
