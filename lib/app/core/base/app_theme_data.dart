@@ -83,12 +83,12 @@ class AppThemeData {
 
   static AppBarTheme get _appBarThemeDark => AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.bgPageDark,
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.dark,
+          statusBarColor: AppColors.primaryDark,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
         iconTheme: const IconThemeData(color: AppColors.basicGreyDark),
-        backgroundColor: AppColors.bgPageDark,
+        backgroundColor: AppColors.primaryDark,
         titleTextStyle: appBarTextStyleDark.copyWith(
           fontFamily: _getFont(),
         ),
@@ -96,12 +96,12 @@ class AppThemeData {
 
   static AppBarTheme get _appBarThemeLight => AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.bgPageLight,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
+          statusBarColor: AppColors.primary,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
         ),
         iconTheme: const IconThemeData(color: AppColors.basicGrey),
-        backgroundColor: AppColors.bgPageLight,
+        backgroundColor: AppColors.primary,
         titleTextStyle: appBarTextStyle.copyWith(fontFamily: _getFont()),
       );
 
@@ -110,7 +110,7 @@ class AppThemeData {
         primary: AppColors.colorWhite,
         background: AppColors.bgPageDark,
         onBackground: AppColors.colorWhite,
-        error: AppColors.errorColor,
+        error: AppColors.errorColorDark,
         errorContainer: AppColors.errorContainerDark,
       );
 
