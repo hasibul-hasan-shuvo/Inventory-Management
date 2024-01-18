@@ -65,7 +65,7 @@ class AppThemeData {
 
   static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
       BottomNavigationBarThemeData(
-        backgroundColor: AppColors.bgCardDark,
+        backgroundColor: AppColors.primaryDark,
         selectedItemColor: AppColors.colorWhite,
         unselectedItemColor: AppColors.lightGreyColor,
         selectedLabelStyle: labelMediumTextStyleDark,
@@ -74,8 +74,8 @@ class AppThemeData {
 
   static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataLight =>
       BottomNavigationBarThemeData(
-        backgroundColor: AppColors.bgCardLight,
-        selectedItemColor: AppColors.primary,
+        backgroundColor: AppColors.primary,
+        selectedItemColor: AppColors.colorWhite,
         unselectedItemColor: AppColors.lightGreyColor,
         selectedLabelStyle: labelMediumTextStyle,
         unselectedLabelStyle: labelMediumTextStyle,
@@ -84,8 +84,8 @@ class AppThemeData {
   static AppBarTheme get _appBarThemeDark => AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppColors.primaryDark,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
         ),
         iconTheme: const IconThemeData(color: AppColors.basicGreyDark),
         backgroundColor: AppColors.primaryDark,

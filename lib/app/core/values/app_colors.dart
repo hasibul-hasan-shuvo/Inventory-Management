@@ -12,13 +12,13 @@ abstract class AppColors {
   static const Color defaultRippleColor = Color(0x0338686A);
 
   static const Color primary = Color(0xFF21404C);
-  static const Color primaryDark = Color(0xFF62C6C6);
+  static const Color primaryDark = Color(0xFF21404C);
   static const Color bgPageLight = Color(0xFFD9D9D9);
   static const Color bgPageDark = Color(0xFF191c1d);
   static const Color bgCardLight = colorWhite;
   static const Color bgCardDark = Color(0xFF354a53);
   static const Color appBarTextLight = colorWhite;
-  static const Color appBarTextDark = colorBlack;
+  static const Color appBarTextDark = colorWhite;
   static const Color textPrimaryLight = colorBlack;
   static const Color textPrimaryDark = colorWhite;
   static const Color textPrimaryButton = colorWhite;
