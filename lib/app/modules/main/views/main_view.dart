@@ -61,12 +61,12 @@ class MainView extends BaseView<MainController> {
                     onPressed: () {
                       Get.back();
                     },
-                    style: ElevatedButton.styleFrom(primary: theme.canvasColor),
+                    style: ElevatedButton.styleFrom(backgroundColor: theme.canvasColor),
                     child: const Text('Yes'),
                   ),
                   const SizedBox(width: 8),
                   TextButton(
-                    style: ElevatedButton.styleFrom(primary: theme.canvasColor),
+                    style: ElevatedButton.styleFrom(backgroundColor: theme.canvasColor),
                     onPressed: () {
                       Get.back();
                     },
