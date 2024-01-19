@@ -78,6 +78,9 @@ abstract class AppValues {
   static const double customAppBarSize = 144.0;
   static const double collapsedAppBarSize = 70.0;
 
+  static const double customAppBarWidthForHome = 117.0;
+  static const double customAppBarHeightForHome = 26.0;
+
   static const int loggerLineLength = 120;
   static const int loggerErrorMethodCount = 8;
   static const int loggerMethodCount = 2;

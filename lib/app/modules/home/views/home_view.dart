@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/core/values/app_images.dart';
+import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +18,11 @@ class HomeView extends BaseView<HomeController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-      appBarTitleText: 'GetX Templates on GitHub',
+      centerImage: const AssetImageView(
+        fileName: AppImages.jacobsenLogo,
+        width: AppValues.customAppBarWidthForHome,
+        height: AppValues.customAppBarHeightForHome,
+      ),
     );
   }
 
