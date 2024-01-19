@@ -1,7 +1,8 @@
 {
-  "bottomNavHome": "Hjemmeside",
-  "bottomNavFavorite": "Favoritt",
-  "bottomNavSettings": "Innstillinger",
+  "bottomNavHome": "Hjem",
+  "bottomNavContactUs": "Kontakt oss",
+  "bottomNavLogOut": "Logg ut",
+  "bottomNavAboutUs": "Om oss",
   "themeDark": "Mørk",
   "themeLight": "Lys",
   "themeSystem": "System standard",

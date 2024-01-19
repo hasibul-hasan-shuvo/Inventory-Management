@@ -8,7 +8,6 @@ import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/controllers/main_controller.dart';
 import '/app/modules/main/model/menu_code.dart';
 import '/app/modules/main/views/bottom_nav_bar.dart';
-import '/app/modules/other/views/other_view.dart';
 import '/app/modules/settings/views/settings_view.dart';
 
 // ignore: must_be_immutable
@@ -39,15 +38,34 @@ class MainView extends BaseView<MainController> {
     switch (menuCode) {
       case MenuCode.HOME:
         return homeView;
-      case MenuCode.FAVORITE:
+      case MenuCode.CONTACT_US:
         favoriteView ??= FavoriteView();
         return favoriteView!;
-      case MenuCode.SETTINGS:
+      case MenuCode.ABOUT:
         settingsView ??= SettingsView();
         return settingsView!;
-      default:
-        return OtherView(
-          viewParam: describeEnum(menuCode),
+      case MenuCode.LOGOUT:
+        return Dialog(
+          child: Container(
+            height: 100,
+            child: Column(
+              children: [
+                const Text('Logout'),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('Yes'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('No'),
+                ),
+              ],
+            ),
+          ),
         );
     }
   }
