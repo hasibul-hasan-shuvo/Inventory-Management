@@ -9,5 +9,6 @@
   "titleOtherView": "andre",
   "settingsTheme": "tema",
   "settingsLanguage": "Språk",
-  "settingsFontSize": "skriftstørrelse"
+  "settingsFontSize": "skriftstørrelse",
+  "logOutMessage:": "Er du sikker på at du vil logge ut?"
 }

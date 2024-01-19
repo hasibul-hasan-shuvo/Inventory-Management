@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,30 +40,41 @@ class MainView extends BaseView<MainController> {
       case MenuCode.CONTACT_US:
         favoriteView ??= FavoriteView();
         return favoriteView!;
-      case MenuCode.ABOUT:
+      case MenuCode.ABOUT_US:
         settingsView ??= SettingsView();
         return settingsView!;
-      case MenuCode.LOGOUT:
-        return Dialog(
-          child: Container(
-            height: 100,
-            child: Column(
-              children: [
-                const Text('Logout'),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('Yes'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('No'),
-                ),
-              ],
-            ),
+      case MenuCode.LOG_OUT:
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(appLocalization.logOutMessage),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: ElevatedButton.styleFrom(primary: theme.canvasColor),
+                    child: const Text('Yes'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(primary: theme.canvasColor),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('No'),
+                  ),
+                ],
+              ),
+            ],
           ),
         );
     }

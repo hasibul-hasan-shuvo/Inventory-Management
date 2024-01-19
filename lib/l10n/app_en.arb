@@ -9,5 +9,6 @@
   "titleOtherView": "OtherView",
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
-  "settingsFontSize": "Font Size"
+  "settingsFontSize": "Font Size",
+  "logOutMessage": "Are you sure you want to log out?"
 }
