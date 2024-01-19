@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/contact_us_controller.dart';
 import '/app/core/base/base_view.dart';
-import '/app/core/values/text_styles.dart';
 import '/app/core/widget/custom_app_bar.dart';
-import '/app/modules/favorite/controllers/favorite_controller.dart';
 
 // ignore: must_be_immutable
-class FavoriteView extends BaseView<FavoriteController> {
+class ContactUsView extends BaseView<ContactUsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-      appBarTitleText: 'Favorite',
+      appBarTitleText: 'Contact Us',
     );
   }
 
@@ -18,7 +17,7 @@ class FavoriteView extends BaseView<FavoriteController> {
   Widget body(BuildContext context) {
     return Center(
       child: Text(
-        'FavoriteView is working',
+        'Contact Us View is working',
         style: textTheme.titleLarge,
       ),
     );

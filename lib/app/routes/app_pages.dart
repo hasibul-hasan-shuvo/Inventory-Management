@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/contact_us/bindings/contact_us_binding.dart';
+import '../modules/contact_us/views/contact_us_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '/app/modules/favorite/bindings/favorite_binding.dart';
-import '/app/modules/favorite/views/favorite_view.dart';
 import '/app/modules/home/bindings/home_binding.dart';
 import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/bindings/main_binding.dart';
@@ -35,8 +35,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FAVORITE,
-      page: () => FavoriteView(),
-      binding: FavoriteBinding(),
+      page: () => ContactUsView(),
+      binding: ContactUsBinding(),
     ),
     GetPage(
       name: _Paths.SETTINGS,

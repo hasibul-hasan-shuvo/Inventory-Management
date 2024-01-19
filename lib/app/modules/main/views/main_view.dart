@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../contact_us/views/contact_us_view.dart';
 import '/app/core/base/base_view.dart';
-import '/app/modules/favorite/views/favorite_view.dart';
 import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/controllers/main_controller.dart';
 import '/app/modules/main/model/menu_code.dart';
@@ -30,7 +30,7 @@ class MainView extends BaseView<MainController> {
   }
 
   final HomeView homeView = HomeView();
-  FavoriteView? favoriteView;
+  ContactUsView? favoriteView;
   SettingsView? settingsView;
 
   Widget getPageOnSelectedMenu(MenuCode menuCode) {
@@ -38,7 +38,7 @@ class MainView extends BaseView<MainController> {
       case MenuCode.HOME:
         return homeView;
       case MenuCode.CONTACT_US:
-        favoriteView ??= FavoriteView();
+        favoriteView ??= ContactUsView();
         return favoriteView!;
       case MenuCode.ABOUT_US:
         settingsView ??= SettingsView();
