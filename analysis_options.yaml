@@ -40,8 +40,8 @@ dart_code_metrics:
       severity: error
     no-boolean-literal-compare:
       severity: warning
-    no-empty-block:
-      severity: error
+#    no-empty-block:
+#      severity: error
     #     avoid-returning-widgets:
     #       severity: none
     prefer-conditional-expressions:

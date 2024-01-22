@@ -1,11 +1,10 @@
-import 'package:dental_inventory/app/core/values/app_images.dart';
-import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
+import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 import '/app/core/base/base_view.dart';
 import '/app/core/values/app_values.dart';
-import '/app/core/widget/custom_app_bar.dart';
 import '/app/core/widget/paging_view.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import '/app/modules/home/widget/item_github_project.dart';
@@ -17,13 +16,7 @@ class HomeView extends BaseView<HomeController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return CustomAppBar(
-      centerImage: const AssetImageView(
-        fileName: AppImages.jacobsenLogo,
-        width: AppValues.customAppBarWidthForHome,
-        height: AppValues.customAppBarHeightForHome,
-      ),
-    );
+    return  const MainAppBar();
   }
 
   @override
@@ -56,3 +49,4 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 }
+

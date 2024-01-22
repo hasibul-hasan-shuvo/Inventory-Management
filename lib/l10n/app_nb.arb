@@ -10,5 +10,11 @@
   "settingsTheme": "tema",
   "settingsLanguage": "Språk",
   "settingsFontSize": "skriftstørrelse",
-  "logOutMessage:": "Er du sikker på at du vil logge ut?"
+  "logOutMessage:": "Er du sikker på at du vil logge ut?",
+  "yes": "Aye",
+  "no": "Nay",
+  "cancel": "Nulify",
+  "logOut": "Disengage",
+  "logIn": "Access",
+  "logInMessage": "Kindly authenticate to proceed"
 }

@@ -2,7 +2,7 @@
   "bottomNavHome": "Home",
   "bottomNavContactUs": "Contact Us",
   "bottomNavLogOut": "Log Out",
-  "bottomNavAboutUs":"About Us",
+  "bottomNavAboutUs": "About Us",
   "themeDark": "Dark",
   "themeLight": "Light",
   "themeSystem": "System Default",
@@ -10,5 +10,11 @@
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
   "settingsFontSize": "Font Size",
-  "logOutMessage": "Are you sure you want to log out?"
+  "logOutMessage": "Are you sure you want to log out?",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "logOut": "Log Out",
+  "logIn": "Log In",
+  "logInMessage": "Please log in to continue"
 }

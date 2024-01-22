@@ -74,12 +74,12 @@ abstract class AppValues {
   static const double iconLargeSize = 36;
   static const double iconExtraLargerSize = 96;
   static const double appBarIconSize = 32;
+  static const double mainAppBarLogoHeight = 26.0;
+
 
   static const double customAppBarSize = 144.0;
   static const double collapsedAppBarSize = 70.0;
 
-  static const double customAppBarWidthForHome = 117.0;
-  static const double customAppBarHeightForHome = 26.0;
 
   static const int loggerLineLength = 120;
   static const int loggerErrorMethodCount = 8;
