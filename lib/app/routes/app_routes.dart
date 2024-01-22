@@ -6,8 +6,8 @@ abstract class Routes {
 
   static const MAIN = _Paths.MAIN;
   static const HOME = _Paths.HOME;
-  static const FAVORITE = _Paths.FAVORITE;
-  static const SETTINGS = _Paths.SETTINGS;
+  static const FAVORITE = _Paths.CONTACT_US;
+  static const SETTINGS = _Paths.ABOUT_US;
   static const OTHER = _Paths.OTHER;
   static const PROJECT_DETAILS = _Paths.PROJECT_DETAILS;
   static const SPLASH = _Paths.SPLASH;
@@ -16,8 +16,8 @@ abstract class Routes {
 abstract class _Paths {
   static const MAIN = '/main';
   static const HOME = '/home';
-  static const FAVORITE = '/favorite';
-  static const SETTINGS = '/settings';
+  static const CONTACT_US = '/contact-us';
+  static const ABOUT_US = '/about-us';
   static const OTHER = '/other';
   static const PROJECT_DETAILS = '/project-details';
   static const SPLASH = '/splash';
