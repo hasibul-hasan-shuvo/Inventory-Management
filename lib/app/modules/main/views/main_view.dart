@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,6 @@ import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/controllers/main_controller.dart';
 import '/app/modules/main/model/menu_code.dart';
 import '/app/modules/main/views/bottom_nav_bar.dart';
-import '/app/modules/settings/views/settings_view.dart';
 
 // ignore: must_be_immutable
 class MainView extends BaseView<MainController> {
@@ -31,7 +31,7 @@ class MainView extends BaseView<MainController> {
 
   final HomeView homeView = HomeView();
   ContactUsView? favoriteView;
-  SettingsView? settingsView;
+  AboutUsView? aboutUsView;
 
   Widget getPageOnSelectedMenu(MenuCode menuCode) {
     switch (menuCode) {
@@ -41,42 +41,8 @@ class MainView extends BaseView<MainController> {
         favoriteView ??= ContactUsView();
         return favoriteView!;
       case MenuCode.ABOUT_US:
-        settingsView ??= SettingsView();
-        return settingsView!;
-      case MenuCode.LOG_OUT:
-        return AlertDialog(
-          title: const Text('Logout'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(appLocalization.logOutMessage),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    style: ElevatedButton.styleFrom(backgroundColor: theme.canvasColor),
-                    child: const Text('Yes'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: theme.canvasColor),
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: const Text('No'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
+        aboutUsView ??= AboutUsView();
+        return aboutUsView!;
     }
   }
 }
