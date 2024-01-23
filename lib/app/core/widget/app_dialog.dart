@@ -1,6 +1,7 @@
+import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:flutter/material.dart';
 
-class AppDialog extends StatelessWidget {
+class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final String title;
   final String content;
   final String? cancelText;
@@ -8,7 +9,7 @@ class AppDialog extends StatelessWidget {
   final VoidCallback? onCancel;
   final VoidCallback? onConfirm;
 
-  const AppDialog({
+  AppDialog({
     Key? key,
     required this.title,
     required this.content,
@@ -19,7 +20,7 @@ class AppDialog extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget body(BuildContext context) {
     return AlertDialog(
       title: Text(title),
       content: Text(content),
@@ -37,4 +38,5 @@ class AppDialog extends StatelessWidget {
       ],
     );
   }
+
 }

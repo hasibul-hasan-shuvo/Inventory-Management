@@ -52,6 +52,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           icon: const AssetImageView(
             fileName: AppIcons.logOut,
+            color: Colors.white,
           )),
     ];
   }
