@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
+import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ import '/app/modules/main/views/bottom_nav_bar.dart';
 // ignore: must_be_immutable
 class MainView extends BaseView<MainController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => null;
+  PreferredSizeWidget? appBar(BuildContext context) => const MainAppBar();
 
   @override
   Widget body(BuildContext context) {
