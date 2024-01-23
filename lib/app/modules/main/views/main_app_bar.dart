@@ -30,30 +30,34 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => AppBar().preferredSize;
 
   List<Widget> _buildActions(BuildContext context) {
-    AppLocalizations appLocalization = AppLocalizations.of(context)!;
-
     return [
       IconButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) => AppDialog(
-                      title: appLocalization.logOut,
-                      content: appLocalization.logOutMessage,
-                      cancelText: appLocalization.no,
-                      confirmText: appLocalization.yes,
-                      onCancel: () {
-                        Navigator.pop(context);
-                      },
-                      onConfirm: () {
-                        Navigator.pop(context);
-                      },
-                    ));
-          },
-          icon: const AssetImageView(
-            fileName: AppIcons.logOut,
-            color: Colors.white,
-          )),
+        onPressed: () => _onTapLogout(context),
+        icon: const AssetImageView(
+          fileName: AppIcons.logOut,
+          color: Colors.white,
+        ),
+      ),
     ];
+  }
+
+  void _onTapLogout(BuildContext context) {
+    AppLocalizations appLocalization = AppLocalizations.of(context)!;
+
+    showDialog(
+      context: context,
+      builder: (context) => AppDialog(
+        title: appLocalization.logOut,
+        content: appLocalization.logOutMessage,
+        cancelText: appLocalization.no,
+        confirmText: appLocalization.yes,
+        onCancel: () {
+          Navigator.pop(context);
+        },
+        onConfirm: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 }
