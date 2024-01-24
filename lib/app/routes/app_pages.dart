@@ -1,9 +1,11 @@
-import 'package:dental_inventory/app/modules/about_us/bindings/about_us_binding.dart';
-import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
 import 'package:get/get.dart';
 
+import '../modules/about_us/bindings/about_us_binding.dart';
+import '../modules/about_us/views/about_us_view.dart';
 import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '/app/modules/home/bindings/home_binding.dart';
@@ -20,7 +22,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
     ),
   ];
 }
