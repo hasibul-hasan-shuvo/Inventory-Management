@@ -1,12 +1,21 @@
 {
   "bottomNavHome": "Home",
-  "bottomNavFavorite": "Favorite",
-  "bottomNavSettings": "Settings",
-  "themeDark": "ডার্ক",
-  "themeLight": "লাইট",
-  "themeSystem": "সিস্টেম ডিফল্ট",
-  "titleOtherView": "OtherView",
+  "bottomNavContactUs": "Contact Us",
+  "bottomNavLogOut": "Log Out",
+  "bottomNavAboutUs": "About Us",
+  "cancel": "Cancel",
+  "logIn": "Log In",
+  "logInMessage": "Please log in to continue",
+  "logOut": "Log Out",
+  "logOutMessage": "Are you sure you want to log out?",
+  "no": "No",
+  "ok": "Ok",
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
-  "settingsFontSize": "Font Size"
+  "settingsFontSize": "Font Size",
+  "themeDark": "Dark",
+  "themeLight": "Light",
+  "themeSystem": "System Default",
+  "titleOtherView": "OtherView",
+  "yes": "Yes"
 }

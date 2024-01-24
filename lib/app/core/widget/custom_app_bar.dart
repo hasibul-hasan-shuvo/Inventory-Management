@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:get/get.dart';
-
-import '/app/core/values/app_colors.dart';
 import '/app/core/widget/app_bar_title.dart';
 
 //Default appbar customized with the design of our app

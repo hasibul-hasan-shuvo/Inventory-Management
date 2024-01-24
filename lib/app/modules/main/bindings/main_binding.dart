@@ -1,10 +1,10 @@
+import 'package:dental_inventory/app/modules/about_us/controllers/about_us_controller.dart';
+import 'package:dental_inventory/app/modules/contact_us/controllers/contact_us_controller.dart';
 import 'package:get/get.dart';
 
-import '/app/modules/favorite/controllers/favorite_controller.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import '/app/modules/main/controllers/main_controller.dart';
 import '/app/modules/other/controllers/other_controller.dart';
-import '/app/modules/settings/controllers/settings_controller.dart';
 
 class MainBinding extends Bindings {
   @override
@@ -21,11 +21,11 @@ class MainBinding extends Bindings {
       () => HomeController(),
       fenix: true,
     );
-    Get.lazyPut<FavoriteController>(
-      () => FavoriteController(),
+    Get.lazyPut<ContactUsController>(
+      () => ContactUsController(),
     );
-    Get.lazyPut<SettingsController>(
-      () => SettingsController(),
+    Get.lazyPut<AboutUsController>(
+      () => AboutUsController(),
     );
   }
 }
