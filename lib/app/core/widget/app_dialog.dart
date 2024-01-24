@@ -6,8 +6,8 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final String content;
   final String? cancelText;
   final String? confirmText;
-  final VoidCallback? onCancel;
-  final VoidCallback? onConfirm;
+  final VoidCallback? onNegativeButtonTap;
+  final VoidCallback? onPositiveButtonTap;
 
   AppDialog({
     Key? key,
@@ -15,8 +15,8 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     required this.content,
     this.cancelText,
     this.confirmText,
-    this.onCancel,
-    this.onConfirm,
+    this.onNegativeButtonTap,
+    this.onPositiveButtonTap,
   }) : super(key: key);
 
   @override
@@ -27,12 +27,12 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
       actions: [
         if (cancelText != null)
           TextButton(
-            onPressed: onCancel,
+            onPressed: onNegativeButtonTap,
             child: Text(cancelText!),
           ),
         if (confirmText != null)
           TextButton(
-            onPressed: onConfirm,
+            onPressed: onPositiveButtonTap,
             child: Text(confirmText!),
           ),
       ],

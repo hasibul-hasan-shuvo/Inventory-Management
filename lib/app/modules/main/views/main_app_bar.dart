@@ -51,10 +51,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         content: appLocalization.logOutMessage,
         cancelText: appLocalization.no,
         confirmText: appLocalization.yes,
-        onCancel: () {
+        onNegativeButtonTap: () {
           Navigator.pop(context);
         },
-        onConfirm: () {
+        onPositiveButtonTap: () {
           Navigator.pop(context);
         },
       ),
