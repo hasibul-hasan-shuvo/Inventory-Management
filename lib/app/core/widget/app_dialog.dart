@@ -1,11 +1,12 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:flutter/material.dart';
 
+//ignore: must_be_immutable
 class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final String title;
   final String content;
-  final String? cancelText;
-  final String? confirmText;
+  final String? negativeTex;
+  final String? positiveTex;
   final VoidCallback? onNegativeButtonTap;
   final VoidCallback? onPositiveButtonTap;
 
@@ -13,8 +14,8 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     Key? key,
     required this.title,
     required this.content,
-    this.cancelText,
-    this.confirmText,
+    this.negativeTex,
+    this.positiveTex,
     this.onNegativeButtonTap,
     this.onPositiveButtonTap,
   }) : super(key: key);
@@ -25,18 +26,22 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
       title: Text(title),
       content: Text(content),
       actions: [
-        if (cancelText != null)
+        if (negativeTex != null)
           TextButton(
-            onPressed: onNegativeButtonTap,
-            child: Text(cancelText!),
+            onPressed: () {
+              onNegativeButtonTap?.call();
+              Navigator.pop(context);
+            },
+            child: Text(negativeTex!),
           ),
-        if (confirmText != null)
-          TextButton(
-            onPressed: onPositiveButtonTap,
-            child: Text(confirmText!),
-          ),
+        TextButton(
+          onPressed: () {
+            onPositiveButtonTap?.call();
+            Navigator.pop(context);
+          },
+          child: Text(positiveTex ?? "Ok"),
+        ),
       ],
     );
   }
-
 }
