@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +40,7 @@ class InventoryController extends BaseController {
   }
 
   void getInventoryList() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < AppValues.height_60; i++) {
       inventoryList.add(
         InventoryCardModel(
           productName: 'Protective head bio 4$i pcs',
@@ -47,6 +48,7 @@ class InventoryController extends BaseController {
           maxTreshold: '100',
           minTreshold: '10',
           currentStock: '50',
+          fixedOrderSuggestions: '20',
           unit: 'pcs',
           price: '10.00',
           productCode: 'P00$i',

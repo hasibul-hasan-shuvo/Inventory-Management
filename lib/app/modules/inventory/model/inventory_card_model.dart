@@ -1,9 +1,10 @@
-class InventoryCardModel{
+class InventoryCardModel {
   final String? productName;
   final String? productImageUrl;
   final String? maxTreshold;
   final String? minTreshold;
   final String? currentStock;
+  final String? fixedOrderSuggestions;
   final String? unit;
   final String? price;
   final String? productCode;
@@ -14,18 +15,19 @@ class InventoryCardModel{
   final String? productLocation;
 
   InventoryCardModel({
-     this.productName,
-     this.productImageUrl,
-     this.maxTreshold,
-     this.minTreshold,
-     this.currentStock,
-     this.unit,
-     this.price,
-     this.productCode,
-     this.productCategory,
-     this.productDescription,
-     this.productBrand,
-     this.productSupplier,
-     this.productLocation,
+    this.productName,
+    this.productImageUrl,
+    this.maxTreshold,
+    this.minTreshold,
+    this.currentStock,
+    this.fixedOrderSuggestions,
+    this.unit,
+    this.price,
+    this.productCode,
+    this.productCategory,
+    this.productDescription,
+    this.productBrand,
+    this.productSupplier,
+    this.productLocation,
   });
 }

@@ -9,8 +9,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 // ignore: must_be_immutable
 class InventoryCard extends StatelessWidget with BaseWidgetMixin {
   final InventoryCardModel inventoryData;
+  final VoidCallback onTap;
 
-  InventoryCard({required this.inventoryData});
+  InventoryCard({required this.inventoryData, required this.onTap});
 
   @override
   Widget body(BuildContext context) {
@@ -28,7 +29,7 @@ class InventoryCard extends StatelessWidget with BaseWidgetMixin {
             SizedBox(
               width: AppValues.margin_10.w,
             ),
-            _buildEditButton()
+            _buildEditButton(onTap: onTap)
           ],
         ),
       ),
@@ -40,11 +41,11 @@ class InventoryCard extends StatelessWidget with BaseWidgetMixin {
         flex: 2, child: Image.network(inventoryData.productImageUrl ?? ""));
   }
 
-  Widget _buildEditButton() {
+  Widget _buildEditButton({required VoidCallback onTap}) {
     return Expanded(
         flex: 1,
         child: IconButton(
-          onPressed: () {},
+          onPressed: onTap,
           icon: SvgPicture.asset(
             AppImages.ic_edit,
             color: theme.colorScheme.onSurface,
