@@ -7,7 +7,7 @@ import '/app/core/values/app_values.dart';
 import '/app/core/widget/paging_view.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import '/app/modules/home/widget/item_github_project.dart';
-
+// ignore: must_be_immutable
 class HomeView extends BaseView<HomeController> {
   HomeView() {
     controller.getGithubGetxProjectList();

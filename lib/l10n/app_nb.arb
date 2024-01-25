@@ -17,5 +17,9 @@
   "themeLight": "Lys",
   "themeSystem": "System standard",
   "titleOtherView": "andre",
-  "yes": "Aye"
+  "yes": "Aye",
+  "password": "Passord",
+  "email": "E-post",
+  "enterEmail": "Skriv inn e-post",
+  "enterPassword": "Skriv inn passord"
 }

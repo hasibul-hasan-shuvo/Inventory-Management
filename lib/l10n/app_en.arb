@@ -4,7 +4,7 @@
   "bottomNavLogOut": "Log Out",
   "bottomNavAboutUs": "About Us",
   "cancel": "Cancel",
-  "logIn": "Log In",
+  "logIn": "Login",
   "logInMessage": "Please log in to continue",
   "logOut": "Log Out",
   "logOutMessage": "Are you sure you want to log out?",
@@ -17,5 +17,9 @@
   "themeLight": "Light",
   "themeSystem": "System Default",
   "titleOtherView": "OtherView",
-  "yes": "Yes"
+  "yes": "Yes",
+  "password": "Password",
+  "email": "Email",
+  "enterEmail": "Enter Email",
+  "enterPassword": "Enter Password"
 }

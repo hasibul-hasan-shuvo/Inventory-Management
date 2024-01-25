@@ -1,7 +1,7 @@
 import 'package:dental_inventory/app/modules/about_us/controllers/about_us_controller.dart';
 import 'package:flutter/material.dart';
 import '/app/core/base/base_view.dart';
-
+//ignore: must_be_immutable
 class AboutUsView extends BaseView<AboutUsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;

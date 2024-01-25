@@ -29,4 +29,5 @@ abstract class AppColors {
   static const Color errorContainerLight = Color(0xFFffdad6);
   static const Color errorContainerDark = Color(0xFF93000a);
   static const Color loaderBackground = Color(0x32000000);
+  static const Color loginScreenIconColor =Color(0xffD9D9D9);
 }
