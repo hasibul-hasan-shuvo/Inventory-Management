@@ -40,6 +40,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - lib/app/modules/inventory/views/assets/
   fonts:
     - family: Roboto
       fonts:

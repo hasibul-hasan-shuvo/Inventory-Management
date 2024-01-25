@@ -1,1 +1,1 @@
-enum Environment { DEVELOPMENT, PRODUCTION }
+enum Environment { DEVELOPMENT, PRODUCTION,QA }

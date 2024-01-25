@@ -1,17 +1,19 @@
 import 'package:get/get.dart';
 
-import 'package:dental_inventory/app/modules/contact_us/bindings/contact_us_binding.dart';
-import 'package:dental_inventory/app/modules/contact_us/views/contact_us_view.dart';
-import 'package:dental_inventory/app/modules/splash/bindings/splash_binding.dart';
-import 'package:dental_inventory/app/modules/splash/views/splash_view.dart';
-import 'package:dental_inventory/app/modules/home/bindings/home_binding.dart';
-import 'package:dental_inventory/app/modules/home/views/home_view.dart';
-import 'package:dental_inventory/app/modules/main/bindings/main_binding.dart';
-import 'package:dental_inventory/app/modules/main/views/main_view.dart';
-import 'package:dental_inventory/app/modules/other/bindings/other_binding.dart';
-import 'package:dental_inventory/app/modules/other/views/other_view.dart';
 import '../modules/about_us/bindings/about_us_binding.dart';
 import '../modules/about_us/views/about_us_view.dart';
+import '../modules/contact_us/bindings/contact_us_binding.dart';
+import '../modules/contact_us/views/contact_us_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/inventory/bindings/inventory_binding.dart';
+import '../modules/inventory/views/inventory_view.dart';
+import '../modules/main/bindings/main_binding.dart';
+import '../modules/main/views/main_view.dart';
+import '../modules/other/bindings/other_binding.dart';
+import '../modules/other/views/other_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 
@@ -52,6 +54,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.INVENTORY,
+      page: () =>  InventoryView(),
+      binding: InventoryBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN,

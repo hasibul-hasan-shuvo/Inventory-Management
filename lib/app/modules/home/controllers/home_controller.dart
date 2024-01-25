@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/modules/home/model/item_home_menu_ui_model.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import '/app/core/base/base_controller.dart';
@@ -18,12 +19,11 @@ class HomeController extends BaseController {
 
   void getHomeMenuItems() {
     List<ItemHomeMenuUiModel> list = List.empty(growable: true);
-
     list.add(
       ItemHomeMenuUiModel(
         icon: AppIcons.inventory,
         title: appLocalization.homeMenuInventory,
-        route: "",
+        route: Routes.INVENTORY,
       ),
     );
     list.add(

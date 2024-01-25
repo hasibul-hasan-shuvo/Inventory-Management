@@ -1,37 +1,38 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:dental_inventory/app/core/utils/transitions.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppThemeData {
   static ThemeData getDarkTheme() {
     return ThemeData(
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      brightness: Brightness.dark,
-      primaryColor: AppColors.primaryDark,
-      primaryColorDark: AppColors.bgCardDark,
-      primaryColorLight: AppColors.primary,
-      buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      cardColor: AppColors.bgCardDark,
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      indicatorColor: AppColors.colorWhite,
-      dividerColor: AppColors.dividerDark,
-      dividerTheme: const DividerThemeData(color: AppColors.dividerDark),
-      hintColor: AppColors.basicGreyDark,
-      dialogBackgroundColor: AppColors.bgPageDark,
-      scaffoldBackgroundColor: AppColors.bgPageDark,
-      textTheme: _textThemeDark,
-      appBarTheme: _appBarThemeDark,
-      fontFamily: _getFont(),
-      colorScheme: _colorSchemeDark,
-      useMaterial3: true,
-      bottomNavigationBarTheme: _bottomNavigationBarThemeDataDark,
-      bottomSheetTheme: _bottomSheetThemeDataDark,
-      dialogTheme: _dialogThemeDark,
-      popupMenuTheme: _popupMenuThemeDark,
-      shadowColor: Colors.black12,
-    );
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark,
+        primaryColor: AppColors.primaryDark,
+        primaryColorDark: AppColors.bgCardDark,
+        primaryColorLight: AppColors.primary,
+        buttonTheme: const ButtonThemeData(alignedDropdown: true),
+        cardColor: AppColors.bgCardDark,
+        iconTheme: const IconThemeData(color: AppColors.colorWhite),
+        indicatorColor: AppColors.colorWhite,
+        dividerColor: AppColors.dividerDark,
+        dividerTheme: const DividerThemeData(color: AppColors.dividerDark),
+        hintColor: AppColors.basicGreyDark,
+        dialogBackgroundColor: AppColors.bgPageDark,
+        scaffoldBackgroundColor: AppColors.bgPageDark,
+        textTheme: _textThemeDark,
+        appBarTheme: _appBarThemeDark,
+        fontFamily: _getFont(),
+        colorScheme: _colorSchemeDark,
+        useMaterial3: true,
+        bottomNavigationBarTheme: _bottomNavigationBarThemeDataDark,
+        bottomSheetTheme: _bottomSheetThemeDataDark,
+        dialogTheme: _dialogThemeDark,
+        popupMenuTheme: _popupMenuThemeDark,
+        shadowColor: Colors.black12,
+        pageTransitionsTheme: pageTransitionsTheme);
   }
 
   static ThemeData getLightTheme() {
@@ -60,6 +61,7 @@ class AppThemeData {
       dialogTheme: _dialogThemeLight,
       popupMenuTheme: _popupMenuThemeLight,
       shadowColor: Colors.black12,
+      pageTransitionsTheme: pageTransitionsTheme
     );
   }
 
