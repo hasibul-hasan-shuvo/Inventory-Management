@@ -12,6 +12,7 @@ abstract class AppValues {
   static const double padding_4 = 4;
   static const double padding_2 = 2;
   static const double padding_3 = 3;
+  static const double padding_20 = 20;
   static const double buttonVerticalPadding = 12;
 
   static const double margin = 16;
@@ -71,15 +72,14 @@ abstract class AppValues {
   static const double iconSmallerSize = 12;
   static const double iconSize_14 = 14;
   static const double iconSize_28 = 28;
+  static const double iconSize_50 = 50;
   static const double iconLargeSize = 36;
   static const double iconExtraLargerSize = 96;
   static const double appBarIconSize = 32;
   static const double mainAppBarLogoHeight = 26.0;
 
-
   static const double customAppBarSize = 144.0;
   static const double collapsedAppBarSize = 70.0;
-
 
   static const int loggerLineLength = 120;
   static const int loggerErrorMethodCount = 8;

@@ -2,18 +2,16 @@ import 'package:dental_inventory/app/modules/about_us/bindings/about_us_binding.
 import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
 import 'package:get/get.dart';
 
-import '../modules/contact_us/bindings/contact_us_binding.dart';
-import '../modules/contact_us/views/contact_us_view.dart';
-import '../modules/splash/bindings/splash_binding.dart';
-import '../modules/splash/views/splash_view.dart';
-import '/app/modules/home/bindings/home_binding.dart';
-import '/app/modules/home/views/home_view.dart';
-import '/app/modules/main/bindings/main_binding.dart';
-import '/app/modules/main/views/main_view.dart';
-import '/app/modules/other/bindings/other_binding.dart';
-import '/app/modules/other/views/other_view.dart';
-import '/app/modules/project_details/bindings/project_details_binding.dart';
-import '/app/modules/project_details/views/project_details_view.dart';
+import 'package:dental_inventory/app/modules/contact_us/bindings/contact_us_binding.dart';
+import 'package:dental_inventory/app/modules/contact_us/views/contact_us_view.dart';
+import 'package:dental_inventory/app/modules/splash/bindings/splash_binding.dart';
+import 'package:dental_inventory/app/modules/splash/views/splash_view.dart';
+import 'package:dental_inventory/app/modules/home/bindings/home_binding.dart';
+import 'package:dental_inventory/app/modules/home/views/home_view.dart';
+import 'package:dental_inventory/app/modules/main/bindings/main_binding.dart';
+import 'package:dental_inventory/app/modules/main/views/main_view.dart';
+import 'package:dental_inventory/app/modules/other/bindings/other_binding.dart';
+import 'package:dental_inventory/app/modules/other/views/other_view.dart';
 
 part 'app_routes.dart';
 
@@ -47,11 +45,6 @@ class AppPages {
       name: _Paths.OTHER,
       page: () => OtherView(),
       binding: OtherBinding(),
-    ),
-    GetPage(
-      name: _Paths.PROJECT_DETAILS,
-      page: () => ProjectDetailsView(),
-      binding: ProjectDetailsBinding(),
     ),
     GetPage(
       name: _Paths.SPLASH,

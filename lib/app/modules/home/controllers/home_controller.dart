@@ -1,81 +1,81 @@
+import 'package:dental_inventory/app/core/values/app_icons.dart';
+import 'package:dental_inventory/app/modules/home/model/item_home_menu_ui_model.dart';
 import 'package:get/get.dart';
 
 import '/app/core/base/base_controller.dart';
-import '/app/core/base/paging_controller.dart';
-import '/app/core/model/github_search_query_param.dart';
-import '/app/data/model/github_project_search_response.dart';
-import '/app/data/repository/github_repository.dart';
-import '/app/modules/home/model/github_project_ui_data.dart';
 
 class HomeController extends BaseController {
-  final GithubRepository _repository =
-      Get.find(tag: (GithubRepository).toString());
+  final RxList<ItemHomeMenuUiModel> _menuListController =
+      RxList.empty(growable: true);
 
-  final RxList<GithubProjectUiData> _githubProjectListController =
-      RxList.empty();
+  List<ItemHomeMenuUiModel> get menuList => _menuListController;
 
-  List<GithubProjectUiData> get projectList =>
-      _githubProjectListController.toList();
+  @override
+  void onInit() {
+    super.onInit();
+    getHomeMenuItems();
+  }
 
-  final pagingController = PagingController<GithubProjectUiData>();
+  void getHomeMenuItems() {
+    List<ItemHomeMenuUiModel> list = List.empty(growable: true);
 
-  void getGithubGetxProjectList() {
-    if (!pagingController.canLoadNextPage()) return;
-
-    pagingController.isLoadingPage = true;
-
-    var queryParam = GithubSearchQueryParam(
-      searchKeyWord: 'flutter getx template',
-      pageNumber: pagingController.pageNumber,
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.inventory,
+        title: appLocalization.homeMenuInventory,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.returnInventory,
+        title: appLocalization.homeMenuRevertItemRetrieved,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.notDelivered,
+        title: appLocalization.homeMenuNotDelivered,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.orderDelivery,
+        title: appLocalization.homeMenuOrderDelivery,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.inventoryCount,
+        title: appLocalization.homeMenuInventoryCount,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.suggestedOrder,
+        title: appLocalization.homeMenuSuggestedOrder,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.search,
+        title: appLocalization.homeMenuSearchItem,
+        route: "",
+      ),
+    );
+    list.add(
+      ItemHomeMenuUiModel(
+        icon: AppIcons.shoppingCart,
+        title: appLocalization.homeMenuShoppingCart,
+        route: "",
+      ),
     );
 
-    var githubRepoSearchService = _repository.searchProject(queryParam);
-
-    callDataService(
-      githubRepoSearchService,
-      onSuccess: _handleProjectListResponseSuccess,
-    );
-
-    pagingController.isLoadingPage = false;
-  }
-
-  onRefreshPage() {
-    pagingController.initRefresh();
-    getGithubGetxProjectList();
-  }
-
-  onLoadNextPage() {
-    logger.i("On load next");
-
-    getGithubGetxProjectList();
-  }
-
-  void _handleProjectListResponseSuccess(GithubProjectSearchResponse response) {
-    List<GithubProjectUiData>? repoList = response.items
-        ?.map((e) => GithubProjectUiData(
-              repositoryName: e.name != null ? e.name! : "Null",
-              ownerLoginName: e.owner != null ? e.owner!.login! : "Null",
-              ownerAvatar: e.owner != null ? e.owner!.avatarUrl! : "",
-              numberOfStar: e.stargazersCount ?? 0,
-              numberOfFork: e.forks ?? 0,
-              score: e.score ?? 0.0,
-              watchers: e.watchers ?? 0,
-              description: e.description ?? "",
-            ))
-        .toList();
-
-    if (_isLastPage(repoList!.length, response.totalCount!)) {
-      pagingController.appendLastPage(repoList);
-    } else {
-      pagingController.appendPage(repoList);
-    }
-
-    var newList = [...pagingController.listItems];
-
-    _githubProjectListController(newList);
-  }
-
-  bool _isLastPage(int newListItemCount, int totalCount) {
-    return (projectList.length + newListItemCount) >= totalCount;
+    _menuListController(list);
   }
 }

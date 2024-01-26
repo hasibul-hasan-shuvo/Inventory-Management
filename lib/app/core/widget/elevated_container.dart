@@ -1,41 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '/app/core/values/app_colors.dart';
-import '/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 
 // ignore: must_be_immutable
 class ElevatedContainer extends StatelessWidget with BaseWidgetMixin {
   final Widget child;
-  final Color bgColor;
+  final Color? bgColor;
   final EdgeInsetsGeometry? padding;
-  final double borderRadius;
+  final double? borderRadius;
+  final double borderWidth;
+  final bool isBorderEnabled;
+  final double? height;
+  final double? width;
 
   ElevatedContainer({
-    Key? key,
+    super.key,
     required this.child,
-    this.bgColor = AppColors.pageBackground,
+    this.bgColor,
     this.padding,
-    this.borderRadius = AppValues.smallRadius,
-  }) : super(key: key);
+    this.borderRadius,
+    this.borderWidth = 1.0,
+    this.isBorderEnabled = false,
+    this.height,
+    this.width,
+  });
 
   @override
   Widget body(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: [
-          BoxShadow(
-            color: theme.shadowColor,
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-        color: theme.cardColor,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius ?? AppValues.radius.r),
+      child: Container(
+        key: key,
+        padding: padding,
+        decoration: _decoration,
+        height: height,
+        width: width,
+        child: child,
       ),
-      child: child,
     );
   }
+
+  BoxDecoration get _decoration => BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius ?? AppValues.radius.r),
+        color: bgColor ?? theme.cardColor,
+        border: isBorderEnabled
+            ? Border.all(
+                color: theme.primaryColor,
+                width: borderWidth,
+              )
+            : null,
+      );
 }
