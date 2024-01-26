@@ -25,7 +25,7 @@ class InputValidators {
   static String? phone(String? value, AppLocalizations appLocalization) {
     if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
-    return value.length != 11 ? appLocalization.mustBe11DigitsLong : null;
+    return value.length != 9 ? appLocalization.mustBe11DigitsLong : null;
   }
 
   static String? password(String? value, AppLocalizations appLocalization) {
