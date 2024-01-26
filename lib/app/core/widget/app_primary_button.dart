@@ -37,12 +37,12 @@ class AppPrimaryButton extends StatelessWidget {
             width: width ?? MediaQuery.of(context).size.width.w,
             child: CupertinoButton(
               padding: textStyle != null
-                  ?  EdgeInsets.symmetric(
-                      horizontal: AppValues.margin_10.w, vertical: AppValues.halfPadding.h)
+                  ? EdgeInsets.symmetric(
+                      horizontal: AppValues.margin_10.w,
+                      vertical: AppValues.halfPadding.h)
                   : null,
               color: Theme.of(context).colorScheme.primary,
-              onPressed:
-                  isEnabled == null || isEnabled == true ? onPressed : null,
+              onPressed: isEnabled ?? true ? onPressed : null,
               child: textStyle == null
                   ? FittedBox(
                       child: Text(

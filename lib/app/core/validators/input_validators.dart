@@ -1,3 +1,5 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class InputValidators {
   static final _userNameRegX = RegExp(r'^[A-Za-z][A-Za-z0-9_]{7,29}$');
 
@@ -6,77 +8,78 @@ class InputValidators {
 
   // static final _phoneRegX = RegExp(r"^\+(?:\d\s?){6,14}\d$");
 
-  static String? userName(String? value) {
-    if (value!.isEmpty) return 'Field can\'t be empty';
+  static String? userName(String? value, AppLocalizations appLocalization) {
+    if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
     return !_userNameRegX.hasMatch(value)
-        ? 'Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters'
+        ? appLocalization.userNameValidator
         : null;
   }
 
-  static String? email(String? value) {
-    if (value!.isEmpty) return 'Field can\'t be empty';
+  static String? email(String? value, AppLocalizations appLocalization) {
+    if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
-    return !_emailRegX.hasMatch(value) ? 'Invalid email' : null;
+    return !_emailRegX.hasMatch(value) ? appLocalization.invalidEmail : null;
   }
 
-  static String? phone(String? value) {
-    if (value!.isEmpty) return 'Field can\'t be empty';
+  static String? phone(String? value, AppLocalizations appLocalization) {
+    if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
-    return value.length != 11 ? 'Must be 11 digits long' : null;
+    return value.length != 11 ? appLocalization.mustBe11DigitsLong : null;
   }
 
-  static String? password(String? value) {
-    if (value!.isEmpty) return 'Field can\'t be empty';
+  static String? password(String? value, AppLocalizations appLocalization) {
+    if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return appLocalization.passwordValidator;
     }
 
     // Check for at least one uppercase letter
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return appLocalization.passwordUpperCaseValidator;
     }
 
     // Check for at least one lowercase letter
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return appLocalization.passwordLowerCaseValidator;
     }
 
     // Check for at least one digit
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one digit';
+      return appLocalization.passwordNumberValidator;
     }
 
     // Check for at least one special character
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
+      return appLocalization.passwordSpecialCharacterValidator;
     }
 
     return null;
   }
 
-  static String? confirmPassword(String? value, String? password) {
-    if (value!.isEmpty) return 'Field can\'t be empty';
+  static String? confirmPassword(
+      String? value, AppLocalizations appLocalization, String? password) {
+    if (value!.isEmpty) return appLocalization.fieldCannotBeEmpty;
 
-    return value != password ? 'Passwords don\'t match' : null;
+    return value != password ? appLocalization.passwordValidator : null;
   }
 
-  static String? name(String? value) {
-    return value!.isEmpty ? 'Field can\'t be empty' : null;
+  static String? name(String? value, AppLocalizations appLocalization) {
+    return value!.isEmpty ? appLocalization.fieldCannotBeEmpty : null;
   }
 
-  static String? otp(String? value) {
+  static String? otp(String? value, AppLocalizations appLocalization) {
     if (value!.isEmpty) {
-      return 'Field can\'t be empty';
+      return appLocalization.fieldCannotBeEmpty;
     }
 
     if (value.length != 6) {
-      return 'Must be 6 digits long';
+      return appLocalization.otpValidator;
     }
 
     if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-      return 'Only digits are allowed';
+      return appLocalization.otpDigitValidator;
     }
 
     return null;

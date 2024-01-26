@@ -25,7 +25,6 @@ class LoginView extends BaseView<LoginController> {
   @override
   Widget? bottomNavigationBar() {
     return Container(
-      width: double.infinity,
       color: AppColors.primary,
       height: AppBar().preferredSize.height,
       child: Padding(
@@ -42,42 +41,6 @@ class LoginView extends BaseView<LoginController> {
     );
   }
 
-  Widget _buildEmailContact() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(Icons.email_outlined, color: AppColors.loginScreenIconColor),
-        SizedBox(
-          width: AppValues.smallMargin.w,
-        ),
-         Text(
-          AppStrings.email,
-          style:  labelSmallTextStyle.copyWith(
-            color: AppColors.colorWhite
-          )
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPhoneContact() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(Icons.call, color: AppColors.loginScreenIconColor),
-        SizedBox(
-          width: AppValues.smallMargin.w,
-        ),
-         Text(
-          AppStrings.phoneNumber,
-          style: labelSmallTextStyle.copyWith(
-            color:AppColors.colorWhite
-          )
-        ),
-      ],
-    );
-  }
-
   @override
   Widget body(BuildContext context) {
     return Center(
@@ -91,12 +54,14 @@ class LoginView extends BaseView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _buildEmailTextField(),
-                _buildPasswordTextField(),
                 SizedBox(
                   height: AppValues.height_16.h,
                 ),
+                _buildPasswordTextField(),
+                SizedBox(
+                  height: AppValues.margin_20.h,
+                ),
                 _buildSignInButton()
-                // _buildSignInButton(),
               ],
             ),
           ),
@@ -105,52 +70,31 @@ class LoginView extends BaseView<LoginController> {
     );
   }
 
-  Widget _buildPasswordTextField() {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Padding(
-        padding: const EdgeInsets.only(left: AppValues.margin_2),
-        child: Text(appLocalization.password),
-      ),
-      subtitle: Padding(
-        padding: EdgeInsets.only(
-          top: AppValues.smallMargin.h,
-        ),
-        child: AppTextField(
-          prefix: const Icon(Icons.key_outlined),
-          controller: _passwordController,
-          validator: InputValidators.password,
-          onChanged: (value) {},
-          obscureText: true,
-          labelText: appLocalization.enterPassword,
-          hintText: appLocalization.enterPassword,
-        ),
-      ),
+  Widget _buildEmailTextField() {
+    return AppTextField(
+      prefix: const Icon(Icons.email_outlined),
+      keyboardType: TextInputType.emailAddress,
+      controller: _loginController,
+      labelText: appLocalization.email,
+      hintText: appLocalization.enterEmail,
+      validator: (value) {
+        return InputValidators.email(value, appLocalization);
+      },
+      onChanged: (value) {},
     );
   }
 
-  //
-  Widget _buildEmailTextField() {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Padding(
-        padding: const EdgeInsets.only(
-          left: AppValues.margin_2,
-        ),
-        child: Text(appLocalization.email),
-      ),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(top: AppValues.smallMargin),
-        child: AppTextField(
-          prefix: const Icon(Icons.email_outlined),
-          keyboardType: TextInputType.emailAddress,
-          controller: _loginController,
-          labelText: appLocalization.enterEmail,
-          hintText: appLocalization.enterEmail,
-          validator: InputValidators.email,
-          onChanged: (value) {},
-        ),
-      ),
+  Widget _buildPasswordTextField() {
+    return AppTextField(
+      prefix: const Icon(Icons.key_outlined),
+      controller: _passwordController,
+      validator: (value) {
+        return InputValidators.password(value, appLocalization);
+      },
+      onChanged: (value) {},
+      obscureText: true,
+      labelText: appLocalization.password,
+      hintText: appLocalization.enterPassword,
     );
   }
 
@@ -160,5 +104,33 @@ class LoginView extends BaseView<LoginController> {
           if (_formKey.currentState!.validate()) {}
         },
         title: appLocalization.logIn);
+  }
+
+  Widget _buildEmailContact() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Icon(Icons.email_outlined, color: AppColors.loginScreenIconColor),
+        SizedBox(
+          width: AppValues.smallMargin.w,
+        ),
+        Text(AppStrings.email,
+            style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
+      ],
+    );
+  }
+
+  Widget _buildPhoneContact() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Icon(Icons.call, color: AppColors.loginScreenIconColor),
+        SizedBox(
+          width: AppValues.smallMargin.w,
+        ),
+        Text(AppStrings.phoneNumber,
+            style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
+      ],
+    );
   }
 }

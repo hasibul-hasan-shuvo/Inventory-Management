@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/values/app_colors.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -7,16 +8,13 @@ class AppTextField extends StatefulWidget {
       {Key? key,
       required this.controller,
       required this.labelText,
+      required this.hintText,
       this.borderRadius = 8,
-      this.hintText,
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.prefix,
       this.suffix,
       this.validator,
-      this.borderWidth,
-      this.borderColor,
-      this.isFiled,
       required this.onChanged,
       this.isEnabled})
       : super(key: key);
@@ -28,12 +26,9 @@ class AppTextField extends StatefulWidget {
   final bool obscureText;
   final Widget? prefix;
   final Widget? suffix;
-  final double? borderWidth;
   final FormFieldValidator<String>? validator;
   final Function(String?) onChanged;
-  final Color? borderColor;
-  final bool? isFiled;
-  final String? hintText;
+  final String hintText;
   final bool? isEnabled;
 
   @override
@@ -45,54 +40,61 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      enabled: widget.isEnabled,
-      controller: widget.controller,
-      onChanged: widget.onChanged,
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        alignLabelWithHint: true,
-        fillColor: Theme.of(context).colorScheme.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        label: FittedBox(child: Text(widget.labelText)),
-        floatingLabelBehavior: widget.hintText != null
-            ? FloatingLabelBehavior.never
-            : FloatingLabelBehavior.auto,
-        filled: widget.isFiled ?? false,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide: BorderSide(width: widget.borderWidth ?? 1)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          borderSide: BorderSide(
-            color: widget.borderColor ??
-                Theme.of(context).textTheme.labelLarge!.color!,
-            width: widget.borderWidth ?? 1,
-          ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.labelText, style:Theme.of(context).textTheme.labelLarge),
+        const SizedBox(
+          height: AppValues.halfPadding,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          borderSide: BorderSide(
-              color: AppColors.primary, width: widget.borderWidth ?? 1),
+        TextFormField(
+          enabled: widget.isEnabled,
+          controller: widget.controller,
+          onChanged: widget.onChanged,
+          decoration: _buildInputDecoration(context),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+          obscureText: widget.obscureText && _obscurePassword,
+          validator: widget.validator,
+          keyboardType: widget.keyboardType,
         ),
-        suffixIcon: widget.obscureText
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _obscurePassword = !_obscurePassword;
-                  });
-                },
-                child: _obscurePassword
-                    ? const Icon(Icons.visibility_off)
-                    :const Icon(Icons.visibility),
-              )
-            : widget.suffix,
-        prefixIcon: widget.prefix,
+      ],
+    );
+  }
+
+  InputDecoration _buildInputDecoration(BuildContext context) {
+    return InputDecoration(
+      hintText: widget.hintText,
+      alignLabelWithHint: true,
+      fillColor: Theme.of(context).colorScheme.surface,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      label: FittedBox(child: Text(widget.labelText)),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide: const BorderSide(width: 1)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderSide: BorderSide(
+            color: Theme.of(context).textTheme.labelLarge!.color!, width: 1),
       ),
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-      obscureText: widget.obscureText && _obscurePassword,
-      validator: widget.validator,
-      keyboardType: widget.keyboardType,
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderSide: const BorderSide(color: AppColors.primary, width: 3),
+      ),
+      suffixIcon: widget.obscureText
+          ? GestureDetector(
+              onTap: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
+              child: _obscurePassword
+                  ? const Icon(Icons.visibility_off)
+                  : const Icon(Icons.visibility),
+            )
+          : widget.suffix,
+      prefixIcon: widget.prefix,
     );
   }
 }
