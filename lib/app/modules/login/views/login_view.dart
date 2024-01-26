@@ -6,7 +6,7 @@ import 'package:dental_inventory/app/core/widget/app_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/validators/input_validators.dart';
+import '../../../core/utils/input_validators.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/app_values.dart';
 import '../../main/views/main_app_bar.dart';
