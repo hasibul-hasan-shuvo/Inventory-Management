@@ -1,9 +1,11 @@
+import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 // ignore: must_be_immutable
-class AppTextField extends StatefulWidget {
+class AppTextField extends StatefulWidget{
   AppTextField(
       {Key? key,
       required this.controller,
