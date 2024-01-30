@@ -72,6 +72,7 @@ abstract class AppValues {
   static const double iconSmallerSize = 12;
   static const double iconSize_14 = 14;
   static const double iconSize_28 = 28;
+  static const double iconSize_40 = 40;
   static const double iconSize_50 = 50;
   static const double iconLargeSize = 36;
   static const double iconExtraLargerSize = 96;

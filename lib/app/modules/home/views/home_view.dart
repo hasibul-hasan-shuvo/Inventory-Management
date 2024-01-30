@@ -17,16 +17,18 @@ class HomeView extends BaseView<HomeController> {
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: AppValues.margin.h),
-        _getMenuGridView(),
-        SizedBox(height: AppValues.margin.h),
-        _getItemRetrievalOptionView(),
-        SizedBox(height: AppValues.margin.h),
-      ],
-    ).marginSymmetric(
-      horizontal: AppValues.margin.w,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: AppValues.margin.h),
+          _getMenuGridView(),
+          SizedBox(height: AppValues.margin.h),
+          _getItemRetrievalOptionView(),
+          SizedBox(height: AppValues.margin.h),
+        ],
+      ).marginSymmetric(
+        horizontal: AppValues.margin.w,
+      ),
     );
   }
 

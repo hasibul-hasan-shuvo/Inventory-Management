@@ -45,7 +45,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
       child: AssetImageView(
         fileName: data.icon,
         color: AppColors.colorWhite,
-        height: AppValues.iconSize_50.h,
+        height: AppValues.iconSize_40.h,
       ),
     );
   }
@@ -53,7 +53,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
   Widget _getTitle() {
     return Text(
       data.title,
-      style: textTheme.bodyMedium?.copyWith(color: AppColors.colorWhite),
+      style: textTheme.bodySmall?.copyWith(color: AppColors.colorWhite),
       textAlign: TextAlign.center,
     );
   }
