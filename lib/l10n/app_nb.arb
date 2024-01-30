@@ -26,5 +26,22 @@
   "themeLight": "Lys",
   "themeSystem": "System standard",
   "titleOtherView": "andre",
-  "yes": "Aye"
+  "yes": "Aye",
+  "password": "Passord",
+  "email": "E-post",
+  "enterEmail": "Skriv inn e-post",
+  "enterPassword": "Skriv inn passord",
+  "fieldCannotBeEmpty": "Feltet kan ikke være tomt",
+  "invalidEmail": "Ugyldig e-post",
+  "mustBe11DigitsLong": "Må være 11 siffer langt",
+  "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",
+  "passwordValidator": "Passordet må være minst 8 tegn langt",
+  "passwordUpperCaseValidator": "Passordet må inneholde minst en stor bokstav",
+  "passwordLowerCaseValidator": "Passordet må inneholde minst en liten bokstav",
+  "passwordNumberValidator": "Passordet må inneholde minst ett tall",
+  "passwordSpecialCharacterValidator": "Passordet må inneholde minst ett spesialtegn",
+  "passwordConfirmPasswordValidator": "Passordene stemmer ikke overens",
+  "passwordConfirmPassword": "Bekreft passord",
+  "otpValidator": "OTP må være 6 siffer langt",
+  "otpDigitValidator": "OTP må være et tall"
 }

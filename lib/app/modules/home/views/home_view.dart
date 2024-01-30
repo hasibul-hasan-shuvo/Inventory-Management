@@ -1,6 +1,3 @@
-import 'package:dental_inventory/app/core/values/app_icons.dart';
-import 'package:dental_inventory/app/modules/home/model/item_home_menu_ui_model.dart';
-import 'package:dental_inventory/app/modules/home/widget/item_home_menu_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
