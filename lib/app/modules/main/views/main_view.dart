@@ -13,7 +13,7 @@ import '/app/modules/main/views/bottom_nav_bar.dart';
 // ignore: must_be_immutable
 class MainView extends BaseView<MainController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => const MainAppBar();
+  PreferredSizeWidget? appBar(BuildContext context) =>  MainAppBar();
 
   @override
   Widget body(BuildContext context) {
