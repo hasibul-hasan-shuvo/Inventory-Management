@@ -1,11 +1,12 @@
-import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get.dart';
+
+import '../base/base_widget_mixin.dart';
 
 // ignore: must_be_immutable
-class AppTextField extends StatefulWidget{
+class AppTextField extends StatelessWidget with BaseWidgetMixin{
   AppTextField(
       {Key? key,
       required this.controller,
@@ -33,70 +34,65 @@ class AppTextField extends StatefulWidget{
   final String hintText;
   final bool? isEnabled;
 
-  @override
-  State<AppTextField> createState() => _AppTextFieldState();
-}
-
-class _AppTextFieldState extends State<AppTextField> {
-  bool _obscurePassword = true;
+  final RxBool _isObscured = false.obs;
 
   @override
-  Widget build(BuildContext context) {
+  Widget body(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.labelText, style:Theme.of(context).textTheme.labelLarge),
+        Text(labelText, style:theme.textTheme.labelLarge),
         const SizedBox(
           height: AppValues.halfPadding,
         ),
+
+        Obx(() =>
         TextFormField(
-          enabled: widget.isEnabled,
-          controller: widget.controller,
-          onChanged: widget.onChanged,
+          enabled: isEnabled,
+          controller: controller,
+          onChanged: onChanged,
           decoration: _buildInputDecoration(context),
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-          obscureText: widget.obscureText && _obscurePassword,
-          validator: widget.validator,
-          keyboardType: widget.keyboardType,
-        ),
+          obscureText: _isObscured.value,
+          validator: validator,
+          keyboardType: keyboardType,
+        ))
       ],
     );
   }
 
   InputDecoration _buildInputDecoration(BuildContext context) {
     return InputDecoration(
-      hintText: widget.hintText,
+      hintText: hintText,
       alignLabelWithHint: true,
-      fillColor: Theme.of(context).colorScheme.surface,
+      fillColor: theme.colorScheme.surface,
       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      label: FittedBox(child: Text(widget.labelText)),
+      label: FittedBox(child: Text(labelText)),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: const BorderSide(width: 1)),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: BorderSide(
-            color: Theme.of(context).textTheme.labelLarge!.color!, width: 1),
+            color: theme.textTheme.labelLarge!.color!, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: const BorderSide(color: AppColors.primary, width: 3),
       ),
-      suffixIcon: widget.obscureText
+      suffixIcon: obscureText
           ? GestureDetector(
               onTap: () {
-                setState(() {
-                  _obscurePassword = !_obscurePassword;
-                });
+                _isObscured.value = !_isObscured.value;
               },
-              child: _obscurePassword
+              child: _isObscured.value
                   ? const Icon(Icons.visibility_off)
                   : const Icon(Icons.visibility),
             )
-          : widget.suffix,
-      prefixIcon: widget.prefix,
+          : suffix,
+      prefixIcon: prefix,
     );
   }
 }
