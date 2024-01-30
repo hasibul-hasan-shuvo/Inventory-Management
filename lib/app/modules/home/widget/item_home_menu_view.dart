@@ -20,7 +20,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return ElevatedContainer(
-      bgColor: theme.primaryColor,
+      bgColor: AppColors.homeOptionBackground,
       borderRadius: AppValues.radius_6.r,
       child: Ripple(
         rippleRadius: AppValues.radius_6.r,
@@ -44,7 +44,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
     return Center(
       child: AssetImageView(
         fileName: data.icon,
-        color: AppColors.colorWhite,
+        color: AppColors.primary,
         height: AppValues.iconSize_40.h,
       ),
     );
@@ -53,7 +53,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
   Widget _getTitle() {
     return Text(
       data.title,
-      style: textTheme.bodySmall?.copyWith(color: AppColors.colorWhite),
+      style: textTheme.bodySmall?.copyWith(color: AppColors.primary),
       textAlign: TextAlign.center,
     );
   }
