@@ -43,5 +43,15 @@
   "passwordConfirmPasswordValidator": "Passordene stemmer ikke overens",
   "passwordConfirmPassword": "Bekreft passord",
   "otpValidator": "OTP må være 6 siffer langt",
-  "otpDigitValidator": "OTP må være et tall"
+  "otpDigitValidator": "OTP må være et tall",
+  "search": "Søk",
+  "noDataFound": "Ingen data funnet",
+  "editProduct": "Rediger produkt",
+  "deleteProduct": "Slett produkt",
+  "updateProduct": "Oppdater produkt",
+  "fixedProposal": "Fast forslag",
+  "inventory": "Beholdning",
+  "min": "Min",
+  "max": "Maks",
+  "available": "Tilgjengelig"
 }

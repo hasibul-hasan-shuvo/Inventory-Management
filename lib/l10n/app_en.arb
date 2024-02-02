@@ -43,5 +43,15 @@
   "passwordConfirmPasswordValidator": "Passwords do not match",
   "passwordConfirmPassword": "Confirm Password",
   "otpValidator": "OTP must be 6 digits long",
-  "otpDigitValidator": "OTP must be a number"
+  "otpDigitValidator": "OTP must be a number",
+  "search": "Search",
+  "noDataFound": "No data found",
+  "editProduct": "Edit Product",
+  "deleteProduct": "Delete Product",
+  "updateProduct": "Update Product",
+  "fixedProposal": "Fixed Proposal",
+  "inventory": "Inventory",
+  "min": "Min",
+  "max": "Max",
+  "available": "Available"
 }

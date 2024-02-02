@@ -50,8 +50,8 @@ class InventoryView extends BaseView<InventoryController> {
   Widget _buildSearchTextField() {
     return TextFormField(
         autofocus: true,
-        decoration: const InputDecoration(
-          hintText: 'Search',
+        decoration: InputDecoration(
+          hintText: appLocalization.search,
           border: InputBorder.none,
         ),
         maxLines: 1,
@@ -73,8 +73,8 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildNoDataFoundWidget() {
-    return const Center(
-      child: Text('No data found'),
+    return Center(
+      child: Text(appLocalization.noDataFound),
     );
   }
 
@@ -100,7 +100,7 @@ class InventoryView extends BaseView<InventoryController> {
   _buildTitle() => Text(appLocalization.homeMenuInventory);
 
   Widget _buildInventoryCard(
-          InventoryCardModel inventoryData, BuildContext context) =>
+          InventoryCardUIModel inventoryData, BuildContext context) =>
       InventoryCard(
         inventoryData: inventoryData,
         onTap: () {
@@ -110,19 +110,17 @@ class InventoryView extends BaseView<InventoryController> {
         },
       );
 
-  Widget _buildDialog(InventoryCardModel inventoryData, BuildContext context) {
+  Widget _buildDialog(InventoryCardUIModel inventoryData, BuildContext context) {
     return AppDialog(
-      title: "Edit Product",
+      title: appLocalization.editProduct,
       content: _buildContent(inventoryData, context),
-      negativeButtonText: "Delete Product",
-      positiveButtonText: "Update Product",
+      negativeButtonText: appLocalization.deleteProduct,
+      positiveButtonText: appLocalization.updateProduct,
     );
   }
 
-  Widget _buildContent(InventoryCardModel inventoryData, BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+  Widget _buildContent(InventoryCardUIModel inventoryData, BuildContext context) {
+    return Column(mainAxisSize: MainAxisSize.min, children: [
       _buildProductImageWithTitle(inventoryData),
       const SizedBox(
         height: 10,
@@ -131,79 +129,83 @@ class InventoryView extends BaseView<InventoryController> {
     ]);
   }
 
-  Widget _buildQuantityStatus(InventoryCardModel inventoryData) {
+  Widget _buildQuantityStatus(InventoryCardUIModel inventoryData) {
     return Container(
       height: AppValues.height_90.h,
       decoration: BoxDecoration(
         color: const Color(0xFFF9F8F4),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppValues.halfPadding.sp),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildMaxMinEditor(),
+          _buildMaxMinEditor(
+              inventoryData.maxTreshold ?? "", inventoryData.minTreshold ?? ""),
           Container(
             height: AppValues.height_90.h,
-            width: 0.5,
+            width: AppValues.dividerWidth.w,
             color: theme.dividerColor,
           ),
-          _buildCurrentAndSuggestionEditor(),
+          _buildCurrentAndSuggestionEditor(
+              inventoryData.fixedOrderSuggestions ?? "",
+              inventoryData.currentStock ?? ""),
         ],
       ),
     );
   }
 
-  Padding _buildCurrentAndSuggestionEditor() {
+  Padding _buildCurrentAndSuggestionEditor(
+      String fixedProposal, String inventory) {
     return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFieldWithTitle(
-                  title: 'Fast Forslag',
-                  initialValue: "30",
-                  onChanged: (value) {}),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFieldWithTitle(
-                  title: 'Beholdning  ',
-                  initialValue: "30",
-                  onChanged: (value) {}),
-            ],
+      padding: EdgeInsets.all(AppValues.halfPadding.sp),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFieldWithTitle(
+              title: appLocalization.fixedProposal,
+              initialValue: fixedProposal,
+              onChanged: (value) {}),
+          const SizedBox(
+            height: 10,
           ),
-        );
+          TextFieldWithTitle(
+              title: appLocalization.inventory,
+              initialValue: inventory,
+              onChanged: (value) {}),
+        ],
+      ),
+    );
   }
 
-  Padding _buildMaxMinEditor() {
+  Padding _buildMaxMinEditor(String max, String min) {
     return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextFieldWithTitle(
-                title: 'Min',
-                initialValue: "30",
-                onChanged: (value) {},
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFieldWithTitle(
-                title: 'Max',
-                initialValue: "30",
-                onChanged: (value) {},
-              ),
-            ],
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextFieldWithTitle(
+            title: appLocalization.min,
+            initialValue: max,
+            onChanged: (value) {},
           ),
-        );
+          const SizedBox(
+            height: 10,
+          ),
+          TextFieldWithTitle(
+            title: appLocalization.max,
+            initialValue: min,
+            onChanged: (value) {},
+          ),
+        ],
+      ),
+    );
   }
 
-  Row _buildProductImageWithTitle(InventoryCardModel inventoryData) {
+  Row _buildProductImageWithTitle(InventoryCardUIModel inventoryData) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,9 +216,13 @@ class InventoryView extends BaseView<InventoryController> {
         const SizedBox(
           width: 10,
         ),
-        Expanded(flex: 3, child: Text(inventoryData.productName ?? "",style: textTheme.titleMedium,)),
+        Expanded(
+            flex: 3,
+            child: Text(
+              inventoryData.productName ?? "",
+              style: textTheme.titleMedium,
+            )),
       ],
     );
   }
 }
-

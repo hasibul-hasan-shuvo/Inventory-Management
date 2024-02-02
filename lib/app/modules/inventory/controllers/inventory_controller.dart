@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
   final RxBool isSearchMode = false.obs;
-  final RxList<InventoryCardModel> inventoryList = <InventoryCardModel>[].obs;
-  final RxList<InventoryCardModel> filteredInventoryList =
-      <InventoryCardModel>[].obs;
+  final RxList<InventoryCardUIModel> inventoryList = <InventoryCardUIModel>[].obs;
+  final RxList<InventoryCardUIModel> filteredInventoryList =
+      <InventoryCardUIModel>[].obs;
   final RxString searchQuery = ''.obs;
 
   @override
@@ -23,8 +23,6 @@ class InventoryController extends BaseController {
     updateSearchQuery(searchQuery.value);
   }
 
-
-
   updateSearchQuery(String query) {
     searchQuery(query);
     if (query.isEmpty) {
@@ -34,7 +32,10 @@ class InventoryController extends BaseController {
       filteredInventoryList.clear();
       filteredInventoryList.addAll(inventoryList
           .where((element) =>
-              element.productName?.toLowerCase().contains(query.toLowerCase())??false)
+              element.productName
+                  ?.toLowerCase()
+                  .contains(query.toLowerCase()) ??
+              false)
           .toList());
     }
   }
@@ -42,9 +43,10 @@ class InventoryController extends BaseController {
   void getInventoryList() {
     for (int i = 0; i < AppValues.height_60; i++) {
       inventoryList.add(
-        InventoryCardModel(
+        InventoryCardUIModel(
           productName: 'Protective head bio 4$i pcs',
-          productImageUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
+          productImageUrl:
+              'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
           maxTreshold: '100',
           minTreshold: '10',
           currentStock: '50',

@@ -1,4 +1,4 @@
-class InventoryCardModel {
+class InventoryCardUIModel {
   final String? productName;
   final String? productImageUrl;
   final String? maxTreshold;
@@ -14,7 +14,7 @@ class InventoryCardModel {
   final String? productSupplier;
   final String? productLocation;
 
-  InventoryCardModel({
+  InventoryCardUIModel({
     this.productName,
     this.productImageUrl,
     this.maxTreshold,

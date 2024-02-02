@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 // ignore: must_be_immutable
 class InventoryCard extends StatelessWidget with BaseWidgetMixin {
-  final InventoryCardModel inventoryData;
+  final InventoryCardUIModel inventoryData;
   final VoidCallback onTap;
 
   InventoryCard({required this.inventoryData, required this.onTap});
@@ -16,7 +16,7 @@ class InventoryCard extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return Card(
-      elevation: AppValues.smallElevation,
+      elevation:AppValues.extraSmallElevation,
       child: Padding(
         padding: EdgeInsets.all(AppValues.halfPadding.sp),
         child: Row(
@@ -72,14 +72,14 @@ class InventoryCard extends StatelessWidget with BaseWidgetMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text("Available: ${inventoryData.currentStock}"),
+                  child: Text("${appLocalization.available}: ${inventoryData.currentStock}"),
                 ),
                 SizedBox(
                   width: AppValues.margin_10.w,
                 ),
                 Expanded(
                   child: Text(
-                    "Max: ${inventoryData.maxTreshold} - Min: ${inventoryData.minTreshold}",
+                    "${appLocalization.max}: ${inventoryData.maxTreshold} - ${appLocalization.min}: ${inventoryData.minTreshold}",
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),

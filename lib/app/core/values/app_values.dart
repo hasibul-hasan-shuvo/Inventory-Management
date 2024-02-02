@@ -45,7 +45,7 @@ abstract class AppValues {
 
   static const double elevation = 16;
   static const double smallElevation = 8;
-  static const double extraSmallElevation = 4;
+  static const double extraSmallElevation = 0.01;
   static const double largeElevation = 24;
 
   static const double circularImageDefaultSize = 90;
@@ -105,4 +105,5 @@ abstract class AppValues {
   static const double height_16 = 16;
   static const double height_60 = 60;
   static const double height_90 = 90;
+  static const double dividerWidth = 0.1;
 }
