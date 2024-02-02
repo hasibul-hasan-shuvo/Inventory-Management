@@ -110,7 +110,8 @@ class InventoryView extends BaseView<InventoryController> {
         },
       );
 
-  Widget _buildDialog(InventoryCardUIModel inventoryData, BuildContext context) {
+  Widget _buildDialog(
+      InventoryCardUIModel inventoryData, BuildContext context) {
     return AppDialog(
       title: appLocalization.editProduct,
       content: _buildContent(inventoryData, context),
@@ -119,7 +120,8 @@ class InventoryView extends BaseView<InventoryController> {
     );
   }
 
-  Widget _buildContent(InventoryCardUIModel inventoryData, BuildContext context) {
+  Widget _buildContent(
+      InventoryCardUIModel inventoryData, BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       _buildProductImageWithTitle(inventoryData),
       const SizedBox(
@@ -133,23 +135,33 @@ class InventoryView extends BaseView<InventoryController> {
     return Container(
       height: AppValues.height_90.h,
       decoration: BoxDecoration(
-        color: const Color(0xFFF9F8F4),
+        color: theme.colorScheme.background.withOpacity(AppValues.smallOpacity),
         borderRadius: BorderRadius.circular(AppValues.halfPadding.sp),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildMaxMinEditor(
-              inventoryData.maxTreshold ?? "", inventoryData.minTreshold ?? ""),
-          Container(
-            height: AppValues.height_90.h,
-            width: AppValues.dividerWidth.w,
-            color: theme.dividerColor,
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                _buildMaxMinEditor(
+                    inventoryData.maxTreshold ?? "", inventoryData.minTreshold ?? ""),
+                Container(
+                  height: AppValues.height_90.h,
+                  width: AppValues.dividerWidth.w,
+                  color: theme.dividerColor,
+                ),
+              ],
+            ),
           ),
-          _buildCurrentAndSuggestionEditor(
-              inventoryData.fixedOrderSuggestions ?? "",
-              inventoryData.currentStock ?? ""),
+          Expanded(
+            flex: 3,
+            child: _buildCurrentAndSuggestionEditor(
+                inventoryData.fixedOrderSuggestions ?? "",
+                inventoryData.currentStock ?? ""),
+          ),
         ],
       ),
     );
@@ -218,9 +230,19 @@ class InventoryView extends BaseView<InventoryController> {
         ),
         Expanded(
             flex: 3,
-            child: Text(
-              inventoryData.productName ?? "",
-              style: textTheme.titleMedium,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  inventoryData.productName ?? "",
+                  style: textTheme.titleMedium,
+                ),
+                Text(
+                   "#${inventoryData.productCode}",
+                  style: textTheme.bodyMedium,
+                ),
+              ],
             )),
       ],
     );

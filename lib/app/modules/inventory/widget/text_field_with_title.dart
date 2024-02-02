@@ -12,40 +12,43 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
 
   TextFieldWithTitle(
       {required this.title,
-        required this.initialValue,
-        required this.onChanged,
-        Key? key});
+      required this.initialValue,
+      required this.onChanged,
+      Key? key});
 
   @override
   Widget body(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(title),
-        const SizedBox(
-          width: 10,
-        ),
-        SizedBox(
-            width: AppValues.margin_40.w,
-            height: AppValues.margin_30.w,
-            child: TextFormField(
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              minLines: 1,
-              initialValue: initialValue,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
+    return Expanded(
+      flex: 1,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(title),
+          const SizedBox(
+            width: 10,
+          ),
+          SizedBox(
+              width: AppValues.margin_40.w,
+              height: AppValues.margin_30.w,
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                minLines: 1,
+                initialValue: initialValue,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: theme.colorScheme.surface,
+                  contentPadding: const EdgeInsets.all(4),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.all(4),
-              ),
-              onChanged: onChanged,
-            )),
-      ],
+                onChanged: onChanged,
+              ))
+        ],
+      ),
     );
   }
 }

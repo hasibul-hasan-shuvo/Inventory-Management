@@ -105,5 +105,6 @@ abstract class AppValues {
   static const double height_16 = 16;
   static const double height_60 = 60;
   static const double height_90 = 90;
-  static const double dividerWidth = 0.1;
+  static const double dividerWidth = 0.4;
+  static const double smallOpacity = 0.5;
 }
