@@ -1,29 +1,35 @@
+import 'package:get/get.dart';
+
 import '/app/core/values/app_values.dart';
 
 class PagingController<T> {
-  List<T> listItems = [];
   int pageNumber = AppValues.defaultPageNumber;
   bool isLoadingPage = false;
-  bool endOfList = false;
+
+  final RxBool _nextPageLoaderController = RxBool(false);
+  bool get isLoadingNextPage => _nextPageLoaderController.value;
+  void loadNextPage() => _nextPageLoaderController(true);
+  void nextPageLoadingCompleted() => _nextPageLoaderController(false);
+
+  final RxBool _lastPageController = RxBool(true);
+  bool get isLastPage => _lastPageController.value;
+  set isLastPage(bool isLast) => _lastPageController(isLast);
 
   initRefresh() {
-    listItems = [];
     pageNumber = AppValues.defaultPageNumber;
     isLoadingPage = false;
-    endOfList = false;
+    nextPageLoadingCompleted();
   }
 
   bool canLoadNextPage() {
-    return !isLoadingPage && !endOfList;
+    return !isLoadingPage && !isLastPage;
   }
 
-  appendPage(List<T> items) {
-    listItems.addAll(items);
+  nextPage() {
     pageNumber++;
   }
 
-  appendLastPage(List<T> items) {
-    listItems.addAll(items);
-    endOfList = true;
+  previousPage() {
+    pageNumber--;
   }
 }
