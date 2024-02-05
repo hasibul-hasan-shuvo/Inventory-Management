@@ -58,7 +58,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.suggestedOrder,
         title: appLocalization.homeMenuSuggestedOrder,
-        route: "",
+        route: Routes.SUGGESTED_ORDERS,
       ),
     );
     list.add(

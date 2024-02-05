@@ -8,14 +8,16 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
 import '../modules/inventory/views/inventory_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/other/bindings/other_binding.dart';
 import '../modules/other/views/other_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/login/bindings/login_binding.dart';
-import '../modules/login/views/login_view.dart';
+import '../modules/suggested_orders/bindings/suggested_orders_binding.dart';
+import '../modules/suggested_orders/views/suggested_orders_view.dart';
 
 part 'app_routes.dart';
 
@@ -57,13 +59,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.INVENTORY,
-      page: () =>  InventoryView(),
+      page: () => InventoryView(),
       binding: InventoryBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () =>  LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUGGESTED_ORDERS,
+      page: () => SuggestedOrdersView(),
+      binding: SuggestedOrdersBinding(),
     ),
   ];
 }
