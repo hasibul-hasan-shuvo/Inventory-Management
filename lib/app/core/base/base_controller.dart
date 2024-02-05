@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dental_inventory/app/core/base/paging_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -21,6 +22,8 @@ abstract class BaseController extends GetxController {
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
 
   final RefreshController refreshController = RefreshController();
+
+  final PagingController pagingController = PagingController();
 
   final logoutController = false.obs;
 
