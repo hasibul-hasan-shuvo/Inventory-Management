@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '/app/core/model/page_state.dart';
 import '/app/network/exceptions/api_exception.dart';
@@ -18,6 +19,8 @@ abstract class BaseController extends GetxController {
   final Logger logger = BuildConfig.instance.config.logger;
 
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
+
+  final RefreshController refreshController = RefreshController();
 
   final logoutController = false.obs;
 

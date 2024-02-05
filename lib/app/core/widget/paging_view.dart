@@ -1,66 +1,48 @@
+import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '/app/core/utils/debouncer.dart';
-import '/app/core/values/app_values.dart';
+typedef OnPagingViewAction = Function();
 
 ///ignore: must_be_immutable
-class PagingView extends StatelessWidget {
+class PagingView extends StatelessWidget with BaseWidgetMixin {
+  final RefreshController controller;
   final Widget child;
-  final Function() onLoadNextPage;
-  final Future<void> Function()? onRefresh;
-
-  ScrollController? scrollController;
-
-  late final _debouncer = Debouncer(milliseconds: 500);
+  final bool enablePullDown;
+  final bool enablePullUp;
+  final OnPagingViewAction? onLoading;
+  final OnPagingViewAction? onRefresh;
+  Axis? scrollDirection;
+  bool? reverse;
 
   PagingView({
     Key? key,
+    required this.controller,
     required this.child,
-    required this.onLoadNextPage,
+    this.enablePullDown = true,
+    this.enablePullUp = false,
     this.onRefresh,
-    this.scrollController,
-  }) : super(key: key) {
-    scrollController ??= ScrollController();
-  }
+    this.onLoading,
+    this.scrollDirection,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return NotificationListener(
-      onNotification: (ScrollNotification scrollInfo) {
-        if (scrollController != null) {
-          var triggerFetchMoreSize =
-              0.75 * scrollController!.position.maxScrollExtent;
-
-          if (scrollController!.position.pixels >= triggerFetchMoreSize &&
-              (scrollController!.position.userScrollDirection ==
-                  ScrollDirection.reverse)) {
-            _debouncer.run(() {
-              onLoadNextPage();
-            });
-          }
-        }
-
-        return true;
-      },
-      child: onRefresh == null
-          ? _getScrollableView()
-          : RefreshIndicator(
-              child: _getScrollableView(),
-              onRefresh: onRefresh!,
-            ),
+  Widget body(BuildContext context) {
+    return SmartRefresher(
+      controller: controller,
+      header: _header,
+      enablePullDown: enablePullDown,
+      enablePullUp: enablePullUp,
+      onRefresh: onRefresh,
+      onLoading: onLoading,
+      scrollDirection: scrollDirection,
+      reverse: reverse,
+      child: child,
     );
   }
 
-  _getScrollableView() {
-    return SingleChildScrollView(
-      controller: scrollController,
-      child: Column(
-        children: [
-          child,
-          const SizedBox(height: AppValues.listBottomEmptySpace),
-        ],
-      ),
-    );
-  }
+  Widget get _header => MaterialClassicHeader(
+        color: theme.primaryColor,
+        backgroundColor: theme.cardColor,
+      );
 }
