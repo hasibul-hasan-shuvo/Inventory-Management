@@ -24,26 +24,21 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return ElevatedContainer(
-      bgColor: theme.colorScheme.background,
-      child: Dismissible(
-        key: ValueKey(data.id),
-        direction: DismissDirection.startToEnd,
-        background: _getDismissibleBackground(),
-        onDismissed: _onDismissed,
-        child: ElevatedContainer(
-          child: Row(
-            children: [
-              _getImageView(),
-              SizedBox(width: AppValues.smallMargin.w),
-              _getItemDetails(),
-              _getEditButton(),
-            ],
-          ),
-        ).marginSymmetric(
-          vertical: AppValues.margin_6.h,
+    return Dismissible(
+      key: ValueKey(data.id),
+      direction: DismissDirection.startToEnd,
+      background: _getDismissibleBackground(),
+      confirmDismiss: _onDismissed,
+      child: ElevatedContainer(
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getEditButton(),
+          ],
         ),
-      ),
+      ).marginOnly(bottom: AppValues.margin_6.h),
     );
   }
 
@@ -106,14 +101,14 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           ),
         ],
       ),
-    ).marginSymmetric(
-      vertical: AppValues.margin_6.h,
-    );
+    ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
   void _onTapEdit() {}
 
-  void _onDismissed(DismissDirection direction) {
+  Future<bool> _onDismissed(DismissDirection direction) {
     _controller.addToCart(data);
+
+    return Future.value(true);
   }
 }

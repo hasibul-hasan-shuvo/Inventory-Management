@@ -34,10 +34,12 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
     return ListView.builder(
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
+      padding: EdgeInsets.symmetric(
+        vertical: AppValues.padding.h,
+        horizontal: AppValues.margin.w,
+      ),
       itemCount: controller.suggestedOrders.length,
       itemBuilder: _getItemBuilder,
-    ).marginSymmetric(
-      horizontal: AppValues.margin.w,
     );
   }
 
