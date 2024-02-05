@@ -107,4 +107,7 @@ abstract class AppValues {
   static const double height_90 = 90;
   static const double dividerWidth = 0.4;
   static const double smallOpacity = 0.5;
+
+  static const double itemImageHeight = 100;
+  static const double itemImageWidth = 70;
 }

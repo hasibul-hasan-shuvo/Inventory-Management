@@ -1,6 +1,7 @@
 abstract class AppIcons {
   static const String home = "ic_home.svg";
   static const String contactUs = "ic_contact_us.svg";
+  static const String edit = "ic_edit.svg";
   static const String inventory = "ic_inventory.svg";
   static const String inventoryCount = "ic_inventory_count.svg";
   static const String notDelivered = "ic_not_delivered.svg";

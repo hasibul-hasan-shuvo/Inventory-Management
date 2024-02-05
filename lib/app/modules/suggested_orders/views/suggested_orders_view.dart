@@ -1,24 +1,58 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/core/widget/paging_view.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/widgets/item_suggested_order_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../controllers/suggested_orders_controller.dart';
 
 // ignore: must_be_immutable
 class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>
-      CustomAppBar(appBarTitleText: appLocalization.homeMenuSuggestedOrder);
+  PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
+        appBarTitleText: appLocalization.homeMenuSuggestedOrder,
+        actions: _getActions,
+      );
 
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text(
-          'SuggestedOrdersView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+    return Obx(
+      () => PagingView(
+        controller: controller.refreshController,
+        enablePullDown: false,
+        enablePullUp: controller.pagingController.canLoadNextPage(),
+        onLoading: controller.onLoading,
+        child: _getSuggestedOrdersListView(),
       ),
     );
+  }
+
+  Widget _getSuggestedOrdersListView() {
+    return ListView.builder(
+      physics: const ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: controller.suggestedOrders.length,
+      itemBuilder: _getItemBuilder,
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+    );
+  }
+
+  Widget _getItemBuilder(BuildContext context, int index) {
+    return ItemSuggestedOrderView(data: controller.suggestedOrders[index]);
+  }
+
+  List<Widget> get _getActions {
+    return [
+      IconButton(
+        onPressed: controller.addToCartAll,
+        icon: const Icon(
+          Icons.done,
+        ),
+      )
+    ];
   }
 }
