@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 // ignore: must_be_immutable
 class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
   AppSecondaryButton(
@@ -17,7 +18,10 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
           EdgeInsets.symmetric(
-            vertical: AppValues.smallPadding.h,
+            vertical: icon != null
+                ? AppValues.halfPadding.h
+                : AppValues.smallPadding.h,
+            horizontal: AppValues.padding_4.w,
           ),
         ),
         shape: MaterialStateProperty.all(
@@ -34,7 +38,10 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
         mainAxisSize: MainAxisSize.min,
         children: [
           icon ?? const SizedBox(),
-          Text(title),
+          Text(
+            title,
+            style: textTheme.bodyMedium,
+          ),
         ],
       ),
     );

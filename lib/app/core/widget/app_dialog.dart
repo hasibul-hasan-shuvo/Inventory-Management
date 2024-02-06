@@ -10,11 +10,11 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final String title;
   final String? message;
   final Widget? content;
-  final List<Widget>? actions;
   final String? negativeButtonText;
   final String? positiveButtonText;
   final VoidCallback? onNegativeButtonTap;
   final VoidCallback? onPositiveButtonTap;
+  final IconData? negativeButtonIcon;
 
   AppDialog({
     Key? key,
@@ -22,21 +22,21 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     this.message,
     this.negativeButtonText,
     this.content,
-    this.actions,
     this.positiveButtonText,
     this.onNegativeButtonTap,
     this.onPositiveButtonTap,
+    this.negativeButtonIcon,
   }) : super(key: key);
 
   @override
   Widget body(BuildContext context) {
     return AlertDialog(
       surfaceTintColor: Colors.transparent,
-      contentPadding: EdgeInsets.all(AppValues.smallPadding.sp),
+      contentPadding: EdgeInsets.all(AppValues.padding.sp),
       titlePadding: EdgeInsets.zero,
       title: _getTitle(),
       content: content ?? _getMessage(),
-      actions: actions ?? _getActions(context),
+      actions: _getActions(context),
       actionsPadding: EdgeInsets.symmetric(
         vertical: AppValues.smallPadding.h,
       ),
@@ -45,7 +45,6 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getTitle() {
     return Container(
-      height: AppValues.height_60.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: theme.primaryColor,
@@ -54,14 +53,17 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
           topRight: Radius.circular(AppValues.margin_6),
         ),
       ),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppValues.halfPadding.w,
+        vertical: AppValues.padding.h,
+      ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             title,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            style: textTheme.bodyLarge,
           ),
         ),
       ),
@@ -77,41 +79,38 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
 
   List<Widget> _getActions(BuildContext context) => [
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: negativeButtonText != null
-              ? Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: AppSecondaryButton(
-                          onPress: onNegativeButtonTap,
-                          title: negativeButtonText ?? "",
-                          icon: const Icon(Icons.delete)),
-                    ),
-                    SizedBox(
-                      width: AppValues.margin_10.w,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: AppPrimaryButton(
-                          onPressed: () {
-                            onPositiveButtonTap?.call();
-                            Navigator.pop(context);
-                          },
-                          title: positiveButtonText ?? appLocalization.ok,
-                          textStyle: textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.surface,
-                          )),
-                    )
-                  ],
-                )
-              : TextButton(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppValues.padding.w,
+            vertical: AppValues.smallPadding.h,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 1,
+                child: negativeButtonText != null
+                    ? AppSecondaryButton(
+                        onPress: onNegativeButtonTap,
+                        title: negativeButtonText ?? "",
+                        icon: negativeButtonIcon != null
+                            ? Icon(negativeButtonIcon)
+                            : const SizedBox.shrink(),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+              SizedBox(width: AppValues.margin_10.w),
+              Expanded(
+                flex: 1,
+                child: AppPrimaryButton(
                   onPressed: () {
                     onPositiveButtonTap?.call();
                     Navigator.pop(context);
                   },
-                  child: Text(positiveButtonText ?? appLocalization.ok)),
+                  title: positiveButtonText ?? appLocalization.ok,
+                ),
+              )
+            ],
+          ),
         ),
       ];
 }
