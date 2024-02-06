@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
@@ -30,6 +31,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
       background: _getDismissibleBackground(),
       confirmDismiss: _onDismissed,
       child: ElevatedContainer(
+        height: AppValues.itemImageHeight.h,
         child: Row(
           children: [
             _getImageView(),
@@ -55,8 +57,11 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _getInventoryName(),
+          _getIdAndCountView(),
+          _getMaxMinAndFixedSuggestionView(),
         ],
       ),
     );
@@ -68,6 +73,65 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
       style: textTheme.bodyMedium,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _getIdAndCountView() {
+    return Row(
+      children: [
+        _getIdView(),
+        SizedBox(width: AppValues.smallMargin.w),
+        _getLabelAndCount(
+          appLocalization.labelCount,
+          data.count.toString(),
+        ),
+      ],
+    ).marginOnly(right: AppValues.margin.w);
+  }
+
+  Widget _getMaxMinAndFixedSuggestionView() {
+    return Row(
+      children: [
+        _getLabelAndCount(
+          appLocalization.labelMinMax,
+          "${data.min}/${data.max}",
+        ),
+        SizedBox(width: AppValues.smallMargin.w),
+        _getLabelAndCount(
+          appLocalization.labelSuggestion,
+          data.suggestion != null ? data.suggestion.toString() : null,
+        ),
+      ],
+    ).marginOnly(right: AppValues.margin.w);
+  }
+
+  Widget _getIdView() {
+    return Expanded(
+      child: Text(
+        "#${data.id}",
+        style: textTheme.bodySmall,
+      ),
+    );
+  }
+
+  Widget _getLabelAndCount(String label, [String? count]) {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              "$label:",
+              style: textTheme.bodySmall,
+            ),
+          ),
+          if (count.isNotNullOrEmpty)
+            Text(
+              "$count",
+              style: textTheme.bodySmall,
+              textAlign: TextAlign.right,
+            ),
+        ],
+      ),
     );
   }
 
