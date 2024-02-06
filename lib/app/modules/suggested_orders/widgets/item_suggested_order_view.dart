@@ -192,6 +192,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
             data.updateSuggestion(suggestion);
+            _controller.rebuildList();
           },
         );
       },

@@ -40,4 +40,8 @@ class SuggestedOrdersController extends BaseController {
   void addToCartAll() {
     logger.d("Adding all items to shopping cart");
   }
+
+  void rebuildList() {
+    _suggestedOrdersController.refresh();
+  }
 }
