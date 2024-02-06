@@ -67,6 +67,7 @@ class InventoryView extends BaseView<InventoryController> {
     return AppDialog(
       title: appLocalization.editProduct,
       content: DialogContent(inventoryData: inventoryData),
+      negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
     );

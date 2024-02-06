@@ -15,9 +15,8 @@ import '../controllers/login_controller.dart';
 // ignore: must_be_immutable
 class LoginView extends BaseView<LoginController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => MainAppBar(
-        isLogOutVisible: false,
-      );
+  PreferredSizeWidget? appBar(BuildContext context) =>
+      MainAppBar(isLogOutVisible: false);
   final _formKey = GlobalKey<FormState>();
   final _loginController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -100,10 +99,11 @@ class LoginView extends BaseView<LoginController> {
 
   Widget _buildSignInButton() {
     return AppPrimaryButton(
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {}
-        },
-        title: appLocalization.logIn);
+      title: appLocalization.logIn,
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {}
+      },
+    );
   }
 
   Widget _buildEmailContact() {
