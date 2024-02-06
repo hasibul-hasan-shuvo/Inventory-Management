@@ -7,11 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // ignore: must_be_immutable
-class InventoryCard extends StatelessWidget with BaseWidgetMixin {
+class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   final InventoryCardUIModel inventoryData;
   final VoidCallback onTap;
 
-  InventoryCard({required this.inventoryData, required this.onTap});
+  ItemInventoryCard({required this.inventoryData, required this.onTap});
 
   @override
   Widget body(BuildContext context) {
