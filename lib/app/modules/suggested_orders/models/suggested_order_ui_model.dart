@@ -4,7 +4,8 @@ class SuggestedOrderUiModel {
   late final String imageUrl;
   late final int min;
   late final int max;
-  int? suggestion;
+  late final int? fixedSuggestion;
+  late int suggestion;
   late final int count;
   late final num price;
 
@@ -17,9 +18,10 @@ class SuggestedOrderUiModel {
     max = 100;
     count = 5;
     price = 100;
+    suggestion = 95;
   }
 
-  void updateFixedSuggestedOrder(int newFixedSuggestedOrder) {
-    suggestion = newFixedSuggestedOrder;
+  void updateSuggestion(int newSuggestion) {
+    suggestion = newSuggestion;
   }
 }

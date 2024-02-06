@@ -72,7 +72,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   Widget _getInventoryName() {
     return Text(
       data.name,
-      style: textTheme.bodyMedium,
+      style: textTheme.titleMedium,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
@@ -101,7 +101,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
           appLocalization.labelSuggestion,
-          data.suggestion != null ? data.suggestion.toString() : null,
+          data.suggestion.toString(),
         ),
       ],
     ).marginOnly(right: AppValues.margin.w);
@@ -171,13 +171,28 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
+    int suggestion = data.suggestion;
+
     showDialog(
       context: context,
       builder: (_) {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
-          content: InventoryOrderEditDialogContentView(),
+          content: InventoryOrderEditDialogContentView(
+            id: data.id.toString(),
+            name: data.name,
+            imageUrl: data.imageUrl,
+            count: data.count,
+            suggestion: data.suggestion,
+            price: data.price,
+            onSuggestionValueChange: (int value) {
+              suggestion = value;
+            },
+          ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
+          onPositiveButtonTap: () {
+            data.updateSuggestion(suggestion);
+          },
         );
       },
     );

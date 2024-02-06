@@ -8,6 +8,8 @@ abstract class AppIcons {
   static const String orderDelivery = "ic_order_delivery.svg";
   static const String qrCodeScanner = "ic_qr_code_scanner.svg";
   static const String returnInventory = "ic_return.svg";
+  static const String roundedMinus = "ic_rounded_minus.svg";
+  static const String roundedPlus = "ic_rounded_plus.svg";
   static const String search = "ic_search.svg";
   static const String shoppingCart = "ic_shopping_cart.svg";
   static const String suggestedOrder = "ic_suggested_order.svg";
