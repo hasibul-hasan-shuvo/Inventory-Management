@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_secondary_button.dart';
@@ -63,7 +64,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             title,
-            style: textTheme.bodyLarge,
+            style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
           ),
         ),
       ),
