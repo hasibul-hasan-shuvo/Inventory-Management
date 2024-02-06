@@ -3,12 +3,14 @@ import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/controllers/suggested_orders_controller.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -168,7 +170,18 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
-  void _onTapEdit(BuildContext context) {}
+  void _onTapEdit(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleEditOrderDialog,
+          content: InventoryOrderEditDialogContentView(),
+          positiveButtonText: appLocalization.buttonTextSaveChanges,
+        );
+      },
+    );
+  }
 
   Future<bool> _onDismissed(DismissDirection direction) {
     _controller.addToCart(data);
