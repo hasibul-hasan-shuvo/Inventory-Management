@@ -37,7 +37,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
             _getImageView(),
             SizedBox(width: AppValues.smallMargin.w),
             _getItemDetails(),
-            _getEditButton(),
+            _getEditButton(context),
           ],
         ),
       ).marginOnly(bottom: AppValues.margin_6.h),
@@ -135,9 +135,9 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _getEditButton() {
+  Widget _getEditButton(BuildContext context) {
     return Ripple(
-      onTap: _onTapEdit,
+      onTap: () => _onTapEdit(context),
       child: AssetImageView(
         fileName: AppIcons.edit,
         height: AppValues.iconDefaultSize.h,
@@ -168,7 +168,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
-  void _onTapEdit() {}
+  void _onTapEdit(BuildContext context) {}
 
   Future<bool> _onDismissed(DismissDirection direction) {
     _controller.addToCart(data);
