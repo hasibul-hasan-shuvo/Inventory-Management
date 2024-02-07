@@ -1,10 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_images.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../../../core/values/app_icons.dart';
+import '../../../core/widget/asset_image_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
@@ -46,9 +46,10 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         flex: 1,
         child: IconButton(
           onPressed: onTap,
-          icon: SvgPicture.asset(
-            AppImages.ic_edit,
-            color: theme.colorScheme.onSurface,
+          icon: AssetImageView(
+            fileName: AppIcons.edit,
+            height: AppValues.iconDefaultSize.h,
+            width: AppValues.iconDefaultSize.w,
           ),
         ));
   }

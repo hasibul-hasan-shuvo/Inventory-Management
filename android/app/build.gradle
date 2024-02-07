@@ -68,8 +68,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "no.inventorymanagement.android"
-        minSdk 22
-        minSdkVersion 22
+        minSdk 21
+        minSdkVersion 21
         targetSdkVersion 33
         compileSdk 33
         versionCode flutterVersionCode.toInteger()

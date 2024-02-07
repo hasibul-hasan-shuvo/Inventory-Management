@@ -14,13 +14,15 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      _buildProductImageWithTitle(inventoryData),
-      const SizedBox(
-        height: 10,
-      ),
-      _buildQuantityStatus(inventoryData),
-    ]);
+    return SingleChildScrollView(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        _buildProductImageWithTitle(inventoryData),
+        const SizedBox(
+          height: 10,
+        ),
+        _buildQuantityStatus(inventoryData),
+      ]),
+    );
   }
 
   Row _buildProductImageWithTitle(InventoryCardUIModel inventoryData) {
@@ -56,7 +58,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildQuantityStatus(InventoryCardUIModel inventoryData) {
     return Container(
-      height: AppValues.height_90.h,
+      height: AppValues.space_110,
       decoration: BoxDecoration(
         color: theme.colorScheme.background.withOpacity(AppValues.smallOpacity),
         borderRadius: BorderRadius.circular(AppValues.halfPadding.sp),
@@ -66,13 +68,13 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Row(
               children: [
                 _buildMaxMinEditor(inventoryData.maxTreshold ?? "",
                     inventoryData.minTreshold ?? ""),
                 Container(
-                  height: AppValues.height_90.h,
+                  height:AppValues.space_110,
                   width: AppValues.dividerWidth.w,
                   color: theme.dividerColor,
                 ),
@@ -80,7 +82,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: _buildCurrentAndSuggestionEditor(
                 inventoryData.fixedOrderSuggestions ?? "",
                 inventoryData.currentStock ?? ""),

@@ -15,4 +15,5 @@ abstract class AppIcons {
   static const String suggestedOrder = "ic_suggested_order.svg";
   static const String logOut = "ic_log_out.svg";
   static const String aboutUs = "ic_about_us.svg";
+  static const String close = "ic_close.svg";
 }

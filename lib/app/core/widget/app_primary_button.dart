@@ -34,10 +34,12 @@ class AppPrimaryButton extends StatelessWidget with BaseWidgetMixin {
             child: ElevatedButton(
               style: _style,
               onPressed: isEnabled ?? true ? onPressed : null,
-              child: Text(
-                title,
-                style: textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.surface),
+              child: FittedBox(
+                child: Text(
+                  title,
+                  style: textTheme.bodyMedium
+                      ?.copyWith(color: theme.colorScheme.surface),
+                ),
               ),
             ),
           );

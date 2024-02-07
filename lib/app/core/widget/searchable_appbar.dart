@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../base/base_widget_mixin.dart';
 import '../values/app_colors.dart';
+import '../values/app_icons.dart';
 import '../values/app_images.dart';
+import '../values/app_values.dart';
+import 'asset_image_view.dart';
 
 // ignore: must_be_immutable
 class SearchAbleAppBar extends StatelessWidget
@@ -39,8 +42,10 @@ class SearchAbleAppBar extends StatelessWidget
         onPressed: () {
           onChangeSearchMode();
         },
-        icon: SvgPicture.asset(
-          AppImages.closeInInventory,
+        icon: AssetImageView(
+          fileName: AppIcons.close,
+          height: AppValues.iconDefaultSize.h,
+          width: AppValues.iconDefaultSize.w,
         ));
   }
 
