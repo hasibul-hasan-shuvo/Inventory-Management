@@ -1,8 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
-import 'package:dental_inventory/app/modules/inventory/widget/dialog_content.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,23 +51,5 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildInventoryCard(
           InventoryCardUIModel inventoryData, BuildContext context) =>
-      ItemInventoryCard(
-        inventoryData: inventoryData,
-        onTap: () {
-          showDialog(
-              context: context,
-              builder: (context) => _buildDialog(inventoryData, context));
-        },
-      );
-
-  Widget _buildDialog(
-      InventoryCardUIModel inventoryData, BuildContext context) {
-    return AppDialog(
-      title: appLocalization.editProduct,
-      content: DialogContent(inventoryData: inventoryData),
-      negativeButtonIcon: Icons.delete_outline,
-      negativeButtonText: appLocalization.deleteProduct,
-      positiveButtonText: appLocalization.updateProduct,
-    );
-  }
+      ItemInventoryCard(inventoryData: inventoryData);
 }

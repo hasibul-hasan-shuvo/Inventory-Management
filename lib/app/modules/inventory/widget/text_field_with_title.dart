@@ -27,7 +27,7 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
         children: [
           Text(title),
           const SizedBox(
-            width: 10,
+            width: AppValues.margin_10,
           ),
           SizedBox(
               width: AppValues.margin_40.w,

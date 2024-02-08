@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _buildProductImageWithTitle(inventoryData),
         const SizedBox(
-          height: 10,
+          height: AppValues.margin_10,
         ),
         _buildQuantityStatus(inventoryData),
       ]),
@@ -32,9 +33,10 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-            flex: 1, child: Image.network(inventoryData.productImageUrl ?? "")),
+            flex: 1,
+            child: NetworkImageView(imageUrl: inventoryData.productImageUrl)),
         const SizedBox(
-          width: 10,
+          width: AppValues.margin_10,
         ),
         Expanded(
             flex: 3,
@@ -43,7 +45,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  inventoryData.productName ?? "",
+                  inventoryData.productName,
                   style: textTheme.titleMedium,
                 ),
                 Text(
@@ -71,10 +73,10 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
             flex: 3,
             child: Row(
               children: [
-                _buildMaxMinEditor(inventoryData.maxTreshold ?? "",
-                    inventoryData.minTreshold ?? ""),
+                _buildMaxMinEditor(
+                    inventoryData.maxTreshold, inventoryData.minTreshold),
                 Container(
-                  height:AppValues.space_110,
+                  height: AppValues.space_110,
                   width: AppValues.dividerWidth.w,
                   color: theme.dividerColor,
                 ),
@@ -84,8 +86,8 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
           Expanded(
             flex: 5,
             child: _buildCurrentAndSuggestionEditor(
-                inventoryData.fixedOrderSuggestions ?? "",
-                inventoryData.currentStock ?? ""),
+                inventoryData.fixedOrderSuggestions,
+                inventoryData.currentStock),
           ),
         ],
       ),
@@ -106,7 +108,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
               initialValue: fixedProposal,
               onChanged: (value) {}),
           const SizedBox(
-            height: 10,
+            height: AppValues.margin_10,
           ),
           TextFieldWithTitle(
               title: appLocalization.inventory,
@@ -119,7 +121,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
 
   Padding _buildMaxMinEditor(String max, String min) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(AppValues.halfPadding.sp),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +132,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
             onChanged: (value) {},
           ),
           const SizedBox(
-            height: 10,
+            height: AppValues.margin_10,
           ),
           TextFieldWithTitle(
             title: appLocalization.max,
