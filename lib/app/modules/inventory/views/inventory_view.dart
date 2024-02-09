@@ -12,17 +12,23 @@ class InventoryView extends BaseView<InventoryController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return PreferredSize(
-        preferredSize: AppBar().preferredSize,
-        child: Obx(() => _buildAppBar(context)));
+      preferredSize: AppBar().preferredSize,
+      child: Obx(
+        () => _buildAppBar(context),
+      ),
+    );
   }
 
   @override
   Widget body(BuildContext context) {
-    return Obx(() => Padding(
+    return Obx(
+      () => Padding(
         padding: const EdgeInsets.all(8.0),
         child: controller.filteredInventoryList.isNotEmpty
             ? _buildListOfProduct()
-            : _buildNoDataFoundWidget()));
+            : _buildNoDataFoundWidget(),
+      ),
+    );
   }
 
   Widget _buildAppBar(BuildContext context) {

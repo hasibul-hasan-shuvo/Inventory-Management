@@ -31,8 +31,9 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
             _buildEditButton(
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (context) => _buildDialog(inventoryData, context));
+                  context: context,
+                  builder: (context) => _buildDialog(inventoryData, context),
+                );
               },
             )
           ],
