@@ -1,4 +1,5 @@
 class InventoryCardUIModel {
+  final String id;
   final String productName;
   final String productImageUrl;
   final String maxTreshold;
@@ -15,6 +16,7 @@ class InventoryCardUIModel {
   final String productLocation;
 
   InventoryCardUIModel({
+    this.id = "",
     this.productName = "",
     this.productImageUrl = "",
     this.maxTreshold = "",

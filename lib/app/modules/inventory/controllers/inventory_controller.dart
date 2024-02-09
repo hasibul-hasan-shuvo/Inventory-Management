@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
   final RxBool isSearchMode = false.obs;
-  final RxList<InventoryCardUIModel> inventoryList = <InventoryCardUIModel>[].obs;
+  final RxList<InventoryCardUIModel> inventoryList =
+      <InventoryCardUIModel>[].obs;
   final RxList<InventoryCardUIModel> filteredInventoryList =
       <InventoryCardUIModel>[].obs;
   final RxString searchQuery = ''.obs;
@@ -32,10 +33,7 @@ class InventoryController extends BaseController {
       filteredInventoryList.clear();
       filteredInventoryList.addAll(inventoryList
           .where((element) =>
-              element.productName
-                  ?.toLowerCase()
-                  .contains(query.toLowerCase()) ??
-              false)
+              element.productName.toLowerCase().contains(query.toLowerCase()))
           .toList());
     }
   }
@@ -44,6 +42,7 @@ class InventoryController extends BaseController {
     for (int i = 0; i < AppValues.height_60; i++) {
       inventoryList.add(
         InventoryCardUIModel(
+          id: "123445",
           productName: 'Protective head bio 4$i pcs',
           productImageUrl:
               'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',

@@ -1,5 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product_top_view.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
@@ -16,45 +16,24 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _buildProductImageWithTitle(inventoryData),
-        const SizedBox(
-          height: AppValues.margin_10,
-        ),
-        _buildQuantityStatus(inventoryData),
-      ]),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildProductImageWithTitle(inventoryData),
+          const SizedBox(
+            height: AppValues.margin_10,
+          ),
+          _buildQuantityStatus(inventoryData),
+        ],
+      ),
     );
   }
 
-  Row _buildProductImageWithTitle(InventoryCardUIModel inventoryData) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-            flex: 1,
-            child: NetworkImageView(imageUrl: inventoryData.productImageUrl)),
-        const SizedBox(
-          width: AppValues.margin_10,
-        ),
-        Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  inventoryData.productName,
-                  style: textTheme.titleMedium,
-                ),
-                Text(
-                  "#${inventoryData.productCode}",
-                  style: textTheme.bodyMedium,
-                ),
-              ],
-            )),
-      ],
+  Widget _buildProductImageWithTitle(InventoryCardUIModel inventoryData) {
+    return ProductTopView(
+      id: inventoryData.id,
+      name: inventoryData.productName,
+      imageUrl: inventoryData.productImageUrl,
     );
   }
 
@@ -104,16 +83,16 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFieldWithTitle(
-              title: appLocalization.fixedProposal,
-              initialValue: fixedProposal,
-              onChanged: (value) {}),
-          const SizedBox(
-            height: AppValues.margin_10,
+            title: appLocalization.fixedProposal,
+            initialValue: fixedProposal,
+            onChanged: (value) {},
           ),
+          SizedBox(height: AppValues.margin_10.h),
           TextFieldWithTitle(
-              title: appLocalization.inventory,
-              initialValue: inventory,
-              onChanged: (value) {}),
+            title: appLocalization.inventory,
+            initialValue: inventory,
+            onChanged: (value) {},
+          ),
         ],
       ),
     );
@@ -131,9 +110,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
             initialValue: max,
             onChanged: (value) {},
           ),
-          const SizedBox(
-            height: AppValues.margin_10,
-          ),
+          SizedBox(height: AppValues.margin_10.h),
           TextFieldWithTitle(
             title: appLocalization.max,
             initialValue: min,

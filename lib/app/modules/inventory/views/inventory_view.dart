@@ -35,6 +35,7 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildListOfProduct() {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: controller.filteredInventoryList.length,
       itemBuilder: (context, index) {
         return _buildInventoryCard(
@@ -45,7 +46,10 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildNoDataFoundWidget() {
     return Center(
-      child: Text(appLocalization.noDataFound),
+      child: Text(
+        appLocalization.noDataFound,
+        style: textTheme.labelLarge,
+      ),
     );
   }
 

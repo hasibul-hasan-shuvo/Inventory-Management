@@ -25,18 +25,16 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         child: Row(
           children: [
             _buildProductImage(),
-            SizedBox(
-              width: AppValues.margin_10.w,
-            ),
+            SizedBox(width: AppValues.margin_10.w),
             _buildQuantityRow(),
-            SizedBox(
-              width: AppValues.margin_10.w,
-            ),
-            _buildEditButton(onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => _buildDialog(inventoryData, context));
-            })
+            SizedBox(width: AppValues.margin_10.w),
+            _buildEditButton(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => _buildDialog(inventoryData, context));
+              },
+            )
           ],
         ),
       ),
@@ -54,59 +52,52 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Expanded _buildProductImage() {
-    return Expanded(
-        flex: 2,
-        child: NetworkImageView(imageUrl: inventoryData.productImageUrl));
+  Widget _buildProductImage() {
+    return NetworkImageView(
+      imageUrl: inventoryData.productImageUrl,
+      height: AppValues.itemImageHeight.h,
+      width: AppValues.itemImageWidth.w,
+    );
   }
 
   Widget _buildEditButton({required VoidCallback onTap}) {
-    return Expanded(
-        flex: 1,
-        child: IconButton(
-          onPressed: onTap,
-          icon: AssetImageView(
-            fileName: AppIcons.edit,
-            height: AppValues.iconDefaultSize.h,
-            width: AppValues.iconDefaultSize.w,
-          ),
-        ));
+    return IconButton(
+      onPressed: onTap,
+      icon: AssetImageView(
+        fileName: AppIcons.edit,
+        height: AppValues.iconDefaultSize.h,
+        width: AppValues.iconDefaultSize.w,
+      ),
+    );
   }
 
   Widget _buildQuantityRow() {
     return Expanded(
-        flex: 6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              inventoryData.productName,
-              style: textTheme.titleMedium,
-            ),
-            SizedBox(height: AppValues.margin_10.h),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                      "${appLocalization.available}: ${inventoryData.currentStock}"),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            inventoryData.productName,
+            style: textTheme.titleMedium,
+          ),
+          SizedBox(height: AppValues.margin_10.h),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                    "${appLocalization.available}: ${inventoryData.currentStock}"),
+              ),
+              SizedBox(width: AppValues.margin_10.w),
+              Expanded(
+                child: Text(
+                  "${appLocalization.max}: ${inventoryData.maxTreshold} ${appLocalization.min}: ${inventoryData.minTreshold}",
+                  style: textTheme.bodySmall,
                 ),
-                SizedBox(
-                  width: AppValues.margin_10.w,
-                ),
-                Expanded(
-                  child: Text(
-                    "${appLocalization.max}: ${inventoryData.maxTreshold} ${appLocalization.min}: ${inventoryData.minTreshold}",
-                    style: textTheme.bodySmall,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ));
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
