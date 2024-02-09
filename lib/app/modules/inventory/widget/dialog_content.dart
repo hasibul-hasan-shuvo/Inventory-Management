@@ -19,17 +19,17 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildProductImageWithTitle(inventoryData),
+          _buildProductTopView(),
           const SizedBox(
             height: AppValues.margin_10,
           ),
-          _buildQuantityStatus(inventoryData),
+          _buildQuantityStatus(),
         ],
       ),
     );
   }
 
-  Widget _buildProductImageWithTitle(InventoryCardUIModel inventoryData) {
+  Widget _buildProductTopView() {
     return ProductTopView(
       id: inventoryData.id,
       name: inventoryData.productName,
@@ -37,7 +37,7 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _buildQuantityStatus(InventoryCardUIModel inventoryData) {
+  Widget _buildQuantityStatus() {
     return Container(
       height: AppValues.space_110,
       decoration: BoxDecoration(
