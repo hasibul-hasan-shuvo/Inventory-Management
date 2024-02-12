@@ -12,6 +12,7 @@ abstract class AppValues {
   static const double padding_4 = 4;
   static const double padding_2 = 2;
   static const double padding_3 = 3;
+  static const double padding_18 = 18;
   static const double padding_20 = 20;
   static const double buttonVerticalPadding = 12;
 

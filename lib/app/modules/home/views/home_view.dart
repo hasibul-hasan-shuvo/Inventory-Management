@@ -22,7 +22,7 @@ class HomeView extends BaseView<HomeController> {
         children: [
           SizedBox(height: AppValues.margin.h),
           _getMenuGridView(),
-          SizedBox(height: AppValues.margin.h),
+          SizedBox(height: AppValues.smallMargin.h),
           _getItemRetrievalOptionView(),
           SizedBox(height: AppValues.margin.h),
         ],
@@ -37,8 +37,8 @@ class HomeView extends BaseView<HomeController> {
       () => AlignedGridView.count(
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
-        mainAxisSpacing: AppValues.margin.h,
-        crossAxisSpacing: AppValues.margin.w,
+        mainAxisSpacing: AppValues.smallMargin.h,
+        crossAxisSpacing: AppValues.smallMargin.w,
         itemCount: controller.menuList.length,
         shrinkWrap: true,
         itemBuilder: _itemBuilder,
