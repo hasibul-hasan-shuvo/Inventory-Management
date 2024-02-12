@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
@@ -23,7 +24,7 @@ class InventoryView extends BaseView<InventoryController> {
   Widget body(BuildContext context) {
     return Obx(
       () => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(AppValues.halfPadding),
         child: controller.filteredInventoryList.isNotEmpty
             ? _buildListOfProduct()
             : _buildNoDataFoundWidget(),
@@ -45,7 +46,7 @@ class InventoryView extends BaseView<InventoryController> {
       itemCount: controller.filteredInventoryList.length,
       itemBuilder: (context, index) {
         return _buildInventoryCard(
-            controller.filteredInventoryList[index], context);
+            controller.filteredInventoryList[index]);
       },
     );
   }
@@ -60,6 +61,6 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildInventoryCard(
-          InventoryCardUIModel inventoryData, BuildContext context) =>
+          InventoryCardUIModel inventoryData) =>
       ItemInventoryCard(inventoryData: inventoryData);
 }
