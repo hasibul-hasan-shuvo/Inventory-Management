@@ -32,7 +32,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => _buildDialog(inventoryData, context),
+                  builder: (context) => _buildDialog(context),
                 );
               },
             )
@@ -42,8 +42,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _buildDialog(
-      InventoryCardUIModel inventoryData, BuildContext context) {
+  Widget _buildDialog(BuildContext context) {
     return AppDialog(
       title: appLocalization.editProduct,
       content: DialogContent(inventoryData: inventoryData),
