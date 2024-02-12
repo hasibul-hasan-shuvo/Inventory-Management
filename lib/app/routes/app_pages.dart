@@ -76,7 +76,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DELIVERY,
-      page: () => const DeliveryView(),
+      page: () =>  DeliveryView(),
       binding: DeliveryBinding(),
     ),
   ];
