@@ -53,6 +53,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context) => AppDialog(
         title: appLocalization.logOut,
         message: appLocalization.logOutMessage,
+        isCancelable: false,
         negativeButtonText: appLocalization.no,
         positiveButtonText: appLocalization.yes,
         onPositiveButtonTap: () {},
