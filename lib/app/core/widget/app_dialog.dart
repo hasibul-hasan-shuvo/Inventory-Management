@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class AppDialog extends StatelessWidget with BaseWidgetMixin {
@@ -16,6 +17,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final VoidCallback? onNegativeButtonTap;
   final VoidCallback? onPositiveButtonTap;
   final IconData? negativeButtonIcon;
+  final bool isCancelable;
 
   AppDialog({
     Key? key,
@@ -27,6 +29,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     this.onNegativeButtonTap,
     this.onPositiveButtonTap,
     this.negativeButtonIcon,
+    this.isCancelable = true,
   }) : super(key: key);
 
   @override
@@ -55,20 +58,34 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
         ),
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: AppValues.halfPadding.w,
-        vertical: AppValues.padding.h,
+        vertical: isCancelable ? AppValues.padding_zero.h : AppValues.padding.h,
       ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(
-            title,
-            style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
+            ),
           ),
-        ),
+          _getCancelButton(),
+        ],
+      ).paddingOnly(
+        left: AppValues.padding.w,
       ),
     );
+  }
+
+  Widget _getCancelButton() {
+    return isCancelable
+        ? IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Icons.clear,
+              color: AppColors.colorWhite,
+            ),
+          )
+        : const SizedBox.shrink();
   }
 
   Widget _getMessage() {
