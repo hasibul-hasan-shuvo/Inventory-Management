@@ -13,6 +13,7 @@ abstract class Routes {
   static const INVENTORY = _Paths.INVENTORY;
   static const LOGIN = _Paths.LOGIN;
   static const SUGGESTED_ORDERS = _Paths.SUGGESTED_ORDERS;
+  static const DELIVERY = _Paths.DELIVERY;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const INVENTORY = '/inventory';
   static const LOGIN = '/login';
   static const SUGGESTED_ORDERS = '/suggested-orders';
+  static const DELIVERY = '/delivery';
 }

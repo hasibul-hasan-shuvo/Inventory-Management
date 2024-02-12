@@ -4,6 +4,8 @@ import '../modules/about_us/bindings/about_us_binding.dart';
 import '../modules/about_us/views/about_us_view.dart';
 import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
+import '../modules/delivery/bindings/delivery_binding.dart';
+import '../modules/delivery/views/delivery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.SUGGESTED_ORDERS,
       page: () => SuggestedOrdersView(),
       binding: SuggestedOrdersBinding(),
+    ),
+    GetPage(
+      name: _Paths.DELIVERY,
+      page: () => const DeliveryView(),
+      binding: DeliveryBinding(),
     ),
   ];
 }
