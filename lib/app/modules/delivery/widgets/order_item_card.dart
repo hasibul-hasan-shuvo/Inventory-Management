@@ -42,7 +42,7 @@ class OrderItemCard extends StatelessWidget with BaseWidgetMixin {
             SizedBox(
               height: AppValues.margin_2.h,
             ),
-            Text("Ant: $productQuantity", style: textTheme.bodyMedium),
+            Text("${appLocalization.total}: $productQuantity", style: textTheme.bodyMedium),
           ],
         ),
       ],

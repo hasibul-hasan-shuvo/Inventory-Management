@@ -13,21 +13,25 @@ class DeliveryView extends BaseView<DeliveryController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() {
-      return PagingView(
-          controller: controller.refreshController,
-          enablePullDown: false,
-          child: Padding(
-            padding: const EdgeInsets.all(AppValues.halfPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildOrderNumberView(),
-                _buildNotOrderList(),
-              ],
-            ),
-          ));
+      return _buildBody();
     });
+  }
+
+  Widget _buildBody() {
+    return PagingView(
+        controller: controller.refreshController,
+        enablePullDown: false,
+        child: Padding(
+          padding: const EdgeInsets.all(AppValues.halfPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildOrderNumberView(),
+              _buildNotOrderList(),
+            ],
+          ),
+        ));
   }
 
   Widget _buildOrderNumberView() {
@@ -53,7 +57,7 @@ class DeliveryView extends BaseView<DeliveryController> {
       elevation: AppValues.extraSmallElevation,
       child: ListTile(
         title: _buildListTileTitle(index),
-        subtitle: controller.orderList[index].isExpanded.value
+        subtitle: controller.orderList[index].isExpanded
             ? _buildExpandedSubTitle(index)
             : const SizedBox(),
       ),
@@ -95,10 +99,10 @@ class DeliveryView extends BaseView<DeliveryController> {
         Row(
           children: [
             Text(
-              controller.orderList[index].id.toString(),
+              controller.orderList[index].id,
               style: textTheme.titleMedium,
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: AppValues.margin_10.w),
             Text(
               controller.orderList[index].date.toString(),
               style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
@@ -109,7 +113,7 @@ class DeliveryView extends BaseView<DeliveryController> {
           onPressed: () {
             controller.toggleExpandStatus(index);
           },
-          icon: controller.orderList[index].isExpanded.value
+          icon: controller.orderList[index].isExpanded
               ? const Icon(Icons.arrow_drop_up)
               : const Icon(Icons.arrow_forward_ios_outlined),
         )
@@ -120,5 +124,6 @@ class DeliveryView extends BaseView<DeliveryController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
         title: Text(appLocalization.homeMenuNotDelivered),
+        centerTitle: true,
       );
 }

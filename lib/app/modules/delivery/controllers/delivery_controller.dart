@@ -18,7 +18,7 @@ class DeliveryController extends BaseController {
   }
 
   void toggleExpandStatus(int index) {
-    orderList[index].isExpanded.value = !orderList[index].isExpanded.value;
+    orderList[index].isExpanded = !orderList[index].isExpanded;
     orderList.refresh();
   }
 }

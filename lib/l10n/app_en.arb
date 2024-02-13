@@ -61,6 +61,7 @@
   "themeSystem": "System Default",
   "titleOtherView": "OtherView",
   "titleEditOrderDialog": "Change the number",
+  "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
   "yes": "Yes"
