@@ -13,7 +13,7 @@ abstract class AppColors {
 
   static const Color primary = Color(0xFF21404C);
   static const Color primaryDark = Color(0xFF21404C);
-  static const Color bgPageLight = Color(0xFFD9D9D9);
+  static const Color bgPageLight = Color(0xFFF9F8F4);
   static const Color bgPageDark = Color(0xFF191c1d);
   static const Color bgCardLight = colorWhite;
   static const Color bgCardDark = Color(0xFF354a53);
@@ -22,12 +22,14 @@ abstract class AppColors {
   static const Color textPrimaryLight = colorBlack;
   static const Color textPrimaryDark = colorWhite;
   static const Color textPrimaryButton = colorWhite;
-  static const Color divider = Color(0xFF70787d);
+  static const Color divider = Color(0xffb1b9bb);
   static const Color dividerDark = Color(0xFF8a9296);
   static const Color basicGrey = Color(0xFF66708C);
   static const Color basicGreyDark = Color(0xFFFFFFFF);
   static const Color errorContainerLight = Color(0xFFffdad6);
   static const Color errorContainerDark = Color(0xFF93000a);
   static const Color loaderBackground = Color(0x32000000);
-  static const Color loginScreenIconColor =Color(0xffD9D9D9);
+  static const Color homeOptionBackground = Color(0xFF62C6C6);
+  static const Color loginScreenIconColor = Color(0xffD9D9D9);
+  static const Color bgDismissibleItem = Color(0xFF80DB7E);
 }

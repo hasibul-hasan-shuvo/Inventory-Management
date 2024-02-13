@@ -5,11 +5,15 @@ import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // ignore: must_be_immutable
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  bool? isLogOutVisible;
+  bool isLogOutVisible;
 
-  MainAppBar({Key? key, this.isLogOutVisible}) : super(key: key);
+  MainAppBar({
+    Key? key,
+    this.isLogOutVisible = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: AppValues.mainAppBarLogoHeight,
         ),
       ),
-      actions: isLogOutVisible==true?_buildActions(context):null,
+      actions: isLogOutVisible ? _buildActions(context) : null,
     );
   }
 
@@ -49,6 +53,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context) => AppDialog(
         title: appLocalization.logOut,
         message: appLocalization.logOutMessage,
+        isCancelable: false,
         negativeButtonText: appLocalization.no,
         positiveButtonText: appLocalization.yes,
         onPositiveButtonTap: () {},

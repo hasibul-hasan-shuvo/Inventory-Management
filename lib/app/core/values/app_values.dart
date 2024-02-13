@@ -12,6 +12,8 @@ abstract class AppValues {
   static const double padding_4 = 4;
   static const double padding_2 = 2;
   static const double padding_3 = 3;
+  static const double padding_18 = 18;
+  static const double padding_20 = 20;
   static const double buttonVerticalPadding = 12;
 
   static const double margin = 16;
@@ -44,7 +46,7 @@ abstract class AppValues {
 
   static const double elevation = 16;
   static const double smallElevation = 8;
-  static const double extraSmallElevation = 4;
+  static const double extraSmallElevation = 0.01;
   static const double largeElevation = 24;
 
   static const double circularImageDefaultSize = 90;
@@ -71,15 +73,15 @@ abstract class AppValues {
   static const double iconSmallerSize = 12;
   static const double iconSize_14 = 14;
   static const double iconSize_28 = 28;
+  static const double iconSize_40 = 40;
+  static const double iconSize_50 = 50;
   static const double iconLargeSize = 36;
   static const double iconExtraLargerSize = 96;
   static const double appBarIconSize = 32;
   static const double mainAppBarLogoHeight = 26.0;
 
-
   static const double customAppBarSize = 144.0;
   static const double collapsedAppBarSize = 70.0;
-
 
   static const int loggerLineLength = 120;
   static const int loggerErrorMethodCount = 8;
@@ -102,4 +104,12 @@ abstract class AppValues {
   static const int defaultThrottleTimeInMilliSeconds = 500;
 
   static const double height_16 = 16;
+  static const double height_60 = 60;
+  static const double height_90 = 90;
+  static const double dividerWidth = 0.4;
+  static const double smallOpacity = 0.5;
+
+  static const double itemImageHeight = 100;
+  static const double itemImageWidth = 70;
+  static const double space_110 = 110;
 }

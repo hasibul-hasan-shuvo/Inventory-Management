@@ -1,66 +1,67 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:dental_inventory/app/core/utils/transitions.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppThemeData {
   static ThemeData getDarkTheme() {
     return ThemeData(
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      brightness: Brightness.dark,
-      primaryColor: AppColors.primaryDark,
-      primaryColorDark: AppColors.bgCardDark,
-      primaryColorLight: AppColors.primary,
-      buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      cardColor: AppColors.bgCardDark,
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      indicatorColor: AppColors.colorWhite,
-      dividerColor: AppColors.dividerDark,
-      dividerTheme: const DividerThemeData(color: AppColors.dividerDark),
-      hintColor: AppColors.basicGreyDark,
-      dialogBackgroundColor: AppColors.bgPageDark,
-      scaffoldBackgroundColor: AppColors.bgPageDark,
-      textTheme: _textThemeDark,
-      appBarTheme: _appBarThemeDark,
-      fontFamily: _getFont(),
-      colorScheme: _colorSchemeDark,
-      useMaterial3: true,
-      bottomNavigationBarTheme: _bottomNavigationBarThemeDataDark,
-      bottomSheetTheme: _bottomSheetThemeDataDark,
-      dialogTheme: _dialogThemeDark,
-      popupMenuTheme: _popupMenuThemeDark,
-      shadowColor: Colors.black12,
-    );
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark,
+        primaryColor: AppColors.primaryDark,
+        primaryColorDark: AppColors.bgCardDark,
+        primaryColorLight: AppColors.primary,
+        buttonTheme: const ButtonThemeData(alignedDropdown: true),
+        cardColor: AppColors.bgCardDark,
+        iconTheme: const IconThemeData(color: AppColors.colorWhite),
+        indicatorColor: AppColors.colorWhite,
+        dividerColor: AppColors.dividerDark,
+        dividerTheme: const DividerThemeData(color: AppColors.dividerDark),
+        hintColor: AppColors.basicGreyDark,
+        dialogBackgroundColor: AppColors.bgPageDark,
+        scaffoldBackgroundColor: AppColors.bgPageDark,
+        textTheme: _textThemeDark,
+        appBarTheme: _appBarThemeDark,
+        fontFamily: _getFont(),
+        colorScheme: _colorSchemeDark,
+        useMaterial3: true,
+        bottomNavigationBarTheme: _bottomNavigationBarThemeDataDark,
+        bottomSheetTheme: _bottomSheetThemeDataDark,
+        dialogTheme: _dialogThemeDark,
+        popupMenuTheme: _popupMenuThemeDark,
+        shadowColor: Colors.black12,
+        pageTransitionsTheme: pageTransitionsTheme);
   }
 
   static ThemeData getLightTheme() {
     return ThemeData(
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      brightness: Brightness.light,
-      primaryColor: AppColors.primary,
-      primaryColorDark: AppColors.primaryDark,
-      primaryColorLight: AppColors.primary,
-      cardColor: AppColors.bgCardLight,
-      iconTheme: const IconThemeData(color: Colors.grey),
-      indicatorColor: AppColors.colorBlack,
-      buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      dividerColor: AppColors.divider,
-      dividerTheme: const DividerThemeData(color: AppColors.divider),
-      hintColor: AppColors.basicGrey,
-      dialogBackgroundColor: AppColors.bgPageLight,
-      scaffoldBackgroundColor: AppColors.bgPageLight,
-      textTheme: _textThemeLight,
-      appBarTheme: _appBarThemeLight,
-      fontFamily: _getFont(),
-      colorScheme: _colorSchemeLight,
-      useMaterial3: true,
-      bottomNavigationBarTheme: _bottomNavigationBarThemeDataLight,
-      bottomSheetTheme: _bottomSheetThemeDataLight,
-      dialogTheme: _dialogThemeLight,
-      popupMenuTheme: _popupMenuThemeLight,
-      shadowColor: Colors.black12,
-    );
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.light,
+        primaryColor: AppColors.primary,
+        primaryColorDark: AppColors.primaryDark,
+        primaryColorLight: AppColors.primary,
+        cardColor: AppColors.bgCardLight,
+        iconTheme: const IconThemeData(color: AppColors.colorBlack),
+        indicatorColor: AppColors.colorBlack,
+        buttonTheme: const ButtonThemeData(alignedDropdown: true),
+        dividerColor: AppColors.divider,
+        dividerTheme: const DividerThemeData(color: AppColors.divider),
+        hintColor: AppColors.basicGrey,
+        dialogBackgroundColor: AppColors.bgPageLight,
+        scaffoldBackgroundColor: AppColors.bgPageLight,
+        textTheme: _textThemeLight,
+        appBarTheme: _appBarThemeLight,
+        fontFamily: _getFont(),
+        colorScheme: _colorSchemeLight,
+        useMaterial3: true,
+        bottomNavigationBarTheme: _bottomNavigationBarThemeDataLight,
+        bottomSheetTheme: _bottomSheetThemeDataLight,
+        dialogTheme: _dialogThemeLight,
+        popupMenuTheme: _popupMenuThemeLight,
+        shadowColor: Colors.black12,
+        pageTransitionsTheme: pageTransitionsTheme);
   }
 
   static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
@@ -87,7 +88,7 @@ class AppThemeData {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        iconTheme: const IconThemeData(color: AppColors.basicGreyDark),
+        iconTheme: const IconThemeData(color: AppColors.colorWhite),
         backgroundColor: AppColors.primaryDark,
         titleTextStyle: appBarTextStyleDark.copyWith(
           fontFamily: _getFont(),
@@ -100,7 +101,7 @@ class AppThemeData {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        iconTheme: const IconThemeData(color: AppColors.basicGrey),
+        iconTheme: const IconThemeData(color: AppColors.colorWhite),
         backgroundColor: AppColors.primary,
         titleTextStyle: appBarTextStyle.copyWith(fontFamily: _getFont()),
       );

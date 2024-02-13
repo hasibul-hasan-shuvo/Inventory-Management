@@ -1,9 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../values/app_values.dart';
 
 // ignore: must_be_immutable
 class AppPrimaryButton extends StatelessWidget with BaseWidgetMixin {
@@ -13,7 +11,6 @@ class AppPrimaryButton extends StatelessWidget with BaseWidgetMixin {
   bool? isLoading;
   double? width;
   double? height;
-  TextStyle? textStyle;
 
   AppPrimaryButton({
     super.key,
@@ -23,43 +20,41 @@ class AppPrimaryButton extends StatelessWidget with BaseWidgetMixin {
     this.isLoading,
     this.height,
     this.width,
-    this.textStyle,
   });
-
 
   @override
   Widget body(BuildContext context) {
     return isLoading == true
         ? CircularProgressIndicator(
-      color: theme.primaryColor,
-    )
+            color: theme.primaryColor,
+          )
         : SizedBox(
-      height: height,
-      width: width ?? MediaQuery.of(context).size.width.w,
-      child: CupertinoButton(
-        padding: textStyle != null
-            ? EdgeInsets.symmetric(
-            horizontal: AppValues.margin_10.w,
-            vertical: AppValues.halfPadding.h)
-            : null,
-        color: theme.colorScheme.primary,
-        onPressed: isEnabled ?? true ? onPressed : null,
-        child: textStyle == null
-            ? FittedBox(
-          child: Text(
-            title,
-            style: textStyle ??
-                TextStyle(
-                  color: theme.colorScheme.surface,
-                  fontWeight: FontWeight.w600,
+            height: height,
+            width: width ?? MediaQuery.of(context).size.width.w,
+            child: ElevatedButton(
+              style: _style,
+              onPressed: isEnabled ?? true ? onPressed : null,
+              child: FittedBox(
+                child: Text(
+                  title,
+                  style: textTheme.bodyMedium
+                      ?.copyWith(color: theme.colorScheme.surface),
                 ),
-          ),
-        )
-            : Text(
-          title,
-          style: textStyle,
-        ),
-      ),
-    );
+              ),
+            ),
+          );
   }
+
+  ButtonStyle get _style => ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: AppValues.smallPadding.h,
+          horizontal: AppValues.padding.w,
+        ),
+        elevation: 0,
+        backgroundColor: theme.colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppValues.radius_6.r),
+        ),
+        disabledBackgroundColor: theme.primaryColor.withOpacity(0.5),
+      );
 }

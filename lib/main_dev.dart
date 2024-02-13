@@ -20,6 +20,7 @@ void main() async {
   );
 
   await GetStorage.init(PreferenceManager.DATABASE_NAME);
-
   runApp(MyApp());
 }
+
+

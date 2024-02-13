@@ -1,49 +1,64 @@
+import 'package:dental_inventory/app/core/values/app_icons.dart';
+import 'package:dental_inventory/app/modules/home/model/item_home_menu_ui_model.dart';
+import 'package:dental_inventory/app/modules/home/widget/item_home_menu_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/modules/home/controllers/home_controller.dart';
 
-import '/app/core/base/base_view.dart';
-import '/app/core/values/app_values.dart';
-import '/app/core/widget/paging_view.dart';
-import '/app/modules/home/controllers/home_controller.dart';
-import '/app/modules/home/widget/item_github_project.dart';
 // ignore: must_be_immutable
 class HomeView extends BaseView<HomeController> {
-  HomeView() {
-    controller.getGithubGetxProjectList();
-  }
-
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
   @override
   Widget body(BuildContext context) {
-    return PagingView(
-      onRefresh: () async {
-        controller.onRefreshPage();
-      },
-      onLoadNextPage: () {
-        controller.onLoadNextPage();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(AppValues.padding),
-        child: Obx(
-          () => ListView.separated(
-            shrinkWrap: true,
-            itemCount: controller.projectList.length,
-            primary: false,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              var model = controller.projectList[index];
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: AppValues.margin.h),
+          _getMenuGridView(),
+          SizedBox(height: AppValues.smallMargin.h),
+          _getItemRetrievalOptionView(),
+          SizedBox(height: AppValues.margin.h),
+        ],
+      ).marginSymmetric(
+        horizontal: AppValues.margin.w,
+      ),
+    );
+  }
 
-              return ItemGithubProject(dataModel: model);
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: AppValues.smallMargin),
-          ),
-        ),
+  Widget _getMenuGridView() {
+    return Obx(
+      () => AlignedGridView.count(
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        mainAxisSpacing: AppValues.smallMargin.h,
+        crossAxisSpacing: AppValues.smallMargin.w,
+        itemCount: controller.menuList.length,
+        shrinkWrap: true,
+        itemBuilder: _itemBuilder,
+      ),
+    );
+  }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    return ItemHomeMenuView(
+      data: controller.menuList[index],
+    );
+  }
+
+  Widget _getItemRetrievalOptionView() {
+    return ItemHomeMenuView(
+      data: ItemHomeMenuUiModel(
+        icon: AppIcons.qrCodeScanner,
+        title: appLocalization.homeMenuItemRetrieval,
+        route: "",
       ),
     );
   }
 }
-
