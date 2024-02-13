@@ -17,21 +17,28 @@ class DeliveryView extends BaseView<DeliveryController> {
     });
   }
 
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+        title: Text(appLocalization.homeMenuOrderDelivery),
+        centerTitle: true,
+      );
+
   Widget _buildBody() {
     return PagingView(
-        controller: controller.refreshController,
-        enablePullDown: false,
-        child: Padding(
-          padding: const EdgeInsets.all(AppValues.halfPadding),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildOrderNumberView(),
-              _buildNotOrderList(),
-            ],
-          ),
-        ));
+      controller: controller.refreshController,
+      enablePullDown: false,
+      child: Padding(
+        padding: const EdgeInsets.all(AppValues.halfPadding),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildOrderNumberView(),
+            _buildNotOrderList(),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildOrderNumberView() {
@@ -59,16 +66,18 @@ class DeliveryView extends BaseView<DeliveryController> {
         enableFeedback: false,
         splashColor: Colors.transparent,
         onTap: () {
-          Get.toNamed(Routes.DELIVERY_DETAILS, arguments: controller.orderList[index]);
+          Get.toNamed(Routes.DELIVERY_DETAILS,
+              arguments: controller.orderList[index]);
         },
-        child: _buildListTileTitle(index),
+        child: _buildOrderBasicInfo(index),
       ),
     );
   }
 
-  Widget _buildListTileTitle(int index) {
+  Widget _buildOrderBasicInfo(int index) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppValues.padding.w, vertical: AppValues.halfPadding.h),
+      padding: EdgeInsets.symmetric(
+          horizontal: AppValues.padding.w, vertical: AppValues.halfPadding.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -85,18 +94,9 @@ class DeliveryView extends BaseView<DeliveryController> {
               ),
             ],
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.arrow_forward_ios_outlined),
-          )
+          const Icon(Icons.arrow_forward_ios_outlined),
         ],
       ),
     );
   }
-
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        title: Text(appLocalization.homeMenuOrderDelivery),
-        centerTitle: true,
-      );
 }

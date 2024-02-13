@@ -17,6 +17,12 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
     });
   }
 
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+        title: Text(appLocalization.homeMenuNotDelivered),
+        centerTitle: true,
+      );
+
   Widget _buildBody() {
     return PagingView(
       controller: controller.refreshController,
@@ -56,47 +62,53 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
   Widget _buildOrderItem(int index) {
     return Card(
       elevation: AppValues.extraSmallElevation,
-      child: ListTile(
-        title: _buildListTileTitle(index),
-        subtitle: controller.orderList[index].isExpanded
-            ? ItemOrderDetails(orderUiModel: controller.orderList[index])
-            : const SizedBox(),
+      child: Column(
+        children: [
+          _buildOrderBasicInfo(index),
+          _buildOrderDetails(index),
+        ],
       ),
     );
   }
 
-  Widget _buildListTileTitle(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
+  Widget _buildOrderBasicInfo(int index) {
+    return InkWell(
+      splashColor: Colors.transparent,
+      enableFeedback: false,
+      onTap: () {
+        controller.toggleExpandStatus(index);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppValues.padding, vertical: AppValues.halfPadding),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              controller.orderList[index].id,
-              style: textTheme.titleMedium,
+            Row(
+              children: [
+                Text(
+                  controller.orderList[index].id,
+                  style: textTheme.titleMedium,
+                ),
+                SizedBox(width: AppValues.margin_10.w),
+                Text(
+                  controller.orderList[index].date.toString(),
+                  style:
+                      textTheme.bodySmall?.copyWith(color: theme.dividerColor),
+                ),
+              ],
             ),
-            SizedBox(width: AppValues.margin_10.w),
-            Text(
-              controller.orderList[index].date.toString(),
-              style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
-            ),
+            controller.orderList[index].isExpanded
+                ? const Icon(Icons.arrow_drop_up)
+                : const Icon(Icons.arrow_forward_ios_outlined),
           ],
         ),
-        IconButton(
-          onPressed: () {
-            controller.toggleExpandStatus(index);
-          },
-          icon: controller.orderList[index].isExpanded
-              ? const Icon(Icons.arrow_drop_up)
-              : const Icon(Icons.arrow_forward_ios_outlined),
-        )
-      ],
+      ),
     );
   }
 
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        title: Text(appLocalization.homeMenuNotDelivered),
-        centerTitle: true,
+  Widget _buildOrderDetails(int index) => Visibility(
+        visible: controller.orderList[index].isExpanded,
+        child: ItemOrderDetails(orderUiModel: controller.orderList[index]),
       );
 }

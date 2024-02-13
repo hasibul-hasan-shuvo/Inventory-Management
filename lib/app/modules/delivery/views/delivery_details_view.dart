@@ -47,9 +47,11 @@ class DeliveryDetailsView extends BaseView<DeliveryController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${appLocalization.status}: $status',style: textTheme.bodyMedium),
+          Text('${appLocalization.status}: $status',
+              style: textTheme.bodyMedium),
           SizedBox(height: AppValues.halfPadding.h),
-          Text('${appLocalization.orderDate}: $orderDate',style: textTheme.bodyMedium),
+          Text('${appLocalization.orderDate}: $orderDate',
+              style: textTheme.bodyMedium),
         ],
       ),
     );
