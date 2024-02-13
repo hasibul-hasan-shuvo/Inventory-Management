@@ -5,14 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //ignore: must_be_immutable
-class OrderItemCard extends StatelessWidget with BaseWidgetMixin {
+class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   final String productName;
   final String productImage;
   final String productPrice;
   final String productQuantity;
   final String productId;
 
-  OrderItemCard({
+  ItemOrderCard({
     required this.productName,
     required this.productImage,
     required this.productPrice,

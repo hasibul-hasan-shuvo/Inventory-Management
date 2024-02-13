@@ -1,5 +1,4 @@
-import 'package:dental_inventory/app/modules/delivery/models/product_model.dart';
-import 'package:get/get.dart';
+import 'package:dental_inventory/app/modules/delivery/models/product_ui_model.dart';
 
 class OrderUiModel {
   late final String id;
@@ -9,7 +8,7 @@ class OrderUiModel {
   late final String totalPrice;
   late bool isExpanded = false;
 
-  OrderUiModel.dummy() {
+  OrderUiModel.dummy(String orderStatus,) {
     id = "8028202";
      date = "2021-10-10";
     items = [
@@ -17,7 +16,7 @@ class OrderUiModel {
       ProductModel(),
       ProductModel(),
     ];
-    status = "Not Delivered";
+    status = orderStatus;
     totalPrice = "1000";
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/modules/delivery/views/delivery_details_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/about_us/bindings/about_us_binding.dart';
@@ -82,8 +83,13 @@ class AppPages {
       binding: DeliveryBinding(),
     ),
     GetPage(
+      name: _Paths.DELIVERY_DETAILS,
+      page: () => DeliveryDetailsView(),
+      binding: NotDeliveryBinding(),
+    ),
+    GetPage(
       name: _Paths.NOT_DELIVERY,
-      page: () =>  NotDeliveryView(),
+      page: () => NotDeliveryView(),
       binding: NotDeliveryBinding(),
     ),
   ];

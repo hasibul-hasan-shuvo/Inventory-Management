@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -54,37 +55,42 @@ class DeliveryView extends BaseView<DeliveryController> {
   Widget _buildOrderItem(int index) {
     return Card(
       elevation: AppValues.extraSmallElevation,
-      child: ListTile(
+      child: InkWell(
+        enableFeedback: false,
+        splashColor: Colors.transparent,
         onTap: () {
-
+          Get.toNamed(Routes.DELIVERY_DETAILS, arguments: controller.orderList[index]);
         },
-        title: _buildListTileTitle(index),
+        child: _buildListTileTitle(index),
       ),
     );
   }
 
   Widget _buildListTileTitle(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Text(
-              controller.orderList[index].id,
-              style: textTheme.titleMedium,
-            ),
-            SizedBox(width: AppValues.margin_10.w),
-            Text(
-              controller.orderList[index].date.toString(),
-              style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
-            ),
-          ],
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.arrow_forward_ios_outlined),
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppValues.padding.w, vertical: AppValues.halfPadding.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Text(
+                controller.orderList[index].id,
+                style: textTheme.titleMedium,
+              ),
+              SizedBox(width: AppValues.margin_10.w),
+              Text(
+                controller.orderList[index].date.toString(),
+                style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
+              ),
+            ],
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.arrow_forward_ios_outlined),
+          )
+        ],
+      ),
     );
   }
 
