@@ -14,6 +14,8 @@ import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/other/bindings/other_binding.dart';
 import '../modules/other/views/other_view.dart';
+import '../modules/shopping_cart/bindings/shopping_cart_binding.dart';
+import '../modules/shopping_cart/views/shopping_cart_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/suggested_orders/bindings/suggested_orders_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.SUGGESTED_ORDERS,
       page: () => SuggestedOrdersView(),
       binding: SuggestedOrdersBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHOPPING_CART,
+      page: () => ShoppingCartView(),
+      binding: ShoppingCartBinding(),
     ),
   ];
 }

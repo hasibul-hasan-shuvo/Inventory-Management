@@ -72,7 +72,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.shoppingCart,
         title: appLocalization.homeMenuShoppingCart,
-        route: "",
+        route: Routes.SHOPPING_CART,
       ),
     );
 
