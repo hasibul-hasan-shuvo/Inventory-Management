@@ -37,14 +37,14 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.notDelivered,
         title: appLocalization.homeMenuNotDelivered,
-        route: Routes.DELIVERY,
+        route: Routes.NOT_DELIVERY,
       ),
     );
     list.add(
       ItemHomeMenuUiModel(
         icon: AppIcons.orderDelivery,
         title: appLocalization.homeMenuOrderDelivery,
-        route: "",
+        route: Routes.DELIVERY,
       ),
     );
     list.add(

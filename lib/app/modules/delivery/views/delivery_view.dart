@@ -1,7 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
-import 'package:dental_inventory/app/modules/delivery/widgets/order_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -56,39 +55,11 @@ class DeliveryView extends BaseView<DeliveryController> {
     return Card(
       elevation: AppValues.extraSmallElevation,
       child: ListTile(
-        title: _buildListTileTitle(index),
-        subtitle: controller.orderList[index].isExpanded
-            ? _buildExpandedSubTitle(index)
-            : const SizedBox(),
-      ),
-    );
-  }
+        onTap: () {
 
-  Widget _buildExpandedSubTitle(int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Divider(),
-        Text(appLocalization.orderLine, style: textTheme.titleMedium),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.orderList[index].items.length,
-          itemBuilder: (context, i) {
-            return Padding(
-              padding: EdgeInsets.all(AppValues.halfPadding.sp),
-              child: OrderItemCard(
-                productId: controller.orderList[index].items[i].id,
-                productImage: controller.orderList[index].items[i].image,
-                productName: controller.orderList[index].items[i].name,
-                productPrice:
-                    controller.orderList[index].items[i].price.toString(),
-                productQuantity: controller.orderList[index].items[i].quantity,
-              ),
-            );
-          },
-        )
-      ],
+        },
+        title: _buildListTileTitle(index),
+      ),
     );
   }
 
@@ -110,12 +81,8 @@ class DeliveryView extends BaseView<DeliveryController> {
           ],
         ),
         IconButton(
-          onPressed: () {
-            controller.toggleExpandStatus(index);
-          },
-          icon: controller.orderList[index].isExpanded
-              ? const Icon(Icons.arrow_drop_up)
-              : const Icon(Icons.arrow_forward_ios_outlined),
+          onPressed: () {},
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
         )
       ],
     );
@@ -123,7 +90,7 @@ class DeliveryView extends BaseView<DeliveryController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        title: Text(appLocalization.homeMenuNotDelivered),
+        title: Text(appLocalization.homeMenuOrderDelivery),
         centerTitle: true,
       );
 }

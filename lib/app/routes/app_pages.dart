@@ -14,6 +14,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
+import '../modules/not_delivery/bindings/not_delivery_binding.dart';
+import '../modules/not_delivery/views/not_delivery_view.dart';
 import '../modules/other/bindings/other_binding.dart';
 import '../modules/other/views/other_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -76,8 +78,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DELIVERY,
-      page: () =>  DeliveryView(),
+      page: () => DeliveryView(),
       binding: DeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOT_DELIVERY,
+      page: () =>  NotDeliveryView(),
+      binding: NotDeliveryBinding(),
     ),
   ];
 }

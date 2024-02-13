@@ -16,9 +16,4 @@ class DeliveryController extends BaseController {
       orderList.add(OrderUiModel.dummy());
     }
   }
-
-  void toggleExpandStatus(int index) {
-    orderList[index].isExpanded = !orderList[index].isExpanded;
-    orderList.refresh();
-  }
 }
