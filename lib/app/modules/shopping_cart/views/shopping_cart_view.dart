@@ -48,9 +48,11 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
     return ListView.builder(
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(
-        vertical: AppValues.padding.h,
-        horizontal: AppValues.margin.w,
+      padding: EdgeInsets.only(
+        top: AppValues.padding.h,
+        bottom: AppValues.extraLargeSpacing.h,
+        left: AppValues.padding.w,
+        right: AppValues.padding.w,
       ),
       itemCount: controller.shoppingCartItems.length,
       itemBuilder: _getItemBuilder,
