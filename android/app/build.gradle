@@ -71,14 +71,11 @@ android {
         minSdk 21
         minSdkVersion 21
         targetSdkVersion 33
-        compileSdk 33
+        compileSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-    }
 
     signingConfigs {
         release {
@@ -94,6 +91,13 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 
     flavorDimensions "default"
     productFlavors {
@@ -106,6 +110,10 @@ android {
             resValue "string", "app_name", "Dental Inventory"
             dimension "default"
         }
+    }
+    namespace 'no.inventorymanagement.android'
+    lint {
+        checkReleaseBuilds false
     }
 }
 
