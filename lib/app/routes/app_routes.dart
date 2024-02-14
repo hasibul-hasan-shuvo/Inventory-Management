@@ -14,6 +14,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SUGGESTED_ORDERS = _Paths.SUGGESTED_ORDERS;
   static const SHOPPING_CART = _Paths.SHOPPING_CART;
+  static const SCANNER = _Paths.SCANNER;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const SUGGESTED_ORDERS = '/suggested-orders';
   static const SHOPPING_CART = '/shopping-cart';
+  static const SCANNER = '/scanner';
 }
