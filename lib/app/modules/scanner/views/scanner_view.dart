@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
@@ -48,12 +49,20 @@ class ScannerView extends BaseView<ScannerController> {
   }
 
   Widget _getTorchButton() {
-    return FloatingActionButton(
-      onPressed: _onPressedTorch,
-      child: AssetImageView(
-        fileName: AppIcons.torch,
-        height: AppValues.iconDefaultSize.h,
-        color: theme.colorScheme.onPrimary,
+    return ValueListenableBuilder(
+      valueListenable: _scannerController.torchState,
+      builder: (_, state, ___) => FloatingActionButton(
+        backgroundColor: state == TorchState.on
+            ? theme.colorScheme.primary
+            : AppColors.basicGrey,
+        onPressed: _onPressedTorch,
+        child: AssetImageView(
+          fileName: AppIcons.torch,
+          height: AppValues.iconDefaultSize.h,
+          color: state == TorchState.on
+              ? theme.colorScheme.onPrimary
+              : AppColors.colorWhite,
+        ),
       ),
     );
   }
