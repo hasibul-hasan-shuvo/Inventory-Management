@@ -1,5 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
+import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
@@ -30,6 +33,18 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
     );
   }
 
+  @override
+  Widget? floatingActionButton() {
+    return FloatingActionButton(
+      onPressed: _onPressedScanner,
+      child: AssetImageView(
+        fileName: AppIcons.barcodeScanner,
+        height: AppValues.iconDefaultSize.h,
+        color: AppColors.colorWhite,
+      ),
+    );
+  }
+
   Widget _getSuggestedOrdersListView() {
     return ListView.builder(
       physics: const ClampingScrollPhysics(),
@@ -46,6 +61,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   Widget _getItemBuilder(BuildContext context, int index) {
     return ItemShoppingCartView(data: controller.shoppingCartItems[index]);
   }
+
+  void _onPressedScanner() {}
 
   List<Widget> get _getActions {
     return [
