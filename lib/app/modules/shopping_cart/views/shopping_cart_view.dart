@@ -67,7 +67,9 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   void _onPressedScanner() {
     Get.toNamed(
       Routes.SCANNER,
-    );
+    )?.then((value) {
+      logger.d("Scanned code: $value");
+    });
   }
 
   List<Widget> get _getActions {
