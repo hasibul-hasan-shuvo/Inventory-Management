@@ -173,7 +173,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
             data.updateCartCount(cartCount);
-            _controller.rebuildList();
+            _controller.updateCartCount();
           },
         );
       },

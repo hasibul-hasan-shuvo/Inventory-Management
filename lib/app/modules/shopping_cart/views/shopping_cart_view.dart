@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
@@ -40,7 +39,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
       child: AssetImageView(
         fileName: AppIcons.barcodeScanner,
         height: AppValues.iconDefaultSize.h,
-        color: AppColors.colorWhite,
+        color: theme.colorScheme.onPrimary,
       ),
     );
   }

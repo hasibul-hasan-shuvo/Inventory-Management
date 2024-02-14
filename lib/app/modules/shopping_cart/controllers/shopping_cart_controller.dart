@@ -38,7 +38,7 @@ class ShoppingCartController extends BaseController {
     logger.d("Ordering all items");
   }
 
-  void rebuildList() {
+  void updateCartCount() {
     _shoppingCartItemsController.refresh();
   }
 }
