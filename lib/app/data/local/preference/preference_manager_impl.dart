@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/values/app_keys.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '/app/data/local/preference/preference_manager.dart';
@@ -47,4 +48,13 @@ class PreferenceManagerImpl implements PreferenceManager {
 
   @override
   void clear() => _storage.erase();
+
+  @override
+  void clearSession() => _storage.remove(AppKeys.TOKEN);
+
+  @override
+  void retrieveToken() => _storage.read(AppKeys.TOKEN);
+
+  @override
+  void storeToken(String token) => _storage.write(AppKeys.TOKEN, token);
 }
