@@ -2,7 +2,6 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +13,7 @@ import '../controllers/scanner_controller.dart';
 
 // ignore: must_be_immutable
 class ScannerView extends BaseView<ScannerController> {
+  String? result;
   final MobileScannerController _scannerController = MobileScannerController();
 
   @override
@@ -29,7 +29,7 @@ class ScannerView extends BaseView<ScannerController> {
         children: [
           _getScannerView(),
           SizedBox(height: AppValues.largeMargin.h),
-          _getTorchButton(),
+          _getButtons(),
         ],
       ),
     );
@@ -48,10 +48,22 @@ class ScannerView extends BaseView<ScannerController> {
     );
   }
 
+  Widget _getButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _getTorchButton(),
+        SizedBox(width: AppValues.smallMargin.w),
+        _getCheckInButton(),
+      ],
+    );
+  }
+
   Widget _getTorchButton() {
     return ValueListenableBuilder(
       valueListenable: _scannerController.torchState,
       builder: (_, state, ___) => FloatingActionButton(
+        heroTag: 'torch',
         backgroundColor: state == TorchState.on
             ? theme.colorScheme.primary
             : AppColors.basicGrey,
@@ -67,17 +79,29 @@ class ScannerView extends BaseView<ScannerController> {
     );
   }
 
+  Widget _getCheckInButton() {
+    return FloatingActionButton(
+      onPressed: _onPressedDoneButton,
+      child: Icon(
+        Icons.done,
+        size: AppValues.iconDefaultSize.h,
+        color: theme.colorScheme.onPrimary,
+      ),
+    );
+  }
+
   void _onPressedTorch() {
     _scannerController.toggleTorch();
   }
 
+  void _onPressedDoneButton() {
+    _scannerController.stop();
+    Get.back(result: result);
+  }
+
   void _onDetect(BarcodeCapture capture) {
     if (capture.barcodes.isNotEmpty) {
-      _scannerController.stop();
-      String? result = capture.barcodes.first.rawValue;
-      if (result.isNotNullOrEmpty) {
-        Get.back(result: result);
-      }
+      result = capture.barcodes.first.rawValue;
     }
   }
 }
