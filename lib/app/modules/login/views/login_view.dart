@@ -95,9 +95,9 @@ class LoginView extends BaseView<LoginController> {
     return AppTextField(
       prefix: const Icon(Icons.key_outlined),
       controller: _passwordController,
-      validator: (value) {
-        return InputValidators.password(value, appLocalization);
-      },
+      // validator: (value) {
+        // return InputValidators.password(value, appLocalization);
+      // },
       onChanged: (value) {
         controller.password = value ?? "";
       },
