@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_textfield.dart';
+import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,7 +97,7 @@ class LoginView extends BaseView<LoginController> {
       prefix: const Icon(Icons.key_outlined),
       controller: _passwordController,
       // validator: (value) {
-        // return InputValidators.password(value, appLocalization);
+      // return InputValidators.password(value, appLocalization);
       // },
       onChanged: (value) {
         controller.password = value ?? "";
@@ -147,10 +148,31 @@ class LoginView extends BaseView<LoginController> {
   }
 
   void _subscribeToLoginState() {
-    controller.token.listen((token) {
-      if (token.isNotEmpty) {
+    controller.authPageState.listen((state) {
+      if (state.status == PageStatus.success) {
         Get.offAllNamed(Routes.MAIN);
+        _successSnackBar(state.message);
+        controller.resetAuthPageState();
+      } else if (state.status == PageStatus.error) {
+        _errorSnackBar(state.message);
+        controller.resetAuthPageState();
       }
     });
+  }
+
+  void _successSnackBar(String? message) {
+    Get.snackbar(
+      appLocalization.success,
+      message ?? appLocalization.logInSuccessMessage,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+
+  void _errorSnackBar(String? message) {
+    Get.snackbar(
+      appLocalization.error,
+      message??appLocalization.logInErrorMessage,
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 }

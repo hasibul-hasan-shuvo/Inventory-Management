@@ -12,8 +12,8 @@ class RepositoryBindings implements Bindings {
       () => GithubRepositoryImpl(),
       tag: (GithubRepository).toString(),
     );
-    Get.lazyPut<LoginRepository>(
-          () => LoginRepositoryImp(),
+    Get.lazyPut<AuthRepository>(
+          () => AuthRepositoryImp(),
     );
   }
 }

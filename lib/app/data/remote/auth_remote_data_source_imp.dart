@@ -3,9 +3,10 @@ import 'package:dental_inventory/app/core/model/login_request_body.dart';
 import 'package:dental_inventory/app/data/model/login_response.dart';
 import 'package:dio/dio.dart';
 
-import 'login_data_source.dart';
+import 'auth_remote_data_source.dart';
 
-class LoginDataSourceImp extends BaseRemoteSource implements LoginDataSource {
+class AuthRemoteDataSourceImp extends BaseRemoteSource
+    implements AuthRemoteDataSource {
   @override
   Future<LoginResponse> login({required LoginRequestBody requestBody}) {
     const endpoint = '/accounts/token/obtain/';
@@ -21,7 +22,6 @@ class LoginDataSourceImp extends BaseRemoteSource implements LoginDataSource {
 
   LoginResponse _parseLoginResponse(Response response) {
     print(response);
-
 
     return LoginResponse.fromJson(response.data);
   }

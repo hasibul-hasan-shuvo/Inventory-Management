@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/core/values/app_keys.dart';
-import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
+import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class SplashController extends BaseController {
   final RxString navigationController = RxString("");
-  final PreferenceManager _preferenceManager = Get.find<PreferenceManager>();
+  final AuthLocalDataSource _preferenceManager = Get.find<AuthLocalDataSource>();
 
   @override
   void onInit() {
@@ -17,7 +16,7 @@ class SplashController extends BaseController {
   }
 
   Future<void> _navigateToNextPage() async {
-    final token = _preferenceManager.getString(AppKeys.TOKEN);
+    final token = _preferenceManager.getToken();
 await Future.delayed(const Duration(seconds: 2));
     if (token != '') {
       navigationController.trigger(Routes.MAIN);
