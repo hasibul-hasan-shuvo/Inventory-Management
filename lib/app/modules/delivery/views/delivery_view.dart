@@ -76,8 +76,8 @@ class DeliveryView extends BaseView<DeliveryController> {
 
   Widget _buildOrderBasicInfo(int index) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppValues.padding.w, vertical: AppValues.halfPadding.h),
+      padding: EdgeInsets.all(AppValues.margin_12.w),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -94,7 +94,7 @@ class DeliveryView extends BaseView<DeliveryController> {
               ),
             ],
           ),
-          const Icon(Icons.arrow_forward_ios_outlined),
+          const Icon(Icons.arrow_right),
         ],
       ),
     );

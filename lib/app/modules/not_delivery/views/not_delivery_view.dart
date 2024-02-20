@@ -79,8 +79,7 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
         controller.toggleExpandStatus(index);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppValues.padding, vertical: AppValues.halfPadding),
+        padding: EdgeInsets.all(AppValues.margin_12.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -100,7 +99,7 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
             ),
             controller.orderList[index].isExpanded
                 ? const Icon(Icons.arrow_drop_up)
-                : const Icon(Icons.arrow_forward_ios_outlined),
+                : const Icon(Icons.arrow_right),
           ],
         ),
       ),

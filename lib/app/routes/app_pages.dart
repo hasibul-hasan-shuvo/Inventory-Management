@@ -1,4 +1,3 @@
-import 'package:dental_inventory/app/modules/delivery/views/delivery_details_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/about_us/bindings/about_us_binding.dart';
@@ -7,6 +6,8 @@ import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
 import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
+import '../modules/delivery_details/bindings/delivery_details_binding.dart';
+import '../modules/delivery_details/views/delivery_details_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
@@ -84,8 +85,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DELIVERY_DETAILS,
-      page: () => DeliveryDetailsView(),
-      binding: NotDeliveryBinding(),
+      page: () =>  DeliveryDetailsView(),
+      binding: DeliveryDetailsBinding(),
     ),
     GetPage(
       name: _Paths.NOT_DELIVERY,
