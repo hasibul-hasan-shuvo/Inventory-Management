@@ -1,5 +1,5 @@
-import 'package:dental_inventory/app/data/remote/login_data_source.dart';
-import 'package:dental_inventory/app/data/remote/login_data_source_imp.dart';
+import 'package:dental_inventory/app/data/remote/auth_remote_data_source.dart';
+import 'package:dental_inventory/app/data/remote/auth_remote_data_source_imp.dart';
 import 'package:get/get.dart';
 
 import '/app/data/remote/github_remote_data_source.dart';
@@ -12,8 +12,9 @@ class RemoteSourceBindings implements Bindings {
       () => GithubRemoteDataSourceImpl(),
       tag: (GithubRemoteDataSource).toString(),
     );
-    Get.lazyPut<LoginDataSource>(
-      () => LoginDataSourceImp(),
+    Get.lazyPut<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImp(),
+      fenix: true,
     );
   }
 }
