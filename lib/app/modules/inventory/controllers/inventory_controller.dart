@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_page_state.dart';
@@ -47,15 +48,18 @@ class InventoryController extends BaseController {
   }
 
   Future<void> _fetchInventoryList() async {
-    callDataService(_inventoryRepository.getInventoryList(), onSuccess: (data) {
-      inventoryPageState.value = InventoryPageState.success(data
-              .data?.inventoryList
-              ?.map((e) => e.toInventoryCardUIModel())
-              .toList() ??
-          []);
-    }, onError: (error) {
+    callDataService(_inventoryRepository.getInventoryList(),
+        onSuccess: _handleFetchInventoryListSuccessResponse, onError: (error) {
       inventoryPageState.value = InventoryPageState.error();
     });
     filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
+  }
+
+  _handleFetchInventoryListSuccessResponse(InventoryResponse data) {
+    inventoryPageState.value = InventoryPageState.success(data
+            .data?.inventoryList
+            ?.map((e) => e.toInventoryCardUIModel())
+            .toList() ??
+        []);
   }
 }

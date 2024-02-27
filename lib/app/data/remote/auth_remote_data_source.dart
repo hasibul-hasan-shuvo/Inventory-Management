@@ -3,4 +3,5 @@ import 'package:dental_inventory/app/data/model/login_response.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login({required LoginRequestBody requestBody});
+  Future<LoginResponse> refreshToken(String refreshToken);
 }

@@ -13,7 +13,6 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   @override
   Future<InventoryResponse> getInventoryList() {
     const endpoint = '/inventory/items/all/';
-    dioClient.options.headers.addAll(headers);
     var dioCall = dioClient.get(endpoint);
     try {
       return callApiWithErrorParser(dioCall)

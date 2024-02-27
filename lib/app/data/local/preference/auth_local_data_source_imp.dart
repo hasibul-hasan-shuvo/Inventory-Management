@@ -12,7 +12,18 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   }
 
   @override
-  Future<String?> getToken() {
+  Future<String> getToken() {
     return Future.value(_preferenceManager.getString(AppKeys.TOKEN));
+  }
+
+  @override
+  Future<String> getRefreshToken() {
+    return Future.value(_preferenceManager.getString(AppKeys.REFRESH));
+
+  }
+
+  @override
+  storeRefreshToken(String refreshToken) {
+    return _preferenceManager.setString(AppKeys.REFRESH, refreshToken);
   }
 }

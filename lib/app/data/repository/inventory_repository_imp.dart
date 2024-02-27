@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/inventory_response.dart';
 import 'package:dental_inventory/app/data/remote/inventory_remote_datasource.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -5,9 +6,10 @@ import 'package:get/get.dart';
 
 class InventoryRepositoryImp implements InventoryRepository {
   final InventoryRemoteDataSource inventoryDataSource = Get.find();
+  final AuthLocalDataSource authLocalDataSource = Get.find();
 
   @override
-  Future<InventoryResponse> getInventoryList() {
+  Future<InventoryResponse> getInventoryList() async {
     return inventoryDataSource.getInventoryList();
   }
 }
