@@ -34,7 +34,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
   final String hintText;
   final bool? isEnabled;
 
-  final RxBool _isObscured = false.obs;
+  final RxBool _isObscured = true.obs;
 
   @override
   Widget body(BuildContext context) {
@@ -42,7 +42,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style:theme.textTheme.labelLarge),
+        Text(labelText, style: theme.textTheme.labelLarge),
         const SizedBox(
           height: AppValues.halfPadding,
         ),
