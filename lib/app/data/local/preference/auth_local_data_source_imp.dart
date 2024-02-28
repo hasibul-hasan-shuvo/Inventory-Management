@@ -7,12 +7,12 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   final PreferenceManager _preferenceManager = Get.find<PreferenceManager>();
 
   @override
-  storeToken(String token) {
+  void storeToken(String token) {
     return _preferenceManager.setString(AppKeys.TOKEN, token);
   }
 
   @override
-  Future<String?> getToken() {
-    return Future.value(_preferenceManager.getString(AppKeys.TOKEN));
+  String getToken() {
+    return _preferenceManager.getString(AppKeys.TOKEN);
   }
 }

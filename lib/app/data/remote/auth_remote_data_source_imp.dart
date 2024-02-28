@@ -21,8 +21,6 @@ class AuthRemoteDataSourceImp extends BaseRemoteSource
   }
 
   LoginResponse _parseLoginResponse(Response response) {
-    print(response);
-
     return LoginResponse.fromJson(response.data);
   }
 }
