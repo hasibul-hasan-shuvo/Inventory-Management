@@ -34,7 +34,7 @@ class LoginController extends BaseController {
         AuthPageState.failed(appLocalization.logInErrorMessage);
   }
 
-  resetAuthPageState() {
+  void resetAuthPageState() {
     authPageState.value = AuthPageState.initial();
   }
 }
