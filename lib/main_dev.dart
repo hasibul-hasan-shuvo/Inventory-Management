@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '/app/my_app.dart';
@@ -10,7 +10,7 @@ import '/flavors/environment.dart';
 void main() async {
   EnvConfig devConfig = EnvConfig(
     appName: "Dental Inventory Dev",
-    baseUrl: "https://api.github.com",
+    baseUrl: "https://inventorybe-p372dbld2tofy-webapp.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
 
