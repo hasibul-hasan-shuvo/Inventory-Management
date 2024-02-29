@@ -44,7 +44,7 @@ class DeliveryView extends BaseView<DeliveryController> {
   Widget _buildOrderNumberView() {
     return Padding(
       padding: const EdgeInsets.all(AppValues.halfPadding),
-      child: Text(appLocalization.orderNumber, style: textTheme.titleLarge),
+      child: Text(appLocalization.orderNumber, style: textTheme.titleMedium),
     );
   }
 
@@ -76,8 +76,8 @@ class DeliveryView extends BaseView<DeliveryController> {
 
   Widget _buildOrderBasicInfo(int index) {
     return Padding(
-      padding: EdgeInsets.all(AppValues.margin_12.w),
-
+      padding: EdgeInsets.symmetric(
+          horizontal: AppValues.margin_12.w, vertical: AppValues.padding.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -94,7 +94,7 @@ class DeliveryView extends BaseView<DeliveryController> {
               ),
             ],
           ),
-          const Icon(Icons.arrow_right),
+          const Icon(Icons.chevron_right),
         ],
       ),
     );

@@ -28,7 +28,7 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
       controller: controller.refreshController,
       enablePullDown: false,
       child: Padding(
-        padding: const EdgeInsets.all(AppValues.halfPadding),
+        padding: EdgeInsets.all(AppValues.halfPadding.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,8 +43,8 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
 
   Widget _buildOrderNumberView() {
     return Padding(
-      padding: const EdgeInsets.all(AppValues.halfPadding),
-      child: Text(appLocalization.orderNumber, style: textTheme.titleLarge),
+      padding: EdgeInsets.all(AppValues.halfPadding.h),
+      child: Text(appLocalization.orderNumber, style: textTheme.titleMedium),
     );
   }
 
@@ -79,7 +79,8 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
         controller.toggleExpandStatus(index);
       },
       child: Padding(
-        padding: EdgeInsets.all(AppValues.margin_12.w),
+        padding: EdgeInsets.symmetric(
+            horizontal: AppValues.margin_10.w, vertical: AppValues.padding.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -98,8 +99,8 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
               ],
             ),
             controller.orderList[index].isExpanded
-                ? const Icon(Icons.arrow_drop_up)
-                : const Icon(Icons.arrow_right),
+                ? const Icon(Icons.keyboard_arrow_up)
+                : const Icon(Icons.keyboard_arrow_down),
           ],
         ),
       ),
