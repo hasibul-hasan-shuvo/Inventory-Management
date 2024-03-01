@@ -18,7 +18,7 @@ class InventoryController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    _fetchInventoryList();
+    fetchInventoryList();
   }
 
   void onLoading() {
@@ -47,7 +47,7 @@ class InventoryController extends BaseController {
     }
   }
 
-  Future<void> _fetchInventoryList() async {
+  Future<void> fetchInventoryList() async {
     callDataService(_inventoryRepository.getInventoryList(),
         onSuccess: _handleFetchInventoryListSuccessResponse, onError: (error) {
       inventoryPageState.value = InventoryPageState.error();

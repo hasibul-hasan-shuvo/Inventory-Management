@@ -1,9 +1,13 @@
 abstract class AuthLocalDataSource {
-  storeToken(String token);
+  void storeToken(String token);
 
-  storeRefreshToken(String refreshToken);
+  void storeInventoryID(String inventoryID);
 
-  Future<String> getToken();
+  void storeRefreshToken(String refreshToken);
 
-  Future<String> getRefreshToken();
+  String getToken();
+
+  String getRefreshToken();
+
+  String getInventoryID();
 }

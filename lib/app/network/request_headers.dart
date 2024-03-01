@@ -21,11 +21,12 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
   Future<Map<String, String>> getCustomHeaders() async {
     var customHeaders = {'content-type': 'application/json'};
 
-    String accessToken = await _repository.getAccessToken();
+    String accessToken = _repository.getAccessToken();
+    String inventoryID = _repository.getInventoryID();
 
     if (accessToken.isNotEmpty) {
       customHeaders['Authorization'] = 'Bearer $accessToken';
-      customHeaders['InventoryID'] = '2';
+      customHeaders['InventoryID'] = inventoryID == '' ? "2" : inventoryID;
     }
 
     return customHeaders;
@@ -34,7 +35,7 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == HttpStatus.unauthorized) {
-      String refreshToken = await _repository.getAccessToken();
+      String refreshToken = _repository.getAccessToken();
       if (err.requestOptions.path.contains(EndPoints.refreshToken)) {
         super.onError(err, handler);
       } else if (refreshToken.isNotEmpty) {

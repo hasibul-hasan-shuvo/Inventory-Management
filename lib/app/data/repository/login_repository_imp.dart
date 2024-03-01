@@ -15,6 +15,7 @@ class AuthRepositoryImp implements AuthRepository {
   Future<LoginResponse> login({required LoginRequestBody requestBody}) async {
     final data = await loginDataSource.login(requestBody: requestBody);
     authLocalDataSource.storeToken(data.token ?? "");
+    authLocalDataSource.storeToken("2");
     authLocalDataSource.storeRefreshToken(data.refreshToken ?? "");
 
     return data;
@@ -22,21 +23,28 @@ class AuthRepositoryImp implements AuthRepository {
 
   @override
   Future<bool> refreshToken() async {
-    final refreshToken = await authLocalDataSource.getRefreshToken();
+    final refreshToken = authLocalDataSource.getRefreshToken();
     final data = await loginDataSource.refreshToken(refreshToken);
     authLocalDataSource.storeToken(data.token ?? "");
+    //TODO
+    authLocalDataSource.storeInventoryID("2");
     authLocalDataSource.storeRefreshToken(data.refreshToken ?? "");
 
     return data.token != null;
   }
 
   @override
-  Future<String> getAccessToken() {
+  String getAccessToken() {
     return authLocalDataSource.getToken();
   }
 
   @override
-  Future<String> getRefreshToken() {
+  String getRefreshToken() {
     return authLocalDataSource.getRefreshToken();
+  }
+
+  @override
+  String getInventoryID() {
+    return authLocalDataSource.getInventoryID();
   }
 }

@@ -56,6 +56,7 @@
   "passwordSpecialCharacterValidator": "Password must contain at least one special character",
   "passwordUpperCaseValidator": "Password must contain at least one uppercase letter",
   "passwordValidator": "Password must be at least 8 characters long",
+  "retry": "Retry",
   "search": "Search",
   "settingsFontSize": "Font Size",
   "settingsLanguage": "Language",

@@ -22,15 +22,13 @@ class AuthRemoteDataSourceImp extends BaseRemoteSource
   }
 
   LoginResponse _parseLoginResponse(Response response) {
-    print(response);
-
     return LoginResponse.fromJson(response.data);
   }
 
   @override
   Future<LoginResponse> refreshToken(String refreshToken) {
     const endpoint = EndPoints.refreshToken;
-    final data = {'refresh':refreshToken};
+    final data = {'refresh': refreshToken};
     var dioCall = dioClient.post(endpoint, data: data);
 
     try {

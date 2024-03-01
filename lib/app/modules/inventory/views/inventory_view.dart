@@ -81,16 +81,21 @@ class InventoryView extends BaseView<InventoryController> {
       ItemInventoryCard(inventoryData: inventoryData);
 
   Widget _buildLoadingWidget() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
   Widget _buildErrorView() {
     return Center(
-      child: Text(
-        "Error",
-        style: textTheme.labelLarge,
+      child: TextButton(
+        onPressed: () {
+          controller.fetchInventoryList();
+        },
+        child: Text(
+          appLocalization.retry,
+          style: textTheme.labelLarge,
+        ),
       ),
     );
   }
