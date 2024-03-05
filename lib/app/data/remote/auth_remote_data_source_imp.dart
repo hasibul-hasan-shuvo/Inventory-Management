@@ -1,6 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/model/login_request_body.dart';
-import 'package:dental_inventory/app/data/model/login_response.dart';
+import 'package:dental_inventory/app/data/model/response/login_response.dart';
 import 'package:dental_inventory/app/network/end_points/end_points.dart';
 import 'package:dio/dio.dart';
 

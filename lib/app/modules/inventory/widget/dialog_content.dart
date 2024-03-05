@@ -1,9 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
+import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../core/values/app_values.dart';
 
@@ -11,7 +13,15 @@ import '../../../core/values/app_values.dart';
 class DialogContent extends StatelessWidget with BaseWidgetMixin {
   InventoryCardUIModel inventoryData;
 
-  DialogContent({required this.inventoryData});
+  final InventoryController _controller = Get.find<InventoryController>();
+
+  DialogContent({required this.inventoryData}) {
+    _controller.productID.value = inventoryData.productCode;
+    _controller.maxCount.value = inventoryData.maxTreshold;
+    _controller.minCount.value = inventoryData.minTreshold;
+    _controller.stockCount.value = inventoryData.fixedOrderSuggestions;
+    _controller.productCount.value = inventoryData.currentStock;
+  }
 
   @override
   Widget body(BuildContext context) {
@@ -85,13 +95,17 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
           TextFieldWithTitle(
             title: appLocalization.fixedProposal,
             initialValue: fixedProposal,
-            onChanged: (value) {},
+            onChanged: (value) {
+              _controller.stockCount.value = value;
+            },
           ),
           SizedBox(height: AppValues.margin_10.h),
           TextFieldWithTitle(
             title: appLocalization.inventory,
             initialValue: inventory,
-            onChanged: (value) {},
+            onChanged: (value) {
+              _controller.productCount.value = value;
+            },
           ),
         ],
       ),
@@ -108,13 +122,17 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
           TextFieldWithTitle(
             title: appLocalization.min,
             initialValue: min,
-            onChanged: (value) {},
+            onChanged: (value) {
+              _controller.minCount.value = value;
+            },
           ),
           SizedBox(height: AppValues.margin_10.h),
           TextFieldWithTitle(
             title: appLocalization.max,
             initialValue: max,
-            onChanged: (value) {},
+            onChanged: (value) {
+              _controller.maxCount.value = value;
+            },
           ),
         ],
       ),
