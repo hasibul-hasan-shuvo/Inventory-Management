@@ -60,6 +60,7 @@
   "themeSystem": "System standard",
   "titleOtherView": "andre",
   "titleEditOrderDialog": "Endre antall",
+  "titleEditProductOutAvailableCount": "Resterende beholdning etter uttak",
   "titleEmptyScannedList": "Skann varer",
   "titleItemRetrieval": "Varer taes ut",
   "updateProduct": "Oppdater produkt",

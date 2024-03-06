@@ -14,6 +14,6 @@ class ScannedProductUiModel {
   }
 
   void updateNumber(int newNumber) {
-    number += newNumber;
+    number = newNumber;
   }
 }

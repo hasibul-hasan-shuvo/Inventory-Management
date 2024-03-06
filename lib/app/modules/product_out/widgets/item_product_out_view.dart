@@ -2,12 +2,14 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/product_out/controllers/product_out_controller.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
+import 'package:dental_inventory/app/modules/product_out/widgets/product_out_item_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -141,31 +143,25 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    // int suggestion = data.number;
-    //
-    // showDialog(
-    //   context: context,
-    //   builder: (_) {
-    //     return AppDialog(
-    //       title: appLocalization.titleEditOrderDialog,
-    //       content: InventoryOrderEditDialogContentView(
-    //         id: data.id.toString(),
-    //         name: data.name,
-    //         imageUrl: data.imageUrl,
-    //         count: data.count,
-    //         suggestion: data.suggestion,
-    //         price: data.price,
-    //         onSuggestionValueChange: (int value) {
-    //           suggestion = value;
-    //         },
-    //       ),
-    //       positiveButtonText: appLocalization.buttonTextSaveChanges,
-    //       onPositiveButtonTap: () {
-    //         data.updateSuggestion(suggestion);
-    //         _controller.rebuildList();
-    //       },
-    //     );
-    //   },
-    // );
+    int number = data.number;
+
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleEditOrderDialog,
+          content: ProductOutItemEditDialogContentView(
+            data: data,
+            onNumberChanged: (int newNumber) {
+              number = newNumber;
+            },
+          ),
+          positiveButtonText: appLocalization.buttonTextSaveChanges,
+          onPositiveButtonTap: () {
+            _controller.updateProductNumber(data.id, number);
+          },
+        );
+      },
+    );
   }
 }

@@ -60,6 +60,7 @@
   "themeSystem": "System Default",
   "titleOtherView": "OtherView",
   "titleEditOrderDialog": "Change the number",
+  "titleEditProductOutAvailableCount": "Remaining stock after withdrawal",
   "titleEmptyScannedList": "Scan items",
   "titleItemRetrieval": "Goods are taken out",
   "updateProduct": "Update Product",

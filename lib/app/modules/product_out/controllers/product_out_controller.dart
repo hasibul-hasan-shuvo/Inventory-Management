@@ -15,7 +15,9 @@ class ProductOutController extends BaseController {
       for (ScannedProductUiModel product in scannedProducts) {
         if (product.id == code) {
           isListItem = true;
-          product.updateNumber(1);
+          if (product.number + 1 < product.available) {
+            product.updateNumber(product.number + 1);
+          }
           break;
         }
       }
@@ -25,5 +27,19 @@ class ProductOutController extends BaseController {
 
       _scannedProductsController.refresh();
     }
+  }
+
+  void updateProductNumber(String id, int number) {
+    if (number == 0) {
+      scannedProducts.removeWhere((element) => element.id == id);
+    } else {
+      for (ScannedProductUiModel product in scannedProducts) {
+        if (product.id == id) {
+          product.updateNumber(number);
+          break;
+        }
+      }
+    }
+    _scannedProductsController.refresh();
   }
 }
