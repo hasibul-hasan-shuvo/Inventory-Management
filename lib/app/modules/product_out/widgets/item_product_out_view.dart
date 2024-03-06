@@ -54,6 +54,7 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
         children: [
           _getInventoryName(),
           _getIdAndNumberView(),
+          _getAvailableView(),
         ],
       ),
     );
@@ -74,8 +75,21 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
         _getIdView(),
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
-          appLocalization.labelCount,
+          appLocalization.labelNumber,
           data.number.toString(),
+        ),
+      ],
+    ).marginOnly(right: AppValues.margin.w);
+  }
+
+  Widget _getAvailableView() {
+    return Row(
+      children: [
+        Expanded(child: Container()),
+        SizedBox(width: AppValues.smallMargin.w),
+        _getLabelAndCount(
+          appLocalization.labelAvailable,
+          data.available.toString(),
         ),
       ],
     ).marginOnly(right: AppValues.margin.w);
