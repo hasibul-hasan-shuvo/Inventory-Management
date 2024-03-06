@@ -58,6 +58,8 @@
   "themeSystem": "System standard",
   "titleOtherView": "andre",
   "titleEditOrderDialog": "Endre antall",
+  "titleEmptyScannedList": "Skann varer",
+  "titleItemRetrieval": "Varer taes ut",
   "updateProduct": "Oppdater produkt",
   "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",
   "yes": "Aye"
