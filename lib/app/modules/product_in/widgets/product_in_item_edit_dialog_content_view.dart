@@ -11,13 +11,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class ProductOutItemEditDialogContentView extends StatelessWidget
+class ProductInItemEditDialogContentView extends StatelessWidget
     with BaseWidgetMixin {
   final ScannedProductUiModel data;
   final Function(int) onNumberChanged;
   final RxInt _numberController = RxInt(0);
 
-  ProductOutItemEditDialogContentView({
+  ProductInItemEditDialogContentView({
     super.key,
     required this.data,
     required this.onNumberChanged,
@@ -61,7 +61,7 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
   Widget _getAvailableWithTitleView() {
     return Obx(
       () => Text(
-        "${appLocalization.titleEditProductOutAvailableCount}: $latestStock",
+        "${appLocalization.titleEditProductInAvailableCount}: $latestStock",
         style: textTheme.bodyMedium,
       ),
     ).marginSymmetric(horizontal: AppValues.smallMargin.w);
@@ -105,16 +105,13 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
   }
 
   Widget _getIncrementButton() {
-    return Obx(
-      () => IconButton(
-        onPressed: latestStock > 0 ? _onTapIncrement : null,
-        icon: AssetImageView(
-          fileName: AppIcons.roundedPlus,
-          height: AppValues.iconLargeSize.h,
-          width: AppValues.iconLargeSize.h,
-          color:
-              latestStock > 0 ? theme.colorScheme.primary : AppColors.basicGrey,
-        ),
+    return IconButton(
+      onPressed: latestStock > 0 ? _onTapIncrement : null,
+      icon: AssetImageView(
+        fileName: AppIcons.roundedPlus,
+        height: AppValues.iconLargeSize.h,
+        width: AppValues.iconLargeSize.h,
+        color: theme.colorScheme.primary,
       ),
     );
   }
@@ -138,5 +135,5 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
     onNumberChanged(_numberController.value);
   }
 
-  int get latestStock => data.available - _numberController.value;
+  int get latestStock => data.available + _numberController.value;
 }

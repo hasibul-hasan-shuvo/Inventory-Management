@@ -60,9 +60,11 @@
   "themeSystem": "System Default",
   "titleOtherView": "OtherView",
   "titleEditOrderDialog": "Change the number",
+  "titleEditProductInAvailableCount": "Remaining stock after revert",
   "titleEditProductOutAvailableCount": "Remaining stock after withdrawal",
   "titleEmptyScannedList": "Scan items",
   "titleItemRetrieval": "Goods are taken out",
+  "titleItemRevertRetrieval": "Goods are getting in",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
   "yes": "Yes"

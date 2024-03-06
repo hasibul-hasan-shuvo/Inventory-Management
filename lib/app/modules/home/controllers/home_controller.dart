@@ -30,7 +30,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.returnInventory,
         title: appLocalization.homeMenuRevertItemRetrieved,
-        route: "",
+        route: Routes.PRODUCT_IN,
       ),
     );
     list.add(

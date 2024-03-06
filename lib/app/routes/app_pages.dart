@@ -1,28 +1,31 @@
-import 'package:dental_inventory/app/modules/about_us/bindings/about_us_binding.dart';
-import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
-import 'package:dental_inventory/app/modules/contact_us/bindings/contact_us_binding.dart';
-import 'package:dental_inventory/app/modules/contact_us/views/contact_us_view.dart';
-import 'package:dental_inventory/app/modules/home/bindings/home_binding.dart';
-import 'package:dental_inventory/app/modules/home/views/home_view.dart';
-import 'package:dental_inventory/app/modules/inventory/bindings/inventory_binding.dart';
-import 'package:dental_inventory/app/modules/inventory/views/inventory_view.dart';
-import 'package:dental_inventory/app/modules/login/bindings/login_binding.dart';
-import 'package:dental_inventory/app/modules/login/views/login_view.dart';
-import 'package:dental_inventory/app/modules/main/bindings/main_binding.dart';
-import 'package:dental_inventory/app/modules/main/views/main_view.dart';
-import 'package:dental_inventory/app/modules/other/bindings/other_binding.dart';
-import 'package:dental_inventory/app/modules/other/views/other_view.dart';
-import 'package:dental_inventory/app/modules/product_out/bindings/product_out_binding.dart';
-import 'package:dental_inventory/app/modules/product_out/views/product_out_view.dart';
-import 'package:dental_inventory/app/modules/scanner/bindings/scanner_binding.dart';
-import 'package:dental_inventory/app/modules/scanner/views/scanner_view.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/bindings/shopping_cart_binding.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/views/shopping_cart_view.dart';
-import 'package:dental_inventory/app/modules/splash/bindings/splash_binding.dart';
-import 'package:dental_inventory/app/modules/splash/views/splash_view.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/bindings/suggested_orders_binding.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/views/suggested_orders_view.dart';
 import 'package:get/get.dart';
+
+import '../modules/about_us/bindings/about_us_binding.dart';
+import '../modules/about_us/views/about_us_view.dart';
+import '../modules/contact_us/bindings/contact_us_binding.dart';
+import '../modules/contact_us/views/contact_us_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/inventory/bindings/inventory_binding.dart';
+import '../modules/inventory/views/inventory_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/main/bindings/main_binding.dart';
+import '../modules/main/views/main_view.dart';
+import '../modules/other/bindings/other_binding.dart';
+import '../modules/other/views/other_view.dart';
+import '../modules/product_in/bindings/product_in_binding.dart';
+import '../modules/product_in/views/product_in_view.dart';
+import '../modules/product_out/bindings/product_out_binding.dart';
+import '../modules/product_out/views/product_out_view.dart';
+import '../modules/scanner/bindings/scanner_binding.dart';
+import '../modules/scanner/views/scanner_view.dart';
+import '../modules/shopping_cart/bindings/shopping_cart_binding.dart';
+import '../modules/shopping_cart/views/shopping_cart_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
+import '../modules/suggested_orders/bindings/suggested_orders_binding.dart';
+import '../modules/suggested_orders/views/suggested_orders_view.dart';
 
 part 'app_routes.dart';
 
@@ -91,6 +94,11 @@ class AppPages {
       name: _Paths.PRODUCT_OUT,
       page: () => ProductOutView(),
       binding: ProductOutBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_IN,
+      page: () => ProductInView(),
+      binding: ProductInBinding(),
     ),
   ];
 }
