@@ -42,4 +42,8 @@ class ProductOutController extends BaseController {
     }
     _scannedProductsController.refresh();
   }
+
+  void retrieveAllItems() {
+    logger.d("Retrieving ${scannedProducts.length} items");
+  }
 }

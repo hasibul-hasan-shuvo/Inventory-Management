@@ -19,8 +19,10 @@ class ProductOutView extends BaseView<ProductOutController> {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>
-      CustomAppBar(appBarTitleText: appLocalization.titleItemRetrieval);
+  PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
+        appBarTitleText: appLocalization.titleItemRetrieval,
+        actions: _getActions,
+      );
 
   @override
   Widget body(BuildContext context) {
@@ -60,5 +62,16 @@ class ProductOutView extends BaseView<ProductOutController> {
     )?.then((code) {
       controller.onScanned(code);
     });
+  }
+
+  List<Widget> get _getActions {
+    return [
+      IconButton(
+        onPressed: controller.retrieveAllItems,
+        icon: const Icon(
+          Icons.done,
+        ),
+      )
+    ];
   }
 }
