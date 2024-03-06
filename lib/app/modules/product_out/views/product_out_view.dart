@@ -1,9 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/ZebraScanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/product_out/widgets/EmptyScannedListView.dart';
 import 'package:dental_inventory/app/modules/product_out/widgets/item_product_out_view.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,6 +31,13 @@ class ProductOutView extends BaseView<ProductOutController> {
     );
   }
 
+  @override
+  Widget? floatingActionButton() {
+    return BarcodeScannerFloatingButton(
+      onPressed: _onPressedScanner,
+    );
+  }
+
   Widget _getProductListView() {
     return ListView.builder(
       padding: EdgeInsets.symmetric(
@@ -43,5 +52,13 @@ class ProductOutView extends BaseView<ProductOutController> {
 
   Widget _getItemBuilder(BuildContext context, int index) {
     return ItemProductOutView(data: controller.scannedProducts[index]);
+  }
+
+  void _onPressedScanner() {
+    Get.toNamed(
+      Routes.SCANNER,
+    )?.then((code) {
+      controller.onScanned(code);
+    });
   }
 }

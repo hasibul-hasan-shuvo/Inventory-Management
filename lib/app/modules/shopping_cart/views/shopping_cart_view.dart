@@ -1,7 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
+import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
@@ -35,13 +34,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
 
   @override
   Widget? floatingActionButton() {
-    return FloatingActionButton(
+    return BarcodeScannerFloatingButton(
       onPressed: _onPressedScanner,
-      child: AssetImageView(
-        fileName: AppIcons.barcodeScanner,
-        height: AppValues.iconDefaultSize.h,
-        color: theme.colorScheme.onPrimary,
-      ),
     );
   }
 
