@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/services.dart';
@@ -27,10 +28,12 @@ class ZebraScanner {
   }
 
   ZebraScanner._internal() {
-    scanChannel.receiveBroadcastStream().listen(
-          _onEvent,
-          onError: _onError,
-        );
+    if (Platform.isAndroid) {
+      scanChannel.receiveBroadcastStream().listen(
+            _onEvent,
+            onError: _onError,
+          );
+    }
   }
 
   void _onEvent(event) {
