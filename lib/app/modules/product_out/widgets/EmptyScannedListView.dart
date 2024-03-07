@@ -25,7 +25,7 @@ class EmptyScannedListView extends StatelessWidget with BaseWidgetMixin {
       child: AssetImageView(
         fileName: AppIcons.barcodeScanner,
         height: AppValues.iconExtraLargerSize.h,
-        color: theme.primaryColor,
+        color: theme.colorScheme.primary,
       ),
     );
   }
