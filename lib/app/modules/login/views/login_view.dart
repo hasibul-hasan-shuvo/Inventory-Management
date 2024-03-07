@@ -152,28 +152,11 @@ class LoginView extends BaseView<LoginController> {
     controller.authPageState.listen((state) {
       if (state.status == PageStatus.success) {
         Get.offAllNamed(Routes.MAIN);
-        _successSnackBar(state.message);
         controller.resetAuthPageState();
       } else if (state.status == PageStatus.error) {
-        _errorSnackBar(state.message);
+        controller.showErrorMessage(state.message ?? '');
         controller.resetAuthPageState();
       }
     });
-  }
-
-  void _successSnackBar(String? message) {
-    Get.snackbar(
-      appLocalization.success,
-      message ?? appLocalization.logInSuccessMessage,
-      snackPosition: SnackPosition.BOTTOM,
-    );
-  }
-
-  void _errorSnackBar(String? message) {
-    Get.snackbar(
-      appLocalization.error,
-      message ?? appLocalization.logInErrorMessage,
-      snackPosition: SnackPosition.BOTTOM,
-    );
   }
 }

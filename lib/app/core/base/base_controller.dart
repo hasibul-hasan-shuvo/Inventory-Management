@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/paging_controller.dart';
+import 'package:dental_inventory/app/data/repository/login_repository.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -20,6 +23,8 @@ abstract class BaseController extends GetxController {
   final Logger logger = BuildConfig.instance.config.logger;
 
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
+
+  final AuthRepository authRepository = Get.find();
 
   final RefreshController refreshController = RefreshController();
 
@@ -89,6 +94,7 @@ abstract class BaseController extends GetxController {
       _exception = exception;
       showErrorMessage(exception.message);
     } on UnauthorizedException catch (exception) {
+      logout();
       _exception = exception;
       showErrorMessage(exception.message);
     } on TimeoutException catch (exception) {
@@ -116,6 +122,16 @@ abstract class BaseController extends GetxController {
     if (onError != null) onError(_exception);
 
     onComplete == null ? hideLoading() : onComplete();
+  }
+
+  void logout() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      authRepository.logout();
+      if (Get.currentRoute != Routes.LOGIN ||
+          Get.currentRoute != Routes.SPLASH) {
+        Get.offAllNamed(Routes.SPLASH);
+      }
+    });
   }
 
   @override

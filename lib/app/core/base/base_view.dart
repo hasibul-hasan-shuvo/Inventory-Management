@@ -1,14 +1,14 @@
+import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/model/page_state.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
+import 'package:dental_inventory/app/core/widget/loading.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/core/model/page_state.dart';
-import 'package:dental_inventory/app/core/widget/loading.dart';
-import 'package:dental_inventory/flavors/build_config.dart';
 
 // ignore: must_be_immutable
 abstract class BaseView<Controller extends BaseController>
@@ -43,8 +43,14 @@ abstract class BaseView<Controller extends BaseController>
           Obx(() => controller.pageState == PageState.LOADING
               ? _showLoading()
               : Container()),
+          Obx(() => controller.successMessage.isNotEmpty
+              ? showSuccessSnackBar(controller.successMessage)
+              : Container()),
           Obx(() => controller.errorMessage.isNotEmpty
               ? showErrorSnackBar(controller.errorMessage)
+              : Container()),
+          Obx(() => controller.message.isNotEmpty
+              ? showSnackBar(controller.message)
               : Container()),
           Container(),
         ],
@@ -100,10 +106,44 @@ abstract class BaseView<Controller extends BaseController>
     }
   }
 
-  Widget showErrorSnackBar(String message) {
-    final snackBar = SnackBar(content: Text(message));
+  Widget showSuccessSnackBar(String message) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+      logger.d("Success message showing: $message");
+      Get.snackbar(
+        appLocalization.success,
+        message,
+        colorText: AppColors.colorWhite,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      controller.showSuccessMessage('');
+    });
+
+    return Container();
+  }
+
+  Widget showErrorSnackBar(String message) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.snackbar(
+        appLocalization.error,
+        message,
+        colorText: AppColors.colorWhite,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      controller.showErrorMessage('');
+    });
+
+    return Container();
+  }
+
+  Widget showSnackBar(String message) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.snackbar(
+        appLocalization.status,
+        message,
+        colorText: AppColors.colorWhite,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      controller.showMessage('');
     });
 
     return Container();

@@ -7,16 +7,21 @@ import 'package:get/get.dart';
 import 'login_repository.dart';
 
 class AuthRepositoryImp implements AuthRepository {
-  final AuthRemoteDataSource loginDataSource =
+  final AuthRemoteDataSource _remoteDataSource =
       Get.find<AuthRemoteDataSource>();
-  final AuthLocalDataSource authLocalDataSource =
-      Get.find<AuthLocalDataSource>();
+  final AuthLocalDataSource _localDataSource = Get.find<AuthLocalDataSource>();
 
   @override
   Future<LoginResponse> login({required LoginRequestBody requestBody}) async {
-    final data = await loginDataSource.login(requestBody: requestBody);
-    authLocalDataSource.storeToken(data.token ?? "");
+    return _remoteDataSource.login(requestBody: requestBody).then((data) {
+      _localDataSource.storeToken(data.token ?? '');
 
-    return data;
+      return data;
+    });
+  }
+
+  @override
+  void logout() {
+    _localDataSource.removeUserData();
   }
 }
