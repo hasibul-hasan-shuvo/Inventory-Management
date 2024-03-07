@@ -1,0 +1,77 @@
+import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/services/ZebraScanner.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/modules/product_in/widgets/item_product_in_view.dart';
+import 'package:dental_inventory/app/modules/product_out/widgets/EmptyScannedListView.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../controllers/product_in_controller.dart';
+
+// ignore: must_be_immutable
+class ProductInView extends BaseView<ProductInController> {
+  ProductInView() {
+    ZebraScanner().addScannerDelegate(controller.onScanned);
+  }
+
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
+        appBarTitleText: appLocalization.titleItemRevertRetrieval,
+        actions: _getActions,
+      );
+
+  @override
+  Widget body(BuildContext context) {
+    return Obx(
+      () => controller.scannedProducts.isEmpty
+          ? EmptyScannedListView()
+          : _getProductListView(),
+    );
+  }
+
+  @override
+  Widget? floatingActionButton() {
+    return BarcodeScannerFloatingButton(
+      onPressed: _onPressedScanner,
+    );
+  }
+
+  Widget _getProductListView() {
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppValues.padding.w,
+        vertical: AppValues.padding.h,
+      ),
+      shrinkWrap: true,
+      itemCount: controller.scannedProducts.length,
+      itemBuilder: _getItemBuilder,
+    );
+  }
+
+  Widget _getItemBuilder(BuildContext context, int index) {
+    return ItemProductInView(data: controller.scannedProducts[index]);
+  }
+
+  void _onPressedScanner() {
+    Get.toNamed(
+      Routes.SCANNER,
+    )?.then((code) {
+      controller.onScanned(code);
+    });
+  }
+
+  List<Widget> get _getActions {
+    return [
+      IconButton(
+        onPressed: controller.revertAllItems,
+        icon: const Icon(
+          Icons.done,
+        ),
+      )
+    ];
+  }
+}

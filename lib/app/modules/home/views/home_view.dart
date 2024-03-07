@@ -1,14 +1,14 @@
-import 'package:dental_inventory/app/core/values/app_icons.dart';
-import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
-import 'package:dental_inventory/app/modules/home/widget/item_home_menu_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/modules/home/controllers/home_controller.dart';
+import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
+import 'package:dental_inventory/app/modules/home/widget/item_home_menu_view.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class HomeView extends BaseView<HomeController> {
@@ -57,7 +57,7 @@ class HomeView extends BaseView<HomeController> {
       data: ItemHomeMenuUiModel(
         icon: AppIcons.qrCodeScanner,
         title: appLocalization.homeMenuItemRetrieval,
-        route: "",
+        route: Routes.PRODUCT_OUT,
       ),
     );
   }

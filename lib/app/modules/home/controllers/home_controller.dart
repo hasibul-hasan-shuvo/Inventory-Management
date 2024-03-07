@@ -30,7 +30,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.returnInventory,
         title: appLocalization.homeMenuRevertItemRetrieved,
-        route: "",
+        route: Routes.PRODUCT_IN,
       ),
     );
     list.add(
@@ -72,7 +72,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.shoppingCart,
         title: appLocalization.homeMenuShoppingCart,
-        route: "",
+        route: Routes.SHOPPING_CART,
       ),
     );
 

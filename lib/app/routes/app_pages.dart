@@ -19,6 +19,14 @@ import '../modules/not_delivery/bindings/not_delivery_binding.dart';
 import '../modules/not_delivery/views/not_delivery_view.dart';
 import '../modules/other/bindings/other_binding.dart';
 import '../modules/other/views/other_view.dart';
+import '../modules/product_in/bindings/product_in_binding.dart';
+import '../modules/product_in/views/product_in_view.dart';
+import '../modules/product_out/bindings/product_out_binding.dart';
+import '../modules/product_out/views/product_out_view.dart';
+import '../modules/scanner/bindings/scanner_binding.dart';
+import '../modules/scanner/views/scanner_view.dart';
+import '../modules/shopping_cart/bindings/shopping_cart_binding.dart';
+import '../modules/shopping_cart/views/shopping_cart_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/suggested_orders/bindings/suggested_orders_binding.dart';
@@ -91,6 +99,26 @@ class AppPages {
       name: _Paths.NOT_DELIVERY,
       page: () => NotDeliveryView(),
       binding: NotDeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHOPPING_CART,
+      page: () => ShoppingCartView(),
+      binding: ShoppingCartBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCANNER,
+      page: () => ScannerView(),
+      binding: ScannerBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_OUT,
+      page: () => ProductOutView(),
+      binding: ProductOutBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_IN,
+      page: () => ProductInView(),
+      binding: ProductInBinding(),
     ),
   ];
 }

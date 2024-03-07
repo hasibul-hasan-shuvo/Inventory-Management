@@ -112,4 +112,5 @@ abstract class AppValues {
   static const double itemImageHeight = 100;
   static const double itemImageWidth = 70;
   static const double space_110 = 110;
+  static const double scannerHeight = 350;
 }
