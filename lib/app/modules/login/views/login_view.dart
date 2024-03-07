@@ -112,6 +112,7 @@ class LoginView extends BaseView<LoginController> {
     return AppPrimaryButton(
       title: appLocalization.logIn,
       onPressed: () {
+        FocusManager.instance.primaryFocus?.unfocus();
         if (_formKey.currentState!.validate()) {
           controller.login();
         }
@@ -171,7 +172,7 @@ class LoginView extends BaseView<LoginController> {
   void _errorSnackBar(String? message) {
     Get.snackbar(
       appLocalization.error,
-      message??appLocalization.logInErrorMessage,
+      message ?? appLocalization.logInErrorMessage,
       snackPosition: SnackPosition.BOTTOM,
     );
   }
