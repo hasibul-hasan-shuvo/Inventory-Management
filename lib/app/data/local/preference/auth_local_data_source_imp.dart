@@ -15,4 +15,9 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   String getToken() {
     return _preferenceManager.getString(AppKeys.TOKEN);
   }
+
+  @override
+  void removeUserData() {
+    _preferenceManager.remove(AppKeys.TOKEN);
+  }
 }
