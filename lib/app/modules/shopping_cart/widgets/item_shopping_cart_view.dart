@@ -160,7 +160,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
-            id: data.id.toString(),
+            id: data.id,
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,

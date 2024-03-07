@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:get/get.dart';
 
@@ -20,15 +21,15 @@ class ShoppingCartController extends BaseController {
 
   void _getSuggestedOrders() {
     _shoppingCartItemsController([
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
-      ShoppingCartUiModel.dummy(),
+      ShoppingCartUiModel.dummy("12345"),
+      ShoppingCartUiModel.dummy("12346"),
+      ShoppingCartUiModel.dummy("12347"),
+      ShoppingCartUiModel.dummy("12348"),
+      ShoppingCartUiModel.dummy("12349"),
+      ShoppingCartUiModel.dummy("12340"),
+      ShoppingCartUiModel.dummy("12341"),
+      ShoppingCartUiModel.dummy("12342"),
+      ShoppingCartUiModel.dummy("12343"),
     ]);
   }
 
@@ -40,5 +41,23 @@ class ShoppingCartController extends BaseController {
 
   void updateCartCount() {
     _shoppingCartItemsController.refresh();
+  }
+
+  void onScanned(String? code) {
+    if (code.isNotNullOrEmpty) {
+      bool isListItem = false;
+      for (ShoppingCartUiModel product in shoppingCartItems) {
+        if (product.id == code) {
+          isListItem = true;
+          product.updateCartCount(product.cartCount + 1);
+          break;
+        }
+      }
+      if (!isListItem) {
+        _shoppingCartItemsController.add(ShoppingCartUiModel.dummy(code!));
+      }
+
+      _shoppingCartItemsController.refresh();
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/services/ZebraScanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
@@ -13,6 +14,10 @@ import '../controllers/shopping_cart_controller.dart';
 
 // ignore: must_be_immutable
 class ShoppingCartView extends BaseView<ShoppingCartController> {
+  ShoppingCartView() {
+    ZebraScanner().addScannerDelegate(controller.onScanned);
+  }
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
         appBarTitleText: appLocalization.homeMenuShoppingCart,
@@ -61,8 +66,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   void _onPressedScanner() {
     Get.toNamed(
       Routes.SCANNER,
-    )?.then((value) {
-      logger.d("Scanned code: $value");
+    )?.then((code) {
+      controller.onScanned(code);
     });
   }
 
