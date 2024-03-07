@@ -1,14 +1,14 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/modules/delivery/controllers/delivery_controller.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
+import 'package:dental_inventory/app/modules/delivery_details/controllers/delivery_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 //ignore: must_be_immutable
-class DeliveryDetailsView extends BaseView<DeliveryController> {
+class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
   late OrderUiModel order;
 
   DeliveryDetailsView() {

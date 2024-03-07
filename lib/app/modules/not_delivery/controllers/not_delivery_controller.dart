@@ -11,7 +11,7 @@ class NotDeliveryController extends BaseController {
     _makeOrderList();
   }
 
-  _makeOrderList() {
+  void _makeOrderList() {
     for (var i = 0; i < 9; i++) {
       orderList.add(OrderUiModel.dummy(i % 2 == 0 ? "Pending" : "Delivered"));
     }
