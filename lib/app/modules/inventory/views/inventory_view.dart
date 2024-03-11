@@ -61,8 +61,11 @@ class InventoryView extends BaseView<InventoryController> {
               itemCount:
                   controller.inventoryPageState.value.inventoryList.length,
               itemBuilder: (context, index) {
-                return _buildInventoryCard(
-                    controller.inventoryPageState.value.inventoryList[index]);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: _buildInventoryCard(
+                      controller.inventoryPageState.value.inventoryList[index]),
+                );
               },
             ),
           );

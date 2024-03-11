@@ -5,7 +5,6 @@ import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/data/repository/login_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_page_state.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
@@ -74,7 +73,7 @@ class InventoryController extends BaseController {
         onError: _handleUpdateInventoryDataError);
   }
 
-  _handleUpdateInventoryDataError(error) {
+  _handleUpdateInventoryDataError(Exception error) {
     inventoryPageState.value = InventoryPageState.error();
   }
 
@@ -85,8 +84,9 @@ class InventoryController extends BaseController {
     filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
   }
 
-  void _handleFetchInventoryListSuccessResponse(InventoryResponse data) {
-    inventoryPageState.value = InventoryPageState.success(data
+  void _handleFetchInventoryListSuccessResponse(
+      InventoryResponse inventoryResponse) {
+    inventoryPageState.value = InventoryPageState.success(inventoryResponse
             .data?.inventoryList
             ?.map((e) => e.toInventoryCardUIModel())
             .toList() ??
@@ -94,13 +94,17 @@ class InventoryController extends BaseController {
   }
 
   void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
-    Get.showSnackbar(
-      const GetSnackBar(
-        title: 'Success',
-        message: 'Inventory Updated Successfully',
-        duration: Duration(seconds: 2),
-      ),
-    );
-    Navigator.pop(Get.context!);
+    inventoryPageState.value.inventoryList
+        .firstWhere((element) => element.productCode == productID.value)
+        .maxTreshold = maxCount.value;
+    inventoryPageState.value.inventoryList
+        .firstWhere((element) => element.productCode == productID.value)
+        .minTreshold = minCount.value;
+    inventoryPageState.value.inventoryList
+        .firstWhere((element) => element.productCode == productID.value)
+        .fixedOrderSuggestions = productCount.value;
+    inventoryPageState.value.inventoryList
+        .firstWhere((element) => element.productCode == productID.value)
+        .currentStock = stockCount.value;
   }
 }

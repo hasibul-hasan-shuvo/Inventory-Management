@@ -2,10 +2,10 @@ class InventoryCardUIModel {
   final String id;
   final String productName;
   final String productImageUrl;
-  final String maxTreshold;
-  final String minTreshold;
-  final String currentStock;
-  final String fixedOrderSuggestions;
+  String maxTreshold;
+  String minTreshold;
+  String currentStock;
+  String fixedOrderSuggestions;
   final String unit;
   final String price;
   final String productCode;
