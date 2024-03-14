@@ -1,8 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
 
 import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
@@ -18,28 +20,24 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return Card(
-      elevation: AppValues.extraSmallElevation,
-      child: Padding(
-        padding: EdgeInsets.all(AppValues.halfPadding.sp),
-        child: Row(
-          children: [
-            _buildProductImage(),
-            SizedBox(width: AppValues.margin_10.w),
-            _buildQuantityRow(),
-            SizedBox(width: AppValues.margin_10.w),
-            _buildEditButton(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => _buildDialog(context),
-                );
-              },
-            )
-          ],
-        ),
+    return ElevatedContainer(
+      child: Row(
+        children: [
+          _buildProductImage(),
+          SizedBox(width: AppValues.margin_10.w),
+          _buildQuantityRow(),
+          SizedBox(width: AppValues.margin_10.w),
+          _buildEditButton(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => _buildDialog(context),
+              );
+            },
+          )
+        ],
       ),
-    );
+    ).marginOnly(bottom: AppValues.smallMargin.h);
   }
 
   Widget _buildDialog(BuildContext context) {
@@ -67,6 +65,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         fileName: AppIcons.edit,
         height: AppValues.iconDefaultSize.h,
         width: AppValues.iconDefaultSize.w,
+        color: theme.iconTheme.color,
       ),
     );
   }
@@ -79,6 +78,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
           Text(
             inventoryData.productName,
             style: textTheme.titleMedium,
+            maxLines: 2,
           ),
           SizedBox(height: AppValues.margin_10.h),
           Row(

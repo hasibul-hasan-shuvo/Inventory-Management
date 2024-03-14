@@ -1,21 +1,24 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/data/model/inventory_response.dart';
+import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_page_state.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
   final RxBool isSearchMode = false.obs;
-  final RxList<InventoryCardUIModel> inventoryList =
-      <InventoryCardUIModel>[].obs;
   final RxList<InventoryCardUIModel> filteredInventoryList =
       <InventoryCardUIModel>[].obs;
   final RxString searchQuery = ''.obs;
+  final Rx<InventoryPageState> inventoryPageState =
+      InventoryPageState.initial().obs;
+
+  final _inventoryRepository = Get.find<InventoryRepository>();
 
   @override
   void onInit() {
     super.onInit();
-    getInventoryList();
-    filteredInventoryList.addAll(inventoryList);
+    fetchInventoryList();
   }
 
   void onLoading() {
@@ -34,38 +37,29 @@ class InventoryController extends BaseController {
     searchQuery(query);
     if (query.isEmpty) {
       filteredInventoryList.clear();
-      filteredInventoryList.addAll(inventoryList);
+      filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
     } else {
       filteredInventoryList.clear();
-      filteredInventoryList.addAll(inventoryList
+      filteredInventoryList.addAll(inventoryPageState.value.inventoryList
           .where((element) =>
               element.productName.toLowerCase().contains(query.toLowerCase()))
           .toList());
     }
   }
 
-  void getInventoryList() {
-    for (int i = 0; i < AppValues.height_60; i++) {
-      inventoryList.add(
-        InventoryCardUIModel(
-          id: "123445",
-          productName: 'Protective head bio 4$i pcs',
-          productImageUrl:
-              'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-          maxTreshold: '100',
-          minTreshold: '10',
-          currentStock: '50',
-          fixedOrderSuggestions: '20',
-          unit: 'pcs',
-          price: '10.00',
-          productCode: 'P00$i',
-          productCategory: 'Category $i',
-          productDescription: 'This is product $i',
-          productBrand: 'Brand $i',
-          productSupplier: 'Supplier $i',
-          productLocation: 'Location $i',
-        ),
-      );
-    }
+  Future<void> fetchInventoryList() async {
+    callDataService(_inventoryRepository.getInventoryList(),
+        onSuccess: _handleFetchInventoryListSuccessResponse, onError: (error) {
+      inventoryPageState.value = InventoryPageState.error();
+    });
+    filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
+  }
+
+  _handleFetchInventoryListSuccessResponse(InventoryResponse data) {
+    inventoryPageState.value = InventoryPageState.success(data
+            .data?.inventoryList
+            ?.map((e) => e.toInventoryCardUIModel())
+            .toList() ??
+        []);
   }
 }

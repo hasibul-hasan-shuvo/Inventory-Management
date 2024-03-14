@@ -17,6 +17,26 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   }
 
   @override
+  String getRefreshToken() {
+    return _preferenceManager.getString(AppKeys.REFRESH);
+  }
+
+  @override
+  void storeRefreshToken(String refreshToken) {
+    return _preferenceManager.setString(AppKeys.REFRESH, refreshToken);
+  }
+
+  @override
+  String getInventoryID() {
+    return _preferenceManager.getString(AppKeys.INVENTORY_ID);
+  }
+
+  @override
+  void storeInventoryID(String inventoryID) {
+    return _preferenceManager.setString(AppKeys.INVENTORY_ID, inventoryID);
+  }
+
+  @override
   void removeUserData() {
     _preferenceManager.remove(AppKeys.TOKEN);
   }

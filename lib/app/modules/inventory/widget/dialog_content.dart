@@ -107,13 +107,13 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
         children: [
           TextFieldWithTitle(
             title: appLocalization.min,
-            initialValue: max,
+            initialValue: min,
             onChanged: (value) {},
           ),
           SizedBox(height: AppValues.margin_10.h),
           TextFieldWithTitle(
             title: appLocalization.max,
-            initialValue: min,
+            initialValue: max,
             onChanged: (value) {},
           ),
         ],
