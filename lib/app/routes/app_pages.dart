@@ -1,9 +1,12 @@
+import 'package:dental_inventory/app/modules/delivery/views/delivery_details_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/about_us/bindings/about_us_binding.dart';
 import '../modules/about_us/views/about_us_view.dart';
 import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
+import '../modules/delivery/bindings/delivery_binding.dart';
+import '../modules/delivery/views/delivery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
@@ -12,6 +15,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
+import '../modules/not_delivery/bindings/not_delivery_binding.dart';
+import '../modules/not_delivery/views/not_delivery_view.dart';
 import '../modules/other/bindings/other_binding.dart';
 import '../modules/other/views/other_view.dart';
 import '../modules/product_in/bindings/product_in_binding.dart';
@@ -79,6 +84,21 @@ class AppPages {
       name: _Paths.SUGGESTED_ORDERS,
       page: () => SuggestedOrdersView(),
       binding: SuggestedOrdersBinding(),
+    ),
+    GetPage(
+      name: _Paths.DELIVERY,
+      page: () => DeliveryView(),
+      binding: DeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.DELIVERY_DETAILS,
+      page: () => DeliveryDetailsView(),
+      binding: NotDeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOT_DELIVERY,
+      page: () => NotDeliveryView(),
+      binding: NotDeliveryBinding(),
     ),
     GetPage(
       name: _Paths.SHOPPING_CART,

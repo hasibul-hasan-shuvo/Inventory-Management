@@ -13,7 +13,7 @@ import '/flavors/environment.dart';
 void main() async {
   EnvConfig prodConfig = EnvConfig(
     appName: "Dental Inventory",
-    baseUrl: "https://api.github.com",
+    baseUrl: "https://inventorybe-p372dbld2tofy-webapp.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
 

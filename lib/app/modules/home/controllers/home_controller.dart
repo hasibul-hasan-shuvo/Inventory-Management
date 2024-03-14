@@ -1,5 +1,5 @@
 import 'package:dental_inventory/app/core/values/app_icons.dart';
-import 'package:dental_inventory/app/modules/home/model/item_home_menu_ui_model.dart';
+import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
@@ -37,14 +37,14 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.notDelivered,
         title: appLocalization.homeMenuNotDelivered,
-        route: "",
+        route: Routes.NOT_DELIVERY,
       ),
     );
     list.add(
       ItemHomeMenuUiModel(
         icon: AppIcons.orderDelivery,
         title: appLocalization.homeMenuOrderDelivery,
-        route: "",
+        route: Routes.DELIVERY,
       ),
     );
     list.add(

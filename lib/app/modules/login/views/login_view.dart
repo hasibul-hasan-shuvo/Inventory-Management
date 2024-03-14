@@ -1,19 +1,26 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_textfield.dart';
+import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../core/utils/input_validators.dart';
-import '../../../core/values/app_colors.dart';
 import '../../../core/values/app_values.dart';
 import '../../main/views/main_app_bar.dart';
 import '../controllers/login_controller.dart';
 
 // ignore: must_be_immutable
 class LoginView extends BaseView<LoginController> {
+  LoginView() {
+    _subscribeToLoginState();
+  }
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) =>
       MainAppBar(isLogOutVisible: false);
@@ -25,7 +32,7 @@ class LoginView extends BaseView<LoginController> {
   Widget? bottomNavigationBar() {
     return Container(
       color: AppColors.primary,
-      height: AppBar().preferredSize.height,
+      height: AppBar().preferredSize.height.h,
       child: Padding(
         padding: const EdgeInsets.all(AppValues.padding),
         child: Row(
@@ -79,7 +86,9 @@ class LoginView extends BaseView<LoginController> {
       validator: (value) {
         return InputValidators.email(value, appLocalization);
       },
-      onChanged: (value) {},
+      onChanged: (value) {
+        controller.email = value ?? "";
+      },
     );
   }
 
@@ -87,10 +96,12 @@ class LoginView extends BaseView<LoginController> {
     return AppTextField(
       prefix: const Icon(Icons.key_outlined),
       controller: _passwordController,
-      validator: (value) {
-        return InputValidators.password(value, appLocalization);
+      // validator: (value) {
+      // return InputValidators.password(value, appLocalization);
+      // },
+      onChanged: (value) {
+        controller.password = value ?? "";
       },
-      onChanged: (value) {},
       obscureText: true,
       labelText: appLocalization.password,
       hintText: appLocalization.enterPassword,
@@ -101,7 +112,10 @@ class LoginView extends BaseView<LoginController> {
     return AppPrimaryButton(
       title: appLocalization.logIn,
       onPressed: () {
-        if (_formKey.currentState!.validate()) {}
+        FocusManager.instance.primaryFocus?.unfocus();
+        if (_formKey.currentState!.validate()) {
+          controller.login();
+        }
       },
     );
   }
@@ -132,5 +146,17 @@ class LoginView extends BaseView<LoginController> {
             style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
       ],
     );
+  }
+
+  void _subscribeToLoginState() {
+    controller.authPageState.listen((state) {
+      if (state.status == PageStatus.success) {
+        Get.offAllNamed(Routes.MAIN);
+        controller.resetAuthPageState();
+      } else if (state.status == PageStatus.error) {
+        controller.showErrorMessage(state.message ?? '');
+        controller.resetAuthPageState();
+      }
+    });
   }
 }

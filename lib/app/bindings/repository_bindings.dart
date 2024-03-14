@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/repository/login_repository.dart';
+import 'package:dental_inventory/app/data/repository/login_repository_imp.dart';
 import 'package:get/get.dart';
 
 import '/app/data/repository/github_repository.dart';
@@ -9,6 +11,10 @@ class RepositoryBindings implements Bindings {
     Get.lazyPut<GithubRepository>(
       () => GithubRepositoryImpl(),
       tag: (GithubRepository).toString(),
+    );
+    Get.lazyPut<AuthRepository>(
+      () => AuthRepositoryImp(),
+      fenix: true,
     );
   }
 }

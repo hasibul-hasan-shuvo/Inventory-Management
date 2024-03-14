@@ -3,8 +3,10 @@ import 'package:dental_inventory/app/core/values/app_images.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
+import 'package:dental_inventory/app/modules/main/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -56,7 +58,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         isCancelable: false,
         negativeButtonText: appLocalization.no,
         positiveButtonText: appLocalization.yes,
-        onPositiveButtonTap: () {},
+        onPositiveButtonTap: () {
+          MainController controller = Get.find();
+          controller.logout();
+        },
       ),
     );
   }

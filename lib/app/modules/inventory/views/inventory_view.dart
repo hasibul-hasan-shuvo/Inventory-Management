@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
@@ -42,12 +43,20 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildListOfProduct() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: controller.filteredInventoryList.length,
-      itemBuilder: (context, index) {
-        return _buildInventoryCard(controller.filteredInventoryList[index]);
-      },
+
+    return PagingView(
+      controller: controller.refreshController,
+      enablePullDown: false,
+      enablePullUp: controller.pagingController.canLoadNextPage(),
+      onLoading: controller.onLoading,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: controller.filteredInventoryList.length,
+        itemBuilder: (context, index) {
+          return _buildInventoryCard(
+              controller.filteredInventoryList[index]);
+        },
+      ),
     );
   }
 

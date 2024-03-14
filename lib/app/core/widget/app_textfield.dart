@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../base/base_widget_mixin.dart';
 
 // ignore: must_be_immutable
-class AppTextField extends StatelessWidget with BaseWidgetMixin{
+class AppTextField extends StatelessWidget with BaseWidgetMixin {
   AppTextField(
       {Key? key,
       required this.controller,
@@ -20,7 +20,9 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
       this.validator,
       required this.onChanged,
       this.isEnabled})
-      : super(key: key);
+      : super(key: key) {
+    _isObscured = RxBool(obscureText);
+  }
 
   final TextEditingController controller;
   late String labelText;
@@ -34,7 +36,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
   final String hintText;
   final bool? isEnabled;
 
-  final RxBool _isObscured = false.obs;
+  late final RxBool _isObscured;
 
   @override
   Widget body(BuildContext context) {
@@ -42,22 +44,20 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style:theme.textTheme.labelLarge),
+        Text(labelText, style: theme.textTheme.labelLarge),
         const SizedBox(
           height: AppValues.halfPadding,
         ),
-
-        Obx(() =>
-        TextFormField(
-          enabled: isEnabled,
-          controller: controller,
-          onChanged: onChanged,
-          decoration: _buildInputDecoration(context),
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-          obscureText: _isObscured.value,
-          validator: validator,
-          keyboardType: keyboardType,
-        ))
+        Obx(() => TextFormField(
+              enabled: isEnabled,
+              controller: controller,
+              onChanged: onChanged,
+              decoration: _buildInputDecoration(context),
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              obscureText: _isObscured.value,
+              validator: validator,
+              keyboardType: keyboardType,
+            ))
       ],
     );
   }
@@ -75,8 +75,8 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin{
           borderSide: const BorderSide(width: 1)),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius),
-        borderSide: BorderSide(
-            color: theme.textTheme.labelLarge!.color!, width: 1),
+        borderSide:
+            BorderSide(color: theme.textTheme.labelLarge!.color!, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius),

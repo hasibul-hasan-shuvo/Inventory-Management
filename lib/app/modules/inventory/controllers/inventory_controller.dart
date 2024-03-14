@@ -18,6 +18,12 @@ class InventoryController extends BaseController {
     filteredInventoryList.addAll(inventoryList);
   }
 
+  void onLoading() {
+    _getNextSuggestedOrders();
+  }
+
+  void _getNextSuggestedOrders() {}
+
   changeSearchMode() {
     isSearchMode.value = !isSearchMode.value;
     searchQuery('');

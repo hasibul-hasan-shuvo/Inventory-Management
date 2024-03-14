@@ -28,4 +28,10 @@ abstract class PreferenceManager {
   void remove(String key);
 
   void clear();
+
+  void storeToken(String token);
+
+  void retrieveToken();
+
+  void clearSession();
 }
