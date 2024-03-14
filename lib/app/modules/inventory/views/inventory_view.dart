@@ -28,15 +28,13 @@ class InventoryView extends BaseView<InventoryController> {
     return Obx(() {
       final pageStatus = controller.inventoryPageState.value.pageStatus;
 
-      return Padding(
-          padding: EdgeInsets.all(AppValues.halfPadding.r),
-          child: pageStatus == PageStatus.loading
-              ? _buildLoadingWidget()
-              : pageStatus == PageStatus.success
-                  ? _buildListOfProduct()
-                  : pageStatus == PageStatus.error
-                      ? _buildErrorView()
-                      : Container());
+      return pageStatus == PageStatus.loading
+          ? _buildLoadingWidget()
+          : pageStatus == PageStatus.success
+              ? _buildListOfProduct()
+              : pageStatus == PageStatus.error
+                  ? _buildErrorView()
+                  : Container();
     });
   }
 
@@ -57,6 +55,10 @@ class InventoryView extends BaseView<InventoryController> {
             enablePullUp: controller.pagingController.canLoadNextPage(),
             onLoading: controller.onLoading,
             child: ListView.builder(
+              padding: EdgeInsets.symmetric(
+                vertical: AppValues.padding.h,
+                horizontal: AppValues.padding.w,
+              ),
               shrinkWrap: true,
               itemCount:
                   controller.inventoryPageState.value.inventoryList.length,
