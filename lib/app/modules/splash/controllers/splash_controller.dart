@@ -18,7 +18,7 @@ class SplashController extends BaseController {
 
   Future<void> _navigateToNextPage() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      String token =await _authRepository.getAccessToken();
+      String token = _authRepository.getAccessToken();
       if (token.isNotEmpty) {
         navigationController.trigger(Routes.MAIN);
       } else {

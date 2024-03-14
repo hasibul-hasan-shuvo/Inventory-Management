@@ -1,7 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/model/login_request_body.dart';
 import 'package:dental_inventory/app/data/model/login_response.dart';
-import 'package:dental_inventory/app/data/model/login_response.dart';
 import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:get/get.dart';
 

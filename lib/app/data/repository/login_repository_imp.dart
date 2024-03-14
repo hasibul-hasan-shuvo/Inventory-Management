@@ -7,15 +7,16 @@ import 'package:get/get.dart';
 import 'login_repository.dart';
 
 class AuthRepositoryImp implements AuthRepository {
-  final AuthRemoteDataSource _remoteDataSource = Get.find<AuthRemoteDataSource>();
+  final AuthRemoteDataSource _remoteDataSource =
+      Get.find<AuthRemoteDataSource>();
   final AuthLocalDataSource _localDataSource = Get.find<AuthLocalDataSource>();
 
   @override
   Future<LoginResponse> login({required LoginRequestBody requestBody}) async {
     return _remoteDataSource.login(requestBody: requestBody).then((data) {
       _localDataSource.storeToken(data.token ?? '');
-    authLocalDataSource.storeToken("2");
-    authLocalDataSource.storeRefreshToken(data.refreshToken ?? "");
+      _localDataSource.storeToken("2");
+      _localDataSource.storeRefreshToken(data.refreshToken ?? "");
 
       return data;
     });
@@ -28,28 +29,28 @@ class AuthRepositoryImp implements AuthRepository {
 
   @override
   Future<bool> refreshToken() async {
-    final refreshToken = authLocalDataSource.getRefreshToken();
-    final data = await loginDataSource.refreshToken(refreshToken);
-    authLocalDataSource.storeToken(data.token ?? "");
+    final refreshToken = _localDataSource.getRefreshToken();
+    final data = await _remoteDataSource.refreshToken(refreshToken);
+    _localDataSource.storeToken(data.token ?? "");
     //TODO
-    authLocalDataSource.storeInventoryID("2");
-    authLocalDataSource.storeRefreshToken(data.refreshToken ?? "");
+    _localDataSource.storeInventoryID("2");
+    _localDataSource.storeRefreshToken(data.refreshToken ?? "");
 
     return data.token != null;
   }
 
   @override
   String getAccessToken() {
-    return authLocalDataSource.getToken();
+    return _localDataSource.getToken();
   }
 
   @override
   String getRefreshToken() {
-    return authLocalDataSource.getRefreshToken();
+    return _localDataSource.getRefreshToken();
   }
 
   @override
   String getInventoryID() {
-    return authLocalDataSource.getInventoryID();
+    return _localDataSource.getInventoryID();
   }
 }
