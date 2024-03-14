@@ -83,7 +83,7 @@ class InventoryNetworkModel {
       minTreshold: minCount.toString(),
       productName: product?.name ?? '',
       currentStock: stockCount.toString(),
-      productCode: product?.itemId ?? '',
+      productCode: product?.itemId.toString() ?? '',
       fixedOrderSuggestions: suggestedOrderCount.toString(),
     );
   }

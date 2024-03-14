@@ -1,10 +1,12 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
+import 'package:get/get.dart';
 
 import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
@@ -15,6 +17,7 @@ import 'dialog_content.dart';
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   final InventoryCardUIModel inventoryData;
+  final InventoryController _controller = Get.find<InventoryController>();
 
   ItemInventoryCard({required this.inventoryData});
 
@@ -47,6 +50,9 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
+      onPositiveButtonTap: () {
+        _controller.updateInventoryData();
+      },
     );
   }
 
