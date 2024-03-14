@@ -5,7 +5,6 @@ import 'package:dental_inventory/app/modules/inventory/controllers/inventory_con
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/utils.dart';
 import 'package:get/get.dart';
 
 import '../../../core/values/app_icons.dart';

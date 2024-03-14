@@ -78,13 +78,13 @@ class InventoryNetworkModel {
 
   InventoryCardUIModel toInventoryCardUIModel() {
     return InventoryCardUIModel(
-    id: id.toString(),
+      id: id.toString(),
       maxTreshold: maxCount.toString(),
       minTreshold: minCount.toString(),
       productName: product?.name ?? '',
       currentStock: stockCount.toString(),
       productCode: product?.itemId.toString() ?? '',
-      fixedOrderSuggestions: suggestedOrderCount.toString(),
+      fixedOrderSuggestions: "${suggestedOrderCount ?? 0}",
     );
   }
 
