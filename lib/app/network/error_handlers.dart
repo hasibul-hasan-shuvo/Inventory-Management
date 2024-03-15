@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dental_inventory/app/network/exceptions/unauthorize_exception.dart';
 import 'package:dio/dio.dart';
 
 import '/app/network/exceptions/api_exception.dart';
@@ -63,6 +64,8 @@ Exception _parseDioErrorResponse(DioException dioError) {
       return ServiceUnavailableException("Service Temporarily Unavailable");
     case HttpStatus.notFound:
       return NotFoundException(serverMessage ?? "", status ?? "");
+    case HttpStatus.unauthorized:
+      return UnauthorizedException(serverMessage ?? "");
     default:
       return ApiException(
           httpCode: statusCode,
