@@ -10,12 +10,12 @@ class InventoryRepositoryImp implements InventoryRepository {
   final AuthLocalDataSource authLocalDataSource = Get.find();
 
   @override
-  Future<InventoryResponse> getInventoryList() async {
+  Future<InventoryListResponse> getInventoryList() async {
     return inventoryDataSource.getInventoryList();
   }
 
   @override
-  Future<InventoryResponse> updateInventoryData(
+  Future<InventoryListResponse> updateInventoryData(
       InventoryCountUpdateRequest request) {
     return inventoryDataSource.updateInventoryData(request);
   }

@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 class InventoryRemoteDataSourceImp extends BaseRemoteSource
     implements InventoryRemoteDataSource {
   @override
-  Future<InventoryResponse> getInventoryList() {
+  Future<InventoryListResponse> getInventoryList() {
     const endpoint = '/inventory/items/all/';
     var dioCall = dioClient.get(endpoint);
     try {
@@ -18,12 +18,12 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
     }
   }
 
-  InventoryResponse _parseInventoryResponse(Response response) {
-    return InventoryResponse.fromJson(response.data);
+  InventoryListResponse _parseInventoryResponse(Response response) {
+    return InventoryListResponse.fromJson(response.data);
   }
 
   @override
-  Future<InventoryResponse> updateInventoryData(
+  Future<InventoryListResponse> updateInventoryData(
       InventoryCountUpdateRequest request) {
     final endpoint = '/inventory/items/${request.productID}/update/';
     print(request.productID);
