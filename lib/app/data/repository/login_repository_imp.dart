@@ -13,12 +13,12 @@ class AuthRepositoryImp implements AuthRepository {
 
   @override
   Future<LoginResponse> login({required LoginRequestBody requestBody}) async {
-    return _remoteDataSource.login(requestBody: requestBody).then((data) {
-      _localDataSource.storeToken(data.token ?? '');
+    return _remoteDataSource.login(requestBody: requestBody).then((response) {
+      _localDataSource.storeToken(response.access ?? '');
       _localDataSource.storeInventoryID("2");
-      _localDataSource.storeRefreshToken(data.refreshToken ?? "");
+      _localDataSource.storeRefreshToken(response.refresh ?? "");
 
-      return data;
+      return response;
     });
   }
 
@@ -31,12 +31,12 @@ class AuthRepositoryImp implements AuthRepository {
   Future<bool> refreshToken() async {
     final refreshToken = _localDataSource.getRefreshToken();
     final data = await _remoteDataSource.refreshToken(refreshToken);
-    _localDataSource.storeToken(data.token ?? "");
+    _localDataSource.storeToken(data.access ?? "");
     //TODO
     _localDataSource.storeInventoryID("2");
-    _localDataSource.storeRefreshToken(data.refreshToken ?? "");
+    _localDataSource.storeRefreshToken(data.refresh ?? "");
 
-    return data.token != null;
+    return data.refresh != null;
   }
 
   @override
