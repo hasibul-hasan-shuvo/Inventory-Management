@@ -33,6 +33,7 @@ class SuggestedOrdersController extends BaseController {
   }
 
   void _handleSuggestedOrdersSuccessResponse(SuggestedOrdersResponse response) {
+    pagingController.nextPage();
     pagingController.isLastPage = response.next == null;
     List<SuggestedOrderUiModel> list = response.results
             ?.map((e) => SuggestedOrderUiModel.fromSuggestedOrderResponse(e))
@@ -55,6 +56,7 @@ class SuggestedOrdersController extends BaseController {
 
   void _handleNextSuggestedOrdersSuccessResponse(
       SuggestedOrdersResponse response) {
+    pagingController.nextPage();
     pagingController.isLastPage = response.next == null;
     List<SuggestedOrderUiModel> list = suggestedOrders;
     list.addAll(response.results

@@ -27,13 +27,17 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () => PagingView(
-        controller: controller.refreshController,
-        enablePullDown: false,
-        enablePullUp: controller.pagingController.canLoadNextPage(),
-        onLoading: controller.onLoading,
-        child: _getSuggestedOrdersListView(),
-      ),
+      () => controller.isPageLoading
+          ? const SizedBox.shrink()
+          : controller.shoppingCartItems.isEmpty
+              ? _getPlaceHolder()
+              : PagingView(
+                  controller: controller.refreshController,
+                  enablePullDown: false,
+                  enablePullUp: controller.pagingController.canLoadNextPage(),
+                  onLoading: controller.onLoading,
+                  child: _getSuggestedOrdersListView(),
+                ),
     );
   }
 
@@ -41,6 +45,18 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   Widget? floatingActionButton() {
     return BarcodeScannerFloatingButton(
       onPressed: _onPressedScanner,
+    );
+  }
+
+  Widget _getPlaceHolder() {
+    return Center(
+      child: Text(
+        appLocalization.placeHolderEmptyShoppingCart,
+        style: textTheme.bodyMedium,
+      ),
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+      vertical: AppValues.margin.h,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+
 class ShoppingCartUiModel {
   late final String id;
   late final String name;
@@ -9,10 +11,9 @@ class ShoppingCartUiModel {
   late final int count;
   late final num price;
 
-  ShoppingCartUiModel.dummy(this.id) {
-    name = "Filmholder fosforplate #0 bw";
-    imageUrl =
-        "https://cdn11.bigcommerce.com/s-cff2npbnfd/images/stencil/500x250/products/9703/15565/gc-eqfc-all__23149.1685386632.png?c=1";
+  ShoppingCartUiModel.fromShoppingCartResponse(ShoppingCartResponse response) {
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
     min = 10;
     max = 100;
     fixedSuggestion = 20;

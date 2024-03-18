@@ -46,6 +46,8 @@ abstract class BaseController extends GetxController {
 
   resetPageState() => _pageSateController(PageState.DEFAULT);
 
+  bool get isPageLoading => pageState == PageState.LOADING;
+
   showLoading() => updatePageState(PageState.LOADING);
 
   hideLoading() => resetPageState();
