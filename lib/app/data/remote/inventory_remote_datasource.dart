@@ -4,6 +4,6 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 abstract class InventoryRemoteDataSource {
   Future<InventoryListResponse> getInventoryList();
 
-  Future<InventoryListResponse> updateInventoryData(
+  Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request);
 }

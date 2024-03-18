@@ -23,7 +23,7 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   }
 
   @override
-  Future<InventoryListResponse> updateInventoryData(
+  Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request) {
     final endpoint = '/inventory/items/${request.productID}/update/';
     print(request.productID);
@@ -31,9 +31,13 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
     var dioCall = dioClient.put(endpoint, data: request.toJson());
     try {
       return callApiWithErrorParser(dioCall)
-          .then((response) => _parseInventoryResponse(response));
+          .then((response) => _parseUpdateInventoryResponse(response));
     } catch (e) {
       rethrow;
     }
+  }
+
+  InventoryResponse _parseUpdateInventoryResponse(Response response) {
+    return InventoryResponse.fromJson(response.data);
   }
 }

@@ -94,7 +94,7 @@ class InventoryController extends BaseController {
         []);
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryListResponse data) {
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
     inventoryPageState.value.inventoryList
         .firstWhere((element) => element.productCode == productID.value)
         .maxTreshold = maxCount.value;

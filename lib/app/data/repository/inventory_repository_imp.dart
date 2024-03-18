@@ -15,7 +15,7 @@ class InventoryRepositoryImp implements InventoryRepository {
   }
 
   @override
-  Future<InventoryListResponse> updateInventoryData(
+  Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request) {
     return inventoryDataSource.updateInventoryData(request);
   }
