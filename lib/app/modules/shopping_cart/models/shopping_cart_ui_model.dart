@@ -4,6 +4,7 @@ class ShoppingCartUiModel {
   late final String id;
   late final String name;
   late final String imageUrl;
+  late final String itemId;
   late final int min;
   late final int max;
   late final int? fixedSuggestion;
@@ -14,6 +15,7 @@ class ShoppingCartUiModel {
   ShoppingCartUiModel.fromShoppingCartResponse(ShoppingCartResponse response) {
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
+    itemId = response.product?.itemId ?? '';
     min = 10;
     max = 100;
     fixedSuggestion = 20;

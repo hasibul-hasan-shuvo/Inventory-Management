@@ -4,6 +4,7 @@ class SuggestedOrderUiModel {
   late final int id;
   late final String name;
   late final String imageUrl;
+  late final String itemId;
   late final int min;
   late final int max;
   late final int? fixedSuggestion;
@@ -16,6 +17,7 @@ class SuggestedOrderUiModel {
     id = response.id ?? -1;
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
+    itemId = response.product?.itemId ?? '';
     min = response.minCount ?? 0;
     max = response.maxCount ?? 0;
     count = response.stockCount ?? 0;
