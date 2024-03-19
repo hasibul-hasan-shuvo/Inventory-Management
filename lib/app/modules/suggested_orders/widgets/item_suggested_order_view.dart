@@ -191,8 +191,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            data.updateSuggestion(suggestion);
-            _controller.addToCart(data);
+            _controller.addToCart(data.itemId, suggestion);
           },
         );
       },
@@ -200,6 +199,8 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Future<bool> _onDismissed(DismissDirection direction) {
-    return _controller.addToCart(data).then((value) => value != null);
+    return _controller
+        .addToCart(data.itemId, data.suggestion)
+        .then((value) => value != null);
   }
 }

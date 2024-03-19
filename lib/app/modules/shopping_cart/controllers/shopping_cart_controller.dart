@@ -75,7 +75,7 @@ class ShoppingCartController extends BaseController {
   }
 
   void updateCartCount(ShoppingCartUiModel data, int cartCount) {
-    if (data.cartCount <= 0) {
+    if (cartCount <= 0) {
       _deleteCartItem(data);
     } else {
       _updateCartItem(data, cartCount);

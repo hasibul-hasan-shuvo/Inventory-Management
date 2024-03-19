@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
@@ -65,18 +66,23 @@ class SuggestedOrdersController extends BaseController {
         []);
   }
 
-  Future addToCart(SuggestedOrderUiModel data) {
+  Future addToCart(String itemId, int quantity) {
+    AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
+      itemId: itemId,
+      quantity: quantity,
+    );
+
     return callDataService(
       _repository.addItemToShoppingCart(
-        data.toAddShoppingCartItemRequestBody(),
+        requestBody,
       ),
-      onSuccess: (_) => _handleAddToCartSuccessResponse(data),
+      onSuccess: (_) => _handleAddToCartSuccessResponse(requestBody),
     );
   }
 
-  void _handleAddToCartSuccessResponse(SuggestedOrderUiModel data) {
+  void _handleAddToCartSuccessResponse(AddShoppingCartItemRequestBody data) {
     _suggestedOrdersController.removeWhere(
-      (element) => element.id == data.id,
+      (element) => element.itemId == data.itemId,
     );
   }
 
