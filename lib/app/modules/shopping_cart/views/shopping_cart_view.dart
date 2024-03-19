@@ -27,7 +27,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () => controller.isPageLoading
+      () => controller.isPageLoading && controller.shoppingCartItems.isEmpty
           ? const SizedBox.shrink()
           : controller.shoppingCartItems.isEmpty
               ? _getPlaceHolder()

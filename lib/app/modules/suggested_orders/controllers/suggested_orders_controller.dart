@@ -65,12 +65,24 @@ class SuggestedOrdersController extends BaseController {
         []);
   }
 
-  void addToCart(SuggestedOrderUiModel data) {
-    logger.d("Adding to shopping cart: ${data.name}");
+  Future addToCart(SuggestedOrderUiModel data) {
+    return callDataService(
+      _repository.addItemToShoppingCart(
+        data.toAddShoppingCartItemRequestBody(),
+      ),
+      onSuccess: (_) => _handleAddToCartSuccessResponse(data),
+    );
+  }
+
+  void _handleAddToCartSuccessResponse(SuggestedOrderUiModel data) {
+    _suggestedOrdersController.removeWhere(
+      (element) => element.id == data.id,
+    );
   }
 
   void addToCartAll() {
     logger.d("Adding all items to shopping cart");
+    _suggestedOrdersController.clear();
   }
 
   void rebuildList() {

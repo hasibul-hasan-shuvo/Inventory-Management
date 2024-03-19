@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
 
 class SuggestedOrderUiModel {
@@ -27,5 +28,12 @@ class SuggestedOrderUiModel {
 
   void updateSuggestion(int newSuggestion) {
     suggestion = newSuggestion;
+  }
+
+  AddShoppingCartItemRequestBody toAddShoppingCartItemRequestBody() {
+    return AddShoppingCartItemRequestBody(
+      itemId: itemId,
+      quantity: suggestion,
+    );
   }
 }

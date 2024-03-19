@@ -100,7 +100,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getIdView() {
     return Expanded(
       child: Text(
-        "#${data.id}",
+        "#${data.itemId}",
         style: textTheme.bodySmall,
       ),
     );
@@ -160,7 +160,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
-            id: data.id,
+            id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,

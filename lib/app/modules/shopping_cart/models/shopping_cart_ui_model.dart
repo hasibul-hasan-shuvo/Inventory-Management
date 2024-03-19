@@ -1,7 +1,7 @@
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
 
 class ShoppingCartUiModel {
-  late final String id;
+  late final int id;
   late final String name;
   late final String imageUrl;
   late final String itemId;
@@ -13,6 +13,7 @@ class ShoppingCartUiModel {
   late final num price;
 
   ShoppingCartUiModel.fromShoppingCartResponse(ShoppingCartResponse response) {
+    id = response.id ?? -1;
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
     itemId = response.product?.itemId ?? '';

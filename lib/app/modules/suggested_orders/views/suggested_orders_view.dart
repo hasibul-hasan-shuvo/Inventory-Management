@@ -20,7 +20,7 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () => controller.isPageLoading
+      () => controller.isPageLoading && controller.suggestedOrders.isEmpty
           ? const SizedBox.shrink()
           : controller.suggestedOrders.isEmpty
               ? _getPlaceHolder()
