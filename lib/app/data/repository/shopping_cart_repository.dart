@@ -6,4 +6,9 @@ abstract class ShoppingCartRepository {
 
   Future<ShoppingCartResponse> addItemInShoppingCart(
       AddShoppingCartItemRequestBody requestBody);
+
+  Future<ShoppingCartResponse> updateItemInShoppingCart(
+      String id, AddShoppingCartItemRequestBody requestBody);
+
+  Future<bool> deleteItemFromShoppingCart(String id);
 }

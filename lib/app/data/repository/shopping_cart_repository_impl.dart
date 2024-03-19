@@ -17,4 +17,15 @@ class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
       AddShoppingCartItemRequestBody requestBody) {
     return _remoteDataSource.addItemInShoppingCart(requestBody);
   }
+
+  @override
+  Future<ShoppingCartResponse> updateItemInShoppingCart(
+      String id, AddShoppingCartItemRequestBody requestBody) {
+    return _remoteDataSource.updateItemInShoppingCart(id, requestBody);
+  }
+
+  @override
+  Future<bool> deleteItemFromShoppingCart(String id) {
+    return _remoteDataSource.deleteItemFromShoppingCart(id);
+  }
 }

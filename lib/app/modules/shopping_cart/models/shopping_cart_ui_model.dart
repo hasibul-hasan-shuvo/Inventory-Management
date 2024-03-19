@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
 
 class ShoppingCartUiModel {
@@ -22,10 +23,17 @@ class ShoppingCartUiModel {
     fixedSuggestion = 20;
     count = 5;
     price = 100;
-    cartCount = 95;
+    cartCount = response.quantity ?? 0;
   }
 
   void updateCartCount(int newCount) {
     cartCount = newCount;
+  }
+
+  AddShoppingCartItemRequestBody toAddShoppingCartItemRequestBody() {
+    return AddShoppingCartItemRequestBody(
+      itemId: itemId,
+      quantity: cartCount,
+    );
   }
 }

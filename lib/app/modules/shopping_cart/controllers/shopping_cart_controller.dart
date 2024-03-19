@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
@@ -10,6 +11,7 @@ class ShoppingCartController extends BaseController {
 
   final RxList<ShoppingCartUiModel> _shoppingCartItemsController =
       RxList.empty(growable: true);
+
   List<ShoppingCartUiModel> get shoppingCartItems =>
       _shoppingCartItemsController;
 
@@ -72,15 +74,54 @@ class ShoppingCartController extends BaseController {
     logger.d("Ordering all items");
   }
 
-  void updateCartCount() {
+  void updateCartCount(ShoppingCartUiModel data, int cartCount) {
+    if (data.cartCount <= 0) {
+      _deleteCartItem(data);
+    } else {
+      _updateCartItem(data, cartCount);
+    }
+  }
+
+  void _updateCartItem(ShoppingCartUiModel data, int cartCount) {
+    AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
+      itemId: data.itemId,
+      quantity: cartCount,
+    );
+
+    callDataService(
+      _repository.updateItemInShoppingCart(
+        data.id.toString(),
+        requestBody,
+      ),
+      onSuccess: (response) => _handleUpdateCartSuccessResponse(data, response),
+    );
+  }
+
+  void _handleUpdateCartSuccessResponse(
+      ShoppingCartUiModel data, ShoppingCartResponse response) {
+    data.updateCartCount(response.quantity ?? 0);
     _shoppingCartItemsController.refresh();
+  }
+
+  void _deleteCartItem(ShoppingCartUiModel data) {
+    callDataService(
+      _repository.deleteItemFromShoppingCart(
+        data.id.toString(),
+      ),
+      onSuccess: (_) => _handleDeleteCartItemSuccessResponse(data),
+    );
+  }
+
+  void _handleDeleteCartItemSuccessResponse(ShoppingCartUiModel data) {
+    _shoppingCartItemsController
+        .removeWhere((element) => element.id == data.id);
   }
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
       bool isListItem = false;
       for (ShoppingCartUiModel product in shoppingCartItems) {
-        if (product.id == code) {
+        if (product.itemId == code) {
           isListItem = true;
           product.updateCartCount(product.cartCount + 1);
           break;
