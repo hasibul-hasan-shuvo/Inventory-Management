@@ -123,16 +123,30 @@ class ShoppingCartController extends BaseController {
       for (ShoppingCartUiModel product in shoppingCartItems) {
         if (product.itemId == code) {
           isListItem = true;
-          product.updateCartCount(product.cartCount + 1);
+          _updateCartItem(product, product.cartCount + 1);
           break;
         }
       }
       if (!isListItem) {
-        // TODO: fetch cart item and add data
-        // _shoppingCartItemsController.add(ShoppingCartUiModel.dummy(code!));
+        _addCartItem(code!);
       }
 
       _shoppingCartItemsController.refresh();
     }
+  }
+
+  void _addCartItem(String itemId) {
+    AddShoppingCartItemRequestBody requestBody =
+        AddShoppingCartItemRequestBody(itemId: itemId);
+    callDataService(
+      _repository.addItemInShoppingCart(requestBody),
+      onSuccess: _handleAddCartItemSuccessResponse,
+    );
+  }
+
+  void _handleAddCartItemSuccessResponse(ShoppingCartResponse response) {
+    _shoppingCartItemsController.add(
+      ShoppingCartUiModel.fromShoppingCartResponse(response),
+    );
   }
 }
