@@ -33,6 +33,7 @@
   "logOut": "Log Out",
   "logOutMessage": "Are you sure you want to log out?",
   "max": "Max",
+  "messageItemsUpdateUnsuccessful": "Items updates failed",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",
   "no": "No",

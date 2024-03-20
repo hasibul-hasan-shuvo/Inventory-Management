@@ -33,6 +33,7 @@
   "logOut": "Disengage",
   "logOutMessage:": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
+  "messageItemsUpdateUnsuccessful": "Vareoppdateringer mislyktes",
   "min": "Min",
   "mustBe11DigitsLong": "Må være 11 siffer langt",
   "no": "Nay",

@@ -78,11 +78,15 @@ class ProductOutController extends BaseController {
 
   void _handleRetrieveAllItemsSuccessResponse(
       ProductRetrievalResponse response) {
-    showSuccessMessage(response.message ?? appLocalization.success);
+    if (response.updatedList == null || response.updatedList!.isEmpty) {
+      showErrorMessage(appLocalization.messageItemsUpdateUnsuccessful);
+    } else {
+      showSuccessMessage(response.message ?? appLocalization.success);
 
-    response.updatedList?.forEach((element) {
-      _scannedProductsController.removeWhere(
-          (scannedProduct) => element.itemId == scannedProduct.itemId);
-    });
+      response.updatedList?.forEach((element) {
+        _scannedProductsController.removeWhere(
+            (scannedProduct) => element.itemId == scannedProduct.itemId);
+      });
+    }
   }
 }
