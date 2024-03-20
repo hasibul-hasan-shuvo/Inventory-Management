@@ -16,11 +16,12 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
   final InventoryController _controller = Get.find<InventoryController>();
 
   DialogContent({required this.inventoryData}) {
+    _controller.id = inventoryData.id;
     _controller.productID = inventoryData.productCode;
     _controller.maxCount = inventoryData.maxTreshold;
     _controller.minCount = inventoryData.minTreshold;
-    _controller.stockCount = inventoryData.fixedOrderSuggestions;
-    _controller.fixedSuggestion = inventoryData.currentStock;
+    _controller.stockCount = inventoryData.currentStock;
+    _controller.fixedSuggestion = inventoryData.fixedOrderSuggestions;
   }
 
   @override

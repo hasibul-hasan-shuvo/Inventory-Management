@@ -52,6 +52,9 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       onPositiveButtonTap: () {
         _controller.updateInventoryData();
       },
+      onNegativeButtonTap: () {
+        _controller.deleteInventoryItem();
+      },
     );
   }
 

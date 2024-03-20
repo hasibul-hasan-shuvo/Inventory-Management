@@ -12,8 +12,9 @@ class InventoryRepositoryImp implements InventoryRepository {
   final AuthRepository _authRepository = Get.find();
 
   @override
-  Future<InventoryListResponse> getInventoryList() async {
-    return _remoteDataSource.getInventoryList();
+  Future<InventoryListResponse> getInventoryList(
+      Map<String, dynamic> request) async {
+    return _remoteDataSource.getInventoryList(request);
   }
 
   @override
@@ -36,5 +37,10 @@ class InventoryRepositoryImp implements InventoryRepository {
       inventoryId,
       requestBody,
     );
+  }
+
+  @override
+  Future deleteInventory(Map<String, dynamic> request) {
+    return _remoteDataSource.deleteInventory(request);
   }
 }

@@ -4,7 +4,9 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 
 abstract class InventoryRepository {
-  Future<InventoryListResponse> getInventoryList();
+  Future<InventoryListResponse> getInventoryList(Map<String, dynamic> request);
+
+  Future deleteInventory(Map<String, dynamic> request);
 
   Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request);

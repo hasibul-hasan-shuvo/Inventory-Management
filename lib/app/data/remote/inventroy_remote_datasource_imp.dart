@@ -10,7 +10,7 @@ import 'package:dio/dio.dart';
 class InventoryRemoteDataSourceImp extends BaseRemoteSource
     implements InventoryRemoteDataSource {
   @override
-  Future<InventoryListResponse> getInventoryList() {
+  Future<InventoryListResponse> getInventoryList(Map<String, dynamic> request) {
     const endpoint = '${EndPoints.inventoryItems}/all/';
     var dioCall = dioClient.get(endpoint);
     try {
@@ -29,7 +29,6 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request) {
     final endpoint = '/inventory/items/${request.productID}/update/';
-    print(request.productID);
 
     var dioCall = dioClient.put(endpoint, data: request.toJson());
     try {
@@ -47,7 +46,7 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   @override
   Future<InventoryResponse> getProduct(String itemId) {
     String endpoint = '${EndPoints.inventoryItems}/$itemId/';
-    var dioCall = dioClient.get(endpoint);
+    var dioCall = dioClient.get(endpoint, queryParameters: {"id": itemId});
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _parseInventoryResponse(response));
@@ -75,5 +74,17 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   ProductRetrievalResponse _parseProductRetrievalResponse(
       Response<dynamic> response) {
     return ProductRetrievalResponse.fromJson(response.data);
+  }
+
+  @override
+  Future deleteInventory(Map<String, dynamic> request) {
+    final endpoint = '/inventory/items/${request["id"]}/delete/';
+
+    var dioCall = dioClient.delete(endpoint, data: request);
+    try {
+      return callApiWithErrorParser(dioCall);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

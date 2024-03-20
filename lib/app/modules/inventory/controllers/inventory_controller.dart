@@ -17,6 +17,7 @@ class InventoryController extends BaseController {
   final RxString searchQuery = ''.obs;
 
   String productID = '';
+  String id = '';
   String maxCount = '';
   String minCount = '';
   String stockCount = '';
@@ -48,14 +49,32 @@ class InventoryController extends BaseController {
     searchQuery(query);
   }
 
+  void deleteInventoryItem() {
+    final request = {"id": id};
+
+    callDataService(_inventoryRepository.deleteInventory(request),
+        onSuccess: _deleteSuccessHandler);
+  }
+
+  void _deleteSuccessHandler(e) {
+    Get.snackbar(appLocalization.success, appLocalization.status);
+    callDataService(
+      _inventoryRepository.getInventoryList({
+        "search": searchQuery.value,
+      }),
+      onSuccess: _handleFetchInventoryListSuccessResponse,
+    );
+  }
+
   Future<void> updateInventoryData() async {
     final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-        id: productID,
-        maxCount: maxCount,
-        minCount: minCount,
-        stockCount: stockCount,
-        inventoryID: _authRepository.getInventoryID(),
-        fixedSuggestion: fixedSuggestion);
+      id: productID,
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      inventoryID: _authRepository.getInventoryID(),
+      fixedSuggestion: fixedSuggestion,
+    );
     callDataService(
       _inventoryRepository.updateInventoryData(request),
       onSuccess: _handleUpdateInventoryDataSuccessResponse,
@@ -64,7 +83,9 @@ class InventoryController extends BaseController {
 
   Future<void> fetchInventoryList() async {
     callDataService(
-      _inventoryRepository.getInventoryList(),
+      _inventoryRepository.getInventoryList({
+        "search": searchQuery.value,
+      }),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );
   }
