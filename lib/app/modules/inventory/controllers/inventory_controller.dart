@@ -4,22 +4,23 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/data/repository/login_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_page_state.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
-  final RxBool isSearchMode = false.obs;
-  final RxList<InventoryCardUIModel> filteredInventoryList =
-      <InventoryCardUIModel>[].obs;
-  final RxString searchQuery = ''.obs;
-  final Rx<InventoryPageState> inventoryPageState =
-      InventoryPageState.initial().obs;
+  final RxList<InventoryCardUIModel> _inventoryItemsController =
+      RxList.empty(growable: true);
 
-  final RxString productID = RxString('');
-  final RxString maxCount = RxString('');
-  final RxString minCount = RxString('');
-  final RxString stockCount = RxString('');
-  final RxString productCount = RxString('');
+  List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
+
+  final RxBool isSearchMode = false.obs;
+
+  final RxString searchQuery = ''.obs;
+
+  String productID = '';
+  String maxCount = '';
+  String minCount = '';
+  String stockCount = '';
+  String fixedSuggestion = '';
 
   final InventoryRepository _inventoryRepository =
       Get.find<InventoryRepository>();
@@ -45,67 +46,48 @@ class InventoryController extends BaseController {
 
   updateSearchQuery(String query) {
     searchQuery(query);
-    if (query.isEmpty) {
-      filteredInventoryList.clear();
-      filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
-    } else {
-      filteredInventoryList.clear();
-      filteredInventoryList.addAll(
-        inventoryPageState.value.inventoryList
-            .where((element) =>
-                element.productName.toLowerCase().contains(query.toLowerCase()))
-            .toList(),
-      );
-    }
   }
 
   Future<void> updateInventoryData() async {
     final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-      id: productID.value,
-      maxCount: maxCount.value,
-      minCount: minCount.value,
-      stockCount: stockCount.value,
-      inventoryID: _authRepository.getInventoryID(),
-      product: productCount.value,
-    );
+        id: productID,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        inventoryID: _authRepository.getInventoryID(),
+        fixedSuggestion: fixedSuggestion);
     callDataService(
       _inventoryRepository.updateInventoryData(request),
       onSuccess: _handleUpdateInventoryDataSuccessResponse,
-      onError: _handleUpdateInventoryDataError,
     );
   }
 
-  _handleUpdateInventoryDataError(Exception error) {
-    inventoryPageState.value = InventoryPageState.error();
-  }
-
   Future<void> fetchInventoryList() async {
-    callDataService(_inventoryRepository.getInventoryList(),
-        onSuccess: _handleFetchInventoryListSuccessResponse,
-        onError: _handleUpdateInventoryDataError);
-    filteredInventoryList.addAll(inventoryPageState.value.inventoryList);
+    callDataService(
+      _inventoryRepository.getInventoryList(),
+      onSuccess: _handleFetchInventoryListSuccessResponse,
+    );
   }
 
   void _handleFetchInventoryListSuccessResponse(
       InventoryListResponse response) {
-    inventoryPageState.value = InventoryPageState.success(response.inventoryList
-            ?.map((e) => e.toInventoryCardUIModel())
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<InventoryCardUIModel> list = response.inventoryList
+            ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
             .toList() ??
-        []);
+        [];
+    _inventoryItemsController(list);
   }
 
   void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
-    inventoryPageState.value.inventoryList
-        .firstWhere((element) => element.productCode == productID.value)
-        .maxTreshold = maxCount.value;
-    inventoryPageState.value.inventoryList
-        .firstWhere((element) => element.productCode == productID.value)
-        .minTreshold = minCount.value;
-    inventoryPageState.value.inventoryList
-        .firstWhere((element) => element.productCode == productID.value)
-        .fixedOrderSuggestions = productCount.value;
-    inventoryPageState.value.inventoryList
-        .firstWhere((element) => element.productCode == productID.value)
-        .currentStock = stockCount.value;
+    for (var element in inventoryItems) {
+      if (element.productCode == data.product?.itemId.toString()) {
+        element.maxTreshold = data.maxCount.toString();
+        element.minTreshold = data.minCount.toString();
+        element.currentStock = data.stockCount.toString();
+        element.fixedOrderSuggestions = data.fixedSuggestion.toString();
+      }
+    }
   }
 }
