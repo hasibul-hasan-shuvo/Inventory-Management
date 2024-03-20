@@ -11,4 +11,6 @@ abstract class ShoppingCartRemoteDataSource {
       String id, AddShoppingCartItemRequestBody requestBody);
 
   Future<bool> deleteItemFromShoppingCart(String id);
+
+  Future<bool> addAllItemsInShoppingCart();
 }

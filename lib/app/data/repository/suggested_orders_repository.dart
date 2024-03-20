@@ -7,4 +7,6 @@ abstract class SuggestedOrdersRepository {
 
   Future<ShoppingCartResponse> addItemToShoppingCart(
       AddShoppingCartItemRequestBody requestBody);
+
+  Future<bool> addAllItemsInShoppingCart();
 }

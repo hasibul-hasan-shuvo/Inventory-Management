@@ -20,4 +20,9 @@ class SuggestedOrdersRepositoryImpl implements SuggestedOrdersRepository {
       AddShoppingCartItemRequestBody requestBody) {
     return _cartRepository.addItemInShoppingCart(requestBody);
   }
+
+  @override
+  Future<bool> addAllItemsInShoppingCart() {
+    return _cartRepository.addAllItemsInShoppingCart();
+  }
 }

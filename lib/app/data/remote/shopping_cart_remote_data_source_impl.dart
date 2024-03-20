@@ -87,4 +87,21 @@ class ShoppingCartRemoteDataSourceImpl extends BaseRemoteSource
   bool _parseDeleteItemFromShoppingCartResponse(Response<dynamic> response) {
     return response.statusCode == HttpStatus.noContent;
   }
+
+  @override
+  Future<bool> addAllItemsInShoppingCart() {
+    try {
+      String endpoint = "${EndPoints.addShoppingCartItems}/all/";
+      var dioCall = dioClient.post(endpoint);
+
+      return callApiWithErrorParser(dioCall).then(
+          (response) => _handleAddAllItemsInShoppingCartResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  bool _handleAddAllItemsInShoppingCartResponse(Response<dynamic> response) {
+    return response.statusCode == HttpStatus.created;
+  }
 }

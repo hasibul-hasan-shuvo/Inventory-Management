@@ -28,4 +28,9 @@ class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
   Future<bool> deleteItemFromShoppingCart(String id) {
     return _remoteDataSource.deleteItemFromShoppingCart(id);
   }
+
+  @override
+  Future<bool> addAllItemsInShoppingCart() {
+    return _remoteDataSource.addAllItemsInShoppingCart();
+  }
 }

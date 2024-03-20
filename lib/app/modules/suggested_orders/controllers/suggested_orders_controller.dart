@@ -9,6 +9,7 @@ class SuggestedOrdersController extends BaseController {
   final SuggestedOrdersRepository _repository = Get.find();
   final RxList<SuggestedOrderUiModel> _suggestedOrdersController =
       RxList.empty(growable: true);
+
   List<SuggestedOrderUiModel> get suggestedOrders => _suggestedOrdersController;
 
   @override
@@ -87,8 +88,12 @@ class SuggestedOrdersController extends BaseController {
   }
 
   void addToCartAll() {
-    logger.d("Adding all items to shopping cart");
-    _suggestedOrdersController.clear();
+    callDataService(_repository.addAllItemsInShoppingCart(),
+        onSuccess: (isSuccess) {
+      if (isSuccess) {
+        _suggestedOrdersController.clear();
+      }
+    });
   }
 
   void rebuildList() {
