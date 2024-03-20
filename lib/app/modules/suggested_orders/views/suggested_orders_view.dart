@@ -20,13 +20,29 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () => PagingView(
-        controller: controller.refreshController,
-        enablePullDown: false,
-        enablePullUp: controller.pagingController.canLoadNextPage(),
-        onLoading: controller.onLoading,
-        child: _getSuggestedOrdersListView(),
+      () => controller.isPageLoading && controller.suggestedOrders.isEmpty
+          ? const SizedBox.shrink()
+          : controller.suggestedOrders.isEmpty
+              ? _getPlaceHolder()
+              : PagingView(
+                  controller: controller.refreshController,
+                  enablePullDown: false,
+                  enablePullUp: controller.pagingController.canLoadNextPage(),
+                  onLoading: controller.onLoading,
+                  child: _getSuggestedOrdersListView(),
+                ),
+    );
+  }
+
+  Widget _getPlaceHolder() {
+    return Center(
+      child: Text(
+        appLocalization.placeHolderEmptySuggestedOrders,
+        style: textTheme.bodyMedium,
       ),
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+      vertical: AppValues.margin.h,
     );
   }
 

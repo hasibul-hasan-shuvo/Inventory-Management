@@ -110,7 +110,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   Widget _getIdView() {
     return Expanded(
       child: Text(
-        "#${data.id}",
+        "#${data.itemId}",
         style: textTheme.bodySmall,
       ),
     );
@@ -179,7 +179,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
-            id: data.id.toString(),
+            id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,
@@ -191,8 +191,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            data.updateSuggestion(suggestion);
-            _controller.rebuildList();
+            _controller.addToCart(data.itemId, suggestion);
           },
         );
       },
@@ -200,8 +199,8 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Future<bool> _onDismissed(DismissDirection direction) {
-    _controller.addToCart(data);
-
-    return Future.value(true);
+    return _controller
+        .addToCart(data.itemId, data.suggestion)
+        .then((value) => value != null);
   }
 }

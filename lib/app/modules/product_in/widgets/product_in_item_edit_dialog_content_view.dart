@@ -42,7 +42,7 @@ class ProductInItemEditDialogContentView extends StatelessWidget
 
   Widget _getProductTopView() {
     return ProductTopView(
-      id: data.id,
+      id: data.itemId,
       name: data.name,
       imageUrl: data.imageUrl,
     );

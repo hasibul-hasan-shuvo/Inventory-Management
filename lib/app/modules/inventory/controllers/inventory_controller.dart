@@ -68,9 +68,11 @@ class InventoryController extends BaseController {
       inventoryID: _authRepository.getInventoryID(),
       product: productCount.value,
     );
-    callDataService(_inventoryRepository.updateInventoryData(request),
-        onSuccess: _handleUpdateInventoryDataSuccessResponse,
-        onError: _handleUpdateInventoryDataError);
+    callDataService(
+      _inventoryRepository.updateInventoryData(request),
+      onSuccess: _handleUpdateInventoryDataSuccessResponse,
+      onError: _handleUpdateInventoryDataError,
+    );
   }
 
   _handleUpdateInventoryDataError(Exception error) {
@@ -85,9 +87,8 @@ class InventoryController extends BaseController {
   }
 
   void _handleFetchInventoryListSuccessResponse(
-      InventoryResponse inventoryResponse) {
-    inventoryPageState.value = InventoryPageState.success(inventoryResponse
-            .data?.inventoryList
+      InventoryListResponse response) {
+    inventoryPageState.value = InventoryPageState.success(response.inventoryList
             ?.map((e) => e.toInventoryCardUIModel())
             .toList() ??
         []);

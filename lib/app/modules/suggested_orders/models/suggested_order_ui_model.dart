@@ -1,7 +1,11 @@
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
+
 class SuggestedOrderUiModel {
   late final int id;
   late final String name;
   late final String imageUrl;
+  late final String itemId;
   late final int min;
   late final int max;
   late final int? fixedSuggestion;
@@ -9,19 +13,27 @@ class SuggestedOrderUiModel {
   late final int count;
   late final num price;
 
-  SuggestedOrderUiModel.dummy() {
-    id = 12345;
-    name = "Filmholder fosforplate #0 bw";
-    imageUrl =
-        "https://cdn11.bigcommerce.com/s-cff2npbnfd/images/stencil/500x250/products/9703/15565/gc-eqfc-all__23149.1685386632.png?c=1";
-    min = 10;
-    max = 100;
-    count = 5;
-    price = 100;
-    suggestion = 95;
+  SuggestedOrderUiModel.fromSuggestedOrderResponse(
+      SuggestedOrderResponse response) {
+    id = response.id ?? -1;
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
+    itemId = response.product?.itemId ?? '';
+    min = response.minCount ?? 0;
+    max = response.maxCount ?? 0;
+    count = response.stockCount ?? 0;
+    price = response.product?.price ?? 0.0;
+    suggestion = response.suggestedOrderCount ?? 0;
   }
 
   void updateSuggestion(int newSuggestion) {
     suggestion = newSuggestion;
+  }
+
+  AddShoppingCartItemRequestBody toAddShoppingCartItemRequestBody() {
+    return AddShoppingCartItemRequestBody(
+      itemId: itemId,
+      quantity: suggestion,
+    );
   }
 }

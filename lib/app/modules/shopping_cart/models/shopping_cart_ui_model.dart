@@ -1,27 +1,33 @@
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+
 class ShoppingCartUiModel {
-  late final String id;
+  late final int id;
   late final String name;
   late final String imageUrl;
-  late final int min;
-  late final int max;
-  late final int? fixedSuggestion;
+  late final String itemId;
   late int cartCount;
   late final int count;
   late final num price;
 
-  ShoppingCartUiModel.dummy(this.id) {
-    name = "Filmholder fosforplate #0 bw";
-    imageUrl =
-        "https://cdn11.bigcommerce.com/s-cff2npbnfd/images/stencil/500x250/products/9703/15565/gc-eqfc-all__23149.1685386632.png?c=1";
-    min = 10;
-    max = 100;
-    fixedSuggestion = 20;
-    count = 5;
-    price = 100;
-    cartCount = 95;
+  ShoppingCartUiModel.fromShoppingCartResponse(ShoppingCartResponse response) {
+    id = response.id ?? -1;
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
+    itemId = response.product?.itemId ?? '';
+    count = response.stockCount ?? 0;
+    price = response.price ?? 0.0;
+    cartCount = response.quantity ?? 0;
   }
 
   void updateCartCount(int newCount) {
     cartCount = newCount;
+  }
+
+  AddShoppingCartItemRequestBody toAddShoppingCartItemRequestBody() {
+    return AddShoppingCartItemRequestBody(
+      itemId: itemId,
+      quantity: cartCount,
+    );
   }
 }
