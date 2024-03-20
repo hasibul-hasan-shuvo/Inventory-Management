@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../login/models/auth_page_state.dart';
 import '../controllers/inventory_controller.dart';
 
 // ignore: must_be_immutable
@@ -26,15 +25,11 @@ class InventoryView extends BaseView<InventoryController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() {
-      final pageStatus = controller.inventoryPageState.value.pageStatus;
-
-      return pageStatus == PageStatus.loading
-          ? _buildLoadingWidget()
-          : pageStatus == PageStatus.success
-              ? _buildListOfProduct()
-              : pageStatus == PageStatus.error
-                  ? _buildErrorView()
-                  : Container();
+      return controller.isPageLoading
+          ? const SizedBox.shrink()
+          : controller.inventoryItems.isEmpty
+              ? _getPlaceHolder()
+              : _buildListOfProduct();
     });
   }
 
@@ -47,34 +42,21 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildListOfProduct() {
-    return controller.inventoryPageState.value.inventoryList.isEmpty
-        ? _buildNoDataFoundWidget()
-        : PagingView(
-            controller: controller.refreshController,
-            enablePullDown: false,
-            enablePullUp: controller.pagingController.canLoadNextPage(),
-            onLoading: controller.onLoading,
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(
-                vertical: AppValues.padding.h,
-                horizontal: AppValues.padding.w,
-              ),
-              shrinkWrap: true,
-              itemCount:
-                  controller.inventoryPageState.value.inventoryList.length,
-              itemBuilder: (context, index) {
-                return _buildInventoryCard(
-                    controller.inventoryPageState.value.inventoryList[index]);
-              },
-            ),
-          );
-  }
-
-  Widget _buildNoDataFoundWidget() {
-    return Center(
-      child: Text(
-        appLocalization.noDataFound,
-        style: textTheme.labelLarge,
+    return PagingView(
+      controller: controller.refreshController,
+      enablePullDown: false,
+      enablePullUp: controller.pagingController.canLoadNextPage(),
+      onLoading: controller.onLoading,
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: AppValues.padding.h,
+          horizontal: AppValues.padding.w,
+        ),
+        shrinkWrap: true,
+        itemCount: controller.inventoryItems.length,
+        itemBuilder: (context, index) {
+          return _buildInventoryCard(controller.inventoryItems[index]);
+        },
       ),
     );
   }
@@ -82,23 +64,15 @@ class InventoryView extends BaseView<InventoryController> {
   Widget _buildInventoryCard(InventoryCardUIModel inventoryData) =>
       ItemInventoryCard(inventoryData: inventoryData);
 
-  Widget _buildLoadingWidget() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget _buildErrorView() {
+  Widget _getPlaceHolder() {
     return Center(
-      child: TextButton(
-        onPressed: () {
-          controller.fetchInventoryList();
-        },
-        child: Text(
-          appLocalization.retry,
-          style: textTheme.labelLarge,
-        ),
+      child: Text(
+        appLocalization.placeHolderEmptyInventory,
+        style: textTheme.bodyMedium,
       ),
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+      vertical: AppValues.margin.h,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+
 class InventoryCardUIModel {
   final String id;
   final String productName;
@@ -32,4 +34,17 @@ class InventoryCardUIModel {
     this.productSupplier = "",
     this.productLocation = "",
   });
+
+  static InventoryCardUIModel fromInventoryResponse(
+          InventoryResponse response) =>
+      InventoryCardUIModel(
+        id: response.id.toString(),
+        productName: response.product?.name ?? "",
+        productImageUrl: response.product?.imageUrl ?? "",
+        maxTreshold: response.maxCount.toString(),
+        minTreshold: response.minCount.toString(),
+        currentStock: response.stockCount.toString(),
+        fixedOrderSuggestions: response.fixedSuggestion.toString(),
+        productCode: response.product?.itemId ?? "",
+      );
 }
