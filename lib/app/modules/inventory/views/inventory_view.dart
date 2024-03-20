@@ -24,14 +24,13 @@ class InventoryView extends BaseView<InventoryController> {
 
   @override
   Widget body(BuildContext context) {
-    return Obx(
-      () => Padding(
-        padding: EdgeInsets.all(AppValues.halfPadding.r),
-        child: controller.filteredInventoryList.isNotEmpty
-            ? _buildListOfProduct()
-            : _buildNoDataFoundWidget(),
-      ),
-    );
+    return Obx(() {
+      return controller.isPageLoading && controller.inventoryItems.isEmpty
+          ? const SizedBox.shrink()
+          : controller.inventoryItems.isEmpty
+              ? _getPlaceHolder()
+              : _buildListOfProduct();
+    });
   }
 
   Widget _buildAppBar(BuildContext context) {
@@ -43,32 +42,37 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildListOfProduct() {
-
     return PagingView(
       controller: controller.refreshController,
       enablePullDown: false,
       enablePullUp: controller.pagingController.canLoadNextPage(),
       onLoading: controller.onLoading,
       child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: AppValues.padding.h,
+          horizontal: AppValues.padding.w,
+        ),
         shrinkWrap: true,
-        itemCount: controller.filteredInventoryList.length,
+        itemCount: controller.inventoryItems.length,
         itemBuilder: (context, index) {
-          return _buildInventoryCard(
-              controller.filteredInventoryList[index]);
+          return _buildInventoryCard(controller.inventoryItems[index]);
         },
-      ),
-    );
-  }
-
-  Widget _buildNoDataFoundWidget() {
-    return Center(
-      child: Text(
-        appLocalization.noDataFound,
-        style: textTheme.labelLarge,
       ),
     );
   }
 
   Widget _buildInventoryCard(InventoryCardUIModel inventoryData) =>
       ItemInventoryCard(inventoryData: inventoryData);
+
+  Widget _getPlaceHolder() {
+    return Center(
+      child: Text(
+        appLocalization.placeHolderEmptyInventory,
+        style: textTheme.bodyMedium,
+      ),
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+      vertical: AppValues.margin.h,
+    );
+  }
 }

@@ -3,6 +3,9 @@ abstract class PreferenceManager {
   static const KEY_TOKEN = "token";
   static const THEME = "theme";
   static const LANGUAGE = "language";
+  static const String REFRESH_TOKEN = 'refresh';
+  static const String INVENTORY_ID = 'inventory_id';
+  static const String USER_DATA = 'user_data';
 
   String getString(String key, {String defaultValue = ""});
 
@@ -28,10 +31,4 @@ abstract class PreferenceManager {
   void remove(String key);
 
   void clear();
-
-  void storeToken(String token);
-
-  void retrieveToken();
-
-  void clearSession();
 }

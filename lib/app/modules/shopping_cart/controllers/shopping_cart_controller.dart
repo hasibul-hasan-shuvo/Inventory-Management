@@ -1,63 +1,152 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartController extends BaseController {
+  final ShoppingCartRepository _repository = Get.find();
+
   final RxList<ShoppingCartUiModel> _shoppingCartItemsController =
       RxList.empty(growable: true);
+
   List<ShoppingCartUiModel> get shoppingCartItems =>
       _shoppingCartItemsController;
 
   @override
   void onInit() {
     super.onInit();
+    pagingController.initRefresh();
     _getSuggestedOrders();
   }
 
   void onLoading() {
-    _getNextSuggestedOrders();
+    if (pagingController.canLoadNextPage()) {
+      _getNextSuggestedOrders();
+    }
   }
 
   void _getSuggestedOrders() {
-    _shoppingCartItemsController([
-      ShoppingCartUiModel.dummy("12345"),
-      ShoppingCartUiModel.dummy("12346"),
-      ShoppingCartUiModel.dummy("12347"),
-      ShoppingCartUiModel.dummy("12348"),
-      ShoppingCartUiModel.dummy("12349"),
-      ShoppingCartUiModel.dummy("12340"),
-      ShoppingCartUiModel.dummy("12341"),
-      ShoppingCartUiModel.dummy("12342"),
-      ShoppingCartUiModel.dummy("12343"),
-    ]);
+    callDataService(
+      _repository.getActiveShoppingCart(
+        pagingController.pageNumber,
+      ),
+      onSuccess: _handleShoppingCartSuccessResponse,
+    );
   }
 
-  void _getNextSuggestedOrders() {}
+  void _handleShoppingCartSuccessResponse(ShoppingCartListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<ShoppingCartUiModel> list = response.results
+            ?.map((e) => ShoppingCartUiModel.fromShoppingCartResponse(e))
+            .toList() ??
+        [];
+
+    _shoppingCartItemsController(list);
+  }
+
+  void _getNextSuggestedOrders() {
+    callDataService(
+      _repository.getActiveShoppingCart(
+        pagingController.pageNumber,
+      ),
+      onSuccess: _handleNextShoppingCartSuccessResponse,
+      onStart: () => logger.d("Fetching more suggested orders"),
+      onComplete: () => refreshController.loadComplete(),
+    );
+  }
+
+  void _handleNextShoppingCartSuccessResponse(
+      ShoppingCartListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<ShoppingCartUiModel> list = shoppingCartItems;
+    list.addAll(response.results
+            ?.map((e) => ShoppingCartUiModel.fromShoppingCartResponse(e))
+            .toList() ??
+        []);
+  }
 
   void orderAll() {
     logger.d("Ordering all items");
   }
 
-  void updateCartCount() {
+  void updateCartCount(ShoppingCartUiModel data, int cartCount) {
+    if (cartCount <= 0) {
+      _deleteCartItem(data);
+    } else {
+      _updateCartItem(data, cartCount);
+    }
+  }
+
+  void _updateCartItem(ShoppingCartUiModel data, int cartCount) {
+    AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
+      itemId: data.itemId,
+      quantity: cartCount,
+    );
+
+    callDataService(
+      _repository.updateItemInShoppingCart(
+        data.id.toString(),
+        requestBody,
+      ),
+      onSuccess: (response) => _handleUpdateCartSuccessResponse(data, response),
+    );
+  }
+
+  void _handleUpdateCartSuccessResponse(
+      ShoppingCartUiModel data, ShoppingCartResponse response) {
+    data.updateCartCount(response.quantity ?? 0);
     _shoppingCartItemsController.refresh();
+  }
+
+  void _deleteCartItem(ShoppingCartUiModel data) {
+    callDataService(
+      _repository.deleteItemFromShoppingCart(
+        data.id.toString(),
+      ),
+      onSuccess: (_) => _handleDeleteCartItemSuccessResponse(data),
+    );
+  }
+
+  void _handleDeleteCartItemSuccessResponse(ShoppingCartUiModel data) {
+    _shoppingCartItemsController
+        .removeWhere((element) => element.id == data.id);
   }
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
       bool isListItem = false;
       for (ShoppingCartUiModel product in shoppingCartItems) {
-        if (product.id == code) {
+        if (product.itemId == code) {
           isListItem = true;
-          product.updateCartCount(product.cartCount + 1);
+          _updateCartItem(product, product.cartCount + 1);
           break;
         }
       }
       if (!isListItem) {
-        _shoppingCartItemsController.add(ShoppingCartUiModel.dummy(code!));
+        _addCartItem(code!);
       }
 
       _shoppingCartItemsController.refresh();
     }
+  }
+
+  void _addCartItem(String itemId) {
+    AddShoppingCartItemRequestBody requestBody =
+        AddShoppingCartItemRequestBody(itemId: itemId);
+    callDataService(
+      _repository.addItemInShoppingCart(requestBody),
+      onSuccess: _handleAddCartItemSuccessResponse,
+    );
+  }
+
+  void _handleAddCartItemSuccessResponse(ShoppingCartResponse response) {
+    _shoppingCartItemsController.add(
+      ShoppingCartUiModel.fromShoppingCartResponse(response),
+    );
   }
 }

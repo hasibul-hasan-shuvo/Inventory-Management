@@ -1,8 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
@@ -13,33 +16,30 @@ import 'dialog_content.dart';
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   final InventoryCardUIModel inventoryData;
+  final InventoryController _controller = Get.find<InventoryController>();
 
   ItemInventoryCard({required this.inventoryData});
 
   @override
   Widget body(BuildContext context) {
-    return Card(
-      elevation: AppValues.extraSmallElevation,
-      child: Padding(
-        padding: EdgeInsets.all(AppValues.halfPadding.sp),
-        child: Row(
-          children: [
-            _buildProductImage(),
-            SizedBox(width: AppValues.margin_10.w),
-            _buildQuantityRow(),
-            SizedBox(width: AppValues.margin_10.w),
-            _buildEditButton(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => _buildDialog(context),
-                );
-              },
-            )
-          ],
-        ),
+    return ElevatedContainer(
+      child: Row(
+        children: [
+          _buildProductImage(),
+          SizedBox(width: AppValues.margin_10.w),
+          _buildQuantityRow(),
+          SizedBox(width: AppValues.margin_10.w),
+          _buildEditButton(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => _buildDialog(context),
+              );
+            },
+          )
+        ],
       ),
-    );
+    ).marginOnly(bottom: AppValues.smallMargin.h);
   }
 
   Widget _buildDialog(BuildContext context) {
@@ -49,6 +49,9 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
+      onPositiveButtonTap: () {
+        _controller.updateInventoryData();
+      },
     );
   }
 
@@ -57,6 +60,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       imageUrl: inventoryData.productImageUrl,
       height: AppValues.itemImageHeight.h,
       width: AppValues.itemImageWidth.w,
+      fit: BoxFit.cover,
     );
   }
 
@@ -67,6 +71,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         fileName: AppIcons.edit,
         height: AppValues.iconDefaultSize.h,
         width: AppValues.iconDefaultSize.w,
+        color: theme.iconTheme.color,
       ),
     );
   }
@@ -79,6 +84,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
           Text(
             inventoryData.productName,
             style: textTheme.titleMedium,
+            maxLines: 2,
           ),
           SizedBox(height: AppValues.margin_10.h),
           Row(

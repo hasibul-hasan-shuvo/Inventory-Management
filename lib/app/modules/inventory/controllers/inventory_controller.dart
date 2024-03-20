@@ -1,21 +1,35 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/repository/auth_repository.dart';
+import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
+  final RxList<InventoryCardUIModel> _inventoryItemsController =
+      RxList.empty(growable: true);
+
+  List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
+
   final RxBool isSearchMode = false.obs;
-  final RxList<InventoryCardUIModel> inventoryList =
-      <InventoryCardUIModel>[].obs;
-  final RxList<InventoryCardUIModel> filteredInventoryList =
-      <InventoryCardUIModel>[].obs;
+
   final RxString searchQuery = ''.obs;
+
+  String productID = '';
+  String maxCount = '';
+  String minCount = '';
+  String stockCount = '';
+  String fixedSuggestion = '';
+
+  final InventoryRepository _inventoryRepository =
+      Get.find<InventoryRepository>();
+  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   @override
   void onInit() {
     super.onInit();
-    getInventoryList();
-    filteredInventoryList.addAll(inventoryList);
+    fetchInventoryList();
   }
 
   void onLoading() {
@@ -32,40 +46,48 @@ class InventoryController extends BaseController {
 
   updateSearchQuery(String query) {
     searchQuery(query);
-    if (query.isEmpty) {
-      filteredInventoryList.clear();
-      filteredInventoryList.addAll(inventoryList);
-    } else {
-      filteredInventoryList.clear();
-      filteredInventoryList.addAll(inventoryList
-          .where((element) =>
-              element.productName.toLowerCase().contains(query.toLowerCase()))
-          .toList());
-    }
   }
 
-  void getInventoryList() {
-    for (int i = 0; i < AppValues.height_60; i++) {
-      inventoryList.add(
-        InventoryCardUIModel(
-          id: "123445",
-          productName: 'Protective head bio 4$i pcs',
-          productImageUrl:
-              'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-          maxTreshold: '100',
-          minTreshold: '10',
-          currentStock: '50',
-          fixedOrderSuggestions: '20',
-          unit: 'pcs',
-          price: '10.00',
-          productCode: 'P00$i',
-          productCategory: 'Category $i',
-          productDescription: 'This is product $i',
-          productBrand: 'Brand $i',
-          productSupplier: 'Supplier $i',
-          productLocation: 'Location $i',
-        ),
-      );
+  Future<void> updateInventoryData() async {
+    final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
+        id: productID,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        inventoryID: _authRepository.getInventoryID(),
+        fixedSuggestion: fixedSuggestion);
+    callDataService(
+      _inventoryRepository.updateInventoryData(request),
+      onSuccess: _handleUpdateInventoryDataSuccessResponse,
+    );
+  }
+
+  Future<void> fetchInventoryList() async {
+    callDataService(
+      _inventoryRepository.getInventoryList(),
+      onSuccess: _handleFetchInventoryListSuccessResponse,
+    );
+  }
+
+  void _handleFetchInventoryListSuccessResponse(
+      InventoryListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<InventoryCardUIModel> list = response.inventoryList
+            ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
+            .toList() ??
+        [];
+    _inventoryItemsController(list);
+  }
+
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
+    for (var element in inventoryItems) {
+      if (element.productCode == data.product?.itemId.toString()) {
+        element.maxTreshold = data.maxCount.toString();
+        element.minTreshold = data.minCount.toString();
+        element.currentStock = data.stockCount.toString();
+        element.fixedOrderSuggestions = data.fixedSuggestion.toString();
+      }
     }
   }
 }

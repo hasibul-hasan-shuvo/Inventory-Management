@@ -100,7 +100,7 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
   Widget _getIdView() {
     return Expanded(
       child: Text(
-        "#${data.id}",
+        "#${data.itemId}",
         style: textTheme.bodySmall,
       ),
     );
@@ -158,7 +158,7 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.updateProductNumber(data.id, number);
+            _controller.updateProductNumber(data.itemId, number);
           },
         );
       },
