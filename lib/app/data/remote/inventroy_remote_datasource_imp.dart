@@ -12,7 +12,7 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   @override
   Future<InventoryListResponse> getInventoryList(Map<String, dynamic> request) {
     const endpoint = '${EndPoints.inventoryItems}/all/';
-    var dioCall = dioClient.get(endpoint);
+    var dioCall = dioClient.get(endpoint, queryParameters: request);
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _parseInventoryListResponse(response));
