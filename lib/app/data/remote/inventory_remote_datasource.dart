@@ -6,4 +6,6 @@ abstract class InventoryRemoteDataSource {
 
   Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request);
+
+  Future<InventoryResponse> getProduct(String itemId);
 }

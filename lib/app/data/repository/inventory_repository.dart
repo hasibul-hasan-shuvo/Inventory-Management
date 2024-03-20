@@ -6,4 +6,6 @@ abstract class InventoryRepository {
 
   Future<InventoryResponse> updateInventoryData(
       InventoryCountUpdateRequest request);
+
+  Future<InventoryResponse> getProduct(String itemId);
 }

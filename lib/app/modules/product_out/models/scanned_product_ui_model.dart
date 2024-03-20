@@ -1,16 +1,20 @@
+import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+
 class ScannedProductUiModel {
-  late final String id;
+  late final int id;
+  late final String itemId;
   late final String name;
   late final String imageUrl;
   late int number;
   late final int available;
 
-  ScannedProductUiModel.dummy(this.id) {
-    name = "FILMHOLDER FOSFORPLATE #0 BW";
-    imageUrl =
-        "https://cdn11.bigcommerce.com/s-cff2npbnfd/images/stencil/500x250/products/9703/15565/gc-eqfc-all__23149.1685386632.png?c=1";
+  ScannedProductUiModel.fromProductResponseModel(InventoryResponse response) {
+    id = response.id ?? -1;
+    itemId = response.product?.itemId ?? '';
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
     number = 1;
-    available = 10;
+    available = response.stockCount ?? 0;
   }
 
   void updateNumber(int newNumber) {
