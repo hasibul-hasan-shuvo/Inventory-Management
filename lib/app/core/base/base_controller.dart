@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/paging_controller.dart';
-import 'package:dental_inventory/app/data/repository/login_repository.dart';
+import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

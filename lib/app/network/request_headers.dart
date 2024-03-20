@@ -1,6 +1,6 @@
-import 'package:dental_inventory/app/data/repository/login_repository.dart';
+import 'package:dental_inventory/app/core/values/end_points.dart';
+import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/network/dio_provider.dart';
-import 'package:dental_inventory/app/network/end_points/end_points.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';

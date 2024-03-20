@@ -1,7 +1,7 @@
+import 'package:dental_inventory/app/data/model/response/user_response.dart';
+
 abstract class AuthLocalDataSource {
   void storeToken(String token);
-
-  void storeInventoryID(String inventoryID);
 
   void storeRefreshToken(String refreshToken);
 
@@ -9,7 +9,9 @@ abstract class AuthLocalDataSource {
 
   String getRefreshToken();
 
-  String getInventoryID();
+  int getInventoryID();
+
+  void storeUserData(UserResponse data);
 
   void removeUserData();
 }

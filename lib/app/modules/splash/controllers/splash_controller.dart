@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/data/repository/login_repository.dart';
+import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

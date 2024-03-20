@@ -1,7 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/model/login_request_body.dart';
+import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/response/login_response.dart';
-import 'package:dental_inventory/app/network/end_points/end_points.dart';
+import 'package:dental_inventory/app/data/model/response/user_response.dart';
 import 'package:dio/dio.dart';
 
 import 'auth_remote_data_source.dart';
@@ -37,5 +38,21 @@ class AuthRemoteDataSourceImp extends BaseRemoteSource
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<UserResponse> getUserData() {
+    try {
+      var dioCall = dioClient.get(EndPoints.userData);
+
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseUserResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  UserResponse _parseUserResponse(Response<dynamic> response) {
+    return UserResponse.fromJson(response.data);
   }
 }

@@ -1,22 +1,26 @@
 import 'package:dental_inventory/app/core/model/login_request_body.dart';
 import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/response/login_response.dart';
+import 'package:dental_inventory/app/data/model/response/user_response.dart';
 import 'package:dental_inventory/app/data/remote/auth_remote_data_source.dart';
 import 'package:get/get.dart';
 
-import 'login_repository.dart';
+import 'auth_repository.dart';
 
-class AuthRepositoryImp implements AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource =
       Get.find<AuthRemoteDataSource>();
   final AuthLocalDataSource _localDataSource = Get.find<AuthLocalDataSource>();
 
   @override
-  Future<LoginResponse> login({required LoginRequestBody requestBody}) async {
-    return _remoteDataSource.login(requestBody: requestBody).then((response) {
+  Future<LoginResponse> login({required LoginRequestBody requestBody}) {
+    return _remoteDataSource
+        .login(requestBody: requestBody)
+        .then((response) async {
       _localDataSource.storeToken(response.access ?? '');
-      _localDataSource.storeInventoryID("2");
       _localDataSource.storeRefreshToken(response.refresh ?? "");
+
+      await _getAndSaveUserData();
 
       return response;
     });
@@ -32,8 +36,6 @@ class AuthRepositoryImp implements AuthRepository {
     final refreshToken = _localDataSource.getRefreshToken();
     final data = await _remoteDataSource.refreshToken(refreshToken);
     _localDataSource.storeToken(data.access ?? "");
-    //TODO
-    _localDataSource.storeInventoryID("2");
     _localDataSource.storeRefreshToken(data.refresh ?? "");
 
     return data.refresh != null;
@@ -51,6 +53,14 @@ class AuthRepositoryImp implements AuthRepository {
 
   @override
   String getInventoryID() {
-    return _localDataSource.getInventoryID();
+    return _localDataSource.getInventoryID().toString();
+  }
+
+  Future<UserResponse> _getAndSaveUserData() {
+    return _remoteDataSource.getUserData().then((response) {
+      _localDataSource.storeUserData(response);
+
+      return response;
+    });
   }
 }

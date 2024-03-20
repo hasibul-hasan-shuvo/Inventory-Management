@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 
 class ScannedProductUiModel {
@@ -19,5 +20,12 @@ class ScannedProductUiModel {
 
   void updateNumber(int newNumber) {
     number = newNumber;
+  }
+
+  ScannedProductsRequestBody toScannedProductsRequestBody(bool isPositive) {
+    return ScannedProductsRequestBody(
+      itemId: itemId,
+      countChange: isPositive ? number : number * -1,
+    );
   }
 }

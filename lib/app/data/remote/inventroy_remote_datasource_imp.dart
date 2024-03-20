@@ -1,7 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/remote/inventory_remote_datasource.dart';
 import 'package:dio/dio.dart';
 
@@ -52,5 +54,23 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<ProductRetrievalResponse> retrieveProduct(
+      String inventoryId, ProductsRetrievalRequestBody requestBody) {
+    String endpoint = '${EndPoints.inventory}/$inventoryId/items/bulk-update/';
+    var dioCall = dioClient.put(endpoint);
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseProductRetrievalResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  ProductRetrievalResponse _parseProductRetrievalResponse(
+      Response<dynamic> response) {
+    return ProductRetrievalResponse.fromJson(response.data);
   }
 }

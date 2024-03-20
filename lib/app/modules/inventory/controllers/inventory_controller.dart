@@ -1,8 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
-import 'package:dental_inventory/app/data/repository/login_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:get/get.dart';
 
