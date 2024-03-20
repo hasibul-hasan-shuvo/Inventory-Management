@@ -60,20 +60,22 @@ class ProductInController extends BaseController {
   }
 
   void revertAllItems() {
-    ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-      data: scannedProducts
-          .map((e) => e.toScannedProductsRequestBody(true))
-          .toList(),
-    );
+    if (scannedProducts.isNotEmpty) {
+      ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
+        data: scannedProducts
+            .map((e) => e.toScannedProductsRequestBody(true))
+            .toList(),
+      );
 
-    callDataService(
-      _repository.retrieveProduct(requestBody),
-      onSuccess: _handleRevertAllItemsSuccessResponse,
-    );
+      callDataService(
+        _repository.retrieveProduct(requestBody),
+        onSuccess: _handleRevertAllItemsSuccessResponse,
+      );
+    }
   }
 
   void _handleRevertAllItemsSuccessResponse(ProductRetrievalResponse response) {
-    showMessage(response.message ?? appLocalization.success);
+    showSuccessMessage(response.message ?? appLocalization.success);
 
     response.updatedList?.forEach((element) {
       _scannedProductsController.removeWhere(

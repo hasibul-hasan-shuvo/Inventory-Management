@@ -68,7 +68,7 @@ abstract class BaseController extends GetxController {
 
   final _successMessageController = ''.obs;
 
-  String get successMessage => _messageController.value;
+  String get successMessage => _successMessageController.value;
 
   showSuccessMessage(String msg) => _successMessageController(msg);
 

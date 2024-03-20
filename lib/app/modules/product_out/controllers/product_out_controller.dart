@@ -62,16 +62,18 @@ class ProductOutController extends BaseController {
   }
 
   void retrieveAllItems() {
-    ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-      data: scannedProducts
-          .map((e) => e.toScannedProductsRequestBody(false))
-          .toList(),
-    );
+    if (scannedProducts.isNotEmpty) {
+      ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
+        data: scannedProducts
+            .map((e) => e.toScannedProductsRequestBody(false))
+            .toList(),
+      );
 
-    callDataService(
-      _repository.retrieveProduct(requestBody),
-      onSuccess: _handleRetrieveAllItemsSuccessResponse,
-    );
+      callDataService(
+        _repository.retrieveProduct(requestBody),
+        onSuccess: _handleRetrieveAllItemsSuccessResponse,
+      );
+    }
   }
 
   void _handleRetrieveAllItemsSuccessResponse(
