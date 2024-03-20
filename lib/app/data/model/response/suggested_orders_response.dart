@@ -17,18 +17,6 @@ class SuggestedOrdersResponse {
   String? next;
   String? previous;
   List<SuggestedOrderResponse>? results;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['count'] = count;
-    map['next'] = next;
-    map['previous'] = previous;
-    if (results != null) {
-      map['results'] = results?.map((v) => v.toJson()).toList();
-    }
-
-    return map;
-  }
 }
 
 class SuggestedOrderResponse {
@@ -51,19 +39,4 @@ class SuggestedOrderResponse {
   int? stockCount;
   int? suggestedOrderCount;
   int? fixedSuggestion;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    if (product != null) {
-      map['product'] = product?.toJson();
-    }
-    map['max_count'] = maxCount;
-    map['min_count'] = minCount;
-    map['stock_count'] = stockCount;
-    map['suggested_order_count'] = suggestedOrderCount;
-    map['fixed_suggestion'] = fixedSuggestion;
-
-    return map;
-  }
 }

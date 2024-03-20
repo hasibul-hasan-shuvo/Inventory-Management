@@ -17,18 +17,6 @@ class ShoppingCartListResponse {
   String? next;
   String? previous;
   List<ShoppingCartResponse>? results;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['count'] = count;
-    map['next'] = next;
-    map['previous'] = previous;
-    if (results != null) {
-      map['results'] = results?.map((v) => v.toJson()).toList();
-    }
-
-    return map;
-  }
 }
 
 class ShoppingCartResponse {
@@ -38,27 +26,17 @@ class ShoppingCartResponse {
         ? ProductResponse.fromJson(json['product'])
         : null;
     quantity = json['quantity'];
+    stockCount = json['stock_count'];
+    price = json['price'];
     cart = json['cart'] != null ? CartResponse.fromJson(json['cart']) : null;
   }
 
   int? id;
   ProductResponse? product;
   int? quantity;
+  int? stockCount;
+  double? price;
   CartResponse? cart;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    if (product != null) {
-      map['product'] = product?.toJson();
-    }
-    map['quantity'] = quantity;
-    if (cart != null) {
-      map['cart'] = cart?.toJson();
-    }
-
-    return map;
-  }
 }
 
 class CartResponse {
@@ -71,13 +49,4 @@ class CartResponse {
   int? id;
   String? status;
   String? invoice;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['status'] = status;
-    map['invoice'] = invoice;
-
-    return map;
-  }
 }

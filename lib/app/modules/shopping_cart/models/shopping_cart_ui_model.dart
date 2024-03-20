@@ -6,9 +6,6 @@ class ShoppingCartUiModel {
   late final String name;
   late final String imageUrl;
   late final String itemId;
-  late final int min;
-  late final int max;
-  late final int? fixedSuggestion;
   late int cartCount;
   late final int count;
   late final num price;
@@ -18,11 +15,8 @@ class ShoppingCartUiModel {
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
     itemId = response.product?.itemId ?? '';
-    min = 10;
-    max = 100;
-    fixedSuggestion = 20;
-    count = 5;
-    price = 100;
+    count = response.stockCount ?? 0;
+    price = response.price ?? 0.0;
     cartCount = response.quantity ?? 0;
   }
 
