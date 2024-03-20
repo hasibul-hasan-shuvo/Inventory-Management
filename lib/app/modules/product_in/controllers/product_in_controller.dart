@@ -73,7 +73,7 @@ class ProductInController extends BaseController {
   }
 
   void _handleRevertAllItemsSuccessResponse(ProductRetrievalResponse response) {
-    showSuccessMessage(response.message ?? appLocalization.success);
+    showMessage(response.message ?? appLocalization.success);
 
     response.updatedList?.forEach((element) {
       _scannedProductsController.removeWhere(
