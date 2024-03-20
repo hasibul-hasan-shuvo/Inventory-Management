@@ -25,7 +25,7 @@ class InventoryView extends BaseView<InventoryController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() {
-      return controller.isPageLoading
+      return controller.isPageLoading && controller.inventoryItems.isEmpty
           ? const SizedBox.shrink()
           : controller.inventoryItems.isEmpty
               ? _getPlaceHolder()

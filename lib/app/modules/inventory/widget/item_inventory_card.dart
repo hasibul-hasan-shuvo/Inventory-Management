@@ -60,6 +60,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       imageUrl: inventoryData.productImageUrl,
       height: AppValues.itemImageHeight.h,
       width: AppValues.itemImageWidth.w,
+      fit: BoxFit.cover,
     );
   }
 
