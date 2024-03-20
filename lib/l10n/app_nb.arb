@@ -8,6 +8,8 @@
   "cancel": "Nulify",
   "currency": "Kr",
   "deleteProduct": "Slett produkt",
+  "deleteSuccessMessage": "Slettet",
+  "done": "Ferdig",
   "editProduct": "Rediger produkt",
   "error": "Feil",
   "email": "E-post",

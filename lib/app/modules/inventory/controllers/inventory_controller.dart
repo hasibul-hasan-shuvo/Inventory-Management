@@ -39,14 +39,17 @@ class InventoryController extends BaseController {
 
   void _getNextSuggestedOrders() {}
 
-  changeSearchMode() {
+  void changeSearchMode() {
     isSearchMode.value = !isSearchMode.value;
     searchQuery('');
-    updateSearchQuery(searchQuery.value);
+    if (!isSearchMode.value) {
+      fetchInventoryList();
+    }
   }
 
-  updateSearchQuery(String query) {
+  void updateSearchQuery(String query) {
     searchQuery(query);
+    fetchInventoryList();
   }
 
   void deleteInventoryItem() {
@@ -57,7 +60,7 @@ class InventoryController extends BaseController {
   }
 
   void _deleteSuccessHandler(e) {
-    Get.snackbar(appLocalization.success, appLocalization.status);
+    Get.snackbar(appLocalization.success, appLocalization.deleteSuccessMessage);
     callDataService(
       _inventoryRepository.getInventoryList({
         "search": searchQuery.value,

@@ -8,6 +8,8 @@
   "cancel": "Cancel",
   "currency": "Kr",
   "deleteProduct": "Delete Product",
+  "deleteSuccessMessage": "Deleted successfully",
+  "done": "Done",
   "editProduct": "Edit Product",
   "error": "Error",
   "email": "Email",
