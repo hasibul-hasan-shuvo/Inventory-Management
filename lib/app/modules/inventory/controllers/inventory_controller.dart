@@ -53,20 +53,14 @@ class InventoryController extends BaseController {
   }
 
   void deleteInventoryItem() {
-    final request = {"id": id};
-
-    callDataService(_inventoryRepository.deleteInventory(request),
+    callDataService(_inventoryRepository.deleteInventory(id: id),
         onSuccess: _deleteSuccessHandler);
   }
 
   void _deleteSuccessHandler(e) {
-    Get.snackbar(appLocalization.success, appLocalization.deleteSuccessMessage);
-    callDataService(
-      _inventoryRepository.getInventoryList({
-        "search": searchQuery.value,
-      }),
-      onSuccess: _handleFetchInventoryListSuccessResponse,
-    );
+    showSuccessMessage(appLocalization.deleteSuccessMessage);
+    _inventoryItemsController.removeWhere((element) => element.id == id);
+    _inventoryItemsController.refresh();
   }
 
   Future<void> updateInventoryData() async {
@@ -86,9 +80,9 @@ class InventoryController extends BaseController {
 
   Future<void> fetchInventoryList() async {
     callDataService(
-      _inventoryRepository.getInventoryList({
-        "search": searchQuery.value,
-      }),
+      _inventoryRepository.getInventoryList(
+        searchQuery: searchQuery.value,
+      ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );
   }
