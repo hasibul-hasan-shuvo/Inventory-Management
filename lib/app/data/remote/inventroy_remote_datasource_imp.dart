@@ -60,7 +60,10 @@ class InventoryRemoteDataSourceImp extends BaseRemoteSource
   Future<ProductRetrievalResponse> retrieveProduct(
       String inventoryId, ProductsRetrievalRequestBody requestBody) {
     String endpoint = '${EndPoints.inventory}/$inventoryId/items/bulk-update/';
-    var dioCall = dioClient.put(endpoint);
+    var dioCall = dioClient.put(
+      endpoint,
+      data: requestBody.toJson(),
+    );
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _parseProductRetrievalResponse(response));
