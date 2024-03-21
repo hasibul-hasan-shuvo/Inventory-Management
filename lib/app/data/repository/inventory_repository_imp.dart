@@ -13,8 +13,8 @@ class InventoryRepositoryImp implements InventoryRepository {
 
   @override
   Future<InventoryListResponse> getInventoryList(
-      Map<String, dynamic> request) async {
-    return _remoteDataSource.getInventoryList(request);
+      {required String searchQuery}) async {
+    return _remoteDataSource.getInventoryList(searchQuery: searchQuery);
   }
 
   @override
@@ -40,7 +40,7 @@ class InventoryRepositoryImp implements InventoryRepository {
   }
 
   @override
-  Future deleteInventory(Map<String, dynamic> request) {
-    return _remoteDataSource.deleteInventory(request);
+  Future deleteInventory({required String id}) {
+    return _remoteDataSource.deleteInventory(id: id);
   }
 }
