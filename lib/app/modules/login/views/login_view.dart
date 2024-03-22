@@ -112,7 +112,7 @@ class LoginView extends BaseView<LoginController> {
     return AppPrimaryButton(
       title: appLocalization.logIn,
       onPressed: () {
-        FocusManager.instance.primaryFocus?.unfocus();
+        closeKeyboard();
         if (_formKey.currentState!.validate()) {
           controller.login();
         }
