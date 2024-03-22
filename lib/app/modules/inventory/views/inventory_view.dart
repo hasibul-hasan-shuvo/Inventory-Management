@@ -35,10 +35,14 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
-        isSearchableMode: controller.isSearchMode.value,
-        title: appLocalization.homeMenuInventory,
-        onChangeSearchMode: controller.changeSearchMode,
-        updateSearchQuery: controller.updateSearchQuery);
+      isSearchableMode: controller.isSearchMode.value,
+      title: appLocalization.homeMenuInventory,
+      onChangeSearchMode: controller.changeSearchMode,
+      updateSearchQuery: (value) {
+        controller.updateSearchQuery(value);
+        closeKeyboard();
+      },
+    );
   }
 
   Widget _buildListOfProduct() {
