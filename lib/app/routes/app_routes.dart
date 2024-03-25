@@ -20,6 +20,7 @@ abstract class Routes {
   static const SCANNER = _Paths.SCANNER;
   static const PRODUCT_OUT = _Paths.PRODUCT_OUT;
   static const PRODUCT_IN = _Paths.PRODUCT_IN;
+  static const ITEM_COUNT = _Paths.ITEM_COUNT;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const SCANNER = '/scanner';
   static const PRODUCT_OUT = '/product-out';
   static const PRODUCT_IN = '/product-in';
+  static const ITEM_COUNT = '/item-count';
 }

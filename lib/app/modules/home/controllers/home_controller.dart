@@ -51,7 +51,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.inventoryCount,
         title: appLocalization.homeMenuInventoryCount,
-        route: "",
+        route: Routes.ITEM_COUNT,
       ),
     );
     list.add(
