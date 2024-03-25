@@ -103,7 +103,11 @@ class SearchAbleAppBar extends StatelessWidget
         border: InputBorder.none,
       ),
       maxLines: 1,
+      textInputAction: TextInputAction.search,
       cursorColor: AppColors.colorWhite,
+      onFieldSubmitted: (value) {
+        updateSearchQuery(value);
+      },
       onChanged: (value) {
         isSearchBoxEmpty(value.isEmpty);
       },
