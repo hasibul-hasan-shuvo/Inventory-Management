@@ -60,7 +60,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildProductImage() {
     return NetworkImageView(
-      imageUrl: inventoryData.productImageUrl,
+      imageUrl: inventoryData.imageUrl,
       height: AppValues.itemImageHeight.h,
       width: AppValues.itemImageWidth.w,
       fit: BoxFit.cover,
@@ -85,7 +85,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            inventoryData.productName,
+            inventoryData.name,
             style: textTheme.titleMedium,
             maxLines: 2,
           ),
@@ -99,7 +99,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
                 child: Text(
-                  "${appLocalization.max}: ${inventoryData.maxTreshold} ${appLocalization.min}: ${inventoryData.minTreshold}",
+                  "${appLocalization.max}: ${inventoryData.max} ${appLocalization.min}: ${inventoryData.min}",
                   style: textTheme.bodySmall,
                 ),
               ),

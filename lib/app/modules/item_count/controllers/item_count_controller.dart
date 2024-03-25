@@ -15,19 +15,10 @@ class ItemCountController extends BaseController {
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
-      bool isListItem = false;
-      for (InventoryCardUIModel product in inventories) {
-        if (product.productCode == code) {
-          isListItem = true;
-          // product.updateNumber(product.number + 1);
-          break;
-        }
-      }
-      if (!isListItem) {
+      int index = inventories.indexWhere((product) => product.itemId == code);
+      if (index == -1) {
         _getProduct(code!);
       }
-
-      _inventoriesController.refresh();
     }
   }
 

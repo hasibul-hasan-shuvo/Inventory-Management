@@ -16,12 +16,13 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
   final InventoryController _controller = Get.find<InventoryController>();
 
   DialogContent({required this.inventoryData}) {
-    _controller.id = inventoryData.id;
-    _controller.productID = inventoryData.productCode;
-    _controller.maxCount = inventoryData.maxTreshold;
-    _controller.minCount = inventoryData.minTreshold;
-    _controller.stockCount = inventoryData.currentStock;
-    _controller.fixedSuggestion = inventoryData.fixedOrderSuggestions;
+    _controller.id = inventoryData.id.toString();
+    _controller.productID = inventoryData.itemId;
+    _controller.maxCount = inventoryData.max.toString();
+    _controller.minCount = inventoryData.min.toString();
+    _controller.stockCount = inventoryData.currentStock.toString();
+    _controller.fixedSuggestion =
+        inventoryData.fixedOrderSuggestions.toString();
   }
 
   @override
@@ -42,9 +43,9 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildProductTopView() {
     return ProductTopView(
-      id: inventoryData.id,
-      name: inventoryData.productName,
-      imageUrl: inventoryData.productImageUrl,
+      id: inventoryData.itemId,
+      name: inventoryData.name,
+      imageUrl: inventoryData.imageUrl,
     );
   }
 
@@ -60,9 +61,13 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildMaxMinEditor(
-              inventoryData.maxTreshold, inventoryData.minTreshold),
+            inventoryData.max.toString(),
+            inventoryData.min.toString(),
+          ),
           _buildCurrentAndSuggestionEditor(
-              inventoryData.fixedOrderSuggestions, inventoryData.currentStock),
+            inventoryData.fixedOrderSuggestions.toString(),
+            inventoryData.currentStock.toString(),
+          ),
         ],
       ),
     );

@@ -98,13 +98,10 @@ class InventoryController extends BaseController {
     _inventoryItemsController(list);
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
     for (var element in inventoryItems) {
-      if (element.productCode == data.product?.itemId.toString()) {
-        element.maxTreshold = data.maxCount.toString();
-        element.minTreshold = data.minCount.toString();
-        element.currentStock = data.stockCount.toString();
-        element.fixedOrderSuggestions = data.fixedSuggestion.toString();
+      if (element.itemId == response.product?.itemId.toString()) {
+        element.updateFromInventoryResponse(response);
       }
     }
   }
