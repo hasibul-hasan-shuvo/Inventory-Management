@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:flutter/material.dart';
 
 import '/app/core/values/app_colors.dart';
 
@@ -27,7 +27,7 @@ class Loading extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getProgressIndicator() {
     return CircularProgressIndicator(
-      color: theme.primaryColor,
+      color: theme.colorScheme.primary,
     );
   }
 }
