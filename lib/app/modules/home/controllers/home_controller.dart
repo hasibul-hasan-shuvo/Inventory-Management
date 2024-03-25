@@ -17,6 +17,7 @@ class HomeController extends BaseController {
     getHomeMenuItems();
   }
 
+  // ignore: long-method
   void getHomeMenuItems() {
     List<ItemHomeMenuUiModel> list = List.empty(growable: true);
     list.add(
