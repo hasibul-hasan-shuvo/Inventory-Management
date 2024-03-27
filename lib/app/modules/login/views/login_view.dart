@@ -89,6 +89,7 @@ class LoginView extends BaseView<LoginController> {
       onChanged: (value) {
         controller.email = value ?? "";
       },
+      maxLength: AppValues.maxEmailLength,
     );
   }
 
@@ -105,6 +106,7 @@ class LoginView extends BaseView<LoginController> {
       obscureText: true,
       labelText: appLocalization.password,
       hintText: appLocalization.enterPassword,
+      maxLength: AppValues.maxPasswordLength,
     );
   }
 

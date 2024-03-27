@@ -44,8 +44,10 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
                   filled: true,
                   fillColor: theme.colorScheme.surface,
                   contentPadding: const EdgeInsets.all(4),
+                  counterText: '',
                 ),
                 onChanged: onChanged,
+                maxLength: AppValues.maxCountLength,
               ))
         ],
       ),

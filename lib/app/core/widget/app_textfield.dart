@@ -7,20 +7,21 @@ import '../base/base_widget_mixin.dart';
 
 // ignore: must_be_immutable
 class AppTextField extends StatelessWidget with BaseWidgetMixin {
-  AppTextField(
-      {Key? key,
-      required this.controller,
-      required this.labelText,
-      required this.hintText,
-      this.borderRadius = 8,
-      this.keyboardType = TextInputType.text,
-      this.obscureText = false,
-      this.prefix,
-      this.suffix,
-      this.validator,
-      required this.onChanged,
-      this.isEnabled})
-      : super(key: key) {
+  AppTextField({
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    required this.hintText,
+    this.borderRadius = 8,
+    this.keyboardType = TextInputType.text,
+    this.obscureText = false,
+    this.prefix,
+    this.suffix,
+    this.validator,
+    required this.onChanged,
+    this.isEnabled,
+    this.maxLength,
+  }) : super(key: key) {
     _isObscured = RxBool(obscureText);
   }
 
@@ -35,6 +36,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
   final Function(String?) onChanged;
   final String hintText;
   final bool? isEnabled;
+  final int? maxLength;
 
   late final RxBool _isObscured;
 
@@ -48,16 +50,19 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
         const SizedBox(
           height: AppValues.halfPadding,
         ),
-        Obx(() => TextFormField(
-              enabled: isEnabled,
-              controller: controller,
-              onChanged: onChanged,
-              decoration: _buildInputDecoration(context),
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-              obscureText: _isObscured.value,
-              validator: validator,
-              keyboardType: keyboardType,
-            ))
+        Obx(
+          () => TextFormField(
+            enabled: isEnabled,
+            controller: controller,
+            onChanged: onChanged,
+            decoration: _buildInputDecoration(context),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            obscureText: _isObscured.value,
+            validator: validator,
+            keyboardType: keyboardType,
+            maxLength: maxLength,
+          ),
+        )
       ],
     );
   }
@@ -93,6 +98,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
             )
           : suffix,
       prefixIcon: prefix,
+      counterText: '',
     );
   }
 }
