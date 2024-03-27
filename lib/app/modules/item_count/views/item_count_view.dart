@@ -59,7 +59,7 @@ class ItemCountView extends BaseView<ItemCountController> {
   List<Widget> get _getActions {
     return [
       IconButton(
-        onPressed: _onDone,
+        onPressed: controller.updateAll,
         icon: const Icon(
           Icons.done,
         ),
@@ -73,9 +73,5 @@ class ItemCountView extends BaseView<ItemCountController> {
     )?.then((code) {
       controller.onScanned(code);
     });
-  }
-
-  void _onDone() {
-    Get.back();
   }
 }
