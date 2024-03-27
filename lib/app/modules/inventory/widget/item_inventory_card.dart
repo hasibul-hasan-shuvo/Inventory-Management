@@ -11,7 +11,7 @@ import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
 import '../../../core/widget/asset_image_view.dart';
 import '../../../core/widget/network_image_view.dart';
-import 'dialog_content.dart';
+import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
@@ -45,7 +45,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   Widget _buildDialog(BuildContext context) {
     return AppDialog(
       title: appLocalization.editProduct,
-      content: DialogContent(inventoryData: inventoryData),
+      content: InventoryItemEditDialogView(inventoryData: inventoryData),
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,

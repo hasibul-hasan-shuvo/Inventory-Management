@@ -10,12 +10,12 @@ import 'package:get/get.dart';
 import '../../../core/values/app_values.dart';
 
 // ignore: must_be_immutable
-class DialogContent extends StatelessWidget with BaseWidgetMixin {
+class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
   InventoryCardUIModel inventoryData;
 
   final InventoryController _controller = Get.find<InventoryController>();
 
-  DialogContent({required this.inventoryData}) {
+  InventoryItemEditDialogView({required this.inventoryData}) {
     _controller.id = inventoryData.id.toString();
     _controller.productID = inventoryData.itemId;
     _controller.maxCount = inventoryData.max.toString();
