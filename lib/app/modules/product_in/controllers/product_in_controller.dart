@@ -27,9 +27,9 @@ class ProductInController extends BaseController {
       }
       if (!isListItem) {
         _getProduct(code!);
+      } else {
+        _scannedProductsController.refresh();
       }
-
-      _scannedProductsController.refresh();
     }
   }
 

@@ -29,4 +29,8 @@ class InventoryCardUIModel {
     currentStock = response.stockCount ?? 0;
     fixedOrderSuggestions = response.fixedSuggestion ?? 0;
   }
+
+  void updateCurrentStock(int newStock) {
+    currentStock = newStock;
+  }
 }
