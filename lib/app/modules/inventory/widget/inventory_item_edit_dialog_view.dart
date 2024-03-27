@@ -84,20 +84,24 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFieldWithTitle(
-              title: appLocalization.fixedProposal,
-              initialValue: fixedProposal,
-              onChanged: (value) {
-                _controller.fixedSuggestion = value;
-              },
+            Expanded(
+              child: TextFieldWithTitle(
+                title: appLocalization.fixedProposal,
+                initialValue: fixedProposal,
+                onChanged: (value) {
+                  _controller.fixedSuggestion = value;
+                },
+              ),
             ),
             SizedBox(height: AppValues.margin_10.h),
-            TextFieldWithTitle(
-              title: appLocalization.inventory,
-              initialValue: inventory,
-              onChanged: (value) {
-                _controller.stockCount = value;
-              },
+            Expanded(
+              child: TextFieldWithTitle(
+                title: appLocalization.inventory,
+                initialValue: inventory,
+                onChanged: (value) {
+                  _controller.stockCount = value;
+                },
+              ),
             ),
           ],
         ),
@@ -116,20 +120,24 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextFieldWithTitle(
-                  title: appLocalization.min,
-                  initialValue: min,
-                  onChanged: (value) {
-                    _controller.minCount = value;
-                  },
+                Expanded(
+                  child: TextFieldWithTitle(
+                    title: appLocalization.min,
+                    initialValue: min,
+                    onChanged: (value) {
+                      _controller.minCount = value;
+                    },
+                  ),
                 ),
                 SizedBox(height: AppValues.margin_10.h),
-                TextFieldWithTitle(
-                  title: appLocalization.max,
-                  initialValue: max,
-                  onChanged: (value) {
-                    _controller.maxCount = value;
-                  },
+                Expanded(
+                  child: TextFieldWithTitle(
+                    title: appLocalization.max,
+                    initialValue: max,
+                    onChanged: (value) {
+                      _controller.maxCount = value;
+                    },
+                  ),
                 ),
               ],
             ),

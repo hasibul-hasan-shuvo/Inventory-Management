@@ -2,12 +2,14 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/item_count/controllers/item_count_controller.dart';
+import 'package:dental_inventory/app/modules/item_count/widgets/item_count_edit_dialog_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -127,25 +129,25 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    // int number = data.productCode;
-    //
-    // showDialog(
-    //   context: context,
-    //   builder: (_) {
-    //     return AppDialog(
-    //       title: appLocalization.titleEditOrderDialog,
-    //       content: ProductOutItemEditDialogContentView(
-    //         data: data,
-    //         onNumberChanged: (int newNumber) {
-    //           number = newNumber;
-    //         },
-    //       ),
-    //       positiveButtonText: appLocalization.buttonTextSaveChanges,
-    //       onPositiveButtonTap: () {
-    //         _controller.updateProductNumber(data.itemId, number);
-    //       },
-    //     );
-    //   },
-    // );
+    String currentStock = data.currentStock.toString();
+
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleEditOrderDialog,
+          content: ItemCountEditDialogView(
+            data: data,
+            onCurrentStockChanged: (String newStock) {
+              currentStock = newStock;
+            },
+          ),
+          positiveButtonText: appLocalization.buttonTextSaveChanges,
+          onPositiveButtonTap: () {
+            _controller.onUpdateCurrentStock(data, currentStock);
+          },
+        );
+      },
+    );
   }
 }
