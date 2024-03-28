@@ -1,11 +1,11 @@
-class ProductModel {
+class OrderedProductUiModel {
   final String id;
   final String name;
   final String quantity;
   final double price;
   final String image;
 
-  ProductModel({
+  OrderedProductUiModel({
     this.id = '90840',
     this.name = 'Beskyttelseshode bio 4stk',
     this.quantity = '34',

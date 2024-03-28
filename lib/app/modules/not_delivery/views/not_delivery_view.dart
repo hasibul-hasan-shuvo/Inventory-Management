@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
+import 'package:dental_inventory/app/modules/not_delivery/widgets/item_not_delivery_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -67,38 +68,9 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
   }
 
   Widget _buildOrderBasicInfo(int index) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      enableFeedback: false,
-      onTap: () {
-        controller.toggleExpandStatus(index);
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppValues.margin_10.w, vertical: AppValues.padding.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Text(
-                  controller.orderList[index].id,
-                  style: textTheme.titleMedium,
-                ),
-                SizedBox(width: AppValues.margin_10.w),
-                Text(
-                  controller.orderList[index].date.toString(),
-                  style:
-                      textTheme.bodySmall?.copyWith(color: theme.dividerColor),
-                ),
-              ],
-            ),
-            controller.orderList[index].isExpanded
-                ? const Icon(Icons.keyboard_arrow_up)
-                : const Icon(Icons.keyboard_arrow_down),
-          ],
-        ),
-      ),
+    return ItemNotDeliveryView(
+      index: index,
+      data: controller.orderList[index],
     );
   }
 

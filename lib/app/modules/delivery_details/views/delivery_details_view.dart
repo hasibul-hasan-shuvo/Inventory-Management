@@ -23,7 +23,7 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-      appBarTitleText: '${appLocalization.order} ${order.id}',
+      appBarTitleText: '${appLocalization.order} ${order.invoiceNo}',
     );
   }
 
@@ -35,7 +35,7 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(order.status, order.id, order.date),
+          _buildHeader(order.status, order.invoiceNo, order.date),
           ItemOrderDetails(orderUiModel: order),
         ],
       ),

@@ -83,7 +83,7 @@ class DeliveryView extends BaseView<DeliveryController> {
           Row(
             children: [
               Text(
-                controller.orderList[index].id,
+                controller.orderList[index].invoiceNo,
                 style: textTheme.titleMedium,
               ),
               SizedBox(width: AppValues.margin_10.w),
