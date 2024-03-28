@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
+import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,9 +62,7 @@ class DeliveryView extends BaseView<DeliveryController> {
   Widget _buildOrderItem(int index) {
     return Card(
       elevation: AppValues.extraSmallElevation,
-      child: InkWell(
-        enableFeedback: false,
-        splashColor: Colors.transparent,
+      child: Ripple(
         onTap: () {
           Get.toNamed(Routes.DELIVERY_DETAILS,
               arguments: controller.orderList[index]);
