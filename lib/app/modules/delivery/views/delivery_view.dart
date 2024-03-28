@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,8 @@ class DeliveryView extends BaseView<DeliveryController> {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        title: Text(appLocalization.homeMenuOrderDelivery),
-        centerTitle: true,
-      );
+  PreferredSizeWidget? appBar(BuildContext context) =>
+      CustomAppBar(appBarTitleText: appLocalization.homeMenuOrderDelivery);
 
   Widget _buildBody() {
     return PagingView(

@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
 import 'package:dental_inventory/app/modules/delivery_details/controllers/delivery_details_controller.dart';
@@ -21,8 +22,8 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      title: Text('${appLocalization.order} ${order.id}'),
+    return CustomAppBar(
+      appBarTitleText: '${appLocalization.order} ${order.id}',
     );
   }
 
