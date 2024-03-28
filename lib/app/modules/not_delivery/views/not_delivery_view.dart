@@ -2,7 +2,6 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
-import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
 import 'package:dental_inventory/app/modules/not_delivery/widgets/item_not_delivery_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +39,10 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
   Widget _buildOrderNumberView() {
     return Padding(
       padding: EdgeInsets.all(AppValues.halfPadding.h),
-      child: Text(appLocalization.orderNumber, style: textTheme.titleMedium),
+      child: Text(
+        appLocalization.orderNumber,
+        style: textTheme.titleMedium,
+      ),
     );
   }
 
@@ -48,34 +50,14 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
     return Expanded(
       child: ListView.builder(
         itemCount: controller.orderList.length,
-        itemBuilder: (context, index) {
-          return _buildOrderItem(index);
-        },
+        itemBuilder: _itemBuilder,
       ),
     );
   }
 
-  Widget _buildOrderItem(int index) {
-    return Card(
-      elevation: AppValues.extraSmallElevation,
-      child: Column(
-        children: [
-          _buildOrderBasicInfo(index),
-          _buildOrderDetails(index),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildOrderBasicInfo(int index) {
+  Widget _itemBuilder(BuildContext context, int index) {
     return ItemNotDeliveryView(
-      index: index,
       data: controller.orderList[index],
     );
   }
-
-  Widget _buildOrderDetails(int index) => Visibility(
-        visible: controller.orderList[index].isExpanded,
-        child: ItemOrderDetails(orderUiModel: controller.orderList[index]),
-      );
 }

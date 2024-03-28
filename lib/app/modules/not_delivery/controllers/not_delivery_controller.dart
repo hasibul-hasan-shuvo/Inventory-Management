@@ -17,8 +17,8 @@ class NotDeliveryController extends BaseController {
     }
   }
 
-  void toggleExpandStatus(int index) {
-    orderList[index].isExpanded = !orderList[index].isExpanded;
+  void toggleExpandStatus(OrderUiModel data) {
+    data.isExpanded = !data.isExpanded;
     orderList.refresh();
   }
 }
