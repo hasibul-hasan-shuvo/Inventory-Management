@@ -22,36 +22,38 @@ class AboutUsView extends BaseView<AboutUsController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTitle(context),
-            const SizedBox(height: 16),
-            _buildDescription1(context),
-            const SizedBox(height: 10),
+            SizedBox(height: AppValues.padding.h),
+            _buildDescriptionOne(),
+            SizedBox(height: AppValues.halfPadding.h),
             _buildGuideImage(),
-            const SizedBox(height: 16),
-            _buildDescription2(context),
+            SizedBox(height: AppValues.padding.h),
+            _buildDescriptionTwo(),
           ],
         ),
       ),
     );
   }
 
-  _buildTitle(BuildContext context) => Text(
-        'Dental lagerstyring gir deg fullstendig kontroll på ditt lager.',
+  Widget _buildTitle(BuildContext context) => Text(
+        appLocalization.dentalTitleForAboutUsTitle,
         style: Theme.of(context).textTheme.titleLarge,
       );
 
-  _buildDescription1(BuildContext context) => Text(
-        'Bruk kameraet på telefonen eller nettbrettet for å skanne QR-koden til produktet hver gang du tar ut en enhet fra lageret, eller når du åpner en pakning.',
+  Widget _buildDescriptionOne() => Text(
+        appLocalization.dentalTitleForAboutUsDescriptionOne,
       );
 
-  _buildDescription2(BuildContext context) => Text(
-        'Systemet foreslår automatisk bestilling av riktig mengde nye produkter for å holde lageret innenfor maksimums- og minimumsverdiene. Appen sparer deg for tid og penger og sikrer at tannlegekontoret alltid har det den trenger.',
+  Widget _buildDescriptionTwo() => Text(
+        appLocalization.dentalTitleForAboutUsDescriptionTwo,
       );
 
-  _buildGuideImage() => const Padding(
-        padding: EdgeInsets.only(right: 20.0),
-        child: Row(
+  Widget _buildGuideImage() => Padding(
+        padding: EdgeInsets.only(right: AppValues.margin_20.w),
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [AssetImageView(fileName: AppIcons.icDentalGuide)],
+          children: [
+            AssetImageView(fileName: AppIcons.icDentalGuide),
+          ],
         ),
       );
 }
