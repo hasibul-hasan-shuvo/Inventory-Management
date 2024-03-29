@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,90 +11,86 @@ class ContactUsView extends BaseView<ContactUsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
-// **Postadresse:**\n
-// Boks 97, Alnabru
-// 0614 Oslo
-//
-// **Besøksadresse:**\n
-// Alfaset 1, Industrivei 40
-// 668 Oslo
-//
-// **Kontaktinformasjon:**
-// \n**Telefon:** 22 79 20 20
-// \n**E-post:** _post@jacobsen-dental.no_
-//
-// **Åpningstider og direktenummer:**\n
-// Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.
-//
-// Dersom du skulle ha problemer med å komme gjennom, har vi følgende direktenummer til de ulike avdelinger:
-//
-// Forbruksvarer: 22 79 20 49\n
-// Utstyr: 22 79 20 58\n
-// Service: 22 79 20 89\n
-// Verksted: 22 79 20 79\n
-// Regnskap: 22 79 20 29\n
-// """;
-
-  final List<ContactInfo> contacts = [
-    const ContactInfo(name: 'Regnskap:', number: '22 79 20 29'),
-    const ContactInfo(name: 'Verksted:', number: '22 79 20 79'),
-    const ContactInfo(name: 'Service:', number: '22 79 20 89'),
-    const ContactInfo(name: 'Utstyr:', number: '22 79 20 58'),
-    const ContactInfo(name: 'Forbruksvarer:', number: '22 79 20 49'),
-  ];
+  List<ContactInfo> _getContacts() => [
+        ContactInfo(
+            name: appLocalization.consumables,
+            number: AppStrings.consumablesNumber),
+        ContactInfo(
+            name: appLocalization.equipment,
+            number: AppStrings.equipmentNumber),
+        ContactInfo(
+            name: appLocalization.service, number: AppStrings.serviceNumber),
+        ContactInfo(
+            name: appLocalization.workshop, number: AppStrings.workshopNumber),
+        ContactInfo(
+            name: appLocalization.accounting,
+            number: AppStrings.accountingNumber),
+      ];
 
   @override
   Widget body(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppValues.padding),
+      padding: EdgeInsets.all(AppValues.padding.h),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildPostAddress(),
-            _buildBookAddress(),
-            _buildTelephone(),
-            _buildEpost(),
-            Text(
-              'Åpningstider og direktenummer:',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const Text(
-              'Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.',
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:',
-            ),
-            const SizedBox(height: 10),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: contacts.length,
-              itemBuilder: (context, index) {
-                return ContactRow(
-                  name: contacts[index].name,
-                  number: contacts[index].number,
-                );
-              },
-            ),
+            _buildPostAddress(context),
+            SizedBox(height: AppValues.halfPadding.h),
+            _buildBookAddress(context),
+            SizedBox(height: AppValues.halfPadding.h),
+            _buildTelephone(context),
+            _buildEmail(context),
+            SizedBox(height: AppValues.halfPadding.h),
+            _buildTime(context),
+            SizedBox(height: AppValues.halfPadding.h),
+            _buildDescription(),
+            SizedBox(height: AppValues.halfPadding.h),
+            _buildContactList(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildEpost() {
+  ListView _buildContactList() {
+    final contacts = _getContacts();
+
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: contacts.length,
+      itemBuilder: (context, index) {
+        return _buildContactRow(
+          contacts[index].name,
+          contacts[index].number,
+        );
+      },
+    );
+  }
+
+  Text _buildDescription() {
+    return Text(
+      appLocalization.contactDescription,
+    );
+  }
+
+  Widget _buildTime(BuildContext context) {
+    return _buildVerticalInfo(context, appLocalization.openingHourTitle,
+        appLocalization.openingHourMessage);
+  }
+
+  Widget _buildEmail(BuildContext context) {
     return Row(
       children: [
-        const Text(
-          'E-post:',
-          style: kDentalTitleStyle,
-        ),
-        const SizedBox(width: 4),
         Text(
-          'post@jacobsen-dental.no',
-          style: kDentalSubtitleStyle.copyWith(
+          appLocalization.email,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        SizedBox(width: AppValues.margin_4.w),
+        const Text(
+          AppStrings.email,
+          style: TextStyle(
             decoration: TextDecoration.underline,
           ),
         ),
@@ -101,56 +98,36 @@ class ContactUsView extends BaseView<ContactUsController> {
     );
   }
 
-  Widget _buildTelephone() {
+  Widget _buildTelephone(BuildContext context) {
     return Row(
       children: [
-        const Text(
-          'Telefon:',
-          style: kDentalTitleStyle,
+        Text(
+          appLocalization.phone,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         SizedBox(width: AppValues.margin_4.w),
-        const Text('22 79 20 20'),
+        const Text(AppStrings.phoneNumber),
       ],
     );
   }
 
-  AddressColumn _buildBookAddress() {
-    return const AddressColumn(
-      title: 'Besøksadresse:',
-      subTitle: 'Alfaset 1. Industrivei 4, 0668 Oslo',
+  Widget _buildBookAddress(BuildContext context) {
+    return _buildVerticalInfo(
+      context,
+      appLocalization.visitingAddress,
+      AppStrings.visitingAddress,
     );
   }
 
-  AddressColumn _buildPostAddress() {
-    return const AddressColumn(
-      title: 'Postadresse:',
-      subTitle: 'Boks 97, Alnabru 0614 Oslo',
+  Widget _buildPostAddress(BuildContext context) {
+    return _buildVerticalInfo(
+      context,
+      appLocalization.postalAddress,
+      AppStrings.postalAddress,
     );
   }
-}
 
-class ContactInfo {
-  final String name;
-  final String number;
-
-  const ContactInfo({
-    required this.name,
-    required this.number,
-  });
-}
-
-class AddressColumn extends StatelessWidget {
-  final String title;
-  final String subTitle;
-
-  const AddressColumn({
-    super.key,
-    required this.title,
-    required this.subTitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Column _buildVerticalInfo(BuildContext context, String title, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -159,53 +136,36 @@ class AddressColumn extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         Text(
-          subTitle,
+          value,
         ),
-        const SizedBox(height: 20),
       ],
     );
   }
+
+  Widget _buildContactRow(String title, String value) => Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              title,
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Text(
+              value,
+            ),
+          ),
+        ],
+      );
 }
 
-class ContactRow extends StatelessWidget {
+class ContactInfo {
   final String name;
   final String number;
 
-  const ContactRow({
-    super.key,
+  ContactInfo({
     required this.name,
     required this.number,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Text(
-            name,
-            style: kDentalSubtitleStyle,
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Text(
-            number,
-            style: kDentalSubtitleStyle,
-          ),
-        ),
-      ],
-    );
-  }
 }
-
-const kDentalTitleStyle = TextStyle(
-  fontSize: 16,
-  fontWeight: FontWeight.w700,
-);
-
-const kDentalSubtitleStyle = TextStyle(
-  fontSize: 16,
-  fontWeight: FontWeight.w400,
-);
