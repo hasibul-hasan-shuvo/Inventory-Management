@@ -1,24 +1,82 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
+import 'package:dental_inventory/app/data/repository/order_repository.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
 import 'package:get/get.dart';
 
 class NotDeliveryController extends BaseController {
-  final RxList<OrderUiModel> orderList = <OrderUiModel>[].obs;
+  final OrderRepository _repository = Get.find();
+  final RxList<OrderUiModel> _orderListController =
+      RxList.empty(growable: true);
+
+  List<OrderUiModel> get orderList => _orderListController;
 
   @override
-  onInit() {
+  void onInit() {
     super.onInit();
-    _makeOrderList();
+    pagingController.initRefresh();
+    _getOrders();
   }
 
-  void _makeOrderList() {
-    for (var i = 0; i < 9; i++) {
-      orderList.add(OrderUiModel.dummy(i % 2 == 0 ? "Pending" : "Delivered"));
+  void onLoading() {
+    if (pagingController.canLoadNextPage()) {
+      _getNextOrders();
     }
+  }
+
+  void _getOrders() {
+    callDataService(
+      _repository.getOrders(
+        pagingController.pageNumber,
+      ),
+      onSuccess: _handleOrdersSuccessResponse,
+    );
+  }
+
+  void _handleOrdersSuccessResponse(OrderListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<OrderUiModel> list = response.orders
+            ?.map(
+              (e) => OrderUiModel.fromOrderResponse(
+                e,
+                appLocalization.localeName,
+              ),
+            )
+            .toList() ??
+        [];
+
+    _orderListController(list);
+  }
+
+  void _getNextOrders() {
+    callDataService(
+      _repository.getOrders(
+        pagingController.pageNumber,
+      ),
+      onSuccess: _handleNextOrdersSuccessResponse,
+      onStart: () => logger.d("Fetching more orders"),
+      onComplete: () => refreshController.loadComplete(),
+    );
+  }
+
+  void _handleNextOrdersSuccessResponse(OrderListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    List<OrderUiModel> list = orderList;
+    list.addAll(response.orders
+            ?.map(
+              (e) => OrderUiModel.fromOrderResponse(
+                e,
+                appLocalization.localeName,
+              ),
+            )
+            .toList() ??
+        []);
   }
 
   void toggleExpandStatus(OrderUiModel data) {
     data.isExpanded = !data.isExpanded;
-    orderList.refresh();
+    _orderListController.refresh();
   }
 }

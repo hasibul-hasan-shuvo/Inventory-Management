@@ -27,35 +27,20 @@ class DeliveryView extends BaseView<DeliveryController> {
     return PagingView(
       controller: controller.refreshController,
       enablePullDown: false,
-      child: Padding(
-        padding: const EdgeInsets.all(AppValues.halfPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildOrderNumberView(),
-            _buildNotOrderList(),
-          ],
-        ),
-      ),
+      child: _buildOrderList(),
     );
   }
 
-  Widget _buildOrderNumberView() {
-    return Padding(
-      padding: const EdgeInsets.all(AppValues.halfPadding),
-      child: Text(appLocalization.orderNumber, style: textTheme.titleMedium),
-    );
-  }
-
-  Widget _buildNotOrderList() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: (context, index) {
-          return _buildOrderItem(index);
-        },
+  Widget _buildOrderList() {
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppValues.margin.w,
+        vertical: AppValues.margin.h,
       ),
+      itemCount: controller.orderList.length,
+      itemBuilder: (context, index) {
+        return _buildOrderItem(index);
+      },
     );
   }
 

@@ -1,13 +1,14 @@
+import 'package:dental_inventory/app/core/utils/date_parser.dart';
+import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
 import 'package:dental_inventory/app/modules/delivery/models/ordered_product_ui_model.dart';
 
 class OrderUiModel {
-  late final String id;
+  late final int id;
   late final String invoiceNo;
   late final String date;
   late final List<OrderedProductUiModel> items;
   late final String status;
-  late final String totalPrice;
-  late bool isExpanded = false;
+  bool isExpanded = false;
 
   OrderUiModel.dummy(
     String orderStatus,
@@ -20,6 +21,17 @@ class OrderUiModel {
       OrderedProductUiModel(),
     ];
     status = orderStatus;
-    totalPrice = "1000";
+  }
+
+  OrderUiModel.fromOrderResponse(OrderResponse response, String localName) {
+    id = response.id ?? 0;
+    invoiceNo = response.invoice ?? '';
+    date = DateParser.getDateString(
+      timestamp: response.orderDate,
+      outputDateFormat: DateParser.defaultDateFormat,
+      localeName: localName,
+    );
+    items = [];
+    status = '';
   }
 }

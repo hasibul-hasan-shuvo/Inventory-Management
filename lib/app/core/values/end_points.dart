@@ -8,4 +8,5 @@ abstract class EndPoints {
   static const String activeShoppingCart = '/shopping/active-cart/items/';
   static const String addShoppingCartItems = '/shopping/active-cart/add-item/';
   static const String placeOrder = '/shopping/active-cart/place-order/';
+  static const String orders = '/shopping/orders';
 }

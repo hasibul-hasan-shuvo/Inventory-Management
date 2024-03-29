@@ -63,26 +63,34 @@ class ItemNotDeliveryView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getInvoiceNoAndDate() {
-    return Row(
-      children: [
-        _getInvoiceNo(),
-        SizedBox(width: AppValues.margin_10.w),
-        _getDate(),
-      ],
+    return Expanded(
+      child: Row(
+        children: [
+          _getInvoiceNo(),
+          SizedBox(width: AppValues.margin_10.w),
+          _getDate(),
+        ],
+      ),
     );
   }
 
   Widget _getInvoiceNo() {
-    return Text(
-      data.invoiceNo,
-      style: textTheme.titleMedium,
+    return Flexible(
+      child: Text(
+        data.invoiceNo,
+        style: textTheme.titleMedium,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 
   Widget _getDate() {
-    return Text(
-      data.date.toString(),
-      style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
+    return Flexible(
+      child: Text(
+        data.date.toString(),
+        style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
+      ),
     );
   }
 

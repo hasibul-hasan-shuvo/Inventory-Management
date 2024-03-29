@@ -21,37 +21,21 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
       return PagingView(
         controller: controller.refreshController,
         enablePullDown: false,
-        child: Padding(
-          padding: EdgeInsets.all(AppValues.halfPadding.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildOrderNumberView(),
-              _buildNotDeliveryOrderList(),
-            ],
-          ),
-        ),
+        enablePullUp: controller.pagingController.canLoadNextPage(),
+        onLoading: controller.onLoading,
+        child: _buildNotDeliveryOrderList(),
       );
     });
   }
 
-  Widget _buildOrderNumberView() {
-    return Padding(
-      padding: EdgeInsets.all(AppValues.halfPadding.h),
-      child: Text(
-        appLocalization.orderNumber,
-        style: textTheme.titleMedium,
-      ),
-    );
-  }
-
   Widget _buildNotDeliveryOrderList() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: _itemBuilder,
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppValues.margin.w,
+        vertical: AppValues.margin.h,
       ),
+      itemCount: controller.orderList.length,
+      itemBuilder: _itemBuilder,
     );
   }
 
