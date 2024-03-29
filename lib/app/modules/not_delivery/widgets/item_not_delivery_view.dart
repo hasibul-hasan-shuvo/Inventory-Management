@@ -43,6 +43,7 @@ class ItemNotDeliveryView extends StatelessWidget with BaseWidgetMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _getInvoiceNoAndDate(),
+            SizedBox(width: AppValues.margin.w),
             _getIcon(),
           ],
         ),
@@ -96,7 +97,9 @@ class ItemNotDeliveryView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getIcon() {
     return data.isExpanded
-        ? const Icon(Icons.keyboard_arrow_up)
+        ? const Icon(
+            Icons.keyboard_arrow_up,
+          )
         : const Icon(Icons.keyboard_arrow_down);
   }
 
