@@ -31,7 +31,7 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
   Widget _buildNotDeliveryOrderList() {
     return ListView.builder(
       padding: EdgeInsets.symmetric(
-        horizontal: AppValues.margin.w,
+        horizontal: AppValues.smallMargin.w,
         vertical: AppValues.margin.h,
       ),
       itemCount: controller.orderList.length,

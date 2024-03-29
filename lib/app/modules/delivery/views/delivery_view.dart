@@ -33,7 +33,7 @@ class DeliveryView extends BaseView<DeliveryController> {
   Widget _buildOrderList() {
     return ListView.builder(
       padding: EdgeInsets.symmetric(
-        horizontal: AppValues.margin.w,
+        horizontal: AppValues.smallMargin.w,
         vertical: AppValues.margin.h,
       ),
       itemCount: controller.orderList.length,
