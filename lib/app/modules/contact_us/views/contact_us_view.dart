@@ -11,22 +11,6 @@ class ContactUsView extends BaseView<ContactUsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
-  List<ContactInfo> _getContacts() => [
-        ContactInfo(
-            name: appLocalization.consumables,
-            number: AppStrings.consumablesNumber),
-        ContactInfo(
-            name: appLocalization.equipment,
-            number: AppStrings.equipmentNumber),
-        ContactInfo(
-            name: appLocalization.service, number: AppStrings.serviceNumber),
-        ContactInfo(
-            name: appLocalization.workshop, number: AppStrings.workshopNumber),
-        ContactInfo(
-            name: appLocalization.accounting,
-            number: AppStrings.accountingNumber),
-      ];
-
   @override
   Widget body(BuildContext context) {
     return Padding(
@@ -54,7 +38,7 @@ class ContactUsView extends BaseView<ContactUsController> {
   }
 
   ListView _buildContactList() {
-    final contacts = _getContacts();
+    final contacts = controller.getContacts();
 
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
@@ -158,14 +142,4 @@ class ContactUsView extends BaseView<ContactUsController> {
           ),
         ],
       );
-}
-
-class ContactInfo {
-  final String name;
-  final String number;
-
-  ContactInfo({
-    required this.name,
-    required this.number,
-  });
 }
