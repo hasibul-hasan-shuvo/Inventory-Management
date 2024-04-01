@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/item_suggested_order_view.dart';
 import 'package:flutter/material.dart';
@@ -35,14 +36,8 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   }
 
   Widget _getPlaceHolder() {
-    return Center(
-      child: Text(
-        appLocalization.placeHolderEmptySuggestedOrders,
-        style: textTheme.bodyMedium,
-      ),
-    ).marginSymmetric(
-      horizontal: AppValues.margin.w,
-      vertical: AppValues.margin.h,
+    return EmptyListPlaceHolder(
+      message: appLocalization.placeHolderEmptySuggestedOrders,
     );
   }
 

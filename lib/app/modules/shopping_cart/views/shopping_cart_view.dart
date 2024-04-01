@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
@@ -49,14 +50,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   Widget _getPlaceHolder() {
-    return Center(
-      child: Text(
-        appLocalization.placeHolderEmptyShoppingCart,
-        style: textTheme.bodyMedium,
-      ),
-    ).marginSymmetric(
-      horizontal: AppValues.margin.w,
-      vertical: AppValues.margin.h,
+    return EmptyListPlaceHolder(
+      message: appLocalization.placeHolderEmptyShoppingCart,
     );
   }
 

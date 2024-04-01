@@ -65,6 +65,7 @@
   "passwordUpperCaseValidator": "Password must contain at least one uppercase letter",
   "passwordValidator": "Password must be at least 8 characters long",
   "placeHolderEmptyInventory": "No inventory data found",
+  "placeHolderEmptyOrders": "No orders found",
   "placeHolderEmptyShoppingCart": "No active shopping cart found",
   "placeHolderEmptySuggestedOrders": "No order suggestion",
   "retry": "Retry",

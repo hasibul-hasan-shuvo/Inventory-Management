@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/not_delivery/widgets/item_not_delivery_view.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +19,24 @@ class NotDeliveryView extends BaseView<NotDeliveryController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() {
-      return PagingView(
-        controller: controller.refreshController,
-        enablePullDown: false,
-        enablePullUp: controller.pagingController.canLoadNextPage(),
-        onLoading: controller.onLoading,
-        child: _buildNotDeliveryOrderList(),
-      );
+      return controller.isPageLoading && controller.orderList.isEmpty
+          ? const SizedBox.shrink()
+          : controller.orderList.isEmpty
+              ? _getPlaceHolder()
+              : PagingView(
+                  controller: controller.refreshController,
+                  enablePullDown: false,
+                  enablePullUp: controller.pagingController.canLoadNextPage(),
+                  onLoading: controller.onLoading,
+                  child: _buildNotDeliveryOrderList(),
+                );
     });
+  }
+
+  Widget _getPlaceHolder() {
+    return EmptyListPlaceHolder(
+      message: appLocalization.placeHolderEmptyOrders,
+    );
   }
 
   Widget _buildNotDeliveryOrderList() {
