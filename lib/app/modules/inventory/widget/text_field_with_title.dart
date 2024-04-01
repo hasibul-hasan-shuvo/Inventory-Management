@@ -18,37 +18,36 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(title),
-          const SizedBox(
-            width: AppValues.margin_10,
-          ),
-          SizedBox(
-              width: AppValues.margin_40.w,
-              height: AppValues.margin_30.w,
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                minLines: 1,
-                initialValue: initialValue,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: theme.colorScheme.surface,
-                  contentPadding: const EdgeInsets.all(4),
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(title),
+        const SizedBox(
+          width: AppValues.margin_10,
+        ),
+        SizedBox(
+            width: AppValues.margin_40.w,
+            height: AppValues.margin_30.w,
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              minLines: 1,
+              initialValue: initialValue,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
                 ),
-                onChanged: onChanged,
-              ))
-        ],
-      ),
+                filled: true,
+                fillColor: theme.colorScheme.surface,
+                contentPadding: const EdgeInsets.all(4),
+                counterText: '',
+              ),
+              onChanged: onChanged,
+              maxLength: AppValues.maxCountLength,
+            ))
+      ],
     );
   }
 }

@@ -71,7 +71,16 @@ class ShoppingCartController extends BaseController {
   }
 
   void orderAll() {
-    logger.d("Ordering all items");
+    callDataService(
+      _repository.placeOrder(),
+      onSuccess: _handlePlaceOrderSuccessResponse,
+    );
+  }
+
+  void _handlePlaceOrderSuccessResponse(bool isSuccess) {
+    if (isSuccess) {
+      _shoppingCartItemsController.clear();
+    }
   }
 
   void updateCartCount(ShoppingCartUiModel data, int cartCount) {

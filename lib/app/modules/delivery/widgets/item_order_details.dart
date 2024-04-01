@@ -1,58 +1,68 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
+import 'package:dental_inventory/app/modules/delivery/widgets/item_order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../core/values/app_values.dart';
-import 'item_order_card.dart';
 
 //ignore: must_be_immutable
 class ItemOrderDetails extends StatelessWidget with BaseWidgetMixin {
-  ItemOrderDetails({required this.orderUiModel, this.isDelivery});
+  ItemOrderDetails({
+    required this.orderUiModel,
+  });
 
   final OrderUiModel orderUiModel;
-  final bool? isDelivery;
 
   @override
   Widget body(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppValues.halfPadding.w),
-          child: const Divider(),
-        ),
-        SizedBox(
-          height: AppValues.halfPadding.h,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: AppValues.halfPadding.w),
-          child: Text(appLocalization.orderLine, style: textTheme.titleMedium),
-        ),
-        SizedBox(
-          height: AppValues.halfPadding.h,
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: orderUiModel.items.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: isDelivery == true ? AppValues.extraSmallElevation : 0,
-              child: Padding(
-                padding: EdgeInsets.all(AppValues.halfPadding.sp),
-                child: ItemOrderCard(
-                  productId: orderUiModel.items[index].id,
-                  productImage: orderUiModel.items[index].image,
-                  productName: orderUiModel.items[index].name,
-                  productPrice: orderUiModel.items[index].price.toString(),
-                  productQuantity: orderUiModel.items[index].quantity,
-                ),
-              ),
-            );
-          },
-        )
+        const Divider(),
+        SizedBox(height: AppValues.halfPadding.h),
+        _getTitle(),
+        SizedBox(height: AppValues.halfPadding.h),
+        _getItemList(),
       ],
+    );
+  }
+
+  Widget _getTitle() {
+    return Text(
+      appLocalization.orderLine,
+      style: textTheme.titleMedium,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _getItemList() {
+    return Obx(
+      () => ListView.builder(
+        padding: EdgeInsets.only(
+          bottom: AppValues.margin.h,
+        ),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: orderUiModel.items.length,
+        itemBuilder: _itemBuilder,
+      ),
+    );
+  }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    return Card(
+      elevation: AppValues.extraSmallElevation,
+      child: ItemOrderCard(
+        productId: orderUiModel.items[index].itemId,
+        productImage: orderUiModel.items[index].imageUrl,
+        productName: orderUiModel.items[index].name,
+        productPrice: orderUiModel.items[index].price.toString(),
+        productQuantity: orderUiModel.items[index].quantity.toString(),
+      ),
     );
   }
 }

@@ -113,4 +113,9 @@ abstract class AppValues {
   static const double itemImageWidth = 70;
   static const double space_110 = 110;
   static const double scannerHeight = 350;
+
+  static const int maxEmailLength = 60;
+  static const int maxPasswordLength = 16;
+  static const int maxCountLength = 3;
+  static const int maxCountValue = 999;
 }

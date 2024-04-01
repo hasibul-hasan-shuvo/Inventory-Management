@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
+import 'package:dental_inventory/app/core/values/order_status.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
 import 'package:dental_inventory/app/modules/delivery_details/controllers/delivery_details_controller.dart';
 import 'package:flutter/material.dart';
@@ -9,51 +10,70 @@ import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
-  late OrderUiModel order;
-
-  DeliveryDetailsView() {
-    init();
-  }
-
-  init() {
-    order = Get.arguments as OrderUiModel;
-  }
-
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      title: Text('${appLocalization.order} ${order.id}'),
+    return CustomAppBar(
+      appBarTitleText: '${appLocalization.order} ${controller.order.invoiceNo}',
+      actions: _getActions,
     );
   }
 
   @override
   Widget body(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(AppValues.halfPadding.sp),
+    return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(order.status, order.id, order.date),
-          ItemOrderDetails(orderUiModel: order),
+          SizedBox(height: AppValues.margin.h),
+          _buildHeader(
+            controller.order.status.getTitle(appLocalization),
+            controller.order.invoiceNo,
+            controller.order.date,
+          ),
+          ItemOrderDetails(
+            orderUiModel: controller.order,
+          ),
         ],
+      ).marginSymmetric(
+        horizontal: AppValues.margin.w,
       ),
     );
   }
 
-  Widget _buildHeader(String status, String orderNumber, String orderDate) {
-    return Padding(
-      padding: EdgeInsets.all(AppValues.halfPadding.sp),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${appLocalization.status}: $status',
-              style: textTheme.bodyMedium),
-          SizedBox(height: AppValues.halfPadding.h),
-          Text('${appLocalization.orderDate}: $orderDate',
-              style: textTheme.bodyMedium),
-        ],
-      ),
+  Widget _buildHeader(
+    String status,
+    String orderNumber,
+    String orderDate,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          '${appLocalization.status}: $status',
+          style: textTheme.bodyMedium,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: AppValues.halfPadding.h),
+        Text(
+          '${appLocalization.orderDate}: $orderDate',
+          style: textTheme.bodyMedium,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
+  }
+
+  List<Widget> get _getActions {
+    return [
+      IconButton(
+        onPressed: controller.confirmDelivery,
+        icon: const Icon(
+          Icons.done,
+        ),
+      )
+    ];
   }
 }

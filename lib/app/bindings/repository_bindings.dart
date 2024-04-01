@@ -1,7 +1,9 @@
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
-import 'package:dental_inventory/app/data/repository/inventory_repository_imp.dart';
+import 'package:dental_inventory/app/data/repository/inventory_repository_impl.dart';
+import 'package:dental_inventory/app/data/repository/order_repository.dart';
+import 'package:dental_inventory/app/data/repository/order_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
@@ -17,7 +19,7 @@ class RepositoryBindings implements Bindings {
     );
 
     Get.lazyPut<InventoryRepository>(
-      () => InventoryRepositoryImp(),
+      () => InventoryRepositoryImpl(),
       fenix: true,
     );
 
@@ -28,6 +30,11 @@ class RepositoryBindings implements Bindings {
 
     Get.lazyPut<ShoppingCartRepository>(
       () => ShoppingCartRepositoryImpl(),
+      fenix: true,
+    );
+
+    Get.lazyPut<OrderRepository>(
+      () => OrderRepositoryImpl(),
       fenix: true,
     );
   }

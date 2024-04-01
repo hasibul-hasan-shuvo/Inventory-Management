@@ -12,11 +12,14 @@ class InventoryController extends BaseController {
 
   List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
 
-  final RxBool isSearchMode = false.obs;
+  final RxBool _searchModeController = RxBool(false);
+
+  bool get isSearchable => _searchModeController.value;
 
   final RxString searchQuery = ''.obs;
 
   String productID = '';
+  String id = '';
   String maxCount = '';
   String minCount = '';
   String stockCount = '';
@@ -38,24 +41,40 @@ class InventoryController extends BaseController {
 
   void _getNextSuggestedOrders() {}
 
-  changeSearchMode() {
-    isSearchMode.value = !isSearchMode.value;
+  void changeSearchMode() {
+    _searchModeController(!isSearchable);
     searchQuery('');
-    updateSearchQuery(searchQuery.value);
+    if (!_searchModeController.value) {
+      fetchInventoryList();
+    }
   }
 
-  updateSearchQuery(String query) {
+  void updateSearchQuery(String query) {
     searchQuery(query);
+    fetchInventoryList();
+  }
+
+  void deleteInventoryItem() {
+    callDataService(_inventoryRepository.deleteInventory(id: id),
+        onSuccess: _deleteSuccessHandler);
+  }
+
+  void _deleteSuccessHandler(e) {
+    showSuccessMessage(appLocalization.deleteSuccessMessage);
+    _inventoryItemsController
+        .removeWhere((element) => element.itemId == productID);
+    _inventoryItemsController.refresh();
   }
 
   Future<void> updateInventoryData() async {
     final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-        id: productID,
-        maxCount: maxCount,
-        minCount: minCount,
-        stockCount: stockCount,
-        inventoryID: _authRepository.getInventoryID(),
-        fixedSuggestion: fixedSuggestion);
+      id: productID,
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      inventoryID: _authRepository.getInventoryID(),
+      fixedSuggestion: fixedSuggestion,
+    );
     callDataService(
       _inventoryRepository.updateInventoryData(request),
       onSuccess: _handleUpdateInventoryDataSuccessResponse,
@@ -64,7 +83,9 @@ class InventoryController extends BaseController {
 
   Future<void> fetchInventoryList() async {
     callDataService(
-      _inventoryRepository.getInventoryList(),
+      _inventoryRepository.getInventoryList(
+        searchQuery: searchQuery.value,
+      ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );
   }
@@ -80,13 +101,10 @@ class InventoryController extends BaseController {
     _inventoryItemsController(list);
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
     for (var element in inventoryItems) {
-      if (element.productCode == data.product?.itemId.toString()) {
-        element.maxTreshold = data.maxCount.toString();
-        element.minTreshold = data.minCount.toString();
-        element.currentStock = data.stockCount.toString();
-        element.fixedOrderSuggestions = data.fixedSuggestion.toString();
+      if (element.itemId == response.product?.itemId.toString()) {
+        element.updateFromInventoryResponse(response);
       }
     }
   }

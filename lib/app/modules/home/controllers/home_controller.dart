@@ -17,6 +17,7 @@ class HomeController extends BaseController {
     getHomeMenuItems();
   }
 
+  // ignore: long-method
   void getHomeMenuItems() {
     List<ItemHomeMenuUiModel> list = List.empty(growable: true);
     list.add(
@@ -51,7 +52,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.inventoryCount,
         title: appLocalization.homeMenuInventoryCount,
-        route: "",
+        route: Routes.ITEM_COUNT,
       ),
     );
     list.add(
@@ -65,7 +66,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.search,
         title: appLocalization.homeMenuSearchItem,
-        route: "",
+        route: Routes.GLOBAL_INVENTORIES,
       ),
     );
     list.add(

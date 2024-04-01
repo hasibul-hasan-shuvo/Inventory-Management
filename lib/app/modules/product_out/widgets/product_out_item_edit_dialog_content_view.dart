@@ -91,12 +91,12 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
   Widget _getDecrementButton() {
     return Obx(
       () => IconButton(
-        onPressed: _numberController.value > 0 ? _onTapDecrement : null,
+        onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
         icon: AssetImageView(
           fileName: AppIcons.roundedMinus,
           height: AppValues.iconLargeSize.h,
           width: AppValues.iconLargeSize.h,
-          color: _numberController.value > 0
+          color: _isDecrementButtonEnabled
               ? theme.colorScheme.primary
               : AppColors.basicGrey,
         ),
@@ -107,13 +107,14 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
   Widget _getIncrementButton() {
     return Obx(
       () => IconButton(
-        onPressed: latestStock > 0 ? _onTapIncrement : null,
+        onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
         icon: AssetImageView(
           fileName: AppIcons.roundedPlus,
           height: AppValues.iconLargeSize.h,
           width: AppValues.iconLargeSize.h,
-          color:
-              latestStock > 0 ? theme.colorScheme.primary : AppColors.basicGrey,
+          color: _isIncrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
         ),
       ),
     );
@@ -137,6 +138,11 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
     _numberController(_numberController.value + 1);
     onNumberChanged(_numberController.value);
   }
+
+  bool get _isDecrementButtonEnabled => _numberController.value > 0;
+
+  bool get _isIncrementButtonEnabled =>
+      latestStock > 0 && latestStock < AppValues.maxCountValue;
 
   int get latestStock => data.available - _numberController.value;
 }

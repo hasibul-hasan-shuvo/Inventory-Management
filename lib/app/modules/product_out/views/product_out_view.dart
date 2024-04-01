@@ -1,9 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/EmptyScannedListView.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
-import 'package:dental_inventory/app/modules/product_out/widgets/EmptyScannedListView.dart';
 import 'package:dental_inventory/app/modules/product_out/widgets/item_product_out_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';

@@ -11,7 +11,7 @@ import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
 import '../../../core/widget/asset_image_view.dart';
 import '../../../core/widget/network_image_view.dart';
-import 'dialog_content.dart';
+import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
@@ -45,19 +45,22 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   Widget _buildDialog(BuildContext context) {
     return AppDialog(
       title: appLocalization.editProduct,
-      content: DialogContent(inventoryData: inventoryData),
+      content: InventoryItemEditDialogView(inventoryData: inventoryData),
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
       onPositiveButtonTap: () {
         _controller.updateInventoryData();
       },
+      onNegativeButtonTap: () {
+        _controller.deleteInventoryItem();
+      },
     );
   }
 
   Widget _buildProductImage() {
     return NetworkImageView(
-      imageUrl: inventoryData.productImageUrl,
+      imageUrl: inventoryData.imageUrl,
       height: AppValues.itemImageHeight.h,
       width: AppValues.itemImageWidth.w,
       fit: BoxFit.cover,
@@ -82,9 +85,10 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            inventoryData.productName,
+            inventoryData.name,
             style: textTheme.titleMedium,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: AppValues.margin_10.h),
           Row(
@@ -96,7 +100,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
                 child: Text(
-                  "${appLocalization.max}: ${inventoryData.maxTreshold} ${appLocalization.min}: ${inventoryData.minTreshold}",
+                  "${appLocalization.max}: ${inventoryData.max} ${appLocalization.min}: ${inventoryData.min}",
                   style: textTheme.bodySmall,
                 ),
               ),

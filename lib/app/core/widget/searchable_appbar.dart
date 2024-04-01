@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../base/base_widget_mixin.dart';
 import '../values/app_colors.dart';
-import '../values/app_icons.dart';
-import '../values/app_images.dart';
 import '../values/app_values.dart';
-import 'asset_image_view.dart';
 
 // ignore: must_be_immutable
 class SearchAbleAppBar extends StatelessWidget
@@ -16,6 +14,10 @@ class SearchAbleAppBar extends StatelessWidget
   final VoidCallback onChangeSearchMode;
   final Function(String) updateSearchQuery;
   final String title;
+
+  final RxBool isSearchBoxEmpty = true.obs;
+
+  final TextEditingController _searchController = TextEditingController();
 
   SearchAbleAppBar(
       {required this.isSearchableMode,
@@ -30,23 +32,57 @@ class SearchAbleAppBar extends StatelessWidget
   Widget body(BuildContext context) => AppBar(
         iconTheme:
             Theme.of(context).iconTheme.copyWith(color: AppColors.colorWhite),
-        actions: [
-          isSearchableMode ? _buildClearButton() : _buildSearchButton()
-        ],
+        actions: _buildActions(),
         title: isSearchableMode ? _buildSearchTextField() : _buildTitle(),
         centerTitle: true,
       );
 
+  List<Widget> _buildActions() {
+    return [
+      isSearchableMode ? _buildSearchableActions() : _buildSearchButton(),
+    ];
+  }
+
+  Widget _buildSearchableActions() {
+    return Row(
+      children: [
+        _buildSearchActionButton(),
+        _buildClearButton(),
+      ],
+    );
+  }
+
+  Widget _buildSearchActionButton() {
+    return Obx(
+      () {
+        return IconButton(
+          onPressed: isSearchBoxEmpty.value
+              ? null
+              : () {
+                  updateSearchQuery(_searchController.text);
+                },
+          icon: Icon(
+            Icons.done,
+            color: isSearchBoxEmpty.value
+                ? AppColors.colorWhite.withOpacity(0.5)
+                : AppColors.colorWhite,
+            size: AppValues.iconDefaultSize.h,
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildClearButton() {
     return IconButton(
-        onPressed: () {
-          onChangeSearchMode();
-        },
-        icon: AssetImageView(
-          fileName: AppIcons.close,
-          height: AppValues.iconDefaultSize.h,
-          width: AppValues.iconDefaultSize.w,
-        ));
+      onPressed: () {
+        onChangeSearchMode();
+      },
+      icon: Icon(
+        Icons.clear,
+        size: AppValues.iconDefaultSize.h,
+      ),
+    );
   }
 
   Widget _buildSearchButton() {
@@ -60,18 +96,24 @@ class SearchAbleAppBar extends StatelessWidget
 
   Widget _buildSearchTextField() {
     return TextFormField(
-        autofocus: true,
-        decoration: InputDecoration(
-          hintText: appLocalization.search,
-          border: InputBorder.none,
-        ),
-        maxLines: 1,
-        cursorColor: AppColors.colorWhite,
-        onChanged: (value) {
-          updateSearchQuery(value);
-        },
-        style: const TextStyle(color: AppColors.colorWhite));
+      autofocus: true,
+      controller: _searchController,
+      decoration: InputDecoration(
+        hintText: appLocalization.search,
+        border: InputBorder.none,
+      ),
+      maxLines: 1,
+      textInputAction: TextInputAction.search,
+      cursorColor: AppColors.colorWhite,
+      onFieldSubmitted: (value) {
+        updateSearchQuery(value);
+      },
+      onChanged: (value) {
+        isSearchBoxEmpty(value.isEmpty);
+      },
+      style: const TextStyle(color: AppColors.colorWhite),
+    );
   }
 
-  _buildTitle() => Text(title);
+  Widget _buildTitle() => Text(title);
 }

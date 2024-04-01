@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
@@ -35,10 +36,14 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
-        isSearchableMode: controller.isSearchMode.value,
-        title: appLocalization.homeMenuInventory,
-        onChangeSearchMode: controller.changeSearchMode,
-        updateSearchQuery: controller.updateSearchQuery);
+      isSearchableMode: controller.isSearchable,
+      title: appLocalization.homeMenuSearchItem,
+      onChangeSearchMode: controller.changeSearchMode,
+      updateSearchQuery: (value) {
+        controller.updateSearchQuery(value);
+        closeKeyboard();
+      },
+    );
   }
 
   Widget _buildListOfProduct() {
@@ -65,14 +70,8 @@ class InventoryView extends BaseView<InventoryController> {
       ItemInventoryCard(inventoryData: inventoryData);
 
   Widget _getPlaceHolder() {
-    return Center(
-      child: Text(
-        appLocalization.placeHolderEmptyInventory,
-        style: textTheme.bodyMedium,
-      ),
-    ).marginSymmetric(
-      horizontal: AppValues.margin.w,
-      vertical: AppValues.margin.h,
+    return EmptyListPlaceHolder(
+      message: appLocalization.placeHolderEmptyInventory,
     );
   }
 }

@@ -8,10 +8,14 @@ import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
 import '../modules/delivery_details/bindings/delivery_details_binding.dart';
 import '../modules/delivery_details/views/delivery_details_view.dart';
+import '../modules/global_inventories/bindings/global_inventories_binding.dart';
+import '../modules/global_inventories/views/global_inventories_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
 import '../modules/inventory/views/inventory_view.dart';
+import '../modules/item_count/bindings/item_count_binding.dart';
+import '../modules/item_count/views/item_count_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
@@ -93,7 +97,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DELIVERY_DETAILS,
-      page: () =>  DeliveryDetailsView(),
+      page: () => DeliveryDetailsView(),
       binding: DeliveryDetailsBinding(),
     ),
     GetPage(
@@ -120,6 +124,16 @@ class AppPages {
       name: _Paths.PRODUCT_IN,
       page: () => ProductInView(),
       binding: ProductInBinding(),
+    ),
+    GetPage(
+      name: _Paths.ITEM_COUNT,
+      page: () => ItemCountView(),
+      binding: ItemCountBinding(),
+    ),
+    GetPage(
+      name: _Paths.GLOBAL_INVENTORIES,
+      page: () => GlobalInventoriesView(),
+      binding: GlobalInventoriesBinding(),
     ),
   ];
 }

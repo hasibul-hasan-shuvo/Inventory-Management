@@ -13,4 +13,6 @@ abstract class ShoppingCartRepository {
   Future<bool> deleteItemFromShoppingCart(String id);
 
   Future<bool> addAllItemsInShoppingCart();
+
+  Future<bool> placeOrder();
 }
