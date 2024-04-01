@@ -86,4 +86,8 @@ class DeliveryController extends BaseController {
             .toList() ??
         []);
   }
+
+  void removeOrder(OrderUiModel data) {
+    _orderListController.removeWhere((element) => element.id == data.id);
+  }
 }

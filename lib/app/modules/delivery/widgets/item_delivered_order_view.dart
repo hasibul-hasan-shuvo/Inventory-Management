@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
+import 'package:dental_inventory/app/modules/delivery/controllers/delivery_controller.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,13 @@ class ItemDeliveredOrderView extends StatelessWidget with BaseWidgetMixin {
     Get.toNamed(
       Routes.DELIVERY_DETAILS,
       arguments: data,
-    );
+    )?.then((confirmed) {
+      if (confirmed == true) {
+        DeliveryController controller = Get.find();
+        controller.removeOrder(data);
+      }
+
+      return confirmed;
+    });
   }
 }

@@ -14,6 +14,7 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
       appBarTitleText: '${appLocalization.order} ${controller.order.invoiceNo}',
+      actions: _getActions,
     );
   }
 
@@ -63,5 +64,16 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
         ),
       ],
     );
+  }
+
+  List<Widget> get _getActions {
+    return [
+      IconButton(
+        onPressed: controller.confirmDelivery,
+        icon: const Icon(
+          Icons.done,
+        ),
+      )
+    ];
   }
 }
