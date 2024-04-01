@@ -33,7 +33,7 @@ class DeliveryDetailsController extends BaseController {
   void confirmDelivery() {
     ConfirmOrderDeliveryRequestBody requestBody =
         ConfirmOrderDeliveryRequestBody(
-      status: OrderStatus.DELIVERED.toLowercaseName,
+      status: OrderStatus.RECEIVED.toLowercaseName,
     );
 
     callDataService(

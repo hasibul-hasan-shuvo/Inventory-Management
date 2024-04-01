@@ -29,7 +29,7 @@ class OrderUiModel {
     status = OrderStatus.values.firstWhereOrNull(
           (element) => element.name.toLowerCase() == response.status,
         ) ??
-        OrderStatus.ORDERED;
+        OrderStatus.DELIVERED;
   }
 
   void updateItemsFromOrderItemResponse(OrderItemsResponse response) {
