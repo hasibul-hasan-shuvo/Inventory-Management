@@ -35,6 +35,7 @@
   "logOut": "Disengage",
   "logOutMessage:": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
+  "messageCodeNotFound": "Koden ble ikke funnet",
   "messageCreateInventorySuccessful": "Elementet ble lagt til",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringer mislyktes",
   "min": "Min",

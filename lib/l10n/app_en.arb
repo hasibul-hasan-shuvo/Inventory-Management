@@ -35,6 +35,7 @@
   "logOut": "Log Out",
   "logOutMessage": "Are you sure you want to log out?",
   "max": "Max",
+  "messageCodeNotFound": "Code not found",
   "messageCreateInventorySuccessful": "Item added successfully",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "min": "Min",
