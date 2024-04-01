@@ -35,6 +35,7 @@
   "logOut": "Disengage",
   "logOutMessage:": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
+  "messageCreateInventorySuccessful": "Elementet ble lagt til",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringer mislyktes",
   "min": "Min",
   "mustBe11DigitsLong": "Må være 11 siffer langt",

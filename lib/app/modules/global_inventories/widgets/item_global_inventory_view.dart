@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/modules/global_inventories/controllers/global_inventories_controller.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,5 +82,8 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  void _onTapAdd(BuildContext context) {}
+  void _onTapAdd(BuildContext context) {
+    GlobalInventoriesController controller = Get.find();
+    controller.createInventory(data);
+  }
 }

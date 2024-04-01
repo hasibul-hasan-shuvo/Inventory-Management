@@ -1,5 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:get/get.dart';
@@ -43,6 +45,22 @@ class GlobalInventoriesController extends BaseController {
           .map((e) => GlobalInventoryUiModel.fromGlobalInventoryResponse(e))
           .toList(),
     );
+  }
+
+  void createInventory(GlobalInventoryUiModel data) {
+    CreateInventoryRequestBody requestBody =
+        CreateInventoryRequestBody(itemId: data.itemId);
+
+    callDataService(
+      _repository.createInventory(requestBody),
+      onSuccess: _handleCreateInventorySuccessResponse,
+    );
+  }
+
+  void _handleCreateInventorySuccessResponse(InventoryResponse response) {
+    if (response.id != null) {
+      showSuccessMessage(appLocalization.messageCreateInventorySuccessful);
+    }
   }
 
   void onScanned(String? code) {
