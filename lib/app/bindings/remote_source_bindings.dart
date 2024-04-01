@@ -1,5 +1,7 @@
 import 'package:dental_inventory/app/data/remote/auth_remote_data_source.dart';
 import 'package:dental_inventory/app/data/remote/auth_remote_data_source_imp.dart';
+import 'package:dental_inventory/app/data/remote/home_remote_data_source.dart';
+import 'package:dental_inventory/app/data/remote/home_remote_data_source_impl.dart';
 import 'package:dental_inventory/app/data/remote/inventory_remote_data_source.dart';
 import 'package:dental_inventory/app/data/remote/inventroy_remote_data_source_impl.dart';
 import 'package:dental_inventory/app/data/remote/order_remote_data_source.dart';
@@ -31,6 +33,10 @@ class RemoteSourceBindings implements Bindings {
     );
     Get.lazyPut<OrderRemoteDataSource>(
       () => OrderRemoteDataSourceImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl(),
       fenix: true,
     );
   }
