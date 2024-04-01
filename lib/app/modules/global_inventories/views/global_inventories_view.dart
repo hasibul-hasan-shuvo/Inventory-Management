@@ -80,6 +80,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   }
 
   void _onPressedScanner() {
+    closeKeyboard();
     Get.toNamed(
       Routes.SCANNER,
     )?.then((code) {
