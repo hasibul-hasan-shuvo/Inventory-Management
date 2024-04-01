@@ -1,7 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
+import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
-import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:dental_inventory/app/modules/delivery/widgets/item_delivered_order_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,90 +15,46 @@ class DeliveryView extends BaseView<DeliveryController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() {
-      return _buildBody();
+      return controller.isPageLoading && controller.orderList.isEmpty
+          ? const SizedBox.shrink()
+          : controller.orderList.isEmpty
+              ? _getPlaceHolder()
+              : _buildBody();
     });
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        title: Text(appLocalization.homeMenuOrderDelivery),
-        centerTitle: true,
-      );
+  PreferredSizeWidget? appBar(BuildContext context) =>
+      CustomAppBar(appBarTitleText: appLocalization.homeMenuOrderDelivery);
 
   Widget _buildBody() {
     return PagingView(
       controller: controller.refreshController,
       enablePullDown: false,
-      child: Padding(
-        padding: const EdgeInsets.all(AppValues.halfPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildOrderNumberView(),
-            _buildNotOrderList(),
-          ],
-        ),
-      ),
+      child: _buildOrderList(),
     );
   }
 
-  Widget _buildOrderNumberView() {
-    return Padding(
-      padding: const EdgeInsets.all(AppValues.halfPadding),
-      child: Text(appLocalization.orderNumber, style: textTheme.titleMedium),
+  Widget _getPlaceHolder() {
+    return EmptyListPlaceHolder(
+      message: appLocalization.placeHolderEmptyOrders,
     );
   }
 
-  Widget _buildNotOrderList() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: (context, index) {
-          return _buildOrderItem(index);
-        },
+  Widget _buildOrderList() {
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppValues.smallMargin.w,
+        vertical: AppValues.margin.h,
       ),
+      itemCount: controller.orderList.length,
+      itemBuilder: (context, index) {
+        return _buildOrderItem(index);
+      },
     );
   }
 
   Widget _buildOrderItem(int index) {
-    return Card(
-      elevation: AppValues.extraSmallElevation,
-      child: InkWell(
-        enableFeedback: false,
-        splashColor: Colors.transparent,
-        onTap: () {
-          Get.toNamed(Routes.DELIVERY_DETAILS,
-              arguments: controller.orderList[index]);
-        },
-        child: _buildOrderBasicInfo(index),
-      ),
-    );
-  }
-
-  Widget _buildOrderBasicInfo(int index) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppValues.margin_12.w, vertical: AppValues.padding.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Text(
-                controller.orderList[index].id,
-                style: textTheme.titleMedium,
-              ),
-              SizedBox(width: AppValues.margin_10.w),
-              Text(
-                controller.orderList[index].date.toString(),
-                style: textTheme.bodySmall?.copyWith(color: theme.dividerColor),
-              ),
-            ],
-          ),
-          const Icon(Icons.chevron_right),
-        ],
-      ),
-    );
+    return ItemDeliveredOrderView(data: controller.orderList[index]);
   }
 }

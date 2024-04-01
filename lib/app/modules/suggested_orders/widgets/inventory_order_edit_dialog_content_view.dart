@@ -116,7 +116,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   Widget _getDecrementButton() {
     return Obx(
       () => IconButton(
-        onPressed: _suggestionController.value > 0 ? _onTapDecrement : null,
+        onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
         icon: AssetImageView(
           fileName: AppIcons.roundedMinus,
           height: AppValues.iconLargeSize.h,
@@ -130,13 +130,17 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   }
 
   Widget _getIncrementButton() {
-    return IconButton(
-      onPressed: _onTapIncrement,
-      icon: AssetImageView(
-        fileName: AppIcons.roundedPlus,
-        height: AppValues.iconLargeSize.h,
-        width: AppValues.iconLargeSize.h,
-        color: theme.colorScheme.primary,
+    return Obx(
+      () => IconButton(
+        onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
+        icon: AssetImageView(
+          fileName: AppIcons.roundedPlus,
+          height: AppValues.iconLargeSize.h,
+          width: AppValues.iconLargeSize.h,
+          color: _isIncrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
+        ),
       ),
     );
   }
@@ -177,4 +181,9 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   String _getTotalPrice() {
     return (_suggestionController.value * price).toStringAsFixed(2);
   }
+
+  bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
+
+  bool get _isIncrementButtonEnabled =>
+      _suggestionController.value < AppValues.maxCountValue;
 }

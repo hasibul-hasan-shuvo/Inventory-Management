@@ -12,7 +12,9 @@ class InventoryController extends BaseController {
 
   List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
 
-  final RxBool isSearchMode = false.obs;
+  final RxBool _searchModeController = RxBool(false);
+
+  bool get isSearchable => _searchModeController.value;
 
   final RxString searchQuery = ''.obs;
 
@@ -40,9 +42,9 @@ class InventoryController extends BaseController {
   void _getNextSuggestedOrders() {}
 
   void changeSearchMode() {
-    isSearchMode.value = !isSearchMode.value;
+    _searchModeController(!isSearchable);
     searchQuery('');
-    if (!isSearchMode.value) {
+    if (!_searchModeController.value) {
       fetchInventoryList();
     }
   }
@@ -59,7 +61,8 @@ class InventoryController extends BaseController {
 
   void _deleteSuccessHandler(e) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
-    _inventoryItemsController.removeWhere((element) => element.id == id);
+    _inventoryItemsController
+        .removeWhere((element) => element.itemId == productID);
     _inventoryItemsController.refresh();
   }
 
@@ -98,13 +101,10 @@ class InventoryController extends BaseController {
     _inventoryItemsController(list);
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse data) {
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
     for (var element in inventoryItems) {
-      if (element.productCode == data.product?.itemId.toString()) {
-        element.maxTreshold = data.maxCount.toString();
-        element.minTreshold = data.minCount.toString();
-        element.currentStock = data.stockCount.toString();
-        element.fixedOrderSuggestions = data.fixedSuggestion.toString();
+      if (element.itemId == response.product?.itemId.toString()) {
+        element.updateFromInventoryResponse(response);
       }
     }
   }

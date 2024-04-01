@@ -1,4 +1,6 @@
 import 'package:dental_inventory/app/core/values/app_icons.dart';
+import 'package:dental_inventory/app/data/model/response/home_counters_response.dart';
+import 'package:dental_inventory/app/data/repository/home_repository.dart';
 import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -6,18 +8,26 @@ import 'package:get/get.dart';
 import '/app/core/base/base_controller.dart';
 
 class HomeController extends BaseController {
+  final HomeRepository _repository = Get.find();
+
   final RxList<ItemHomeMenuUiModel> _menuListController =
       RxList.empty(growable: true);
 
   List<ItemHomeMenuUiModel> get menuList => _menuListController;
 
+  final RxMap<String, int?> _badgesController = RxMap();
+
+  Map<String, int?> get badges => _badgesController;
+
   @override
   void onInit() {
     super.onInit();
-    getHomeMenuItems();
+    _getHomeMenuItems();
+    getCounters();
   }
 
-  void getHomeMenuItems() {
+  // ignore: long-method
+  void _getHomeMenuItems() {
     List<ItemHomeMenuUiModel> list = List.empty(growable: true);
     list.add(
       ItemHomeMenuUiModel(
@@ -38,6 +48,7 @@ class HomeController extends BaseController {
         icon: AppIcons.notDelivered,
         title: appLocalization.homeMenuNotDelivered,
         route: Routes.NOT_DELIVERY,
+        badgeKey: 'active_orders',
       ),
     );
     list.add(
@@ -45,13 +56,14 @@ class HomeController extends BaseController {
         icon: AppIcons.orderDelivery,
         title: appLocalization.homeMenuOrderDelivery,
         route: Routes.DELIVERY,
+        badgeKey: 'completed_orders',
       ),
     );
     list.add(
       ItemHomeMenuUiModel(
         icon: AppIcons.inventoryCount,
         title: appLocalization.homeMenuInventoryCount,
-        route: "",
+        route: Routes.ITEM_COUNT,
       ),
     );
     list.add(
@@ -59,13 +71,14 @@ class HomeController extends BaseController {
         icon: AppIcons.suggestedOrder,
         title: appLocalization.homeMenuSuggestedOrder,
         route: Routes.SUGGESTED_ORDERS,
+        badgeKey: 'suggested_order_items',
       ),
     );
     list.add(
       ItemHomeMenuUiModel(
         icon: AppIcons.search,
         title: appLocalization.homeMenuSearchItem,
-        route: "",
+        route: Routes.GLOBAL_INVENTORIES,
       ),
     );
     list.add(
@@ -73,9 +86,23 @@ class HomeController extends BaseController {
         icon: AppIcons.shoppingCart,
         title: appLocalization.homeMenuShoppingCart,
         route: Routes.SHOPPING_CART,
+        badgeKey: 'active_cart_items',
       ),
     );
 
     _menuListController(list);
+  }
+
+  void getCounters() {
+    callDataService(
+      _repository.getHomeMenuCounters(),
+      onSuccess: _handleHomeCountersSuccessResponse,
+      onStart: () => logger.d("Fetching home counters"),
+      onComplete: () => logger.d("Fetched home counters"),
+    );
+  }
+
+  void _handleHomeCountersSuccessResponse(HomeCountersResponse response) {
+    _badgesController(response.toJson());
   }
 }

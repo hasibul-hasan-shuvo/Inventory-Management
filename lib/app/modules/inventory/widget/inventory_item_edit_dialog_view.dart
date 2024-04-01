@@ -10,18 +10,19 @@ import 'package:get/get.dart';
 import '../../../core/values/app_values.dart';
 
 // ignore: must_be_immutable
-class DialogContent extends StatelessWidget with BaseWidgetMixin {
+class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
   InventoryCardUIModel inventoryData;
 
   final InventoryController _controller = Get.find<InventoryController>();
 
-  DialogContent({required this.inventoryData}) {
-    _controller.id = inventoryData.id;
-    _controller.productID = inventoryData.productCode;
-    _controller.maxCount = inventoryData.maxTreshold;
-    _controller.minCount = inventoryData.minTreshold;
-    _controller.stockCount = inventoryData.currentStock;
-    _controller.fixedSuggestion = inventoryData.fixedOrderSuggestions;
+  InventoryItemEditDialogView({required this.inventoryData}) {
+    _controller.id = inventoryData.id.toString();
+    _controller.productID = inventoryData.itemId;
+    _controller.maxCount = inventoryData.max.toString();
+    _controller.minCount = inventoryData.min.toString();
+    _controller.stockCount = inventoryData.currentStock.toString();
+    _controller.fixedSuggestion =
+        inventoryData.fixedOrderSuggestions.toString();
   }
 
   @override
@@ -42,9 +43,9 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildProductTopView() {
     return ProductTopView(
-      id: inventoryData.id,
-      name: inventoryData.productName,
-      imageUrl: inventoryData.productImageUrl,
+      id: inventoryData.itemId,
+      name: inventoryData.name,
+      imageUrl: inventoryData.imageUrl,
     );
   }
 
@@ -60,9 +61,13 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildMaxMinEditor(
-              inventoryData.maxTreshold, inventoryData.minTreshold),
+            inventoryData.max.toString(),
+            inventoryData.min.toString(),
+          ),
           _buildCurrentAndSuggestionEditor(
-              inventoryData.fixedOrderSuggestions, inventoryData.currentStock),
+            inventoryData.fixedOrderSuggestions.toString(),
+            inventoryData.currentStock.toString(),
+          ),
         ],
       ),
     );
@@ -79,20 +84,24 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFieldWithTitle(
-              title: appLocalization.fixedProposal,
-              initialValue: fixedProposal,
-              onChanged: (value) {
-                _controller.fixedSuggestion = value;
-              },
+            Expanded(
+              child: TextFieldWithTitle(
+                title: appLocalization.fixedProposal,
+                initialValue: fixedProposal,
+                onChanged: (value) {
+                  _controller.fixedSuggestion = value;
+                },
+              ),
             ),
             SizedBox(height: AppValues.margin_10.h),
-            TextFieldWithTitle(
-              title: appLocalization.inventory,
-              initialValue: inventory,
-              onChanged: (value) {
-                _controller.stockCount = value;
-              },
+            Expanded(
+              child: TextFieldWithTitle(
+                title: appLocalization.inventory,
+                initialValue: inventory,
+                onChanged: (value) {
+                  _controller.stockCount = value;
+                },
+              ),
             ),
           ],
         ),
@@ -111,20 +120,24 @@ class DialogContent extends StatelessWidget with BaseWidgetMixin {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextFieldWithTitle(
-                  title: appLocalization.min,
-                  initialValue: min,
-                  onChanged: (value) {
-                    _controller.minCount = value;
-                  },
+                Expanded(
+                  child: TextFieldWithTitle(
+                    title: appLocalization.min,
+                    initialValue: min,
+                    onChanged: (value) {
+                      _controller.minCount = value;
+                    },
+                  ),
                 ),
                 SizedBox(height: AppValues.margin_10.h),
-                TextFieldWithTitle(
-                  title: appLocalization.max,
-                  initialValue: max,
-                  onChanged: (value) {
-                    _controller.maxCount = value;
-                  },
+                Expanded(
+                  child: TextFieldWithTitle(
+                    title: appLocalization.max,
+                    initialValue: max,
+                    onChanged: (value) {
+                      _controller.maxCount = value;
+                    },
+                  ),
                 ),
               ],
             ),

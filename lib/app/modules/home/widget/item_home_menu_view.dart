@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
+import 'package:dental_inventory/app/modules/home/controllers/home_controller.dart';
 import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,9 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
+  final HomeController _controller = Get.find();
   final ItemHomeMenuUiModel data;
+
   ItemHomeMenuView({
     super.key,
     required this.data,
@@ -25,19 +28,50 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
       child: Ripple(
         rippleRadius: AppValues.radius_6.r,
         onTap: _onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            _getIcon(),
-            SizedBox(height: AppValues.margin_4.h),
-            _getTitle(),
+            _getBadge(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _getIcon(),
+                SizedBox(height: AppValues.margin_4.h),
+                _getTitle(),
+              ],
+            ).paddingSymmetric(
+              horizontal: AppValues.smallPadding.w,
+              vertical: AppValues.padding_18.h,
+            ),
           ],
-        ).paddingSymmetric(
-          horizontal: AppValues.smallPadding.w,
-          vertical: AppValues.padding_18.h,
         ),
       ),
     );
+  }
+
+  Widget _getBadge() {
+    return data.badgeKey.isEmpty
+        ? const SizedBox.shrink()
+        : Obx(
+            () => !_isBadgeAvailable
+                ? const SizedBox.shrink()
+                : Positioned(
+                    top: AppValues.smallMargin.h,
+                    right: AppValues.smallMargin.w,
+                    child: Container(
+                      decoration: _badgeDecoration,
+                      height: AppValues.iconSize_28.r,
+                      width: AppValues.iconSize_28.r,
+                      child: Center(
+                        child: Text(
+                          '${_controller.badges[data.badgeKey]}',
+                          style: textTheme.labelSmall
+                              ?.copyWith(color: AppColors.colorWhite),
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+          );
   }
 
   Widget _getIcon() {
@@ -63,7 +97,16 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
       Get.toNamed(
         data.route,
         arguments: data.arguments,
-      );
+      )?.then((value) => _controller.getCounters());
     }
   }
+
+  BoxDecoration get _badgeDecoration => const BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primary,
+      );
+
+  bool get _isBadgeAvailable =>
+      _controller.badges[data.badgeKey] != null &&
+      _controller.badges[data.badgeKey] != 0;
 }

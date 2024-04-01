@@ -7,4 +7,8 @@ abstract class EndPoints {
   static const String suggestedOrders = '/inventory/suggested-order-list/';
   static const String activeShoppingCart = '/shopping/active-cart/items/';
   static const String addShoppingCartItems = '/shopping/active-cart/add-item/';
+  static const String placeOrder = '/shopping/active-cart/place-order/';
+  static const String orders = '/shopping/orders';
+  static const String globalInventory = '/inventory/search-products/';
+  static const String homeCounters = '/inventory/miscellaneous-counts/';
 }

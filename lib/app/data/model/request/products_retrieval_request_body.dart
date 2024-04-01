@@ -19,20 +19,23 @@ class ScannedProductsRequestBody {
   ScannedProductsRequestBody({
     this.itemId,
     this.countChange,
+    this.currentStock,
   });
-
-  ScannedProductsRequestBody.fromJson(dynamic json) {
-    itemId = json['item_id'];
-    countChange = json['count_change'];
-  }
 
   String? itemId;
   int? countChange;
+  int? currentStock;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['item_id'] = itemId;
-    map['count_change'] = countChange;
+    if (countChange != null) {
+      map['count_change'] = countChange;
+    }
+
+    if (currentStock != null) {
+      map['stock_count'] = currentStock;
+    }
 
     return map;
   }

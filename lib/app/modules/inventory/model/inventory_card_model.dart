@@ -1,50 +1,44 @@
+import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 
 class InventoryCardUIModel {
-  final String id;
-  final String productName;
-  final String productImageUrl;
-  String maxTreshold;
-  String minTreshold;
-  String currentStock;
-  String fixedOrderSuggestions;
-  final String unit;
-  final String price;
-  final String productCode;
-  final String productCategory;
-  final String productDescription;
-  final String productBrand;
-  final String productSupplier;
-  final String productLocation;
+  late final int id;
+  late final String itemId;
+  late final String name;
+  late final String imageUrl;
+  late int max;
+  late int min;
+  late int currentStock;
+  late int fixedOrderSuggestions;
+  late final double price;
 
-  InventoryCardUIModel({
-    this.id = "",
-    this.productName = "",
-    this.productImageUrl = "",
-    this.maxTreshold = "",
-    this.minTreshold = "",
-    this.currentStock = "",
-    this.fixedOrderSuggestions = "",
-    this.unit = "",
-    this.price = "",
-    this.productCode = "",
-    this.productCategory = "",
-    this.productDescription = "",
-    this.productBrand = "",
-    this.productSupplier = "",
-    this.productLocation = "",
-  });
+  InventoryCardUIModel.fromInventoryResponse(InventoryResponse response) {
+    id = response.id ?? -1;
+    itemId = response.product?.itemId ?? '';
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
+    max = response.maxCount ?? 0;
+    min = response.minCount ?? 0;
+    currentStock = response.stockCount ?? 0;
+    fixedOrderSuggestions = response.fixedSuggestion ?? 0;
+    price = response.product?.price ?? 0.0;
+  }
 
-  static InventoryCardUIModel fromInventoryResponse(
-          InventoryResponse response) =>
-      InventoryCardUIModel(
-        id: response.id.toString(),
-        productName: response.product?.name ?? "",
-        productImageUrl: response.product?.imageUrl ?? "",
-        maxTreshold: response.maxCount.toString(),
-        minTreshold: response.minCount.toString(),
-        currentStock: response.stockCount.toString(),
-        fixedOrderSuggestions: response.fixedSuggestion.toString(),
-        productCode: response.product?.itemId ?? "",
-      );
+  updateFromInventoryResponse(InventoryResponse response) {
+    max = response.maxCount ?? 0;
+    min = response.minCount ?? 0;
+    currentStock = response.stockCount ?? 0;
+    fixedOrderSuggestions = response.fixedSuggestion ?? 0;
+  }
+
+  void updateCurrentStock(int newStock) {
+    currentStock = newStock;
+  }
+
+  ScannedProductsRequestBody toScannedProductsRequestBody() {
+    return ScannedProductsRequestBody(
+      itemId: itemId,
+      currentStock: currentStock,
+    );
+  }
 }

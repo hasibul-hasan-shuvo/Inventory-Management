@@ -2,10 +2,10 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -95,8 +95,11 @@ class ScannerView extends BaseView<ScannerController> {
   }
 
   void _onPressedDoneButton() {
-    _scannerController.stop();
-    Get.back(result: result);
+    if (result.isNullOrEmpty) {
+      controller.showErrorMessage(appLocalization.messageCodeNotFound);
+    } else {
+      Get.back(result: result);
+    }
   }
 
   void _onDetect(BarcodeCapture capture) {
