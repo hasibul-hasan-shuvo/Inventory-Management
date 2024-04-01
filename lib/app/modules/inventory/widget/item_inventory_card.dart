@@ -88,6 +88,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
             inventoryData.name,
             style: textTheme.titleMedium,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: AppValues.margin_10.h),
           Row(
