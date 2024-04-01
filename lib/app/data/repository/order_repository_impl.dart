@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/model/request/order_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/order_items_response.dart';
 import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
 import 'package:dental_inventory/app/data/remote/order_remote_data_source.dart';
@@ -13,8 +14,8 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<OrderListResponse> getOrders(int page) {
-    return _remoteDataSource.getOrders(page);
+  Future<OrderListResponse> getOrders(OrderListQueryParams queryParams) {
+    return _remoteDataSource.getOrders(queryParams);
   }
 
   @override

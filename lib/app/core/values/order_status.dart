@@ -17,4 +17,6 @@ extension OrderStatusExtensions on OrderStatus {
         return appLocalization.orderStatusDelivered;
     }
   }
+
+  String get toLowercaseName => name.toLowerCase();
 }

@@ -1,4 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/order_status.dart';
+import 'package:dental_inventory/app/data/model/request/order_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/order_items_response.dart';
 import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
@@ -26,9 +28,14 @@ class NotDeliveryController extends BaseController {
   }
 
   void _getOrders() {
+    OrderListQueryParams queryParams = OrderListQueryParams(
+      page: pagingController.pageNumber,
+      status: OrderStatus.ORDERED.toLowercaseName,
+    );
+
     callDataService(
       _repository.getOrders(
-        pagingController.pageNumber,
+        queryParams,
       ),
       onSuccess: _handleOrdersSuccessResponse,
     );
@@ -51,9 +58,14 @@ class NotDeliveryController extends BaseController {
   }
 
   void _getNextOrders() {
+    OrderListQueryParams queryParams = OrderListQueryParams(
+      page: pagingController.pageNumber,
+      status: OrderStatus.ORDERED.toLowercaseName,
+    );
+
     callDataService(
       _repository.getOrders(
-        pagingController.pageNumber,
+        queryParams,
       ),
       onSuccess: _handleNextOrdersSuccessResponse,
       onStart: () => logger.d("Fetching more orders"),
