@@ -1,5 +1,7 @@
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository_impl.dart';
+import 'package:dental_inventory/app/data/repository/home_repository.dart';
+import 'package:dental_inventory/app/data/repository/home_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
@@ -35,6 +37,11 @@ class RepositoryBindings implements Bindings {
 
     Get.lazyPut<OrderRepository>(
       () => OrderRepositoryImpl(),
+      fenix: true,
+    );
+
+    Get.lazyPut<HomeRepository>(
+      () => HomeRepositoryImpl(),
       fenix: true,
     );
   }
