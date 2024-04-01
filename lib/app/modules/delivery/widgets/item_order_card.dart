@@ -32,11 +32,17 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getImage() {
-    return NetworkImageView(
-      imageUrl: productImage,
-      width: AppValues.itemImageWidth.w,
-      height: AppValues.itemImageHeight.h,
-      fit: BoxFit.cover,
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(AppValues.radius.r),
+        bottomLeft: Radius.circular(AppValues.radius.r),
+      ),
+      child: NetworkImageView(
+        imageUrl: productImage,
+        width: AppValues.itemImageWidth.w,
+        height: AppValues.itemImageHeight.h,
+        fit: BoxFit.cover,
+      ),
     );
   }
 

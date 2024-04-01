@@ -80,8 +80,7 @@ class NotDeliveryController extends BaseController {
     if (data.items.isEmpty) {
       _getOrderItemsAndToggleExpandStatus(data);
     } else {
-      data.isExpanded = !data.isExpanded;
-      _orderListController.refresh();
+      data.toggleExpandedStatus();
     }
   }
 
@@ -96,8 +95,7 @@ class NotDeliveryController extends BaseController {
     OrderItemsResponse response,
     OrderUiModel orderUiModel,
   ) {
-    orderUiModel.isExpanded = !orderUiModel.isExpanded;
+    orderUiModel.toggleExpandedStatus();
     orderUiModel.updateItemsFromOrderItemResponse(response);
-    _orderListController.refresh();
   }
 }

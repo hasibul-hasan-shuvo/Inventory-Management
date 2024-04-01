@@ -9,9 +9,14 @@ class OrderUiModel {
   late final int id;
   late final String invoiceNo;
   late final String date;
-  late List<OrderedProductUiModel> items;
+  final RxList<OrderedProductUiModel> _itemsController =
+      RxList.empty(growable: true);
+
+  List<OrderedProductUiModel> get items => _itemsController;
   late final OrderStatus status;
-  bool isExpanded = false;
+  final RxBool _isExpandedController = RxBool(false);
+
+  bool get isExpanded => _isExpandedController.value;
 
   OrderUiModel.fromOrderResponse(OrderResponse response, String localName) {
     id = response.id ?? 0;
@@ -21,7 +26,6 @@ class OrderUiModel {
       outputDateFormat: DateParser.defaultDateFormat,
       localeName: localName,
     );
-    items = [];
     status = OrderStatus.values.firstWhereOrNull(
           (element) => element.name.toLowerCase() == response.status,
         ) ??
@@ -29,7 +33,7 @@ class OrderUiModel {
   }
 
   void updateItemsFromOrderItemResponse(OrderItemsResponse response) {
-    items = response.items
+    _itemsController(response.items
             ?.map(
               (e) => OrderedProductUiModel(
                 id: e.product?.id ?? -1,
@@ -41,6 +45,10 @@ class OrderUiModel {
               ),
             )
             .toList() ??
-        [];
+        []);
+  }
+
+  void toggleExpandedStatus() {
+    _isExpandedController(!isExpanded);
   }
 }
