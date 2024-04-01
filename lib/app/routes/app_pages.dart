@@ -8,6 +8,8 @@ import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
 import '../modules/delivery_details/bindings/delivery_details_binding.dart';
 import '../modules/delivery_details/views/delivery_details_view.dart';
+import '../modules/global_inventories/bindings/global_inventories_binding.dart';
+import '../modules/global_inventories/views/global_inventories_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.ITEM_COUNT,
       page: () => ItemCountView(),
       binding: ItemCountBinding(),
+    ),
+    GetPage(
+      name: _Paths.GLOBAL_INVENTORIES,
+      page: () => GlobalInventoriesView(),
+      binding: GlobalInventoriesBinding(),
     ),
   ];
 }

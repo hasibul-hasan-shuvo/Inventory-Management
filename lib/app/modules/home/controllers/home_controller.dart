@@ -66,7 +66,7 @@ class HomeController extends BaseController {
       ItemHomeMenuUiModel(
         icon: AppIcons.search,
         title: appLocalization.homeMenuSearchItem,
-        route: "",
+        route: Routes.GLOBAL_INVENTORIES,
       ),
     );
     list.add(

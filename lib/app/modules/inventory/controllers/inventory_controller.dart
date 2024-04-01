@@ -12,7 +12,9 @@ class InventoryController extends BaseController {
 
   List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
 
-  final RxBool isSearchMode = false.obs;
+  final RxBool _searchModeController = RxBool(false);
+
+  bool get isSearchable => _searchModeController.value;
 
   final RxString searchQuery = ''.obs;
 
@@ -40,9 +42,9 @@ class InventoryController extends BaseController {
   void _getNextSuggestedOrders() {}
 
   void changeSearchMode() {
-    isSearchMode.value = !isSearchMode.value;
+    _searchModeController(!isSearchable);
     searchQuery('');
-    if (!isSearchMode.value) {
+    if (!_searchModeController.value) {
       fetchInventoryList();
     }
   }
