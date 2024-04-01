@@ -56,6 +56,8 @@
   "orderStatusActive": "Aktiv",
   "orderStatusOrdered": "Bestilt",
   "orderStatusDelivered": "Levert",
+  "orderStatusNotDelivered": "Ikke levert",
+  "orderStatusReceived": "Mottatt",
   "password": "Passord",
   "passwordConfirmPassword": "Bekreft passord",
   "passwordConfirmPasswordValidator": "Passordene stemmer ikke overens",
