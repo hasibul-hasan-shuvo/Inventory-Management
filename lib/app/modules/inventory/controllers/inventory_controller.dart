@@ -61,7 +61,8 @@ class InventoryController extends BaseController {
 
   void _deleteSuccessHandler(e) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
-    _inventoryItemsController.removeWhere((element) => element.id == id);
+    _inventoryItemsController
+        .removeWhere((element) => element.itemId == productID);
     _inventoryItemsController.refresh();
   }
 
