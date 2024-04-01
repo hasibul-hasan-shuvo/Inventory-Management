@@ -46,7 +46,9 @@ class GlobalInventoriesController extends BaseController {
   }
 
   void onScanned(String? code) {
-    _searchQueryController(code);
-    _fetchInventoryList();
+    if (code != null) {
+      _searchQueryController(code);
+      _fetchInventoryList();
+    }
   }
 }
