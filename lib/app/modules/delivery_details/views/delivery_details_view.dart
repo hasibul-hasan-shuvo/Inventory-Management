@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/order_status.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
@@ -35,7 +36,11 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(order.status, order.invoiceNo, order.date),
+          _buildHeader(
+            order.status.getTitle(appLocalization),
+            order.invoiceNo,
+            order.date,
+          ),
           ItemOrderDetails(orderUiModel: order),
         ],
       ),

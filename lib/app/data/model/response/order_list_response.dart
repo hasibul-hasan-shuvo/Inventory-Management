@@ -22,9 +22,11 @@ class OrderResponse {
     id = json['id'];
     invoice = json['invoice'];
     orderDate = json['order_date'];
+    status = json['status'];
   }
 
   int? id;
   String? invoice;
   String? orderDate;
+  String? status;
 }

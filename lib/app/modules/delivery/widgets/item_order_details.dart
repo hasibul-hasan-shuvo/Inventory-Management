@@ -42,11 +42,12 @@ class ItemOrderDetails extends StatelessWidget with BaseWidgetMixin {
               child: Padding(
                 padding: EdgeInsets.all(AppValues.halfPadding.sp),
                 child: ItemOrderCard(
-                  productId: orderUiModel.items[index].id,
-                  productImage: orderUiModel.items[index].image,
+                  productId: orderUiModel.items[index].itemId,
+                  productImage: orderUiModel.items[index].imageUrl,
                   productName: orderUiModel.items[index].name,
                   productPrice: orderUiModel.items[index].price.toString(),
-                  productQuantity: orderUiModel.items[index].quantity,
+                  productQuantity:
+                      orderUiModel.items[index].quantity.toString(),
                 ),
               ),
             );

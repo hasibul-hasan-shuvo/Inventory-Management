@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/response/order_items_response.dart';
 import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
 import 'package:dental_inventory/app/modules/delivery/models/order_ui_model.dart';
@@ -76,7 +77,27 @@ class NotDeliveryController extends BaseController {
   }
 
   void toggleExpandStatus(OrderUiModel data) {
-    data.isExpanded = !data.isExpanded;
+    if (data.items.isEmpty) {
+      _getOrderItemsAndToggleExpandStatus(data);
+    } else {
+      data.isExpanded = !data.isExpanded;
+      _orderListController.refresh();
+    }
+  }
+
+  void _getOrderItemsAndToggleExpandStatus(OrderUiModel data) {
+    callDataService(
+      _repository.getOrderItems(data.id),
+      onSuccess: (response) => _handleOrderItemsSuccessResponse(response, data),
+    );
+  }
+
+  void _handleOrderItemsSuccessResponse(
+    OrderItemsResponse response,
+    OrderUiModel orderUiModel,
+  ) {
+    orderUiModel.isExpanded = !orderUiModel.isExpanded;
+    orderUiModel.updateItemsFromOrderItemResponse(response);
     _orderListController.refresh();
   }
 }

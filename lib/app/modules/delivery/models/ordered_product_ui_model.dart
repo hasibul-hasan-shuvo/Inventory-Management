@@ -1,16 +1,17 @@
 class OrderedProductUiModel {
-  final String id;
+  final int id;
+  final String itemId;
   final String name;
-  final String quantity;
+  final int quantity;
   final double price;
-  final String image;
+  final String imageUrl;
 
   OrderedProductUiModel({
-    this.id = '90840',
-    this.name = 'Beskyttelseshode bio 4stk',
-    this.quantity = '34',
-    this.price = 0.0,
-    this.image =
-        "https://cdn11.bigcommerce.com/s-cff2npbnfd/images/stencil/500x250/products/9703/15565/gc-eqfc-all__23149.1685386632.png?c=1",
+    required this.id,
+    required this.itemId,
+    required this.name,
+    required this.quantity,
+    required this.price,
+    required this.imageUrl,
   });
 }

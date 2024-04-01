@@ -24,28 +24,61 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   Widget body(BuildContext context) {
     return Row(
       children: [
-        NetworkImageView(
-            imageUrl: productImage,
-            width: AppValues.itemImageWidth.w,
-            height: AppValues.itemImageHeight.h),
-        SizedBox(
-          width: AppValues.padding.w,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(productName, style: textTheme.titleMedium),
-            SizedBox(
-              height: AppValues.margin_2.h,
-            ),
-            Text("#$productId", style: textTheme.bodyMedium),
-            SizedBox(
-              height: AppValues.margin_2.h,
-            ),
-            Text("${appLocalization.total}: $productQuantity", style: textTheme.bodyMedium),
-          ],
-        ),
+        _getImage(),
+        SizedBox(width: AppValues.padding.w),
+        _getDetails(),
       ],
+    );
+  }
+
+  Widget _getImage() {
+    return NetworkImageView(
+      imageUrl: productImage,
+      width: AppValues.itemImageWidth.w,
+      height: AppValues.itemImageHeight.h,
+      fit: BoxFit.cover,
+    );
+  }
+
+  Widget _getDetails() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getProductName(),
+          SizedBox(height: AppValues.margin_2.h),
+          _getProductId(),
+          SizedBox(height: AppValues.margin_2.h),
+          _getQuantity(),
+        ],
+      ),
+    );
+  }
+
+  Widget _getProductName() {
+    return Text(
+      productName,
+      style: textTheme.titleMedium,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _getProductId() {
+    return Text(
+      "#$productId",
+      style: textTheme.bodyMedium,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _getQuantity() {
+    return Text(
+      "${appLocalization.total}: $productQuantity",
+      style: textTheme.bodyMedium,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
