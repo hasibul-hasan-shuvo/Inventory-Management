@@ -30,7 +30,7 @@ class NotDeliveryController extends BaseController {
   void _getOrders() {
     OrderListQueryParams queryParams = OrderListQueryParams(
       page: pagingController.pageNumber,
-      status: OrderStatus.ORDERED.toLowercaseName,
+      status: OrderStatus.ACTIVE.toLowercaseName,
     );
 
     callDataService(
@@ -60,7 +60,7 @@ class NotDeliveryController extends BaseController {
   void _getNextOrders() {
     OrderListQueryParams queryParams = OrderListQueryParams(
       page: pagingController.pageNumber,
-      status: OrderStatus.ORDERED.toLowercaseName,
+      status: OrderStatus.ACTIVE.toLowercaseName,
     );
 
     callDataService(

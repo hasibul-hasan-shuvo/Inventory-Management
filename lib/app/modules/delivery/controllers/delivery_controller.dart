@@ -29,7 +29,7 @@ class DeliveryController extends BaseController {
   void _getOrders() {
     OrderListQueryParams queryParams = OrderListQueryParams(
       page: pagingController.pageNumber,
-      status: OrderStatus.DELIVERED.toLowercaseName,
+      status: OrderStatus.ORDERED.toLowercaseName,
     );
 
     callDataService(
@@ -59,7 +59,7 @@ class DeliveryController extends BaseController {
   void _getNextOrders() {
     OrderListQueryParams queryParams = OrderListQueryParams(
       page: pagingController.pageNumber,
-      status: OrderStatus.DELIVERED.toLowercaseName,
+      status: OrderStatus.ORDERED.toLowercaseName,
     );
 
     callDataService(
