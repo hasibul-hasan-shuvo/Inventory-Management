@@ -18,4 +18,5 @@ abstract class AppIcons {
   static const String shoppingCart = "ic_shopping_cart.svg";
   static const String suggestedOrder = "ic_suggested_order.svg";
   static const String torch = "ic_torch.svg";
+  static const String icDentalGuide = "ic_dental.svg";
 }
