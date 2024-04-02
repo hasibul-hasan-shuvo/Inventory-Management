@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/order_status.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/delivery/widgets/item_order_details.dart';
 import 'package:dental_inventory/app/modules/delivery_details/controllers/delivery_details_controller.dart';
@@ -14,7 +15,7 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
       appBarTitleText: '${appLocalization.order} ${controller.order.invoiceNo}',
-      actions: _getActions,
+      actions: _getActions(context),
     );
   }
 
@@ -66,14 +67,32 @@ class DeliveryDetailsView extends BaseView<DeliveryDetailsController> {
     );
   }
 
-  List<Widget> get _getActions {
+  List<Widget> _getActions(BuildContext context) {
     return [
       IconButton(
-        onPressed: controller.confirmDelivery,
+        onPressed: () => _onConfirmDelivery(context),
         icon: const Icon(
           Icons.done,
         ),
       )
     ];
+  }
+
+  void _onConfirmDelivery(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AppDialog(
+        title: appLocalization.titleConfirmDelivery,
+        message: appLocalization.messageConfirmDelivery,
+        isCancelable: false,
+        negativeButtonText: appLocalization.no,
+        positiveButtonText: appLocalization.yes,
+        onPositiveButtonTap: _onConfirmDeliveryTap,
+      ),
+    );
+  }
+
+  void _onConfirmDeliveryTap() {
+    controller.confirmDelivery();
   }
 }
