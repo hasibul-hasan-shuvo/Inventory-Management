@@ -92,12 +92,12 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
         isCancelable: false,
         negativeButtonText: appLocalization.no,
         positiveButtonText: appLocalization.yes,
-        onPositiveButtonTap: _onConfirmDelete,
+        onPositiveButtonTap: _onConfirmAdd,
       ),
     );
   }
 
-  void _onConfirmDelete() {
+  void _onConfirmAdd() {
     GlobalInventoriesController controller = Get.find();
     controller.createInventory(data);
   }

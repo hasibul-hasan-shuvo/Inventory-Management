@@ -18,6 +18,8 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final VoidCallback? onPositiveButtonTap;
   final IconData? negativeButtonIcon;
   final bool isCancelable;
+  final bool willPopOnPositiveButtonTap;
+  final bool willPopOnNegativeButtonTap;
 
   AppDialog({
     Key? key,
@@ -30,6 +32,8 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     this.onPositiveButtonTap,
     this.negativeButtonIcon,
     this.isCancelable = true,
+    this.willPopOnPositiveButtonTap = true,
+    this.willPopOnNegativeButtonTap = true,
   }) : super(key: key);
 
   @override
@@ -108,7 +112,12 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
                 flex: 1,
                 child: negativeButtonText != null
                     ? AppSecondaryButton(
-                        onPress: onNegativeButtonTap,
+                        onPress: () {
+                          onNegativeButtonTap?.call();
+                          if (willPopOnNegativeButtonTap) {
+                            Navigator.pop(context);
+                          }
+                        },
                         title: negativeButtonText ?? "",
                         icon: negativeButtonIcon != null
                             ? Icon(negativeButtonIcon)
@@ -122,7 +131,9 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
                 child: AppPrimaryButton(
                   onPressed: () {
                     onPositiveButtonTap?.call();
-                    Navigator.pop(context);
+                    if (willPopOnPositiveButtonTap) {
+                      Navigator.pop(context);
+                    }
                   },
                   title: positiveButtonText ?? appLocalization.ok,
                 ),
