@@ -11,5 +11,5 @@ class ProductResponse {
   String? name;
   String? itemId;
   String? imageUrl;
-  double? price;
+  num? price;
 }

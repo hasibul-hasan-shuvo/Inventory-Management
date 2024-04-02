@@ -32,7 +32,6 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
       ),
       onPressed: () {
         onPress?.call();
-        Navigator.pop(context);
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

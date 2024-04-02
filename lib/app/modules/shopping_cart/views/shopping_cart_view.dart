@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
@@ -22,7 +23,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
         appBarTitleText: appLocalization.homeMenuShoppingCart,
-        actions: _getActions,
+        actions: _getActions(context),
       );
 
   @override
@@ -82,14 +83,36 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
     });
   }
 
-  List<Widget> get _getActions {
+  List<Widget> _getActions(BuildContext context) {
     return [
       IconButton(
-        onPressed: controller.orderAll,
+        onPressed: () => _onConfirmOrder(context),
         icon: const Icon(
           Icons.done,
         ),
       )
     ];
+  }
+
+  void _onConfirmOrder(BuildContext context) {
+    if (controller.shoppingCartItems.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AppDialog(
+          title: appLocalization.titleConfirmOrder,
+          message: appLocalization.messageConfirmOrder,
+          isCancelable: false,
+          negativeButtonText: appLocalization.no,
+          positiveButtonText: appLocalization.yes,
+          onPositiveButtonTap: _onConfirmOrderTap,
+        ),
+      );
+    } else {
+      controller.showErrorMessage(appLocalization.placeHolderEmptyShoppingCart);
+    }
+  }
+
+  void _onConfirmOrderTap() {
+    controller.confirmOrder();
   }
 }

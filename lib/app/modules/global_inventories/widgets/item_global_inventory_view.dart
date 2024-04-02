@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/controllers/global_inventories_controller.dart';
@@ -83,6 +84,20 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapAdd(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AppDialog(
+        title: appLocalization.titleCreateInventory,
+        message: appLocalization.messageCreateInventory,
+        isCancelable: false,
+        negativeButtonText: appLocalization.no,
+        positiveButtonText: appLocalization.yes,
+        onPositiveButtonTap: _onConfirmAdd,
+      ),
+    );
+  }
+
+  void _onConfirmAdd() {
     GlobalInventoriesController controller = Get.find();
     controller.createInventory(data);
   }

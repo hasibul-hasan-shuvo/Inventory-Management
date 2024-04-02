@@ -33,7 +33,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
             onTap: () {
               showDialog(
                 context: context,
-                builder: (context) => _buildDialog(context),
+                builder: (_) => _buildDialog(context),
               );
             },
           )
@@ -49,11 +49,13 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
+      willPopOnNegativeButtonTap: false,
       onPositiveButtonTap: () {
         _controller.updateInventoryData();
       },
       onNegativeButtonTap: () {
-        _controller.deleteInventoryItem();
+        Get.back();
+        _onDeleteProductTap(context);
       },
     );
   }
@@ -109,5 +111,23 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         ],
       ),
     );
+  }
+
+  void _onDeleteProductTap(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AppDialog(
+        title: appLocalization.titleDeleteInventory,
+        message: appLocalization.messageDeleteInventory,
+        isCancelable: false,
+        negativeButtonText: appLocalization.no,
+        positiveButtonText: appLocalization.yes,
+        onPositiveButtonTap: _onConfirmDelete,
+      ),
+    );
+  }
+
+  void _onConfirmDelete() {
+    _controller.deleteInventoryItem();
   }
 }

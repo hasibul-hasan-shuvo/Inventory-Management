@@ -21,7 +21,7 @@ class InventoryCardUIModel {
     min = response.minCount ?? 0;
     currentStock = response.stockCount ?? 0;
     fixedOrderSuggestions = response.fixedSuggestion ?? 0;
-    price = response.product?.price ?? 0.0;
+    price = response.product?.price?.toDouble() ?? 0.0;
   }
 
   updateFromInventoryResponse(InventoryResponse response) {

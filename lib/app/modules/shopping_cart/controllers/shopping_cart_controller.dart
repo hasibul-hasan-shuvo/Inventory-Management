@@ -70,14 +70,14 @@ class ShoppingCartController extends BaseController {
         []);
   }
 
-  void orderAll() {
+  void confirmOrder() {
     callDataService(
       _repository.placeOrder(),
-      onSuccess: _handlePlaceOrderSuccessResponse,
+      onSuccess: _handleConfirmOrderSuccessResponse,
     );
   }
 
-  void _handlePlaceOrderSuccessResponse(bool isSuccess) {
+  void _handleConfirmOrderSuccessResponse(bool isSuccess) {
     if (isSuccess) {
       _shoppingCartItemsController.clear();
     }

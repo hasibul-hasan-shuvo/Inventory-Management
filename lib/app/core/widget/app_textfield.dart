@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 
 import '../base/base_widget_mixin.dart';
 
+typedef OnSubmitCallback = Function(String);
+
 // ignore: must_be_immutable
 class AppTextField extends StatelessWidget with BaseWidgetMixin {
   AppTextField({
@@ -21,6 +23,8 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
     required this.onChanged,
     this.isEnabled,
     this.maxLength,
+    this.inputAction,
+    this.onSubmit,
   }) : super(key: key) {
     _isObscured = RxBool(obscureText);
   }
@@ -37,6 +41,8 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
   final String hintText;
   final bool? isEnabled;
   final int? maxLength;
+  final TextInputAction? inputAction;
+  final OnSubmitCallback? onSubmit;
 
   late final RxBool _isObscured;
 
@@ -61,6 +67,8 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
             validator: validator,
             keyboardType: keyboardType,
             maxLength: maxLength,
+            textInputAction: inputAction,
+            onFieldSubmitted: onSubmit,
           ),
         )
       ],

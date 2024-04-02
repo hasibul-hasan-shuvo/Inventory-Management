@@ -90,6 +90,7 @@ class LoginView extends BaseView<LoginController> {
         controller.email = value ?? "";
       },
       maxLength: AppValues.maxEmailLength,
+      inputAction: TextInputAction.next,
     );
   }
 
@@ -97,9 +98,6 @@ class LoginView extends BaseView<LoginController> {
     return AppTextField(
       prefix: const Icon(Icons.key_outlined),
       controller: _passwordController,
-      // validator: (value) {
-      // return InputValidators.password(value, appLocalization);
-      // },
       onChanged: (value) {
         controller.password = value ?? "";
       },
@@ -107,18 +105,15 @@ class LoginView extends BaseView<LoginController> {
       labelText: appLocalization.password,
       hintText: appLocalization.enterPassword,
       maxLength: AppValues.maxPasswordLength,
+      inputAction: TextInputAction.go,
+      onSubmit: (_) => _onLoginButtonTap(),
     );
   }
 
   Widget _buildSignInButton() {
     return AppPrimaryButton(
       title: appLocalization.logIn,
-      onPressed: () {
-        closeKeyboard();
-        if (_formKey.currentState!.validate()) {
-          controller.login();
-        }
-      },
+      onPressed: _onLoginButtonTap,
     );
   }
 
@@ -148,6 +143,13 @@ class LoginView extends BaseView<LoginController> {
             style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
       ],
     );
+  }
+
+  void _onLoginButtonTap() {
+    closeKeyboard();
+    if (_formKey.currentState!.validate()) {
+      controller.login();
+    }
   }
 
   void _subscribeToLoginState() {
