@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,8 @@ import '/app/core/base/base_view.dart';
 // ignore: must_be_immutable
 class ContactUsView extends BaseView<ContactUsController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => null;
+  PreferredSizeWidget? appBar(BuildContext context) =>
+      CustomAppBar(appBarTitleText: appLocalization.bottomNavContactUs);
 
   @override
   Widget body(BuildContext context) {
