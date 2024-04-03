@@ -1,4 +1,4 @@
-import 'package:dental_inventory/app/modules/about_us/views/about_us_view.dart';
+import 'package:dental_inventory/app/modules/about_us/views/about_app_view.dart';
 import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ import '/app/modules/main/views/bottom_nav_bar.dart';
 // ignore: must_be_immutable
 class MainView extends BaseView<MainController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>  MainAppBar();
+  PreferredSizeWidget? appBar(BuildContext context) => MainAppBar();
 
   @override
   Widget body(BuildContext context) {
@@ -32,7 +32,7 @@ class MainView extends BaseView<MainController> {
 
   final HomeView homeView = HomeView();
   ContactUsView? favoriteView;
-  AboutUsView? aboutUsView;
+  AboutAppView? aboutUsView;
 
   Widget getPageOnSelectedMenu(MenuCode menuCode) {
     switch (menuCode) {
@@ -42,7 +42,7 @@ class MainView extends BaseView<MainController> {
         favoriteView ??= ContactUsView();
         return favoriteView!;
       case MenuCode.ABOUT_US:
-        aboutUsView ??= AboutUsView();
+        aboutUsView ??= AboutAppView();
         return aboutUsView!;
     }
   }

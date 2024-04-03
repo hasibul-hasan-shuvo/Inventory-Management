@@ -1,4 +1,4 @@
-import 'package:dental_inventory/app/modules/about_us/controllers/about_us_controller.dart';
+import 'package:dental_inventory/app/modules/about_us/controllers/about_app_controller.dart';
 import 'package:dental_inventory/app/modules/contact_us/controllers/contact_us_controller.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +24,8 @@ class MainBinding extends Bindings {
     Get.lazyPut<ContactUsController>(
       () => ContactUsController(),
     );
-    Get.lazyPut<AboutUsController>(
-      () => AboutUsController(),
+    Get.lazyPut<AboutAppController>(
+      () => AboutAppController(),
     );
   }
 }

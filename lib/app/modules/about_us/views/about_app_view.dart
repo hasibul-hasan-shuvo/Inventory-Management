@@ -1,14 +1,14 @@
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
-import 'package:dental_inventory/app/modules/about_us/controllers/about_us_controller.dart';
+import 'package:dental_inventory/app/modules/about_us/controllers/about_app_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/app/core/base/base_view.dart';
 
 //ignore: must_be_immutable
-class AboutUsView extends BaseView<AboutUsController> {
+class AboutAppView extends BaseView<AboutAppController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 

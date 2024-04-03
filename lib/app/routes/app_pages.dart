@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/about_us/bindings/about_us_binding.dart';
-import '../modules/about_us/views/about_us_view.dart';
+import '../modules/about_us/bindings/about_app_binding.dart';
+import '../modules/about_us/views/about_app_view.dart';
 import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
 import '../modules/delivery/bindings/delivery_binding.dart';
@@ -61,9 +61,9 @@ class AppPages {
       binding: ContactUsBinding(),
     ),
     GetPage(
-      name: _Paths.ABOUT_US,
-      page: () => AboutUsView(),
-      binding: AboutUsBinding(),
+      name: _Paths.ABOUT_APP,
+      page: () => AboutAppView(),
+      binding: AboutAppBinding(),
     ),
     GetPage(
       name: _Paths.OTHER,
