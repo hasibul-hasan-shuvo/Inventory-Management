@@ -45,6 +45,10 @@ class ScannerView extends BaseView<ScannerController> {
         child: MobileScanner(
           controller: _scannerController,
           onDetect: _onDetect,
+          overlay: const Icon(
+            Icons.add,
+            color: AppColors.colorWhite,
+          ),
         ),
       ),
     );
