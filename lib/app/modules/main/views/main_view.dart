@@ -1,5 +1,8 @@
+import 'package:dental_inventory/app/core/utils/url_launcher.dart';
+import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/modules/about_us/views/about_app_view.dart';
 import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
+import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,33 +20,29 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget body(BuildContext context) {
-    return Container(
-      key: UniqueKey(),
-      child: Obx(
-        () => getPageOnSelectedMenu(controller.selectedMenuCode),
-      ),
-    );
+    return HomeView();
   }
 
   @override
   Widget? bottomNavigationBar() {
-    return BottomNavBar(onItemSelected: controller.onMenuSelected);
+    return BottomNavBar(onItemSelected: _onMenuSelected);
   }
 
   final HomeView homeView = HomeView();
   ContactUsView? favoriteView;
   AboutAppView? aboutUsView;
 
-  Widget getPageOnSelectedMenu(MenuCode menuCode) {
+  void _onMenuSelected(MenuCode menuCode) {
     switch (menuCode) {
       case MenuCode.HOME:
-        return homeView;
+        UrlLauncher.launchUrl(AppStrings.website);
+        break;
       case MenuCode.CONTACT_US:
-        favoriteView ??= ContactUsView();
-        return favoriteView!;
+        Get.toNamed(Routes.CONTACT_US);
+        break;
       case MenuCode.ABOUT_US:
-        aboutUsView ??= AboutAppView();
-        return aboutUsView!;
+        Get.toNamed(Routes.ABOUT_APP);
+        break;
     }
   }
 }

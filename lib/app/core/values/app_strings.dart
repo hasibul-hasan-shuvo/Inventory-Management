@@ -1,4 +1,5 @@
-abstract class AppStrings{
+abstract class AppStrings {
+  static const String website = "https://www.jacobsen-dental.no/";
   static const String phoneNumber = "22 79 20 20";
   static const String email = "post@jacobsen-dental.no";
   static const String accountingNumber = "22 79 20 29";

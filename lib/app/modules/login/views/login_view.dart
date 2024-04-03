@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
@@ -10,7 +11,6 @@ import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/utils/input_validators.dart';
 import '../../../core/values/app_values.dart';
@@ -180,19 +180,11 @@ class LoginView extends BaseView<LoginController> {
 
   void _onTapPhoneNumber() {
     String url = 'tel:${AppStrings.phoneNumber}';
-    launchUrl(url);
+    UrlLauncher.launchUrl(url);
   }
 
   void _onTapEmail() {
     String url = 'mailto:${AppStrings.email}';
-    launchUrl(url);
-  }
-
-  void launchUrl(String url) {
-    canLaunchUrlString(url).then((bool canLaunch) {
-      if (canLaunch) {
-        launchUrlString(url);
-      }
-    });
+    UrlLauncher.launchUrl(url);
   }
 }

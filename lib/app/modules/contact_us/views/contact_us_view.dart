@@ -1,9 +1,9 @@
+import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../controllers/contact_us_controller.dart';
 import '/app/core/base/base_view.dart';
@@ -160,19 +160,11 @@ class ContactUsView extends BaseView<ContactUsController> {
 
   void _onTapPhoneNumber(String phoneNumber) {
     String url = 'tel:$phoneNumber';
-    launchUrl(url);
+    UrlLauncher.launchUrl(url);
   }
 
   void _onTapEmail() {
     String url = 'mailto:${AppStrings.email}';
-    launchUrl(url);
-  }
-
-  void launchUrl(String url) {
-    canLaunchUrlString(url).then((bool canLaunch) {
-      if (canLaunch) {
-        launchUrlString(url);
-      }
-    });
+    UrlLauncher.launchUrl(url);
   }
 }
