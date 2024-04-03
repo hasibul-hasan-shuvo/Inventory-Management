@@ -5,8 +5,9 @@ class BottomNavItem {
   final String iconSvgName;
   final MenuCode menuCode;
 
-  const BottomNavItem(
-      {required this.navTitle,
-      required this.iconSvgName,
-      required this.menuCode});
+  const BottomNavItem({
+    required this.navTitle,
+    required this.iconSvgName,
+    required this.menuCode,
+  });
 }

@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
-import 'package:get/get.dart';
-
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/modules/main/controllers/bottom_nav_controller.dart';
 import 'package:dental_inventory/app/modules/main/model/menu_code.dart';
 import 'package:dental_inventory/app/modules/main/model/menu_item.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 typedef OnBottomNavItemSelected = Function(MenuCode menuCode);
 
@@ -34,7 +33,7 @@ class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
         type: BottomNavigationBarType.fixed,
         backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
         selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
-        unselectedItemColor: theme.bottomNavigationBarTheme.unselectedItemColor,
+        unselectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
         currentIndex: navController.selectedIndex,
         onTap: (index) {
           navController.updateSelectedIndex(index);
@@ -47,27 +46,18 @@ class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
   List<BottomNavigationBarItem> _navItemBuilder(List<BottomNavItem> navItems) {
     return navItems
         .map(
-          (BottomNavItem navItem) => _getBottomNavigationBarItem(
-            navItem,
-            navItems.indexOf(navItem) == navController.selectedIndex,
-          ),
+          (BottomNavItem navItem) => _getBottomNavigationBarItem(navItem),
         )
         .toList();
   }
 
-  BottomNavigationBarItem _getBottomNavigationBarItem(
-    BottomNavItem navItem,
-    bool isSelected,
-  ) {
+  BottomNavigationBarItem _getBottomNavigationBarItem(BottomNavItem navItem) {
     return BottomNavigationBarItem(
       icon: AssetImageView(
-        fileName: navItem.iconSvgName,
-        height: AppValues.iconDefaultSize,
-        width: AppValues.iconDefaultSize,
-        color: isSelected
-            ? theme.bottomNavigationBarTheme.selectedItemColor
-            : theme.bottomNavigationBarTheme.unselectedItemColor,
-      ),
+          fileName: navItem.iconSvgName,
+          height: AppValues.iconDefaultSize,
+          width: AppValues.iconDefaultSize,
+          color: theme.bottomNavigationBarTheme.selectedItemColor),
       label: navItem.navTitle,
       tooltip: navItem.navTitle,
     );

@@ -5,10 +5,10 @@ abstract class Routes {
   Routes._();
 
   static const MAIN = _Paths.MAIN;
-  static const HOME = _Paths.HOME;
+  static const CONTACT_US = _Paths.CONTACT_US;
+  static const ABOUT_APP = _Paths.ABOUT_APP;
   static const FAVORITE = _Paths.CONTACT_US;
-  static const SETTINGS = _Paths.ABOUT_US;
-  static const OTHER = _Paths.OTHER;
+  static const SETTINGS = _Paths.ABOUT_APP;
   static const SPLASH = _Paths.SPLASH;
   static const INVENTORY = _Paths.INVENTORY;
   static const LOGIN = _Paths.LOGIN;
@@ -26,10 +26,8 @@ abstract class Routes {
 
 abstract class _Paths {
   static const MAIN = '/main';
-  static const HOME = '/home';
   static const CONTACT_US = '/contact-us';
-  static const ABOUT_US = '/about-us';
-  static const OTHER = '/other';
+  static const ABOUT_APP = '/about-us';
   static const SPLASH = '/splash';
   static const INVENTORY = '/inventory';
   static const LOGIN = '/login';

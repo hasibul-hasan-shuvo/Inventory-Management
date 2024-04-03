@@ -1,9 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_textfield.dart';
+import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,6 @@ class LoginView extends BaseView<LoginController> {
       child: Padding(
         padding: const EdgeInsets.all(AppValues.padding),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildPhoneContact(),
@@ -118,30 +119,43 @@ class LoginView extends BaseView<LoginController> {
   }
 
   Widget _buildEmailContact() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(Icons.email_outlined, color: AppColors.loginScreenIconColor),
-        SizedBox(
-          width: AppValues.smallMargin.w,
+    return Expanded(
+      child: Ripple(
+        onTap: _onTapEmail,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.email_outlined,
+              color: AppColors.loginScreenIconColor,
+            ),
+            SizedBox(width: AppValues.smallMargin.w),
+            Text(
+              AppStrings.email,
+              style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite),
+            ),
+          ],
         ),
-        Text(AppStrings.email,
-            style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
-      ],
+      ),
     );
   }
 
   Widget _buildPhoneContact() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(Icons.call, color: AppColors.loginScreenIconColor),
-        SizedBox(
-          width: AppValues.smallMargin.w,
+    return Expanded(
+      child: Ripple(
+        onTap: _onTapPhoneNumber,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.call, color: AppColors.loginScreenIconColor),
+            SizedBox(width: AppValues.smallMargin.w),
+            Text(
+              AppStrings.phoneNumber,
+              style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite),
+            ),
+          ],
         ),
-        Text(AppStrings.phoneNumber,
-            style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite)),
-      ],
+      ),
     );
   }
 
@@ -162,5 +176,15 @@ class LoginView extends BaseView<LoginController> {
         controller.resetAuthPageState();
       }
     });
+  }
+
+  void _onTapPhoneNumber() {
+    String url = 'tel:${AppStrings.phoneNumber}';
+    UrlLauncher.launchUrl(url);
+  }
+
+  void _onTapEmail() {
+    String url = 'mailto:${AppStrings.email}';
+    UrlLauncher.launchUrl(url);
   }
 }
