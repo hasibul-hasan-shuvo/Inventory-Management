@@ -178,7 +178,7 @@ class LoginView extends BaseView<LoginController> {
     });
   }
 
-  void _onTapPhoneNumber() async {
+  void _onTapPhoneNumber() {
     String url = 'tel:${AppStrings.phoneNumber}';
     launchUrl(url);
   }

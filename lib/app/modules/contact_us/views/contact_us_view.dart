@@ -1,7 +1,9 @@
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../controllers/contact_us_controller.dart';
 import '/app/core/base/base_view.dart';
@@ -56,42 +58,52 @@ class ContactUsView extends BaseView<ContactUsController> {
   Text _buildDescription() {
     return Text(
       appLocalization.contactDescription,
+      style: textTheme.bodySmall,
     );
   }
 
   Widget _buildTime(BuildContext context) {
-    return _buildVerticalInfo(context, appLocalization.openingHourTitle,
-        appLocalization.openingHourMessage);
+    return _buildVerticalInfo(
+      context,
+      appLocalization.openingHourTitle,
+      appLocalization.openingHourMessage,
+    );
   }
 
   Widget _buildEmail(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          appLocalization.email,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        SizedBox(width: AppValues.margin_4.w),
-        const Text(
-          AppStrings.email,
-          style: TextStyle(
-            decoration: TextDecoration.underline,
+    return Ripple(
+      onTap: _onTapEmail,
+      child: Row(
+        children: [
+          Text(
+            appLocalization.email,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-        ),
-      ],
+          SizedBox(width: AppValues.margin_4.w),
+          const Text(
+            AppStrings.email,
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildTelephone(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          appLocalization.phone,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        SizedBox(width: AppValues.margin_4.w),
-        const Text(AppStrings.phoneNumber),
-      ],
+    return Ripple(
+      onTap: () => _onTapPhoneNumber(AppStrings.phoneNumber),
+      child: Row(
+        children: [
+          Text(
+            appLocalization.phone,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          SizedBox(width: AppValues.margin_4.w),
+          const Text(AppStrings.phoneNumber),
+        ],
+      ),
     );
   }
 
@@ -126,20 +138,41 @@ class ContactUsView extends BaseView<ContactUsController> {
     );
   }
 
-  Widget _buildContactRow(String title, String value) => Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              title,
+  Widget _buildContactRow(String title, String value) => Ripple(
+        onTap: () => _onTapPhoneNumber(value),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                title,
+              ),
             ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Text(
-              value,
+            Expanded(
+              flex: 5,
+              child: Text(
+                value,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
+
+  void _onTapPhoneNumber(String phoneNumber) {
+    String url = 'tel:$phoneNumber';
+    launchUrl(url);
+  }
+
+  void _onTapEmail() {
+    String url = 'mailto:${AppStrings.email}';
+    launchUrl(url);
+  }
+
+  void launchUrl(String url) {
+    canLaunchUrlString(url).then((bool canLaunch) {
+      if (canLaunch) {
+        launchUrlString(url);
+      }
+    });
+  }
 }
