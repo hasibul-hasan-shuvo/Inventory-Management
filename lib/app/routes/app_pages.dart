@@ -10,8 +10,6 @@ import '../modules/delivery_details/bindings/delivery_details_binding.dart';
 import '../modules/delivery_details/views/delivery_details_view.dart';
 import '../modules/global_inventories/bindings/global_inventories_binding.dart';
 import '../modules/global_inventories/views/global_inventories_view.dart';
-import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
 import '../modules/inventory/views/inventory_view.dart';
 import '../modules/item_count/bindings/item_count_binding.dart';
@@ -22,8 +20,6 @@ import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/not_delivery/bindings/not_delivery_binding.dart';
 import '../modules/not_delivery/views/not_delivery_view.dart';
-import '../modules/other/bindings/other_binding.dart';
-import '../modules/other/views/other_view.dart';
 import '../modules/product_in/bindings/product_in_binding.dart';
 import '../modules/product_in/views/product_in_view.dart';
 import '../modules/product_out/bindings/product_out_binding.dart';
@@ -51,11 +47,6 @@ class AppPages {
       binding: MainBinding(),
     ),
     GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
-    ),
-    GetPage(
       name: _Paths.CONTACT_US,
       page: () => ContactUsView(),
       binding: ContactUsBinding(),
@@ -64,11 +55,6 @@ class AppPages {
       name: _Paths.ABOUT_APP,
       page: () => AboutAppView(),
       binding: AboutAppBinding(),
-    ),
-    GetPage(
-      name: _Paths.OTHER,
-      page: () => OtherView(),
-      binding: OtherBinding(),
     ),
     GetPage(
       name: _Paths.SPLASH,

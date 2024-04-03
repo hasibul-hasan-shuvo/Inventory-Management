@@ -4,15 +4,15 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/home/controllers/home_controller.dart';
-import 'package:dental_inventory/app/modules/home/models/item_home_menu_ui_model.dart';
+import 'package:dental_inventory/app/modules/main/controllers/main_controller.dart';
+import 'package:dental_inventory/app/modules/main/model/item_home_menu_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
-  final HomeController _controller = Get.find();
+  final MainController _controller = Get.find();
   final ItemHomeMenuUiModel data;
 
   ItemHomeMenuView({
