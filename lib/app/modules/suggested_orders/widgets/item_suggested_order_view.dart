@@ -189,7 +189,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
               suggestion = value;
             },
           ),
-          positiveButtonText: appLocalization.buttonTextSaveChanges,
+          positiveButtonText: appLocalization.buttonTextAddToCart,
           onPositiveButtonTap: () {
             _controller.addToCart(data.itemId, suggestion);
           },
