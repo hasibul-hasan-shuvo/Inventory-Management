@@ -73,7 +73,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _getTitleAndValue(
-            appLocalization.labelCount,
+            appLocalization.inventory,
             "$count",
           ),
           _getTitleAndValue(

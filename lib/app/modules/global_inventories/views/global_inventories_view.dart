@@ -25,7 +25,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       child: Obx(
         () => SearchAbleAppBar(
           isSearchableMode: controller.isSearchable,
-          title: appLocalization.homeMenuInventory,
+          title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
           updateSearchQuery: (value) {
             controller.updateSearchQuery(value);
@@ -55,8 +55,11 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   }
 
   Widget _getPlaceHolder() {
-    return EmptyListPlaceHolder(
-      message: appLocalization.placeHolderEmptyInventory,
+    return GestureDetector(
+      onTap: closeKeyboard,
+      child: EmptyListPlaceHolder(
+        message: appLocalization.placeHolderEmptyInventory,
+      ),
     );
   }
 

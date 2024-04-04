@@ -6,7 +6,9 @@ import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,8 +18,11 @@ import '../controllers/shopping_cart_controller.dart';
 
 // ignore: must_be_immutable
 class ShoppingCartView extends BaseView<ShoppingCartController> {
+  late BuildContext _context;
+
   ShoppingCartView() {
     ZebraScanner().addScannerDelegate(controller.onScanned);
+    _subscribeNewCartItemArrivedController();
   }
 
   @override
@@ -28,6 +33,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
 
   @override
   Widget body(BuildContext context) {
+    _context = context;
+
     return Obx(
       () => controller.isPageLoading && controller.shoppingCartItems.isEmpty
           ? const SizedBox.shrink()
@@ -114,5 +121,42 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
 
   void _onConfirmOrderTap() {
     controller.confirmOrder();
+  }
+
+  void _subscribeNewCartItemArrivedController() {
+    controller.newCartItemArrivedController.listen((cartItem) {
+      if (cartItem != null) {
+        _showNewCartItemEditDialog(cartItem);
+        controller.clearNewCartArrivedController();
+      }
+    });
+  }
+
+  void _showNewCartItemEditDialog(ShoppingCartUiModel data) {
+    int cartCount = data.cartCount;
+
+    showDialog(
+      context: _context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleEditOrderDialog,
+          content: InventoryOrderEditDialogContentView(
+            id: data.itemId,
+            name: data.name,
+            imageUrl: data.imageUrl,
+            count: data.count,
+            suggestion: data.cartCount,
+            price: data.price,
+            onSuggestionValueChange: (int value) {
+              cartCount = value;
+            },
+          ),
+          positiveButtonText: appLocalization.buttonTextSaveChanges,
+          onPositiveButtonTap: () {
+            controller.updateCartCount(data, cartCount);
+          },
+        );
+      },
+    );
   }
 }

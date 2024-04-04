@@ -37,7 +37,7 @@ class InventoryView extends BaseView<InventoryController> {
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
       isSearchableMode: controller.isSearchable,
-      title: appLocalization.homeMenuSearchItem,
+      title: appLocalization.homeMenuInventory,
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);
@@ -70,8 +70,11 @@ class InventoryView extends BaseView<InventoryController> {
       ItemInventoryCard(inventoryData: inventoryData);
 
   Widget _getPlaceHolder() {
-    return EmptyListPlaceHolder(
-      message: appLocalization.placeHolderEmptyInventory,
+    return GestureDetector(
+      onTap: closeKeyboard,
+      child: EmptyListPlaceHolder(
+        message: appLocalization.placeHolderEmptyInventory,
+      ),
     );
   }
 }

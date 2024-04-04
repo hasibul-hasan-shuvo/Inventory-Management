@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
+import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,14 @@ import '../controllers/scanner_controller.dart';
 
 // ignore: must_be_immutable
 class ScannerView extends BaseView<ScannerController> {
-  String? result;
-  final MobileScannerController _scannerController = MobileScannerController();
+  final Rx<String?> _barCodeController = Rx(null);
+  final MobileScannerController _scannerController = MobileScannerController(
+    detectionSpeed: DetectionSpeed.noDuplicates,
+  );
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => null;
+  PreferredSizeWidget? appBar(BuildContext context) =>
+      CustomAppBar(appBarTitleText: appLocalization.titleScannerView);
 
   @override
   Widget body(BuildContext context) {
@@ -43,6 +47,10 @@ class ScannerView extends BaseView<ScannerController> {
         child: MobileScanner(
           controller: _scannerController,
           onDetect: _onDetect,
+          overlay: const Icon(
+            Icons.add,
+            color: AppColors.colorWhite,
+          ),
         ),
       ),
     );
@@ -80,12 +88,19 @@ class ScannerView extends BaseView<ScannerController> {
   }
 
   Widget _getCheckInButton() {
-    return FloatingActionButton(
-      onPressed: _onPressedDoneButton,
-      child: Icon(
-        Icons.done,
-        size: AppValues.iconDefaultSize.h,
-        color: theme.colorScheme.onPrimary,
+    return Obx(
+      () => FloatingActionButton(
+        onPressed: _isBarCodeDetected ? _onPressedDoneButton : null,
+        backgroundColor: _isBarCodeDetected
+            ? theme.colorScheme.primary
+            : AppColors.basicGrey,
+        child: Icon(
+          Icons.done,
+          size: AppValues.iconDefaultSize.h,
+          color: _isBarCodeDetected
+              ? theme.colorScheme.onPrimary
+              : AppColors.colorWhite,
+        ),
       ),
     );
   }
@@ -95,16 +110,20 @@ class ScannerView extends BaseView<ScannerController> {
   }
 
   void _onPressedDoneButton() {
-    if (result.isNullOrEmpty) {
-      controller.showErrorMessage(appLocalization.messageCodeNotFound);
+    if (_isBarCodeDetected) {
+      Get.back(result: _barCodeController.value);
     } else {
-      Get.back(result: result);
+      controller.showErrorMessage(appLocalization.messageCodeNotFound);
     }
   }
 
   void _onDetect(BarcodeCapture capture) {
     if (capture.barcodes.isNotEmpty) {
-      result = capture.barcodes.first.rawValue;
+      _barCodeController(capture.barcodes.first.rawValue);
+    } else {
+      _barCodeController(null);
     }
   }
+
+  bool get _isBarCodeDetected => _barCodeController.value.isNotNullOrEmpty;
 }

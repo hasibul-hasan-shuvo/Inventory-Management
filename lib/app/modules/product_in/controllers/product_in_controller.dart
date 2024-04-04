@@ -47,6 +47,11 @@ class ProductInController extends BaseController {
     _scannedProductsController.refresh();
   }
 
+  void incrementProductNumber(ScannedProductUiModel product) {
+    product.updateNumber(product.number + 1);
+    _scannedProductsController.refresh();
+  }
+
   void _getProduct(String itemId) {
     callDataService(
       _repository.getProduct(itemId),

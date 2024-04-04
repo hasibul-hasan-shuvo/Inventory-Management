@@ -28,13 +28,16 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
   Widget body(BuildContext context) {
     return ElevatedContainer(
       height: AppValues.itemImageHeight.h,
-      child: Row(
-        children: [
-          _getImageView(),
-          SizedBox(width: AppValues.smallMargin.w),
-          _getItemDetails(),
-          _getEditButton(context),
-        ],
+      child: Ripple(
+        onTap: _onTap,
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getEditButton(context),
+          ],
+        ),
       ),
     ).marginOnly(bottom: AppValues.margin_6.h);
   }
@@ -140,6 +143,10 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
         vertical: AppValues.padding.h,
       ),
     );
+  }
+
+  void _onTap() {
+    _controller.incrementProductNumber(data);
   }
 
   void _onTapEdit(BuildContext context) {

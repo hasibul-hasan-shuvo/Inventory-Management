@@ -85,15 +85,21 @@ class SuggestedOrdersController extends BaseController {
     _suggestedOrdersController.removeWhere(
       (element) => element.itemId == data.itemId,
     );
+    showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
   void addToCartAll() {
-    callDataService(_repository.addAllItemsInShoppingCart(),
-        onSuccess: (isSuccess) {
-      if (isSuccess) {
-        _suggestedOrdersController.clear();
-      }
-    });
+    callDataService(
+      _repository.addAllItemsInShoppingCart(),
+      onSuccess: _handleAddToCartAllSuccessResponse,
+    );
+  }
+
+  void _handleAddToCartAllSuccessResponse(bool isSuccess) {
+    if (isSuccess) {
+      _suggestedOrdersController.clear();
+    }
+    showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
   void rebuildList() {

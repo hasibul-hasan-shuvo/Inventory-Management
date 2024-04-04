@@ -77,7 +77,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         _getIdView(),
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
-          appLocalization.labelCount,
+          appLocalization.inventory,
           data.count.toString(),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -15,14 +16,12 @@ class InventoryRemoteDataSourceImpl extends BaseRemoteSource
     implements InventoryRemoteDataSource {
   @override
   Future<InventoryListResponse> getInventoryList({
-    required String searchQuery,
+    required InventoryListQueryParams queryParams,
   }) {
     const endpoint = '${EndPoints.inventoryItems}/all/';
     var dioCall = dioClient.get(
       endpoint,
-      queryParameters: {
-        "search": searchQuery,
-      },
+      queryParameters: queryParams.toJson(),
     );
     try {
       return callApiWithErrorParser(dioCall)
