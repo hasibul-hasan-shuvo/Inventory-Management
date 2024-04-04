@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -32,26 +33,26 @@ class InventoryController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    fetchInventoryList();
+    _fetchInventoryList();
   }
 
   void onLoading() {
-    _getNextSuggestedOrders();
+    if (pagingController.canLoadNextPage()) {
+      _getNextInventoryList();
+    }
   }
-
-  void _getNextSuggestedOrders() {}
 
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     searchQuery('');
     if (!_searchModeController.value) {
-      fetchInventoryList();
+      _fetchInventoryList();
     }
   }
 
   void updateSearchQuery(String query) {
     searchQuery(query);
-    fetchInventoryList();
+    _fetchInventoryList();
   }
 
   void deleteInventoryItem() {
@@ -68,25 +69,15 @@ class InventoryController extends BaseController {
     _inventoryItemsController.refresh();
   }
 
-  Future<void> updateInventoryData() async {
-    final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-      id: productID,
-      maxCount: maxCount,
-      minCount: minCount,
-      stockCount: stockCount,
-      inventoryID: _authRepository.getInventoryID(),
-      fixedSuggestion: fixedSuggestion,
+  void _fetchInventoryList() {
+    pagingController.initRefresh();
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
     );
-    callDataService(
-      _inventoryRepository.updateInventoryData(request),
-      onSuccess: _handleUpdateInventoryDataSuccessResponse,
-    );
-  }
-
-  Future<void> fetchInventoryList() async {
     callDataService(
       _inventoryRepository.getInventoryList(
-        searchQuery: searchQuery.value,
+        queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );
@@ -101,6 +92,47 @@ class InventoryController extends BaseController {
             .toList() ??
         [];
     _inventoryItemsController(list);
+  }
+
+  void _getNextInventoryList() {
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
+    );
+    callDataService(
+      _inventoryRepository.getInventoryList(
+        queryParams: queryParams,
+      ),
+      onSuccess: _handleNextInventoryListSuccessResponse,
+      onStart: () => logger.d("Fetching more inventories..."),
+      onComplete: () => refreshController.loadComplete(),
+    );
+  }
+
+  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    _inventoryItemsController.addAll(
+      response.inventoryList
+              ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
+              .toList() ??
+          [],
+    );
+  }
+
+  void updateInventoryData() async {
+    final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
+      id: productID,
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      inventoryID: _authRepository.getInventoryID(),
+      fixedSuggestion: fixedSuggestion,
+    );
+    callDataService(
+      _inventoryRepository.updateInventoryData(request),
+      onSuccess: _handleUpdateInventoryDataSuccessResponse,
+    );
   }
 
   void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
