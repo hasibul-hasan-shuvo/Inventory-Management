@@ -43,6 +43,7 @@
   "logOut": "Logg ut",
   "logOutMessage:": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
+  "messageAddedToShoppingCart": "Lagt til i handlekurv",
   "messageCodeNotFound": "QR-kode eller strekkode ikke funnet",
   "messageConfirmDelivery": "Har du mottatt alle produkter i god stand?",
   "messageConfirmOrder": "Vil du bekrefte bestillingen?",

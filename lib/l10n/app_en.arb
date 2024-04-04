@@ -43,6 +43,7 @@
   "logOut": "Log Out",
   "logOutMessage": "Are you sure you want to log out?",
   "max": "Max",
+  "messageAddedToShoppingCart": "Added to shopping cart",
   "messageCodeNotFound": "Qrcode or Barcode not found",
   "messageConfirmDelivery": "Have you received all the product correctly?",
   "messageConfirmOrder": "Do you want to confirm the order?",
