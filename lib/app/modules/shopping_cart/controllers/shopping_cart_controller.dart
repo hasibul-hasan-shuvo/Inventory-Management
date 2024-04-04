@@ -15,6 +15,12 @@ class ShoppingCartController extends BaseController {
   List<ShoppingCartUiModel> get shoppingCartItems =>
       _shoppingCartItemsController;
 
+  Rx<ShoppingCartUiModel?> newCartItemArrivedController = Rx(null);
+
+  void clearNewCartArrivedController() {
+    newCartItemArrivedController.trigger(null);
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -154,8 +160,9 @@ class ShoppingCartController extends BaseController {
   }
 
   void _handleAddCartItemSuccessResponse(ShoppingCartResponse response) {
-    _shoppingCartItemsController.add(
-      ShoppingCartUiModel.fromShoppingCartResponse(response),
-    );
+    ShoppingCartUiModel cartItem =
+        ShoppingCartUiModel.fromShoppingCartResponse(response);
+    _shoppingCartItemsController.add(cartItem);
+    newCartItemArrivedController.trigger(cartItem);
   }
 }
