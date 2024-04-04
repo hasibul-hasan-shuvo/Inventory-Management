@@ -107,7 +107,7 @@
   "titleEmptyScannedList": "Scan items",
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
-  "titleOtherView": "OtherView",
+  "titleScannerView": "Barcode scanner",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
