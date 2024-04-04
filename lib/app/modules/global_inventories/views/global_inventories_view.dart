@@ -55,8 +55,11 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   }
 
   Widget _getPlaceHolder() {
-    return EmptyListPlaceHolder(
-      message: appLocalization.placeHolderEmptyInventory,
+    return GestureDetector(
+      onTap: closeKeyboard,
+      child: EmptyListPlaceHolder(
+        message: appLocalization.placeHolderEmptyInventory,
+      ),
     );
   }
 
