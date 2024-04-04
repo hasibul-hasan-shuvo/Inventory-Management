@@ -25,7 +25,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       child: Obx(
         () => SearchAbleAppBar(
           isSearchableMode: controller.isSearchable,
-          title: appLocalization.homeMenuInventory,
+          title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
           updateSearchQuery: (value) {
             controller.updateSearchQuery(value);
