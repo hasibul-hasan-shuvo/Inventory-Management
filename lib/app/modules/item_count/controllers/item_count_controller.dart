@@ -33,6 +33,11 @@ class ItemCountController extends BaseController {
     }
   }
 
+  void incrementProductNumber(InventoryCardUIModel inventory) {
+    inventory.updateCurrentStock(inventory.currentStock + 1);
+    _inventoriesController.refresh();
+  }
+
   void _getProduct(String itemId) {
     callDataService(
       _repository.getProduct(itemId),
