@@ -47,9 +47,9 @@ class GlobalInventoriesController extends BaseController {
     );
   }
 
-  void createInventory(GlobalInventoryUiModel data) {
+  void createInventory(String itemId) {
     CreateInventoryRequestBody requestBody =
-        CreateInventoryRequestBody(itemId: data.itemId);
+        CreateInventoryRequestBody(itemId: itemId);
 
     callDataService(
       _repository.createInventory(requestBody),
@@ -65,8 +65,7 @@ class GlobalInventoriesController extends BaseController {
 
   void onScanned(String? code) {
     if (code != null) {
-      _searchQueryController(code);
-      _fetchInventoryList();
+      createInventory(code);
     }
   }
 }
