@@ -19,11 +19,12 @@ class SearchAbleAppBar extends StatelessWidget
 
   final TextEditingController _searchController = TextEditingController();
 
-  SearchAbleAppBar(
-      {required this.isSearchableMode,
-      required this.title,
-      required this.onChangeSearchMode,
-      required this.updateSearchQuery});
+  SearchAbleAppBar({
+    required this.isSearchableMode,
+    required this.title,
+    required this.onChangeSearchMode,
+    required this.updateSearchQuery,
+  });
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -39,38 +40,8 @@ class SearchAbleAppBar extends StatelessWidget
 
   List<Widget> _buildActions() {
     return [
-      isSearchableMode ? _buildSearchableActions() : _buildSearchButton(),
+      isSearchableMode ? _buildClearButton() : _buildSearchButton(),
     ];
-  }
-
-  Widget _buildSearchableActions() {
-    return Row(
-      children: [
-        _buildSearchActionButton(),
-        _buildClearButton(),
-      ],
-    );
-  }
-
-  Widget _buildSearchActionButton() {
-    return Obx(
-      () {
-        return IconButton(
-          onPressed: isSearchBoxEmpty.value
-              ? null
-              : () {
-                  updateSearchQuery(_searchController.text);
-                },
-          icon: Icon(
-            Icons.done,
-            color: isSearchBoxEmpty.value
-                ? AppColors.colorWhite.withOpacity(0.5)
-                : AppColors.colorWhite,
-            size: AppValues.iconDefaultSize.h,
-          ),
-        );
-      },
-    );
   }
 
   Widget _buildClearButton() {
@@ -100,6 +71,7 @@ class SearchAbleAppBar extends StatelessWidget
       controller: _searchController,
       decoration: InputDecoration(
         hintText: appLocalization.search,
+        hintStyle: textTheme.bodyLarge?.copyWith(color: theme.hintColor),
         border: InputBorder.none,
       ),
       maxLines: 1,
@@ -111,7 +83,7 @@ class SearchAbleAppBar extends StatelessWidget
       onChanged: (value) {
         isSearchBoxEmpty(value.isEmpty);
       },
-      style: const TextStyle(color: AppColors.colorWhite),
+      style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
     );
   }
 
