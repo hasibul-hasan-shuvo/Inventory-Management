@@ -85,7 +85,7 @@
   "postalAddress": "Postadresse",
   "placeHolderEmptyInventory": "Ingen produkter funnet",
   "placeHolderEmptyOrders": "Ingen bestillinger funnet",
-  "placeHolderEmptyShoppingCart": "Ingen aktiv handlekurv funnet",
+  "placeHolderEmptyShoppingCart": "Handlekurven er tom",
   "placeHolderEmptySuggestedOrders": "Ingen produkter i bestillingsforslaget",
   "retry": "Prov på nytt",
   "search": "Søk",
