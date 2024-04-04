@@ -84,7 +84,7 @@
   "postalAddress": "Postal Address",
   "placeHolderEmptyInventory": "No inventory data found",
   "placeHolderEmptyOrders": "No orders found",
-  "placeHolderEmptyShoppingCart": "No active shopping cart found",
+  "placeHolderEmptyShoppingCart": "Shopping cart is empty",
   "placeHolderEmptySuggestedOrders": "No order suggestion",
   "retry": "Retry",
   "search": "Search",
