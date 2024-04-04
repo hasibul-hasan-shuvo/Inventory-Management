@@ -17,10 +17,6 @@ class ShoppingCartController extends BaseController {
 
   Rx<ShoppingCartUiModel?> newCartItemArrivedController = Rx(null);
 
-  void clearNewCartArrivedController() {
-    newCartItemArrivedController.trigger(null);
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -164,5 +160,9 @@ class ShoppingCartController extends BaseController {
         ShoppingCartUiModel.fromShoppingCartResponse(response);
     _shoppingCartItemsController.add(cartItem);
     newCartItemArrivedController.trigger(cartItem);
+  }
+
+  void clearNewCartArrivedController() {
+    newCartItemArrivedController.trigger(null);
   }
 }
