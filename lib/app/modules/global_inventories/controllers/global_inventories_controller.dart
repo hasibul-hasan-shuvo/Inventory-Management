@@ -31,12 +31,16 @@ class GlobalInventoriesController extends BaseController {
   }
 
   void _fetchInventoryList() {
-    callDataService(
-      _repository.getGlobalInventoryList(
-        query: _searchQueryController.value,
-      ),
-      onSuccess: _handleInventoryListResponse,
-    );
+    if (_searchQueryController.isNotEmpty) {
+      callDataService(
+        _repository.getGlobalInventoryList(
+          query: _searchQueryController.value,
+        ),
+        onSuccess: _handleInventoryListResponse,
+      );
+    } else {
+      _inventoriesController.clear();
+    }
   }
 
   void _handleInventoryListResponse(List<GlobalInventoryResponse> response) {
