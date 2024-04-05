@@ -109,7 +109,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getPriceView() {
     return Expanded(
       child: Text(
-        "${appLocalization.currency}. ${data.price}",
+        "${appLocalization.currency}. ${data.price.toStringAsFixed(2)}",
         style: textTheme.bodySmall,
       ),
     );

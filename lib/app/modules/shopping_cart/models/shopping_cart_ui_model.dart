@@ -16,7 +16,7 @@ class ShoppingCartUiModel {
     imageUrl = response.product?.imageUrl ?? '';
     itemId = response.product?.itemId ?? '';
     count = response.stockCount ?? 0;
-    price = response.price ?? 0.0;
+    price = response.product?.price ?? 0.0;
     cartCount = response.quantity ?? 0;
   }
 
