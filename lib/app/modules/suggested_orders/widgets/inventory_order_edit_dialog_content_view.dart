@@ -16,6 +16,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   final String name;
   final String imageUrl;
   final int count;
+  final String? suggestionLabel;
   final int? suggestion;
   final num price;
   final Function(int) onSuggestionValueChange;
@@ -27,6 +28,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
     required this.name,
     required this.imageUrl,
     required this.count,
+    this.suggestionLabel,
     required this.suggestion,
     required this.price,
     required this.onSuggestionValueChange,
@@ -77,7 +79,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
             "$count",
           ),
           _getTitleAndValue(
-            appLocalization.labelSuggestion,
+            suggestionLabel ?? appLocalization.labelSuggestion,
             suggestion != null ? "$suggestion" : "",
           ),
           const Divider(),

@@ -164,6 +164,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,
+            suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.price,
             onSuggestionValueChange: (int value) {
