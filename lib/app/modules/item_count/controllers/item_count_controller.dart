@@ -84,8 +84,12 @@ class ItemCountController extends BaseController {
     if (newStock.isEmpty) {
       data.updateCurrentStock(0);
     } else {
-      int stock = int.parse(newStock);
-      data.updateCurrentStock(stock);
+      try {
+        int stock = int.parse(newStock);
+        data.updateCurrentStock(stock);
+      } catch (e) {
+        logger.d("Item count: $e");
+      }
     }
     _inventoriesController.refresh();
   }
