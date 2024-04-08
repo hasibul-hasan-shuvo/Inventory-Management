@@ -50,6 +50,7 @@
   "messageCreateInventory": "Do you want to add this item in inventories?",
   "messageCreateInventorySuccessful": "Item added successfully",
   "messageDeleteInventory": "Do you want to delete the inventory?",
+  "messageInvalidNumber": "Invalid number",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "min": "Min",

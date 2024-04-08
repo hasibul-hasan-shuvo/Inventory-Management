@@ -50,6 +50,7 @@
   "messageCreateInventory": "Vil du legge til denne varen i varelager?",
   "messageCreateInventorySuccessful": "Produktet ble lagt til",
   "messageDeleteInventory": "Vil du slette produktet?",
+  "messageInvalidNumber": "Feil nummer",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "min": "Min",
