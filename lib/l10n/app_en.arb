@@ -51,6 +51,7 @@
   "messageCreateInventorySuccessful": "Item added successfully",
   "messageDeleteInventory": "Do you want to delete the inventory?",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
+  "messageItemUpdatedSuccessfully": "Item updated successfully",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",
   "no": "No",

@@ -141,5 +141,7 @@ class InventoryController extends BaseController {
         element.updateFromInventoryResponse(response);
       }
     }
+
+    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
   }
 }
