@@ -126,6 +126,7 @@
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
+  "version": "Version",
   "visitingAddress": "Visiting Address",
   "yes": "Yes",
   "workshop": "Workshop"
