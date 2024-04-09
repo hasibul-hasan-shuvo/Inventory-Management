@@ -59,6 +59,7 @@
       }
     }
   },
+  "messageItemOutValidation": "Antallet kan ikke være større enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",

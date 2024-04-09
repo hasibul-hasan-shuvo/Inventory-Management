@@ -59,6 +59,7 @@
       }
     }
   },
+  "messageItemOutValidation": "Number can't be greater than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "messageMaxMinValidation": "Max value can't less than min value",
