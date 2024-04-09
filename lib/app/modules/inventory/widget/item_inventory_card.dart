@@ -15,10 +15,12 @@ import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
-  final InventoryCardUIModel inventoryData;
+  final InventoryCardUIModel data;
   final InventoryController _controller = Get.find<InventoryController>();
 
-  ItemInventoryCard({required this.inventoryData});
+  ItemInventoryCard({
+    required this.data,
+  });
 
   @override
   Widget body(BuildContext context) {
@@ -43,15 +45,32 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _buildDialog(BuildContext context) {
+    TextEditingController minController = TextEditingController();
+    TextEditingController maxController = TextEditingController();
+    TextEditingController fixedSuggestionController = TextEditingController();
+    TextEditingController stockCountController = TextEditingController();
+
     return AppDialog(
       title: appLocalization.editProduct,
-      content: InventoryItemEditDialogView(inventoryData: inventoryData),
+      content: InventoryItemEditDialogView(
+        inventoryData: data,
+        minController: minController,
+        maxController: maxController,
+        fixedSuggestionController: fixedSuggestionController,
+        stockCountController: stockCountController,
+      ),
       negativeButtonIcon: Icons.delete_outline,
       negativeButtonText: appLocalization.deleteProduct,
       positiveButtonText: appLocalization.updateProduct,
       willPopOnNegativeButtonTap: false,
       onPositiveButtonTap: () {
-        _controller.updateInventoryData();
+        _controller.updateInventoryData(
+          data: data,
+          minCount: minController.text,
+          maxCount: maxController.text,
+          fixedSuggestion: fixedSuggestionController.text,
+          stockCount: stockCountController.text,
+        );
       },
       onNegativeButtonTap: () {
         Get.back();
@@ -62,7 +81,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildProductImage() {
     return NetworkImageView(
-      imageUrl: inventoryData.imageUrl,
+      imageUrl: data.imageUrl,
       height: AppValues.itemImageHeight.h,
       width: AppValues.itemImageWidth.w,
       fit: BoxFit.cover,
@@ -87,7 +106,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            inventoryData.name,
+            data.name,
             style: textTheme.titleMedium,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -96,13 +115,13 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
           Row(
             children: [
               Expanded(
-                child: Text(
-                    "${appLocalization.available}: ${inventoryData.currentStock}"),
+                child:
+                    Text("${appLocalization.available}: ${data.currentStock}"),
               ),
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
                 child: Text(
-                  "${appLocalization.max}: ${inventoryData.max} ${appLocalization.min}: ${inventoryData.min}",
+                  "${appLocalization.max}: ${data.max} ${appLocalization.min}: ${data.min}",
                   style: textTheme.bodySmall,
                 ),
               ),
@@ -128,6 +147,6 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onConfirmDelete() {
-    _controller.deleteInventoryItem();
+    _controller.deleteInventoryItem(data);
   }
 }

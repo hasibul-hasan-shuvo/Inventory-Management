@@ -10,14 +10,16 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ItemCountEditDialogView extends StatelessWidget with BaseWidgetMixin {
+  final TextEditingController controller;
   final InventoryCardUIModel data;
-  final Function(String) onCurrentStockChanged;
 
   ItemCountEditDialogView({
     super.key,
+    required this.controller,
     required this.data,
-    required this.onCurrentStockChanged,
-  });
+  }) {
+    controller.text = data.currentStock.toString();
+  }
 
   @override
   Widget body(BuildContext context) {
@@ -66,9 +68,8 @@ class ItemCountEditDialogView extends StatelessWidget with BaseWidgetMixin {
     return Row(
       children: [
         TextFieldWithTitle(
+          controller: controller,
           title: appLocalization.number,
-          initialValue: data.currentStock.toString(),
-          onChanged: onCurrentStockChanged,
         ),
       ],
     ).marginSymmetric(horizontal: AppValues.margin.w);

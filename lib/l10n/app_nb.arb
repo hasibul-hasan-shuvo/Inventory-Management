@@ -51,8 +51,17 @@
   "messageCreateInventorySuccessful": "Produktet ble lagt til",
   "messageDeleteInventory": "Vil du slette produktet?",
   "messageInvalidNumber": "Feil nummer",
+  "messageInvalidItemNumber": "Feil {itemName} antall",
+  "@messageInvalidItemNumber": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
+  "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
   "min": "Min",
   "mustBe11DigitsLong": "Må være minst 11 siffer langt",
   "no": "Nei",

@@ -124,7 +124,7 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    String currentStock = data.currentStock.toString();
+    TextEditingController currentStockController = TextEditingController();
 
     showDialog(
       context: context,
@@ -132,14 +132,15 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: ItemCountEditDialogView(
+            controller: currentStockController,
             data: data,
-            onCurrentStockChanged: (String newStock) {
-              currentStock = newStock;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.onUpdateCurrentStock(data, currentStock);
+            _controller.onUpdateCurrentStock(
+              data,
+              currentStockController.text,
+            );
           },
         );
       },
