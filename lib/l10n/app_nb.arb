@@ -59,10 +59,10 @@
       }
     }
   },
-  "messageItemOutValidation": "Antall kan ikke være større enn gjenværende beholdning",
+  "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
-  "messageMaxCountThresholdValidation": "Antall kan ikke være større enn 999",
+  "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
   "min": "Min",
   "mustBe11DigitsLong": "Må være minst 11 siffer langt",
