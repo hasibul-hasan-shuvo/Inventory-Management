@@ -59,9 +59,10 @@
       }
     }
   },
-  "messageItemOutValidation": "Number can't be greater than remaining stock",
+  "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
+  "messageMaxCountThresholdValidation": "Number can't be more than 999",
   "messageMaxMinValidation": "Max value can't less than min value",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",

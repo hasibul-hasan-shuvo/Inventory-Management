@@ -133,7 +133,9 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   void _showNewCartItemEditDialog(ShoppingCartUiModel data) {
-    int cartCount = data.cartCount;
+    TextEditingController cartController = TextEditingController();
+
+    cartController.text = data.cartCount.toString();
 
     showDialog(
       context: _context,
@@ -141,6 +143,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
+            numberController: cartController,
             id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
@@ -148,13 +151,13 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.price,
-            onSuggestionValueChange: (int value) {
-              cartCount = value;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            controller.updateCartCount(data, cartCount);
+            controller.updateCartCount(
+              data,
+              cartController.text,
+            );
           },
         );
       },

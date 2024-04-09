@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -64,6 +65,11 @@ class ProductOutController extends BaseController {
   }
 
   void incrementProductNumber(ScannedProductUiModel product) {
+    if (product.number >= AppValues.maxCountValue) {
+      showErrorMessage(appLocalization.messageMaxCountThresholdValidation);
+
+      return;
+    }
     if (product.number + 1 <= product.available) {
       product.updateNumber(product.number + 1);
       _scannedProductsController.refresh();

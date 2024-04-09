@@ -146,7 +146,7 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
   bool get _isDecrementButtonEnabled => _numberController.value > 0;
 
   bool get _isIncrementButtonEnabled =>
-      latestStock > 0 && latestStock < AppValues.maxCountValue;
+      latestStock > 0 && _numberController.value < AppValues.maxCountValue;
 
   int get latestStock => data.available - _numberController.value;
 }
