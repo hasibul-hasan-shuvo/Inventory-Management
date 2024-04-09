@@ -81,12 +81,7 @@ class ItemCountController extends BaseController {
   }
 
   void onUpdateCurrentStock(InventoryCardUIModel data, String newStock) {
-    if (newStock.isEmpty) {
-      data.updateCurrentStock(0);
-    } else {
-      int stock = int.parse(newStock);
-      data.updateCurrentStock(stock);
-    }
+    data.updateCurrentStock(newStock.toInt);
     _inventoriesController.refresh();
   }
 }

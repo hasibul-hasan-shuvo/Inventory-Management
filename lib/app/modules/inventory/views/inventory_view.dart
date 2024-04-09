@@ -67,7 +67,7 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildInventoryCard(InventoryCardUIModel inventoryData) =>
-      ItemInventoryCard(inventoryData: inventoryData);
+      ItemInventoryCard(data: inventoryData);
 
   Widget _getPlaceHolder() {
     return GestureDetector(

@@ -1,29 +1,28 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
-import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../../core/values/app_values.dart';
 
 // ignore: must_be_immutable
 class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
   InventoryCardUIModel inventoryData;
+  final TextEditingController minController;
+  final TextEditingController maxController;
+  final TextEditingController fixedSuggestionController;
+  final TextEditingController stockCountController;
 
-  final InventoryController _controller = Get.find<InventoryController>();
-
-  InventoryItemEditDialogView({required this.inventoryData}) {
-    _controller.id = inventoryData.id.toString();
-    _controller.productID = inventoryData.itemId;
-    _controller.maxCount = inventoryData.max.toString();
-    _controller.minCount = inventoryData.min.toString();
-    _controller.stockCount = inventoryData.currentStock.toString();
-    _controller.fixedSuggestion =
-        inventoryData.fixedOrderSuggestions.toString();
-  }
+  InventoryItemEditDialogView({
+    required this.inventoryData,
+    required this.minController,
+    required this.maxController,
+    required this.fixedSuggestionController,
+    required this.stockCountController,
+  });
 
   @override
   Widget body(BuildContext context) {
@@ -32,9 +31,7 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildProductTopView(),
-          SizedBox(
-            height: AppValues.margin_10.h,
-          ),
+          SizedBox(height: AppValues.margin_10.h),
           _buildQuantityStatus(),
         ],
       ),
@@ -50,31 +47,22 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _buildQuantityStatus() {
-    return Container(
-      height: AppValues.space_110,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.background.withOpacity(AppValues.smallOpacity),
-        borderRadius: BorderRadius.circular(AppValues.halfPadding.sp),
-      ),
+    return ElevatedContainer(
+      height: AppValues.space_110.h,
+      bgColor: theme.colorScheme.background,
+      borderRadius: AppValues.radius_6.r,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildMaxMinEditor(
-            inventoryData.max.toString(),
-            inventoryData.min.toString(),
-          ),
-          _buildCurrentAndSuggestionEditor(
-            inventoryData.fixedOrderSuggestions.toString(),
-            inventoryData.currentStock.toString(),
-          ),
+          _buildMaxMinEditor(),
+          _buildCurrentAndSuggestionEditor(),
         ],
       ),
     );
   }
 
-  Widget _buildCurrentAndSuggestionEditor(
-      String fixedProposal, String inventory) {
+  Widget _buildCurrentAndSuggestionEditor() {
     return Expanded(
       flex: 5,
       child: Padding(
@@ -86,21 +74,15 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
           children: [
             Expanded(
               child: TextFieldWithTitle(
+                controller: fixedSuggestionController,
                 title: appLocalization.fixedProposal,
-                initialValue: fixedProposal,
-                onChanged: (value) {
-                  _controller.fixedSuggestion = value;
-                },
               ),
             ),
             SizedBox(height: AppValues.margin_10.h),
             Expanded(
               child: TextFieldWithTitle(
+                controller: stockCountController,
                 title: appLocalization.inventory,
-                initialValue: inventory,
-                onChanged: (value) {
-                  _controller.stockCount = value;
-                },
               ),
             ),
           ],
@@ -109,7 +91,7 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _buildMaxMinEditor(String max, String min) {
+  Widget _buildMaxMinEditor() {
     return Expanded(
       flex: 3,
       child: Row(
@@ -122,21 +104,15 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
               children: [
                 Expanded(
                   child: TextFieldWithTitle(
+                    controller: minController,
                     title: appLocalization.min,
-                    initialValue: min,
-                    onChanged: (value) {
-                      _controller.minCount = value;
-                    },
                   ),
                 ),
                 SizedBox(height: AppValues.margin_10.h),
                 Expanded(
                   child: TextFieldWithTitle(
+                    controller: maxController,
                     title: appLocalization.max,
-                    initialValue: max,
-                    onChanged: (value) {
-                      _controller.maxCount = value;
-                    },
                   ),
                 ),
               ],

@@ -50,7 +50,19 @@
   "messageCreateInventory": "Do you want to add this item in inventories?",
   "messageCreateInventorySuccessful": "Item added successfully",
   "messageDeleteInventory": "Do you want to delete the inventory?",
+  "messageInvalidNumber": "Invalid number",
+  "messageInvalidItemNumber": "Invalid {itemName} number",
+  "@messageInvalidItemNumber": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "messageItemOutValidation": "Number can't be greater than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
+  "messageItemUpdatedSuccessfully": "Item updated successfully",
+  "messageMaxMinValidation": "Max value can't less than min value",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",
   "no": "No",

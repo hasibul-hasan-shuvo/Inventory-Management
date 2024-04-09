@@ -35,12 +35,26 @@ class ProductOutController extends BaseController {
     }
   }
 
-  void updateProductNumber(String id, int number) {
+  void updateProductNumber(ScannedProductUiModel data, String numberString) {
+    if (!numberString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
+
+      return;
+    }
+
+    int number = numberString.toInt;
+
+    if (number > data.available) {
+      showErrorMessage(appLocalization.messageItemOutValidation);
+
+      return;
+    }
+
     if (number == 0) {
-      scannedProducts.removeWhere((element) => element.itemId == id);
+      scannedProducts.removeWhere((element) => element.itemId == data.itemId);
     } else {
       for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == id) {
+        if (product.itemId == data.itemId) {
           product.updateNumber(number);
           break;
         }
@@ -53,6 +67,8 @@ class ProductOutController extends BaseController {
     if (product.number + 1 <= product.available) {
       product.updateNumber(product.number + 1);
       _scannedProductsController.refresh();
+    } else {
+      showErrorMessage(appLocalization.messageItemOutValidation);
     }
   }
 

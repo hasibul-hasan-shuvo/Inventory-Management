@@ -50,7 +50,19 @@
   "messageCreateInventory": "Vil du legge til denne varen i varelager?",
   "messageCreateInventorySuccessful": "Produktet ble lagt til",
   "messageDeleteInventory": "Vil du slette produktet?",
+  "messageInvalidNumber": "Feil nummer",
+  "messageInvalidItemNumber": "Feil {itemName} antall",
+  "@messageInvalidItemNumber": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "messageItemOutValidation": "Antallet kan ikke være større enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
+  "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
+  "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
   "min": "Min",
   "mustBe11DigitsLong": "Må være minst 11 siffer langt",
   "no": "Nei",
@@ -114,7 +126,7 @@
   "total": "Totalt",
   "updateProduct": "Oppdater produkt",
   "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",
-  "visiting address": "Besøksadresse",
+  "visitingAddress": "Besøksadresse",
   "yes": "Ja",
   "workshop": "Verksted"
 }

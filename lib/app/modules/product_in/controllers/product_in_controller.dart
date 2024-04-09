@@ -33,7 +33,14 @@ class ProductInController extends BaseController {
     }
   }
 
-  void updateProductNumber(String id, int number) {
+  void updateProductNumber(String id, String numberString) {
+    if (!numberString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
+
+      return;
+    }
+    int number = numberString.toInt;
+
     if (number == 0) {
       scannedProducts.removeWhere((element) => element.itemId == id);
     } else {
