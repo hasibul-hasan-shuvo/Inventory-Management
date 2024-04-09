@@ -125,6 +125,7 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
 
   void _onTapEdit(BuildContext context) {
     TextEditingController currentStockController = TextEditingController();
+    currentStockController.text = data.currentStock.toString();
 
     showDialog(
       context: context,
