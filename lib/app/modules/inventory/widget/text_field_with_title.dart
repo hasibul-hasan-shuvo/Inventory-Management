@@ -9,10 +9,12 @@ import '../../../core/values/app_values.dart';
 class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
   final TextEditingController controller;
   final String? title;
+  final Function(String)? onChangedValue;
 
   TextFieldWithTitle({
     required this.controller,
-    required this.title,
+    this.title,
+    this.onChangedValue,
     Key? key,
   });
 
@@ -47,6 +49,7 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
               counterText: '',
             ),
             maxLength: AppValues.maxCountLength,
+            onChanged: onChangedValue,
           ),
         )
       ],

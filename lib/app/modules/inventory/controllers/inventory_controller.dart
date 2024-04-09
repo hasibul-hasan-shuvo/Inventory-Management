@@ -189,8 +189,8 @@ class InventoryController extends BaseController {
 
   bool _checkMaxMinValidity(String max, String min) {
     try {
-      int maxCount = int.parse(max);
-      int minCount = int.parse(min);
+      int maxCount = max.toInt;
+      int minCount = min.toInt;
 
       if (maxCount < minCount) {
         showErrorMessage(appLocalization.messageMaxMinValidation);

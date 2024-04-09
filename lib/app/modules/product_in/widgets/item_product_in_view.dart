@@ -138,7 +138,8 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    int number = data.number;
+    TextEditingController numberController = TextEditingController();
+    numberController.text = data.number.toString();
 
     showDialog(
       context: context,
@@ -147,13 +148,14 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
           title: appLocalization.titleEditOrderDialog,
           content: ProductInItemEditDialogContentView(
             data: data,
-            onNumberChanged: (int newNumber) {
-              number = newNumber;
-            },
+            controller: numberController,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.updateProductNumber(data.itemId, number);
+            _controller.updateProductNumber(
+              data.itemId,
+              numberController.text,
+            );
           },
         );
       },

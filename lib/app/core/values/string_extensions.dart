@@ -21,4 +21,17 @@ extension StringExtensions on String? {
       return false;
     }
   }
+
+  int get toInt {
+    if (isNullOrEmpty) {
+      return 0;
+    }
+    try {
+      int integerValue = int.parse(this!);
+
+      return integerValue;
+    } catch (e) {
+      return 0;
+    }
+  }
 }
