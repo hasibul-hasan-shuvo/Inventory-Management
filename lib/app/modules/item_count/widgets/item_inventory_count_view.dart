@@ -83,7 +83,7 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
           data.currentStock.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {

@@ -84,7 +84,7 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
           data.number.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getAvailableView() {
@@ -97,7 +97,7 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
           data.available.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {

@@ -88,7 +88,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           data.count.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getMaxMinAndFixedSuggestionView() {
@@ -104,7 +104,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           data.suggestion.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {
