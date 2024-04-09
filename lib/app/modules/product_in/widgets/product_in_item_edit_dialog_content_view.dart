@@ -108,15 +108,17 @@ class ProductInItemEditDialogContentView extends StatelessWidget
   }
 
   Widget _getIncrementButton() {
-    return IconButton(
-      onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
-      icon: AssetImageView(
-        fileName: AppIcons.roundedPlus,
-        height: AppValues.iconLargeSize.h,
-        width: AppValues.iconLargeSize.h,
-        color: _isIncrementButtonEnabled
-            ? theme.colorScheme.primary
-            : AppColors.basicGrey,
+    return Obx(
+      () => IconButton(
+        onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
+        icon: AssetImageView(
+          fileName: AppIcons.roundedPlus,
+          height: AppValues.iconLargeSize.h,
+          width: AppValues.iconLargeSize.h,
+          color: _isIncrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
+        ),
       ),
     );
   }
@@ -142,8 +144,7 @@ class ProductInItemEditDialogContentView extends StatelessWidget
 
   bool get _isDecrementButtonEnabled => _numberController.value > 0;
 
-  bool get _isIncrementButtonEnabled =>
-      latestStock > 0 && latestStock < AppValues.maxCountValue;
+  bool get _isIncrementButtonEnabled => latestStock < AppValues.maxCountValue;
 
   int get latestStock => data.available + _numberController.value;
 }
