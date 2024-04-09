@@ -3,7 +3,6 @@ import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:get/get.dart';
@@ -22,7 +21,6 @@ class InventoryController extends BaseController {
 
   final InventoryRepository _inventoryRepository =
       Get.find<InventoryRepository>();
-  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   @override
   void onInit() {
@@ -132,7 +130,7 @@ class InventoryController extends BaseController {
         maxCount: maxCount,
         minCount: minCount,
         stockCount: stockCount,
-        inventoryID: _authRepository.getInventoryID(),
+        inventoryID: authRepository.getInventoryID(),
         fixedSuggestion: fixedSuggestion,
       );
       callDataService(
