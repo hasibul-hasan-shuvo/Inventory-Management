@@ -33,10 +33,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
           SizedBox(width: AppValues.margin_10.w),
           _buildEditButton(
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => _buildDialog(context),
-              );
+              _buildDialog(context);
             },
           )
         ],
@@ -44,38 +41,46 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
     ).marginOnly(bottom: AppValues.smallMargin.h);
   }
 
-  Widget _buildDialog(BuildContext context) {
+  void _buildDialog(BuildContext context) {
     TextEditingController minController = TextEditingController();
     TextEditingController maxController = TextEditingController();
     TextEditingController fixedSuggestionController = TextEditingController();
     TextEditingController stockCountController = TextEditingController();
 
-    return AppDialog(
-      title: appLocalization.editProduct,
-      content: InventoryItemEditDialogView(
-        inventoryData: data,
-        minController: minController,
-        maxController: maxController,
-        fixedSuggestionController: fixedSuggestionController,
-        stockCountController: stockCountController,
+    minController.text = data.min.toString();
+    maxController.text = data.max.toString();
+    fixedSuggestionController.text = data.fixedOrderSuggestions.toString();
+    stockCountController.text = data.currentStock.toString();
+
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog(
+        title: appLocalization.editProduct,
+        content: InventoryItemEditDialogView(
+          inventoryData: data,
+          minController: minController,
+          maxController: maxController,
+          fixedSuggestionController: fixedSuggestionController,
+          stockCountController: stockCountController,
+        ),
+        negativeButtonIcon: Icons.delete_outline,
+        negativeButtonText: appLocalization.deleteProduct,
+        positiveButtonText: appLocalization.updateProduct,
+        willPopOnNegativeButtonTap: false,
+        onPositiveButtonTap: () {
+          _controller.updateInventoryData(
+            data: data,
+            minCount: minController.text,
+            maxCount: maxController.text,
+            fixedSuggestion: fixedSuggestionController.text,
+            stockCount: stockCountController.text,
+          );
+        },
+        onNegativeButtonTap: () {
+          Get.back();
+          _onDeleteProductTap(context);
+        },
       ),
-      negativeButtonIcon: Icons.delete_outline,
-      negativeButtonText: appLocalization.deleteProduct,
-      positiveButtonText: appLocalization.updateProduct,
-      willPopOnNegativeButtonTap: false,
-      onPositiveButtonTap: () {
-        _controller.updateInventoryData(
-          data: data,
-          minCount: minController.text,
-          maxCount: maxController.text,
-          fixedSuggestion: fixedSuggestionController.text,
-          stockCount: stockCountController.text,
-        );
-      },
-      onNegativeButtonTap: () {
-        Get.back();
-        _onDeleteProductTap(context);
-      },
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
@@ -21,13 +22,7 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
     required this.maxController,
     required this.fixedSuggestionController,
     required this.stockCountController,
-  }) {
-    minController.text = inventoryData.min.toString();
-    maxController.text = inventoryData.max.toString();
-    fixedSuggestionController.text =
-        inventoryData.fixedOrderSuggestions.toString();
-    stockCountController.text = inventoryData.currentStock.toString();
-  }
+  });
 
   @override
   Widget body(BuildContext context) {
@@ -36,9 +31,7 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildProductTopView(),
-          SizedBox(
-            height: AppValues.margin_10.h,
-          ),
+          SizedBox(height: AppValues.margin_10.h),
           _buildQuantityStatus(),
         ],
       ),
@@ -54,12 +47,10 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _buildQuantityStatus() {
-    return Container(
-      height: AppValues.space_110,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.background.withOpacity(AppValues.smallOpacity),
-        borderRadius: BorderRadius.circular(AppValues.halfPadding.sp),
-      ),
+    return ElevatedContainer(
+      height: AppValues.space_110.h,
+      bgColor: theme.colorScheme.background,
+      borderRadius: AppValues.radius_6.r,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
