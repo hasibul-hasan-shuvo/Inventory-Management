@@ -85,7 +85,14 @@ class ShoppingCartController extends BaseController {
     }
   }
 
-  void updateCartCount(ShoppingCartUiModel data, int cartCount) {
+  void updateCartCount(ShoppingCartUiModel data, String count) {
+    if (!count.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization
+          .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
+
+      return;
+    }
+    int cartCount = count.toInt;
     if (cartCount <= 0) {
       _deleteCartItem(data);
     } else {

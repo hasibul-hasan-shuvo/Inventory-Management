@@ -140,7 +140,8 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    int cartCount = data.cartCount;
+    TextEditingController cartController = TextEditingController();
+    cartController.text = data.cartCount.toString();
 
     showDialog(
       context: context,
@@ -148,6 +149,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
+            numberController: cartController,
             id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
@@ -155,13 +157,13 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.price,
-            onSuggestionValueChange: (int value) {
-              cartCount = value;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.updateCartCount(data, cartCount);
+            _controller.updateCartCount(
+              data,
+              cartController.text,
+            );
           },
         );
       },

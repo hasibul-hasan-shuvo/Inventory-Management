@@ -159,7 +159,8 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
-    int suggestion = data.suggestion;
+    TextEditingController suggestionController = TextEditingController();
+    suggestionController.text = data.suggestion.toString();
 
     showDialog(
       context: context,
@@ -167,19 +168,20 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
+            numberController: suggestionController,
             id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,
             suggestion: data.suggestion,
             price: data.price,
-            onSuggestionValueChange: (int value) {
-              suggestion = value;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextAddToCart,
           onPositiveButtonTap: () {
-            _controller.addToCart(data.itemId, suggestion);
+            _controller.addToCart(
+              data.itemId,
+              suggestionController.text,
+            );
           },
         );
       },
@@ -188,7 +190,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
 
   Future<bool> _onDismissed(DismissDirection direction) {
     return _controller
-        .addToCart(data.itemId, data.suggestion)
+        .addToCart(data.itemId, data.suggestion.toString())
         .then((value) => value != null);
   }
 }
