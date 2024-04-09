@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/modules/about_us/controllers/about_app_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '/app/core/base/base_view.dart';
 
@@ -21,7 +22,7 @@ class AboutAppView extends BaseView<AboutAppController> {
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildTitle(context),
             SizedBox(height: AppValues.padding.h),
@@ -30,6 +31,8 @@ class AboutAppView extends BaseView<AboutAppController> {
             _buildGuideImage(),
             SizedBox(height: AppValues.padding.h),
             _buildDescriptionTwo(),
+            SizedBox(height: AppValues.largeMargin.h),
+            _getAppVersion(),
           ],
         ),
       ),
@@ -58,4 +61,14 @@ class AboutAppView extends BaseView<AboutAppController> {
           ],
         ),
       );
+
+  Widget _getAppVersion() {
+    return Obx(
+      () => Text(
+        controller.version,
+        style: textTheme.labelSmall?.copyWith(color: theme.hintColor),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 }
