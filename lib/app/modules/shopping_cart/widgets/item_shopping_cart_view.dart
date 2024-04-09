@@ -1,10 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
@@ -81,7 +81,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
           data.count.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getPriceAndCartCountView() {
@@ -94,7 +94,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
           data.cartCount.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {
@@ -117,21 +117,9 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getLabelAndCount(String label, [String? count]) {
     return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              "$label:",
-              style: textTheme.bodySmall,
-            ),
-          ),
-          if (count.isNotNullOrEmpty)
-            Text(
-              "$count",
-              style: textTheme.bodySmall,
-              textAlign: TextAlign.right,
-            ),
-        ],
+      child: LabelAndCountView(
+        label: label,
+        count: count,
       ),
     );
   }
