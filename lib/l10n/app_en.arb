@@ -86,6 +86,7 @@
   "placeHolderEmptyOrders": "No orders found",
   "placeHolderEmptyShoppingCart": "No active shopping cart found",
   "placeHolderEmptySuggestedOrders": "No order suggestion",
+  "remainingStockAfterWithdrawal": "Remaining stock after withdrawal",
   "retry": "Retry",
   "search": "Search",
   "service": "Service",

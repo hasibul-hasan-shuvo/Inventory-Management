@@ -12,6 +12,7 @@ class SearchAbleAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final bool isSearchableMode;
   final VoidCallback onChangeSearchMode;
+  VoidCallback? onBackButtonClick;
   final Function(String) updateSearchQuery;
   final String title;
 
@@ -23,7 +24,8 @@ class SearchAbleAppBar extends StatelessWidget
       {required this.isSearchableMode,
       required this.title,
       required this.onChangeSearchMode,
-      required this.updateSearchQuery});
+      required this.updateSearchQuery,
+      this.onBackButtonClick});
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -32,6 +34,17 @@ class SearchAbleAppBar extends StatelessWidget
   Widget body(BuildContext context) => AppBar(
         iconTheme:
             Theme.of(context).iconTheme.copyWith(color: AppColors.colorWhite),
+
+        ///
+        leading: IconButton(
+          onPressed: () {
+            onBackButtonClick != null ? onBackButtonClick!() : Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            size: AppValues.iconDefaultSize.h,
+          ),
+        ),
         actions: _buildActions(),
         title: isSearchableMode ? _buildSearchTextField() : _buildTitle(),
         centerTitle: true,

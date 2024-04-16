@@ -35,6 +35,10 @@ class ProductOutController extends BaseController {
     }
   }
 
+  void onUpdateProduct(List<ScannedProductUiModel> items) {
+    _scannedProductsController.refresh();
+  }
+
   void updateProductNumber(String id, int number) {
     if (number == 0) {
       scannedProducts.removeWhere((element) => element.itemId == id);
