@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
@@ -132,9 +133,13 @@ class SelectableInventoryListController extends BaseController {
   }
 
   Future<void> fetchInventoryList() async {
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
+    );
     callDataService(
       _inventoryRepository.getInventoryList(
-        searchQuery: searchQuery.value,
+        queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );

@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -33,11 +34,22 @@ class ProductInController extends BaseController {
     }
   }
 
+// <<<<<<< HEAD
   void onUpdateProduct(List<ScannedProductUiModel> items) {
     _scannedProductsController.refresh();
   }
 
-  void updateProductNumber(String id, int number) {
+//   void updateProductNumber(String id, int number) {
+// =======
+  void updateProductNumber(String id, String numberString) {
+    if (!numberString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
+
+      return;
+    }
+    int number = numberString.toInt;
+
+// >>>>>>> d046376904a0ed80070af18d9221844fe1d0d604
     if (number == 0) {
       scannedProducts.removeWhere((element) => element.itemId == id);
     } else {
@@ -48,6 +60,16 @@ class ProductInController extends BaseController {
         }
       }
     }
+    _scannedProductsController.refresh();
+  }
+
+  void incrementProductNumber(ScannedProductUiModel product) {
+    if (product.number + 1 > AppValues.maxCountValue) {
+      showErrorMessage(appLocalization.messageMaxCountThresholdValidation);
+
+      return;
+    }
+    product.updateNumber(product.number + 1);
     _scannedProductsController.refresh();
   }
 

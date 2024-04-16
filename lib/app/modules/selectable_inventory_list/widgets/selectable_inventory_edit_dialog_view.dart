@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class SelectableInventoryItemEditDialogView extends StatelessWidget
     with BaseWidgetMixin {
   final SelectableInventoryItemUiModel inventoryData;
+  final TextEditingController controller;
   final Function(String) onCurrentStockChanged;
   final RxInt _numberController = RxInt(0);
 
@@ -19,6 +20,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     super.key,
     required this.inventoryData,
     required this.onCurrentStockChanged,
+    required this.controller,
   }) {
     _numberController(inventoryData.number);
   }
@@ -69,8 +71,8 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
       children: [
         TextFieldWithTitle(
           title: appLocalization.number,
-          initialValue: inventoryData.number.toString(),
-          onChanged: onCurrentStockChanged,
+          // initialValue: inventoryData.number.toString(),
+          onChangedValue: onCurrentStockChanged, controller: controller,
         )
         // // _getTitleAndValue(
         // //   appLocalization.labelCount,
@@ -114,77 +116,77 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     );
   }
 
-  // Widget _getDecrementButton() {
-  //   return Obx(
-  //     () => IconButton(
-  //       onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
-  //       icon: AssetImageView(
-  //         fileName: AppIcons.roundedMinus,
-  //         height: AppValues.iconLargeSize.h,
-  //         width: AppValues.iconLargeSize.h,
-  //         color: _suggestionController.value > 0
-  //             ? theme.colorScheme.primary
-  //             : AppColors.basicGrey,
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget _getDecrementButton() {
+//   return Obx(
+//     () => IconButton(
+//       onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
+//       icon: AssetImageView(
+//         fileName: AppIcons.roundedMinus,
+//         height: AppValues.iconLargeSize.h,
+//         width: AppValues.iconLargeSize.h,
+//         color: _suggestionController.value > 0
+//             ? theme.colorScheme.primary
+//             : AppColors.basicGrey,
+//       ),
+//     ),
+//   );
+// }
 
-  // Widget _getIncrementButton() {
-  //   return Obx(
-  //     () => IconButton(
-  //       onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
-  //       icon: AssetImageView(
-  //         fileName: AppIcons.roundedPlus,
-  //         height: AppValues.iconLargeSize.h,
-  //         width: AppValues.iconLargeSize.h,
-  //         color: _isIncrementButtonEnabled
-  //             ? theme.colorScheme.primary
-  //             : AppColors.basicGrey,
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget _getIncrementButton() {
+//   return Obx(
+//     () => IconButton(
+//       onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
+//       icon: AssetImageView(
+//         fileName: AppIcons.roundedPlus,
+//         height: AppValues.iconLargeSize.h,
+//         width: AppValues.iconLargeSize.h,
+//         color: _isIncrementButtonEnabled
+//             ? theme.colorScheme.primary
+//             : AppColors.basicGrey,
+//       ),
+//     ),
+//   );
+// }
 
-  // Widget _getSuggestion() {
-  //   return Obx(
-  //     () => Text(
-  //       _suggestionController.value.toString(),
-  //       style: textTheme.bodyMedium,
-  //     ),
-  //   );
-  // }
+// Widget _getSuggestion() {
+//   return Obx(
+//     () => Text(
+//       _suggestionController.value.toString(),
+//       style: textTheme.bodyMedium,
+//     ),
+//   );
+// }
 
-  // Widget _getPriceView() {
-  //   return Expanded(
-  //     child: Obx(
-  //       () => Text(
-  //         "${appLocalization.currency}. ${_getTotalPrice()}",
-  //         style: textTheme.titleMedium,
-  //         textAlign: TextAlign.right,
-  //       ).marginSymmetric(
-  //         horizontal: AppValues.margin.w,
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget _getPriceView() {
+//   return Expanded(
+//     child: Obx(
+//       () => Text(
+//         "${appLocalization.currency}. ${_getTotalPrice()}",
+//         style: textTheme.titleMedium,
+//         textAlign: TextAlign.right,
+//       ).marginSymmetric(
+//         horizontal: AppValues.margin.w,
+//       ),
+//     ),
+//   );
+// }
 
-  // void _onTapDecrement() {
-  //   _suggestionController(_suggestionController.value - 1);
-  //   onSuggestionValueChange(_suggestionController.value);
-  // }
-  //
-  // void _onTapIncrement() {
-  //   _suggestionController(_suggestionController.value + 1);
-  //   onSuggestionValueChange(_suggestionController.value);
-  // }
+// void _onTapDecrement() {
+//   _suggestionController(_suggestionController.value - 1);
+//   onSuggestionValueChange(_suggestionController.value);
+// }
+//
+// void _onTapIncrement() {
+//   _suggestionController(_suggestionController.value + 1);
+//   onSuggestionValueChange(_suggestionController.value);
+// }
 
-  // String _getTotalPrice() {
-  //   return (_suggestionController.value * 1).toStringAsFixed(2);
-  // }
+// String _getTotalPrice() {
+//   return (_suggestionController.value * 1).toStringAsFixed(2);
+// }
 
-  // bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
-  //
-  // bool get _isIncrementButtonEnabled =>
-  //     _suggestionController.value < AppValues.maxCountValue;
+// bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
+//
+// bool get _isIncrementButtonEnabled =>
+//     _suggestionController.value < AppValues.maxCountValue;
 }

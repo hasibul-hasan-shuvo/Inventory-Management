@@ -2,9 +2,11 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,30 +15,32 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class ProductInItemEditDialogContentView extends StatelessWidget
     with BaseWidgetMixin {
+  final TextEditingController controller;
   final ScannedProductUiModel data;
-  final Function(int) onNumberChanged;
   final RxInt _numberController = RxInt(0);
 
   ProductInItemEditDialogContentView({
     super.key,
     required this.data,
-    required this.onNumberChanged,
+    required this.controller,
   }) {
-    _numberController(data.number);
+    _numberController(controller.text.toInt);
   }
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _getProductTopView(),
-        _getTitle(),
-        _getNumberChangingView(),
-        SizedBox(height: AppValues.smallMargin.h),
-        _getAvailableWithTitleView(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getProductTopView(),
+          _getTitle(),
+          _getNumberChangingView(),
+          SizedBox(height: AppValues.smallMargin.h),
+          _getAvailableWithTitleView(),
+        ],
+      ),
     );
   }
 
@@ -53,7 +57,6 @@ class ProductInItemEditDialogContentView extends StatelessWidget
       appLocalization.number,
       style: textTheme.labelMedium,
     ).marginSymmetric(
-      horizontal: AppValues.smallMargin.w,
       vertical: AppValues.smallMargin.h,
     );
   }
@@ -105,42 +108,44 @@ class ProductInItemEditDialogContentView extends StatelessWidget
   }
 
   Widget _getIncrementButton() {
-    return IconButton(
-      onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
-      icon: AssetImageView(
-        fileName: AppIcons.roundedPlus,
-        height: AppValues.iconLargeSize.h,
-        width: AppValues.iconLargeSize.h,
-        color: _isIncrementButtonEnabled
-            ? theme.colorScheme.primary
-            : AppColors.basicGrey,
+    return Obx(
+      () => IconButton(
+        onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
+        icon: AssetImageView(
+          fileName: AppIcons.roundedPlus,
+          height: AppValues.iconLargeSize.h,
+          width: AppValues.iconLargeSize.h,
+          color: _isIncrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
+        ),
       ),
     );
   }
 
   Widget _getNumberView() {
-    return Obx(
-      () => Text(
-        _numberController.value.toString(),
-        style: textTheme.bodyMedium,
-      ),
+    return TextFieldWithTitle(
+      controller: controller,
+      onChangedValue: (String value) {
+        _numberController(value.toInt);
+      },
     );
   }
 
   void _onTapDecrement() {
     _numberController(_numberController.value - 1);
-    onNumberChanged(_numberController.value);
+    controller.text = _numberController.value.toString();
   }
 
   void _onTapIncrement() {
     _numberController(_numberController.value + 1);
-    onNumberChanged(_numberController.value);
+    controller.text = _numberController.value.toString();
   }
 
   bool get _isDecrementButtonEnabled => _numberController.value > 0;
 
   bool get _isIncrementButtonEnabled =>
-      latestStock > 0 && latestStock < AppValues.maxCountValue;
+      latestStock > 0 && _numberController.value < AppValues.maxCountValue;
 
   int get latestStock => data.available + _numberController.value;
 }

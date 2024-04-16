@@ -5,6 +5,7 @@
   "bottomNavContactUs": "Contact Us",
   "bottomNavHome": "Home",
   "bottomNavLogOut": "Log Out",
+  "buttonTextAddToCart": "Add to cart",
   "buttonTextSaveChanges": "Save changes",
   "cancel": "Cancel",
   "consumables": "Consumables",
@@ -42,13 +43,27 @@
   "logOut": "Log Out",
   "logOutMessage": "Are you sure you want to log out?",
   "max": "Max",
+  "messageAddedToShoppingCart": "Added to shopping cart",
   "messageCodeNotFound": "Qrcode or Barcode not found",
   "messageConfirmDelivery": "Have you received all the product correctly?",
   "messageConfirmOrder": "Do you want to confirm the order?",
   "messageCreateInventory": "Do you want to add this item in inventories?",
   "messageCreateInventorySuccessful": "Item added successfully",
   "messageDeleteInventory": "Do you want to delete the inventory?",
+  "messageInvalidNumber": "Invalid number",
+  "messageInvalidItemNumber": "Invalid {itemName} number",
+  "@messageInvalidItemNumber": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
+  "messageItemUpdatedSuccessfully": "Item updated successfully",
+  "messageMaxCountThresholdValidation": "Number can't be more than 999",
+  "messageMaxMinValidation": "Max value can't less than min value",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",
   "no": "No",
@@ -84,7 +99,7 @@
   "postalAddress": "Postal Address",
   "placeHolderEmptyInventory": "No inventory data found",
   "placeHolderEmptyOrders": "No orders found",
-  "placeHolderEmptyShoppingCart": "No active shopping cart found",
+  "placeHolderEmptyShoppingCart": "Shopping cart is empty",
   "placeHolderEmptySuggestedOrders": "No order suggestion",
   "remainingStockAfterWithdrawal": "Remaining stock after withdrawal",
   "retry": "Retry",
@@ -108,10 +123,11 @@
   "titleEmptyScannedList": "Scan items",
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
-  "titleOtherView": "OtherView",
+  "titleScannerView": "Barcode scanner",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
+  "version": "Version",
   "visitingAddress": "Visiting Address",
   "yes": "Yes",
   "workshop": "Workshop"

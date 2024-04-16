@@ -1,7 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:get/get.dart';
@@ -18,73 +19,57 @@ class InventoryController extends BaseController {
 
   final RxString searchQuery = ''.obs;
 
-  String productID = '';
-  String id = '';
-  String maxCount = '';
-  String minCount = '';
-  String stockCount = '';
-  String fixedSuggestion = '';
-
   final InventoryRepository _inventoryRepository =
       Get.find<InventoryRepository>();
-  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   @override
   void onInit() {
     super.onInit();
-    fetchInventoryList();
+    _fetchInventoryList();
   }
 
   void onLoading() {
-    _getNextSuggestedOrders();
+    if (pagingController.canLoadNextPage()) {
+      _getNextInventoryList();
+    }
   }
-
-  void _getNextSuggestedOrders() {}
 
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     searchQuery('');
     if (!_searchModeController.value) {
-      fetchInventoryList();
+      _fetchInventoryList();
     }
   }
 
   void updateSearchQuery(String query) {
     searchQuery(query);
-    fetchInventoryList();
+    _fetchInventoryList();
   }
 
-  void deleteInventoryItem() {
-    callDataService(_inventoryRepository.deleteInventory(id: id),
-        onSuccess: _deleteSuccessHandler);
+  void deleteInventoryItem(InventoryCardUIModel data) {
+    callDataService(
+      _inventoryRepository.deleteInventory(id: data.id.toString()),
+      onSuccess: (e) => _deleteSuccessHandler(data),
+    );
   }
 
-  void _deleteSuccessHandler(e) {
+  void _deleteSuccessHandler(InventoryCardUIModel data) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
     _inventoryItemsController
-        .removeWhere((element) => element.itemId == productID);
+        .removeWhere((element) => element.itemId == data.itemId);
     _inventoryItemsController.refresh();
   }
 
-  Future<void> updateInventoryData() async {
-    final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-      id: productID,
-      maxCount: maxCount,
-      minCount: minCount,
-      stockCount: stockCount,
-      inventoryID: _authRepository.getInventoryID(),
-      fixedSuggestion: fixedSuggestion,
+  void _fetchInventoryList() {
+    pagingController.initRefresh();
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
     );
-    callDataService(
-      _inventoryRepository.updateInventoryData(request),
-      onSuccess: _handleUpdateInventoryDataSuccessResponse,
-    );
-  }
-
-  Future<void> fetchInventoryList() async {
     callDataService(
       _inventoryRepository.getInventoryList(
-        searchQuery: searchQuery.value,
+        queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
     );
@@ -101,11 +86,125 @@ class InventoryController extends BaseController {
     _inventoryItemsController(list);
   }
 
+  void _getNextInventoryList() {
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
+    );
+    callDataService(
+      _inventoryRepository.getInventoryList(
+        queryParams: queryParams,
+      ),
+      onSuccess: _handleNextInventoryListSuccessResponse,
+      onStart: () => logger.d("Fetching more inventories..."),
+      onComplete: () => refreshController.loadComplete(),
+    );
+  }
+
+  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    _inventoryItemsController.addAll(
+      response.inventoryList
+              ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
+              .toList() ??
+          [],
+    );
+  }
+
+  void updateInventoryData({
+    required InventoryCardUIModel data,
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (_checkValuesValidity(
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      fixedSuggestion: fixedSuggestion,
+    )) {
+      final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
+        id: data.itemId,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        inventoryID: authRepository.getInventoryID(),
+        fixedSuggestion: fixedSuggestion,
+      );
+      callDataService(
+        _inventoryRepository.updateInventoryData(request),
+        onSuccess: _handleUpdateInventoryDataSuccessResponse,
+      );
+    }
+  }
+
   void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
     for (var element in inventoryItems) {
       if (element.itemId == response.product?.itemId.toString()) {
         element.updateFromInventoryResponse(response);
       }
     }
+
+    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+  }
+
+  bool _checkValuesValidity({
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (!maxCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.max);
+
+      return false;
+    }
+
+    if (!minCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.min);
+
+      return false;
+    }
+
+    if (!stockCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.inventory);
+
+      return false;
+    }
+
+    if (!fixedSuggestion.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.fixedProposal);
+
+      return false;
+    }
+
+    if (!_checkMaxMinValidity(maxCount, minCount)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _checkMaxMinValidity(String max, String min) {
+    try {
+      int maxCount = max.toInt;
+      int minCount = min.toInt;
+
+      if (maxCount < minCount) {
+        showErrorMessage(appLocalization.messageMaxMinValidation);
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void _showInvalidValueErrorMessage(String itemName) {
+    showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
 }

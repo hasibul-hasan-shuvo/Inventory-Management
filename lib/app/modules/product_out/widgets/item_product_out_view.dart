@@ -1,10 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/product_out/controllers/product_out_controller.dart';
@@ -28,13 +28,16 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
   Widget body(BuildContext context) {
     return ElevatedContainer(
       height: AppValues.itemImageHeight.h,
-      child: Row(
-        children: [
-          _getImageView(),
-          SizedBox(width: AppValues.smallMargin.w),
-          _getItemDetails(),
-          _getEditButton(context),
-        ],
+      child: Ripple(
+        onTap: _onTap,
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getEditButton(context),
+          ],
+        ),
       ),
     ).marginOnly(bottom: AppValues.margin_6.h);
   }
@@ -81,7 +84,7 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
           data.number.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getAvailableView() {
@@ -94,7 +97,7 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
           data.available.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {
@@ -108,21 +111,9 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getLabelAndCount(String label, [String? count]) {
     return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              "$label:",
-              style: textTheme.bodySmall,
-            ),
-          ),
-          if (count.isNotNullOrEmpty)
-            Text(
-              "$count",
-              style: textTheme.bodySmall,
-              textAlign: TextAlign.right,
-            ),
-        ],
+      child: LabelAndCountView(
+        label: label,
+        count: count,
       ),
     );
   }
@@ -142,8 +133,13 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
+  void _onTap() {
+    _controller.incrementProductNumber(data);
+  }
+
   void _onTapEdit(BuildContext context) {
-    int number = data.number;
+    TextEditingController numberController = TextEditingController();
+    numberController.text = data.number.toString();
 
     showDialog(
       context: context,
@@ -151,14 +147,15 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: ProductOutItemEditDialogContentView(
+            controller: numberController,
             data: data,
-            onNumberChanged: (int newNumber) {
-              number = newNumber;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.updateProductNumber(data.itemId, number);
+            _controller.updateProductNumber(
+              data,
+              numberController.text,
+            );
           },
         );
       },

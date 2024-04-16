@@ -20,12 +20,21 @@ class SearchAbleAppBar extends StatelessWidget
 
   final TextEditingController _searchController = TextEditingController();
 
+// <<<<<<< HEAD
   SearchAbleAppBar(
       {required this.isSearchableMode,
       required this.title,
       required this.onChangeSearchMode,
       required this.updateSearchQuery,
       this.onBackButtonClick});
+// =======
+//   SearchAbleAppBar({
+//     required this.isSearchableMode,
+//     required this.title,
+//     required this.onChangeSearchMode,
+//     required this.updateSearchQuery,
+//   });
+// >>>>>>> d046376904a0ed80070af18d9221844fe1d0d604
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -52,44 +61,14 @@ class SearchAbleAppBar extends StatelessWidget
 
   List<Widget> _buildActions() {
     return [
-      isSearchableMode ? _buildSearchableActions() : _buildSearchButton(),
+      isSearchableMode ? _buildClearButton() : _buildSearchButton(),
     ];
-  }
-
-  Widget _buildSearchableActions() {
-    return Row(
-      children: [
-        _buildSearchActionButton(),
-        _buildClearButton(),
-      ],
-    );
-  }
-
-  Widget _buildSearchActionButton() {
-    return Obx(
-      () {
-        return IconButton(
-          onPressed: isSearchBoxEmpty.value
-              ? null
-              : () {
-                  updateSearchQuery(_searchController.text);
-                },
-          icon: Icon(
-            Icons.done,
-            color: isSearchBoxEmpty.value
-                ? AppColors.colorWhite.withOpacity(0.5)
-                : AppColors.colorWhite,
-            size: AppValues.iconDefaultSize.h,
-          ),
-        );
-      },
-    );
   }
 
   Widget _buildClearButton() {
     return IconButton(
       onPressed: () {
-        onChangeSearchMode();
+        _searchController.clear();
       },
       icon: Icon(
         Icons.clear,
@@ -113,6 +92,7 @@ class SearchAbleAppBar extends StatelessWidget
       controller: _searchController,
       decoration: InputDecoration(
         hintText: appLocalization.search,
+        hintStyle: textTheme.bodyLarge?.copyWith(color: theme.hintColor),
         border: InputBorder.none,
       ),
       maxLines: 1,
@@ -124,7 +104,7 @@ class SearchAbleAppBar extends StatelessWidget
       onChanged: (value) {
         isSearchBoxEmpty(value.isEmpty);
       },
-      style: const TextStyle(color: AppColors.colorWhite),
+      style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
     );
   }
 

@@ -99,6 +99,6 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
 
   void _onConfirmAdd() {
     GlobalInventoriesController controller = Get.find();
-    controller.createInventory(data);
+    controller.createInventory(data.itemId);
   }
 }

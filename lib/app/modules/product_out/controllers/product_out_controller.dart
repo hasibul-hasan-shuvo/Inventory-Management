@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -21,7 +22,7 @@ class ProductOutController extends BaseController {
       for (ScannedProductUiModel product in scannedProducts) {
         if (product.itemId == code) {
           isListItem = true;
-          if (product.number + 1 < product.available) {
+          if (product.number + 1 <= product.available) {
             product.updateNumber(product.number + 1);
           }
           break;
@@ -35,22 +36,54 @@ class ProductOutController extends BaseController {
     }
   }
 
+// <<<<<<< HEAD
   void onUpdateProduct(List<ScannedProductUiModel> items) {
     _scannedProductsController.refresh();
   }
 
-  void updateProductNumber(String id, int number) {
+//   void updateProductNumber(String id, int number) {
+// =======
+  void updateProductNumber(ScannedProductUiModel data, String numberString) {
+    if (!numberString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
+
+      return;
+    }
+
+    int number = numberString.toInt;
+
+    if (number > data.available) {
+      showErrorMessage(appLocalization.messageItemOutValidation);
+
+      return;
+    }
+
+// >>>>>>> d046376904a0ed80070af18d9221844fe1d0d604
     if (number == 0) {
-      scannedProducts.removeWhere((element) => element.itemId == id);
+      scannedProducts.removeWhere((element) => element.itemId == data.itemId);
     } else {
       for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == id) {
+        if (product.itemId == data.itemId) {
           product.updateNumber(number);
           break;
         }
       }
     }
     _scannedProductsController.refresh();
+  }
+
+  void incrementProductNumber(ScannedProductUiModel product) {
+    if (product.number >= AppValues.maxCountValue) {
+      showErrorMessage(appLocalization.messageMaxCountThresholdValidation);
+
+      return;
+    }
+    if (product.number + 1 <= product.available) {
+      product.updateNumber(product.number + 1);
+      _scannedProductsController.refresh();
+    } else {
+      showErrorMessage(appLocalization.messageItemOutValidation);
+    }
   }
 
   void _getProduct(String itemId) {

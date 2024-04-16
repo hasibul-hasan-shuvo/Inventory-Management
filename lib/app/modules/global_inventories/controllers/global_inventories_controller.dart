@@ -31,12 +31,16 @@ class GlobalInventoriesController extends BaseController {
   }
 
   void _fetchInventoryList() {
-    callDataService(
-      _repository.getGlobalInventoryList(
-        query: _searchQueryController.value,
-      ),
-      onSuccess: _handleInventoryListResponse,
-    );
+    if (_searchQueryController.isNotEmpty) {
+      callDataService(
+        _repository.getGlobalInventoryList(
+          query: _searchQueryController.value,
+        ),
+        onSuccess: _handleInventoryListResponse,
+      );
+    } else {
+      _inventoriesController.clear();
+    }
   }
 
   void _handleInventoryListResponse(List<GlobalInventoryResponse> response) {
@@ -47,9 +51,9 @@ class GlobalInventoriesController extends BaseController {
     );
   }
 
-  void createInventory(GlobalInventoryUiModel data) {
+  void createInventory(String itemId) {
     CreateInventoryRequestBody requestBody =
-        CreateInventoryRequestBody(itemId: data.itemId);
+        CreateInventoryRequestBody(itemId: itemId);
 
     callDataService(
       _repository.createInventory(requestBody),
@@ -65,8 +69,7 @@ class GlobalInventoriesController extends BaseController {
 
   void onScanned(String? code) {
     if (code != null) {
-      _searchQueryController(code);
-      _fetchInventoryList();
+      createInventory(code);
     }
   }
 }

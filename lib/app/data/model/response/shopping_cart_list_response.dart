@@ -27,7 +27,6 @@ class ShoppingCartResponse {
         : null;
     quantity = json['quantity'];
     stockCount = json['stock_count'];
-    price = json['price'];
     cart = json['cart'] != null ? CartResponse.fromJson(json['cart']) : null;
   }
 
@@ -35,7 +34,6 @@ class ShoppingCartResponse {
   ProductResponse? product;
   int? quantity;
   int? stockCount;
-  double? price;
   CartResponse? cart;
 }
 

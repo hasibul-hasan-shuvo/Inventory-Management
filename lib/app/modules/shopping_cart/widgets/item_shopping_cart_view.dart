@@ -1,10 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
@@ -77,11 +77,11 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         _getIdView(),
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
-          appLocalization.labelCount,
+          appLocalization.inventory,
           data.count.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getPriceAndCartCountView() {
@@ -94,7 +94,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
           data.cartCount.toString(),
         ),
       ],
-    ).marginOnly(right: AppValues.margin.w);
+    );
   }
 
   Widget _getIdView() {
@@ -109,7 +109,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getPriceView() {
     return Expanded(
       child: Text(
-        "${appLocalization.currency}. ${data.price}",
+        _getPrice(),
         style: textTheme.bodySmall,
       ),
     );
@@ -117,21 +117,9 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getLabelAndCount(String label, [String? count]) {
     return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              "$label:",
-              style: textTheme.bodySmall,
-            ),
-          ),
-          if (count.isNotNullOrEmpty)
-            Text(
-              "$count",
-              style: textTheme.bodySmall,
-              textAlign: TextAlign.right,
-            ),
-        ],
+      child: LabelAndCountView(
+        label: label,
+        count: count,
       ),
     );
   }
@@ -151,8 +139,14 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
+  String _getPrice() {
+    return "${appLocalization.currency}. "
+        "${(data.cartCount * data.price).toStringAsFixed(2)}";
+  }
+
   void _onTapEdit(BuildContext context) {
-    int cartCount = data.cartCount;
+    TextEditingController cartController = TextEditingController();
+    cartController.text = data.cartCount.toString();
 
     showDialog(
       context: context,
@@ -160,19 +154,21 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
           content: InventoryOrderEditDialogContentView(
+            numberController: cartController,
             id: data.itemId,
             name: data.name,
             imageUrl: data.imageUrl,
             count: data.count,
+            suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.price,
-            onSuggestionValueChange: (int value) {
-              cartCount = value;
-            },
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
-            _controller.updateCartCount(data, cartCount);
+            _controller.updateCartCount(
+              data,
+              cartController.text,
+            );
           },
         );
       },

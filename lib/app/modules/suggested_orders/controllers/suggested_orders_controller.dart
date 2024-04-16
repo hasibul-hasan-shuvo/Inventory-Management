@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
@@ -67,7 +68,16 @@ class SuggestedOrdersController extends BaseController {
         []);
   }
 
-  Future addToCart(String itemId, int quantity) {
+  Future addToCart(String itemId, String quantityString) {
+    if (!quantityString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization
+          .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
+
+      return Future.value();
+    }
+
+    int quantity = quantityString.toInt;
+
     AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
       itemId: itemId,
       quantity: quantity,
@@ -85,15 +95,21 @@ class SuggestedOrdersController extends BaseController {
     _suggestedOrdersController.removeWhere(
       (element) => element.itemId == data.itemId,
     );
+    showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
   void addToCartAll() {
-    callDataService(_repository.addAllItemsInShoppingCart(),
-        onSuccess: (isSuccess) {
-      if (isSuccess) {
-        _suggestedOrdersController.clear();
-      }
-    });
+    callDataService(
+      _repository.addAllItemsInShoppingCart(),
+      onSuccess: _handleAddToCartAllSuccessResponse,
+    );
+  }
+
+  void _handleAddToCartAllSuccessResponse(bool isSuccess) {
+    if (isSuccess) {
+      _suggestedOrdersController.clear();
+    }
+    showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
   void rebuildList() {

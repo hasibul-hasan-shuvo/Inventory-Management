@@ -15,6 +15,8 @@ class ShoppingCartController extends BaseController {
   List<ShoppingCartUiModel> get shoppingCartItems =>
       _shoppingCartItemsController;
 
+  Rx<ShoppingCartUiModel?> newCartItemArrivedController = Rx(null);
+
   @override
   void onInit() {
     super.onInit();
@@ -83,7 +85,14 @@ class ShoppingCartController extends BaseController {
     }
   }
 
-  void updateCartCount(ShoppingCartUiModel data, int cartCount) {
+  void updateCartCount(ShoppingCartUiModel data, String count) {
+    if (!count.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization
+          .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
+
+      return;
+    }
+    int cartCount = count.toInt;
     if (cartCount <= 0) {
       _deleteCartItem(data);
     } else {
@@ -154,8 +163,13 @@ class ShoppingCartController extends BaseController {
   }
 
   void _handleAddCartItemSuccessResponse(ShoppingCartResponse response) {
-    _shoppingCartItemsController.add(
-      ShoppingCartUiModel.fromShoppingCartResponse(response),
-    );
+    ShoppingCartUiModel cartItem =
+        ShoppingCartUiModel.fromShoppingCartResponse(response);
+    _shoppingCartItemsController.add(cartItem);
+    newCartItemArrivedController.trigger(cartItem);
+  }
+
+  void clearNewCartArrivedController() {
+    newCartItemArrivedController.trigger(null);
   }
 }

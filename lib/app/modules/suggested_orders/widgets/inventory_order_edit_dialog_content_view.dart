@@ -2,9 +2,11 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,38 +14,42 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class InventoryOrderEditDialogContentView extends StatelessWidget
     with BaseWidgetMixin {
+  final TextEditingController numberController;
   final String id;
   final String name;
   final String imageUrl;
   final int count;
+  final String? suggestionLabel;
   final int? suggestion;
   final num price;
-  final Function(int) onSuggestionValueChange;
   final RxInt _suggestionController = RxInt(0);
 
   InventoryOrderEditDialogContentView({
     super.key,
+    required this.numberController,
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.count,
+    this.suggestionLabel,
     required this.suggestion,
     required this.price,
-    required this.onSuggestionValueChange,
   }) {
-    _suggestionController(suggestion);
+    _suggestionController(numberController.text.toInt);
   }
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _getProductTopView(),
-        _getTitle(),
-        _getNumberChangingView(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getProductTopView(),
+          _getTitle(),
+          _getNumberChangingView(),
+        ],
+      ),
     );
   }
 
@@ -73,11 +79,11 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _getTitleAndValue(
-            appLocalization.labelCount,
+            appLocalization.inventory,
             "$count",
           ),
           _getTitleAndValue(
-            appLocalization.labelSuggestion,
+            suggestionLabel ?? appLocalization.labelSuggestion,
             suggestion != null ? "$suggestion" : "",
           ),
           const Divider(),
@@ -146,11 +152,11 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   }
 
   Widget _getSuggestion() {
-    return Obx(
-      () => Text(
-        _suggestionController.value.toString(),
-        style: textTheme.bodyMedium,
-      ),
+    return TextFieldWithTitle(
+      controller: numberController,
+      onChangedValue: (String value) {
+        _suggestionController(value.toInt);
+      },
     );
   }
 
@@ -170,12 +176,12 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
 
   void _onTapDecrement() {
     _suggestionController(_suggestionController.value - 1);
-    onSuggestionValueChange(_suggestionController.value);
+    numberController.text = _suggestionController.value.toString();
   }
 
   void _onTapIncrement() {
     _suggestionController(_suggestionController.value + 1);
-    onSuggestionValueChange(_suggestionController.value);
+    numberController.text = _suggestionController.value.toString();
   }
 
   String _getTotalPrice() {
