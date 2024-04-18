@@ -42,8 +42,8 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
               ? _getPlaceHolder()
               : PagingView(
                   controller: controller.refreshController,
-                  enablePullDown: false,
                   enablePullUp: controller.pagingController.canLoadNextPage(),
+                  onRefresh: controller.onRefresh,
                   onLoading: controller.onLoading,
                   child: _getSuggestedOrdersListView(),
                 ),
