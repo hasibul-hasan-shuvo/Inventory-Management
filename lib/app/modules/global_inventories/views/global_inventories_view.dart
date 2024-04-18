@@ -15,7 +15,10 @@ import '../controllers/global_inventories_controller.dart';
 // ignore: must_be_immutable
 class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   GlobalInventoriesView() {
-    ZebraScanner().addScannerDelegate(controller.onScanned);
+    ZebraScanner().addScannerDelegate((String? code) {
+      closeKeyboard();
+      controller.onScanned(code);
+    });
   }
 
   @override
@@ -28,8 +31,8 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
           updateSearchQuery: (value) {
-            controller.updateSearchQuery(value);
             closeKeyboard();
+            controller.updateSearchQuery(value);
           },
         ),
       ),

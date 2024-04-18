@@ -21,21 +21,29 @@ class ShoppingCartController extends BaseController {
   void onInit() {
     super.onInit();
     pagingController.initRefresh();
-    _getSuggestedOrders();
+    _getCartItems(false);
+  }
+
+  void onRefresh() {
+    pagingController.initRefresh();
+    _getCartItems(true);
   }
 
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
-      _getNextSuggestedOrders();
+      _getNextCartItems();
     }
   }
 
-  void _getSuggestedOrders() {
+  void _getCartItems(bool isRefreshing) {
     callDataService(
       _repository.getActiveShoppingCart(
         pagingController.pageNumber,
       ),
       onSuccess: _handleShoppingCartSuccessResponse,
+      onStart: isRefreshing ? () => logger.d("Fetching cart items") : null,
+      onComplete:
+          isRefreshing ? () => refreshController.refreshCompleted() : null,
     );
   }
 
@@ -50,7 +58,7 @@ class ShoppingCartController extends BaseController {
     _shoppingCartItemsController(list);
   }
 
-  void _getNextSuggestedOrders() {
+  void _getNextCartItems() {
     callDataService(
       _repository.getActiveShoppingCart(
         pagingController.pageNumber,
@@ -163,9 +171,9 @@ class ShoppingCartController extends BaseController {
   }
 
   void _handleAddCartItemSuccessResponse(ShoppingCartResponse response) {
+    onRefresh();
     ShoppingCartUiModel cartItem =
         ShoppingCartUiModel.fromShoppingCartResponse(response);
-    _shoppingCartItemsController.add(cartItem);
     newCartItemArrivedController.trigger(cartItem);
   }
 

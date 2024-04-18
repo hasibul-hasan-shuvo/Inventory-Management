@@ -87,7 +87,7 @@ class SearchAbleAppBar extends StatelessWidget
   }
 
   Widget _buildSearchTextField() {
-    return TextFormField(
+    return TextField(
       autofocus: true,
       controller: _searchController,
       decoration: InputDecoration(
@@ -98,7 +98,7 @@ class SearchAbleAppBar extends StatelessWidget
       maxLines: 1,
       textInputAction: TextInputAction.search,
       cursorColor: AppColors.colorWhite,
-      onFieldSubmitted: (value) {
+      onSubmitted: (value) {
         updateSearchQuery(value);
       },
       onChanged: (value) {
