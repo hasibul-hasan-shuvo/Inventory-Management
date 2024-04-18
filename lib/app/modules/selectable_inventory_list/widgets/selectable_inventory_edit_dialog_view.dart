@@ -1,5 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
+import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
@@ -13,16 +17,14 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     with BaseWidgetMixin {
   final SelectableInventoryItemUiModel inventoryData;
   final TextEditingController controller;
-  final Function(String) onCurrentStockChanged;
   final RxInt _numberController = RxInt(0);
 
   SelectableInventoryItemEditDialogView({
     super.key,
     required this.inventoryData,
-    required this.onCurrentStockChanged,
     required this.controller,
   }) {
-    _numberController(inventoryData.number);
+    _numberController(controller.text.toInt);
   }
 
   @override
@@ -34,6 +36,8 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
         _getProductTopView(),
         _getTitle(),
         _getNumberChangingView(),
+        SizedBox(height: AppValues.smallMargin.h),
+        _getAvailableWithTitleView(),
       ],
     );
   }
@@ -56,6 +60,15 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     );
   }
 
+  Widget _getAvailableWithTitleView() {
+    return Obx(
+      () => Text(
+        "${appLocalization.titleEditProductOutAvailableCount}: $latestStock",
+        style: textTheme.bodyMedium,
+      ),
+    ).marginSymmetric(horizontal: AppValues.smallMargin.w);
+  }
+
   Widget _getNumberChangingView() {
     return ElevatedContainer(
       bgColor: theme.colorScheme.background,
@@ -69,124 +82,68 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
   Widget _buildNumberChangerView() {
     return Row(
       children: [
-        TextFieldWithTitle(
-          title: appLocalization.number,
-          // initialValue: inventoryData.number.toString(),
-          onChangedValue: onCurrentStockChanged, controller: controller,
-        )
-        // // _getTitleAndValue(
-        // //   appLocalization.labelCount,
-        // //   "$count",
-        // // ),
-        // // _getTitleAndValue(
-        // //   appLocalization.labelSuggestion,
-        // //   suggestion != null ? "$suggestion" : "",
-        // // ),
-        // // const Divider(),
-        // _getSuggestionChangerAndPriceView(),
+        _getDecrementButton(),
+        _getNumberView(),
+        _getIncrementButton(),
       ],
     ).marginSymmetric(horizontal: AppValues.margin.w);
   }
 
-  Widget _getRemainingStock() {
-    return Text("${appLocalization.remainingStockAfterWithdrawal}: 1");
-  }
-
-  // Widget _getTitleAndValue(
-  //   String title,
-  //   String value,
-  // ) {
-  //   return Text(
-  //     "$title: $value",
-  //     style: textTheme.bodyMedium,
-  //   ).marginSymmetric(
-  //     horizontal: AppValues.margin.w,
-  //   );
-  // }
-
-  Widget _getSuggestionChangerAndPriceView() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // _getDecrementButton(),
-        // _getSuggestion(),
-        // _getIncrementButton(),
-        // _getPriceView(),
-      ],
+  Widget _getDecrementButton() {
+    return Obx(
+      () => IconButton(
+        onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
+        icon: AssetImageView(
+          fileName: AppIcons.roundedMinus,
+          height: AppValues.iconLargeSize.h,
+          width: AppValues.iconLargeSize.h,
+          color: _isDecrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
+        ),
+      ),
     );
   }
 
-// Widget _getDecrementButton() {
-//   return Obx(
-//     () => IconButton(
-//       onPressed: _isDecrementButtonEnabled ? _onTapDecrement : null,
-//       icon: AssetImageView(
-//         fileName: AppIcons.roundedMinus,
-//         height: AppValues.iconLargeSize.h,
-//         width: AppValues.iconLargeSize.h,
-//         color: _suggestionController.value > 0
-//             ? theme.colorScheme.primary
-//             : AppColors.basicGrey,
-//       ),
-//     ),
-//   );
-// }
+  Widget _getIncrementButton() {
+    return Obx(
+      () => IconButton(
+        onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
+        icon: AssetImageView(
+          fileName: AppIcons.roundedPlus,
+          height: AppValues.iconLargeSize.h,
+          width: AppValues.iconLargeSize.h,
+          color: _isIncrementButtonEnabled
+              ? theme.colorScheme.primary
+              : AppColors.basicGrey,
+        ),
+      ),
+    );
+  }
 
-// Widget _getIncrementButton() {
-//   return Obx(
-//     () => IconButton(
-//       onPressed: _isIncrementButtonEnabled ? _onTapIncrement : null,
-//       icon: AssetImageView(
-//         fileName: AppIcons.roundedPlus,
-//         height: AppValues.iconLargeSize.h,
-//         width: AppValues.iconLargeSize.h,
-//         color: _isIncrementButtonEnabled
-//             ? theme.colorScheme.primary
-//             : AppColors.basicGrey,
-//       ),
-//     ),
-//   );
-// }
+  Widget _getNumberView() {
+    return TextFieldWithTitle(
+      controller: controller,
+      onChangedValue: (String value) {
+        _numberController(value.toInt);
+      },
+    );
+  }
 
-// Widget _getSuggestion() {
-//   return Obx(
-//     () => Text(
-//       _suggestionController.value.toString(),
-//       style: textTheme.bodyMedium,
-//     ),
-//   );
-// }
+  void _onTapDecrement() {
+    _numberController(_numberController.value - 1);
+    controller.text = _numberController.value.toString();
+  }
 
-// Widget _getPriceView() {
-//   return Expanded(
-//     child: Obx(
-//       () => Text(
-//         "${appLocalization.currency}. ${_getTotalPrice()}",
-//         style: textTheme.titleMedium,
-//         textAlign: TextAlign.right,
-//       ).marginSymmetric(
-//         horizontal: AppValues.margin.w,
-//       ),
-//     ),
-//   );
-// }
+  void _onTapIncrement() {
+    _numberController(_numberController.value + 1);
+    controller.text = _numberController.value.toString();
+  }
 
-// void _onTapDecrement() {
-//   _suggestionController(_suggestionController.value - 1);
-//   onSuggestionValueChange(_suggestionController.value);
-// }
-//
-// void _onTapIncrement() {
-//   _suggestionController(_suggestionController.value + 1);
-//   onSuggestionValueChange(_suggestionController.value);
-// }
+  bool get _isDecrementButtonEnabled => _numberController.value > 0;
 
-// String _getTotalPrice() {
-//   return (_suggestionController.value * 1).toStringAsFixed(2);
-// }
+  bool get _isIncrementButtonEnabled =>
+      latestStock > 0 && _numberController.value < AppValues.maxCountValue;
 
-// bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
-//
-// bool get _isIncrementButtonEnabled =>
-//     _suggestionController.value < AppValues.maxCountValue;
+  int get latestStock => inventoryData.available - _numberController.value;
 }

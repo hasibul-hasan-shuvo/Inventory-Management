@@ -43,9 +43,6 @@ class SelectableInventoryListView
       isSearchableMode: controller.isSearchable,
       title: appLocalization.homeMenuSearchItem,
       onBackButtonClick: () {
-        // Get.back();
-        // print('#########################');
-        // print(controller.scannedProducts.length);
         Get.back(result: controller.scannedProducts);
       },
       onChangeSearchMode: controller.changeSearchMode,

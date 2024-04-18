@@ -132,7 +132,6 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
   void _onTapEdit(BuildContext context) {
     TextEditingController numberController = TextEditingController();
     numberController.text = inventoryData.number.toString();
-    int currentStock = inventoryData.number;
 
     showDialog(
       context: context,
@@ -141,15 +140,14 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
           title: appLocalization.titleEditOrderDialog,
           content: SelectableInventoryItemEditDialogView(
             inventoryData: inventoryData,
-            onCurrentStockChanged: (String newStock) {
-              if (newStock.isNotEmpty) currentStock = int.parse(newStock);
-            },
             controller: numberController,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
             _controller.updateProductNumber(
-                inventoryData.itemId.toString(), currentStock);
+              inventoryData,
+              numberController.text,
+            );
           },
         );
       },

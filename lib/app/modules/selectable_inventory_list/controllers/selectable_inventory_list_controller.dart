@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -40,40 +41,28 @@ class SelectableInventoryListController extends BaseController {
 
   void _getNextSuggestedOrders() {}
 
-  // void deleteInventoryItem() {
-  //   callDataService(_inventoryRepository.deleteInventory(id: id),
-  //       onSuccess: _deleteSuccessHandler);
-  // }
+  void updateProductNumber(
+      SelectableInventoryItemUiModel data, String numberString) {
+    if (!numberString.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
 
-  // void _deleteSuccessHandler(e) {
-  //   showSuccessMessage(appLocalization.deleteSuccessMessage);
-  //   _inventoryItemsController
-  //       .removeWhere((element) => element.itemId == productID);
-  //   _inventoryItemsController.refresh();
-  // }
+      return;
+    }
 
-  // Future<void> updateInventoryData() async {
-  //   final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-  //     id: productID,
-  //     maxCount: maxCount,
-  //     minCount: minCount,
-  //     stockCount: stockCount,
-  //     inventoryID: _authRepository.getInventoryID(),
-  //     fixedSuggestion: fixedSuggestion,
-  //   );
-  //   callDataService(
-  //     _inventoryRepository.updateInventoryData(request),
-  //     onSuccess: _handleUpdateInventoryDataSuccessResponse,
-  //   );
-  // }
+    int number = numberString.toInt;
 
-  void updateProductNumber(String id, int number) {
+    if (number > data.available) {
+      showErrorMessage(appLocalization.messageItemOutValidation);
+
+      return;
+    }
+
     bool isItemExist = false;
     if (number == 0) {
-      scannedProducts.removeWhere((element) => element.itemId == id);
+      scannedProducts.removeWhere((element) => element.itemId == data.itemId);
     } else {
       for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == id) {
+        if (product.itemId == data.itemId) {
           isItemExist = true;
           product.updateNumber(number);
           break;
@@ -82,9 +71,9 @@ class SelectableInventoryListController extends BaseController {
     }
     _scannedProductsController.refresh();
     for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
-      if (productUiModel.itemId == id) {
-        productUiModel.updateNumber(number);
+      if (productUiModel.itemId == data.itemId) {
         if (number != 0 && !isItemExist) onItemAdd(productUiModel);
+        productUiModel.updateNumber(number);
         break;
       }
     }
@@ -151,17 +140,19 @@ class SelectableInventoryListController extends BaseController {
     pagingController.isLastPage = response.next == null;
     List<SelectableInventoryItemUiModel> temp = [];
     for (InventoryResponse res in response.inventoryList!) {
-      SelectableInventoryItemUiModel model =
-          SelectableInventoryItemUiModel.fromProductResponseModel(res);
+      if (res.stockCount != 0) {
+        SelectableInventoryItemUiModel model =
+            SelectableInventoryItemUiModel.fromProductResponseModel(res);
 
-      for (ScannedProductUiModel product in scannedProducts) {
-        if (model.itemId == product.itemId) {
-          model.number = product.number;
-          break;
+        for (ScannedProductUiModel product in scannedProducts) {
+          if (model.itemId == product.itemId) {
+            model.number = product.number;
+            break;
+          }
         }
-      }
 
-      temp.add(model);
+        temp.add(model);
+      }
     }
     // List<ScannedProductUiModel> list = response.inventoryList
     //         ?.map((e) => ScannedProductUiModel.fromProductResponseModel(e))
