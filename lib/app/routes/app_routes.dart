@@ -19,6 +19,8 @@ abstract class Routes {
   static const SHOPPING_CART = _Paths.SHOPPING_CART;
   static const SCANNER = _Paths.SCANNER;
   static const SELECTABLE_INVENTORY_LIST = _Paths.SELECTABLE_INVENTORY_LIST;
+  static const SHOPPING_CART_SELECTABLE_INVENTORIES =
+      _Paths.SHOPPING_CART_SELECTABLE_INVENTORIES;
   static const PRODUCT_OUT = _Paths.PRODUCT_OUT;
   static const PRODUCT_IN = _Paths.PRODUCT_IN;
   static const ITEM_COUNT = _Paths.ITEM_COUNT;
@@ -39,6 +41,8 @@ abstract class _Paths {
   static const SHOPPING_CART = '/shopping-cart';
   static const SCANNER = '/scanner';
   static const SELECTABLE_INVENTORY_LIST = '/selectable-inventory-list';
+  static const SHOPPING_CART_SELECTABLE_INVENTORIES =
+      '/shopping_cart_selectable-inventories';
   static const PRODUCT_OUT = '/product-out';
   static const PRODUCT_IN = '/product-in';
   static const ITEM_COUNT = '/item-count';

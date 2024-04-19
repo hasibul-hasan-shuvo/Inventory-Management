@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 
 class ScannedProductUiModel {
   late final int id;
@@ -25,6 +26,16 @@ class ScannedProductUiModel {
     imageUrl = response.product?.imageUrl ?? '';
     number = 1;
     available = response.stockCount ?? 0;
+  }
+
+  ScannedProductUiModel.addProductFromInventory(
+      SelectableInventoryItemUiModel data) {
+    id = data.id;
+    itemId = data.itemId;
+    name = data.name;
+    imageUrl = data.imageUrl;
+    number = data.number + 1;
+    available = data.available;
   }
 
   void updateNumber(int newNumber) {

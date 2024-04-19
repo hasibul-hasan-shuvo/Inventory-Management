@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/controllers/scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
@@ -6,15 +7,17 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:get/get.dart';
 
-class ProductOutController extends BaseController {
+class ProductOutController extends BaseController
+    with ScannedProductsControllerMixin {
   final InventoryRepository _repository = Get.find();
 
-  final RxList<ScannedProductUiModel> _scannedProductsController =
-      RxList.empty(growable: true);
-
-  List<ScannedProductUiModel> get scannedProducts => _scannedProductsController;
+  // final RxList<ScannedProductUiModel> _scannedProductsController =
+  //     RxList.empty(growable: true);
+  //
+  // List<ScannedProductUiModel> get scannedProducts => _scannedProductsController;
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
@@ -31,18 +34,15 @@ class ProductOutController extends BaseController {
       if (!isListItem) {
         _getProduct(code!);
       } else {
-        _scannedProductsController.refresh();
+        onRefresh();
       }
     }
   }
 
-// <<<<<<< HEAD
   void onUpdateProduct(List<ScannedProductUiModel> items) {
-    _scannedProductsController.refresh();
+    onRefresh();
   }
 
-//   void updateProductNumber(String id, int number) {
-// =======
   void updateProductNumber(ScannedProductUiModel data, String numberString) {
     if (!numberString.isPositiveIntegerNumber) {
       showErrorMessage(appLocalization.messageInvalidNumber);
@@ -58,7 +58,6 @@ class ProductOutController extends BaseController {
       return;
     }
 
-// >>>>>>> d046376904a0ed80070af18d9221844fe1d0d604
     if (number == 0) {
       scannedProducts.removeWhere((element) => element.itemId == data.itemId);
     } else {
@@ -69,7 +68,7 @@ class ProductOutController extends BaseController {
         }
       }
     }
-    _scannedProductsController.refresh();
+    onRefresh();
   }
 
   void incrementProductNumber(ScannedProductUiModel product) {
@@ -80,7 +79,7 @@ class ProductOutController extends BaseController {
     }
     if (product.number + 1 <= product.available) {
       product.updateNumber(product.number + 1);
-      _scannedProductsController.refresh();
+      onRefresh();
     } else {
       showErrorMessage(appLocalization.messageItemOutValidation);
     }
@@ -94,8 +93,7 @@ class ProductOutController extends BaseController {
   }
 
   void _handleGetProductSuccessResponse(InventoryResponse response) {
-    _scannedProductsController
-        .add(ScannedProductUiModel.fromProductResponseModel(response));
+    addProduct(ScannedProductUiModel.fromProductResponseModel(response));
   }
 
   void retrieveAllItems() {
@@ -121,9 +119,30 @@ class ProductOutController extends BaseController {
       showSuccessMessage(response.message ?? appLocalization.success);
 
       response.updatedList?.forEach((element) {
-        _scannedProductsController.removeWhere(
-            (scannedProduct) => element.itemId == scannedProduct.itemId);
+        removeProductByItemId(element.itemId);
       });
+    }
+  }
+
+  @override
+  void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
+    bool itemExistOnScanned = false;
+    if (inventoryData.number + 1 < inventoryData.available) {
+      for (var product in scannedProducts) {
+        if (inventoryData.itemId == product.itemId) {
+          itemExistOnScanned = true;
+          inventoryData.updateNumber(inventoryData.number + 1);
+          product.updateNumber(product.number + 1);
+          break;
+        }
+      }
+    }
+
+    if (!itemExistOnScanned) {
+      scannedProducts
+          .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
+    } else {
+      onRefresh();
     }
   }
 }

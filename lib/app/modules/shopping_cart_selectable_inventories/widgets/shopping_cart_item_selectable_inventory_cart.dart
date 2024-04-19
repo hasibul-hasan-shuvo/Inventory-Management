@@ -2,26 +2,25 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
-import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/controllers/selectable_inventory_list_controller.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/widgets/selectable_inventory_edit_dialog_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/controllers/shopping_cart_selectable_inventories_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
+class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
+    with BaseWidgetMixin {
   final SelectableInventoryItemUiModel inventoryData;
 
-  final SelectableInventoryListController _controller =
-      Get.find<SelectableInventoryListController>();
+  final ShoppingCartSelectableInventoriesController _controller =
+      Get.find<ShoppingCartSelectableInventoriesController>();
 
-  ItemSelectableInventoryCard({
+  ShoppingCartItemSelectableInventoryCard({
     super.key,
     required this.inventoryData,
   });
@@ -29,8 +28,11 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return Ripple(
-      // onTap: () => _controller.onItemAdd(inventoryData),
-      onTap: () {},
+      onTap: () => _onTapEdit(context),
+      //     () {
+      //   _controller.addCartItem(inventoryData.itemId);
+      //
+      // },
       child: ElevatedContainer(
         child: Row(
           children: [
@@ -38,7 +40,7 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
             SizedBox(width: AppValues.smallMargin.w),
             _buildItemDetails(),
             SizedBox(width: AppValues.margin_10.w),
-            _buildEditButton(context)
+            // _buildEditButton(context)
           ],
         ),
       ).marginOnly(bottom: AppValues.smallMargin.h),
@@ -58,7 +60,10 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [_buildInventoryName(), _buildIdAndInventoryCountView()],
+        children: [
+          _buildInventoryName(),
+          _buildIdAndInventoryCountView(),
+        ],
       ),
     );
   }
@@ -77,10 +82,10 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
       children: [
         _buildIdView(),
         SizedBox(width: AppValues.smallMargin.w),
-        _buildLabelAndCount(
-          appLocalization.number,
-          inventoryData.number.toString(),
-        ),
+        // _buildLabelAndCount(
+        //   appLocalization.number,
+        //   inventoryData.number.toString(),
+        // ),
       ],
     ).marginOnly(right: AppValues.margin.w);
   }
@@ -134,25 +139,24 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
     TextEditingController numberController = TextEditingController();
     numberController.text = inventoryData.number.toString();
 
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AppDialog(
-          title: appLocalization.titleEditOrderDialog,
-          content: SelectableInventoryItemEditDialogView(
-            inventoryData: inventoryData,
-            controller: numberController,
-            minAvailableQuantity: _controller.pageArguments.minAvailableProduct,
-          ),
-          positiveButtonText: appLocalization.buttonTextSaveChanges,
-          onPositiveButtonTap: () {
-            _controller.updateProductNumber(
-              inventoryData,
-              numberController.text,
-            );
-          },
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (_) {
+    //     return AppDialog(
+    //       title: appLocalization.titleEditOrderDialog,
+    //       content: SelectableInventoryItemEditDialogView(
+    //         inventoryData: inventoryData,
+    //         controller: numberController,
+    //       ),
+    //       positiveButtonText: appLocalization.buttonTextSaveChanges,
+    //       onPositiveButtonTap: () {
+    //         _controller.updateProductNumber(
+    //           inventoryData,
+    //           numberController.text,
+    //         );
+    //       },
+    //     );
+    //   },
+    // );
   }
 }

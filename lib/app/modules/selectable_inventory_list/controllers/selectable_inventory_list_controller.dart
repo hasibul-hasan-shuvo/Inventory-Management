@@ -1,10 +1,12 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_list_page_arguments.dart';
 import 'package:get/get.dart';
 
 class SelectableInventoryListController extends BaseController {
@@ -14,10 +16,7 @@ class SelectableInventoryListController extends BaseController {
   List<SelectableInventoryItemUiModel> get inventoryItems =>
       _inventoryItemsController;
 
-  final RxList<ScannedProductUiModel> _scannedProductsController =
-      RxList.empty(growable: true);
-
-  List<ScannedProductUiModel> get scannedProducts => _scannedProductsController;
+  late SelectableInventoryListPageArguments pageArguments;
 
   final RxBool _searchModeController = RxBool(false);
 
@@ -31,15 +30,13 @@ class SelectableInventoryListController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    _scannedProductsController.value = Get.arguments;
+    pageArguments = Get.arguments;
     fetchInventoryList();
   }
 
   void onLoading() {
     _getNextSuggestedOrders();
   }
-
-  void _getNextSuggestedOrders() {}
 
   void updateProductNumber(
       SelectableInventoryItemUiModel data, String numberString) {
@@ -51,7 +48,7 @@ class SelectableInventoryListController extends BaseController {
 
     int number = numberString.toInt;
 
-    if (number > data.available) {
+    if (number > data.available && pageArguments.minAvailableProduct > 0) {
       showErrorMessage(appLocalization.messageItemOutValidation);
 
       return;
@@ -59,9 +56,11 @@ class SelectableInventoryListController extends BaseController {
 
     bool isItemExist = false;
     if (number == 0) {
-      scannedProducts.removeWhere((element) => element.itemId == data.itemId);
+      pageArguments.controller.scannedProducts
+          .removeWhere((element) => element.itemId == data.itemId);
     } else {
-      for (ScannedProductUiModel product in scannedProducts) {
+      for (ScannedProductUiModel product
+          in pageArguments.controller.scannedProducts) {
         if (product.itemId == data.itemId) {
           isItemExist = true;
           product.updateNumber(number);
@@ -69,10 +68,11 @@ class SelectableInventoryListController extends BaseController {
         }
       }
     }
-    _scannedProductsController.refresh();
+    pageArguments.controller.onRefresh();
     for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
       if (productUiModel.itemId == data.itemId) {
-        if (number != 0 && !isItemExist) onItemAdd(productUiModel);
+        if ((number != 0 || pageArguments.minAvailableProduct > 0) &&
+            !isItemExist) onItemAdd(productUiModel);
         productUiModel.updateNumber(number);
         break;
       }
@@ -81,31 +81,9 @@ class SelectableInventoryListController extends BaseController {
   }
 
   void onItemAdd(SelectableInventoryItemUiModel inventoryData) {
-    bool itemExistOnScanned = false;
-    if (inventoryData.number + 1 < inventoryData.available) {
-      for (var product in _scannedProductsController) {
-        if (inventoryData.itemId == product.itemId) {
-          itemExistOnScanned = true;
-          inventoryData.updateNumber(inventoryData.number + 1);
-          product.updateNumber(product.number + 1);
-          break;
-        }
-      }
-      _inventoryItemsController.refresh();
-      if (!itemExistOnScanned) {
-        ScannedProductUiModel model = ScannedProductUiModel(
-          id: inventoryData.id,
-          itemId: inventoryData.itemId,
-          name: inventoryData.name,
-          imageUrl: inventoryData.imageUrl,
-          number: inventoryData.number + 1,
-          available: inventoryData.available,
-        );
-        _scannedProductsController.add(model);
-      } else {
-        _scannedProductsController.refresh();
-      }
-    }
+    pageArguments.controller.onProductSelect(inventoryData);
+
+    _inventoryItemsController.refresh();
   }
 
   void changeSearchMode() {
@@ -125,6 +103,7 @@ class SelectableInventoryListController extends BaseController {
     InventoryListQueryParams queryParams = InventoryListQueryParams(
       search: searchQuery.value,
       page: pagingController.pageNumber,
+      minAvailableQuantity: pageArguments.minAvailableProduct,
     );
     callDataService(
       _inventoryRepository.getInventoryList(
@@ -140,19 +119,18 @@ class SelectableInventoryListController extends BaseController {
     pagingController.isLastPage = response.next == null;
     List<SelectableInventoryItemUiModel> temp = [];
     for (InventoryResponse res in response.inventoryList!) {
-      if (res.stockCount != 0) {
-        SelectableInventoryItemUiModel model =
-            SelectableInventoryItemUiModel.fromProductResponseModel(res);
+      SelectableInventoryItemUiModel model =
+          SelectableInventoryItemUiModel.fromProductResponseModel(res);
 
-        for (ScannedProductUiModel product in scannedProducts) {
-          if (model.itemId == product.itemId) {
-            model.number = product.number;
-            break;
-          }
+      for (ScannedProductUiModel product
+          in pageArguments.controller.scannedProducts) {
+        if (model.itemId == product.itemId) {
+          model.number = product.number;
+          break;
         }
-
-        temp.add(model);
       }
+
+      temp.add(model);
     }
     // List<ScannedProductUiModel> list = response.inventoryList
     //         ?.map((e) => ScannedProductUiModel.fromProductResponseModel(e))
@@ -160,6 +138,130 @@ class SelectableInventoryListController extends BaseController {
     //     [];
 
     _inventoryItemsController(temp);
+  }
+
+  void _getNextSuggestedOrders() {
+    InventoryListQueryParams queryParams = InventoryListQueryParams(
+      search: searchQuery.value,
+      page: pagingController.pageNumber,
+      minAvailableQuantity: pageArguments.minAvailableProduct,
+    );
+    callDataService(
+      _inventoryRepository.getInventoryList(
+        queryParams: queryParams,
+      ),
+      onSuccess: _handleNextInventoryListSuccessResponse,
+      onStart: () => logger.d("Fetching more inventories..."),
+      onComplete: () => refreshController.loadComplete(),
+    );
+  }
+
+  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+    pagingController.nextPage();
+    pagingController.isLastPage = response.next == null;
+    _inventoryItemsController.addAll(
+      response.inventoryList
+              ?.map((e) =>
+                  SelectableInventoryItemUiModel.fromProductResponseModel(e))
+              .toList() ??
+          [],
+    );
+  }
+
+  void updateInventoryData({
+    required SelectableInventoryItemUiModel data,
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (_checkValuesValidity(
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      fixedSuggestion: fixedSuggestion,
+    )) {
+      final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
+        id: data.itemId,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        inventoryID: authRepository.getInventoryID(),
+        fixedSuggestion: fixedSuggestion,
+      );
+      callDataService(
+        _inventoryRepository.updateInventoryData(request),
+        onSuccess: _handleUpdateInventoryDataSuccessResponse,
+      );
+    }
+  }
+
+  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
+    for (var element in inventoryItems) {
+      if (element.itemId == response.product?.itemId.toString()) {
+        element.updateFromInventoryResponse(response);
+      }
+    }
+
+    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+  }
+
+  bool _checkValuesValidity({
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (!maxCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.max);
+
+      return false;
+    }
+
+    if (!minCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.min);
+
+      return false;
+    }
+
+    if (!stockCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.inventory);
+
+      return false;
+    }
+
+    if (!fixedSuggestion.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.fixedProposal);
+
+      return false;
+    }
+
+    if (!_checkMaxMinValidity(maxCount, minCount)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _checkMaxMinValidity(String max, String min) {
+    try {
+      int maxCount = max.toInt;
+      int minCount = min.toInt;
+
+      if (maxCount < minCount) {
+        showErrorMessage(appLocalization.messageMaxMinValidation);
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void _showInvalidValueErrorMessage(String itemName) {
+    showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
 
 // void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {}

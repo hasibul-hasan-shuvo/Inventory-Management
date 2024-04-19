@@ -3,17 +3,27 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/controllers/selectable_inventory_list_controller.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/widgets/item_selectable_inventory_card.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/controllers/shopping_cart_selectable_inventories_controller.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/widgets/shopping_cart_item_selectable_inventory_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class SelectableInventoryListView
-    extends BaseView<SelectableInventoryListController> {
-  SelectableInventoryListView();
+class ShoppingCartSelectableInventoriesView
+    extends BaseView<ShoppingCartSelectableInventoriesController> {
+  ShoppingCartSelectableInventoriesView();
+
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: AppBar().preferredSize,
+      child: Obx(
+        () => _buildAppBar(context),
+      ),
+    );
+  }
 
   @override
   Widget body(BuildContext context) {
@@ -25,16 +35,6 @@ class SelectableInventoryListView
                 ? _getPlaceHolder()
                 : _buildListOfProduct();
       },
-    );
-  }
-
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: AppBar().preferredSize,
-      child: Obx(
-        () => _buildAppBar(context),
-      ),
     );
   }
 
@@ -78,9 +78,9 @@ class SelectableInventoryListView
 
   Widget _buildInventoryCard(SelectableInventoryItemUiModel inventoryData) =>
       GestureDetector(
-        onTap: () {
-          Get.back(result: inventoryData.itemId);
-        },
-        child: ItemSelectableInventoryCard(inventoryData: inventoryData),
-      );
+          onTap: () {
+            Get.back(result: inventoryData.itemId);
+          },
+          child: ShoppingCartItemSelectableInventoryCard(
+              inventoryData: inventoryData));
 }

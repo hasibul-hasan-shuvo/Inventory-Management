@@ -18,11 +18,13 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
   final SelectableInventoryItemUiModel inventoryData;
   final TextEditingController controller;
   final RxInt _numberController = RxInt(0);
+  final int minAvailableQuantity;
 
   SelectableInventoryItemEditDialogView({
     super.key,
     required this.inventoryData,
     required this.controller,
+    required this.minAvailableQuantity,
   }) {
     _numberController(controller.text.toInt);
   }
@@ -63,7 +65,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
   Widget _getAvailableWithTitleView() {
     return Obx(
       () => Text(
-        "${appLocalization.titleEditProductOutAvailableCount}: $latestStock",
+        "${minAvailableQuantity == 0 ? appLocalization.titleEditProductInAvailableCount : appLocalization.titleEditProductOutAvailableCount}: $latestStock",
         style: textTheme.bodyMedium,
       ),
     ).marginSymmetric(horizontal: AppValues.smallMargin.w);
@@ -143,7 +145,9 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
   bool get _isDecrementButtonEnabled => _numberController.value > 0;
 
   bool get _isIncrementButtonEnabled =>
-      latestStock > 0 && _numberController.value < AppValues.maxCountValue;
+      (latestStock > 0 && _numberController.value < AppValues.maxCountValue) ||
+      minAvailableQuantity == 0;
 
-  int get latestStock => inventoryData.available - _numberController.value;
+  int get latestStock =>
+      (inventoryData.available - _numberController.value).abs();
 }

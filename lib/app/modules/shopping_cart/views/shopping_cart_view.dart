@@ -92,7 +92,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   void _onPressedList() {
-    Get.toNamed(Routes.SELECTABLE_INVENTORY_LIST);
+    Get.toNamed(Routes.SHOPPING_CART_SELECTABLE_INVENTORIES);
   }
 
   List<Widget> _getActions(BuildContext context) {

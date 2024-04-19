@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/widget/EmptyScannedListView.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/custom_floating_button.dart';
 import 'package:dental_inventory/app/modules/product_in/widgets/item_product_in_view.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_list_page_arguments.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,10 +68,15 @@ class ProductInView extends BaseView<ProductInController> {
 
   /// for showing list of items
   void _onPressedList() {
+    SelectableInventoryListPageArguments pageArguments =
+        SelectableInventoryListPageArguments(
+      controller: controller,
+    );
+
     Get.toNamed(
       Routes.SELECTABLE_INVENTORY_LIST,
-      arguments: controller.scannedProducts,
-    )?.then((value) => controller.onUpdateProduct(value));
+      arguments: pageArguments,
+    );
   }
 
   List<Widget> get _getActions {

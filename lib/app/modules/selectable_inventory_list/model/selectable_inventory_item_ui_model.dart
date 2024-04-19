@@ -19,6 +19,8 @@ class SelectableInventoryItemUiModel {
     available = response.stockCount ?? 0;
   }
 
+  updateFromInventoryResponse(InventoryResponse response) {}
+
   void updateNumber(int newNumber) {
     number = newNumber;
   }
