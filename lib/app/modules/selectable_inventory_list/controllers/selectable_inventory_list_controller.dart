@@ -77,6 +77,7 @@ class SelectableInventoryListController extends BaseController {
         break;
       }
     }
+
     _inventoryItemsController.refresh();
   }
 
