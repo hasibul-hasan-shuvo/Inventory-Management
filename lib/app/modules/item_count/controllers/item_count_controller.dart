@@ -6,7 +6,7 @@ import 'package:dental_inventory/app/data/model/request/products_retrieval_reque
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:get/get.dart';
 
@@ -14,18 +14,18 @@ class ItemCountController extends BaseController
     with ScannedProductsControllerMixin {
   final InventoryRepository _repository = Get.find();
 
-  final RxList<InventoryCardUIModel> _inventoriesController =
+  final RxList<ScannedProductUiModel> _inventoriesController =
       RxList.empty(growable: true);
 
-  List<InventoryCardUIModel> get inventories => _inventoriesController;
+  List<ScannedProductUiModel> get inventories => _inventoriesController;
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
       bool isListItem = false;
-      for (InventoryCardUIModel inventory in inventories) {
+      for (ScannedProductUiModel inventory in inventories) {
         if (inventory.itemId == code) {
           isListItem = true;
-          inventory.updateCurrentStock(inventory.currentStock + 1);
+          inventory.updateNumber(inventory.number + 1);
           break;
         }
       }
@@ -37,13 +37,13 @@ class ItemCountController extends BaseController
     }
   }
 
-  void incrementProductNumber(InventoryCardUIModel inventory) {
-    if (inventory.currentStock + 1 > AppValues.maxCountValue) {
+  void incrementProductNumber(ScannedProductUiModel inventory) {
+    if (inventory.number + 1 > AppValues.maxCountValue) {
       showErrorMessage(appLocalization.messageMaxCountThresholdValidation);
 
       return;
     }
-    inventory.updateCurrentStock(inventory.currentStock + 1);
+    inventory.updateNumber(inventory.number + 1);
     _inventoriesController.refresh();
   }
 
@@ -56,13 +56,15 @@ class ItemCountController extends BaseController
 
   void _handleGetProductSuccessResponse(InventoryResponse response) {
     _inventoriesController
-        .add(InventoryCardUIModel.fromInventoryResponse(response));
+        .add(ScannedProductUiModel.fromProductResponseModel(response));
   }
 
   void updateAll() {
     if (inventories.isNotEmpty) {
       ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-        data: inventories.map((e) => e.toScannedProductsRequestBody()).toList(),
+        data: inventories
+            .map((e) => e.toScannedProductsRequestBodyWithCurrentStock())
+            .toList(),
       );
 
       callDataService(
@@ -89,9 +91,14 @@ class ItemCountController extends BaseController
     }
   }
 
-  void onUpdateCurrentStock(InventoryCardUIModel data, String newStock) {
-    data.updateCurrentStock(newStock.toInt);
-    _inventoriesController.refresh();
+  void onUpdateCurrentStock(ScannedProductUiModel data, String newStock) {
+    if (newStock.toInt > 0) {
+      data.updateNumber(newStock.toInt);
+      _inventoriesController.refresh();
+    } else {
+      _inventoriesController
+          .removeWhere((element) => element.itemId == data.itemId);
+    }
   }
 
   @override

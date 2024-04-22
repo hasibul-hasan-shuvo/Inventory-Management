@@ -119,14 +119,18 @@ class ShoppingCartController extends BaseController {
         data.id.toString(),
         requestBody,
       ),
-      onSuccess: (response) => _handleUpdateCartSuccessResponse(data, response),
+      onSuccess: _handleUpdateCartSuccessResponse,
     );
   }
 
-  void _handleUpdateCartSuccessResponse(
-      ShoppingCartUiModel data, ShoppingCartResponse response) {
-    data.updateCartCount(response.quantity ?? 0);
-    _shoppingCartItemsController.refresh();
+  void _handleUpdateCartSuccessResponse(ShoppingCartResponse response) {
+    ShoppingCartUiModel? data = _shoppingCartItemsController.firstWhereOrNull(
+        (element) => element.itemId == response.product?.itemId);
+
+    if (data != null) {
+      data.updateCartCount(response.quantity ?? data.cartCount);
+      _shoppingCartItemsController.refresh();
+    }
   }
 
   void _deleteCartItem(ShoppingCartUiModel data) {

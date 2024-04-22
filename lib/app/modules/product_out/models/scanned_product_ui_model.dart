@@ -10,21 +10,22 @@ class ScannedProductUiModel {
   late int number;
   late final int available;
 
-  ScannedProductUiModel({
-    required this.id,
-    required this.itemId,
-    required this.name,
-    required this.imageUrl,
-    required this.number,
-    required this.available,
-  });
+  ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
+      InventoryResponse response) {
+    id = response.id ?? -1;
+    itemId = response.product?.itemId ?? '';
+    name = response.product?.name ?? '';
+    imageUrl = response.product?.imageUrl ?? '';
+    number = 1;
+    available = response.stockCount ?? 0;
+  }
 
   ScannedProductUiModel.fromProductResponseModel(InventoryResponse response) {
     id = response.id ?? -1;
     itemId = response.product?.itemId ?? '';
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
-    number = 1;
+    number = response.stockCount ?? 0;
     available = response.stockCount ?? 0;
   }
 
@@ -42,10 +43,18 @@ class ScannedProductUiModel {
     number = newNumber;
   }
 
-  ScannedProductsRequestBody toScannedProductsRequestBody(bool isPositive) {
+  ScannedProductsRequestBody toScannedProductsRequestBodyWithCountChange(
+      bool isPositive) {
     return ScannedProductsRequestBody(
       itemId: itemId,
       countChange: isPositive ? number : number * -1,
+    );
+  }
+
+  ScannedProductsRequestBody toScannedProductsRequestBodyWithCurrentStock() {
+    return ScannedProductsRequestBody(
+      itemId: itemId,
+      currentStock: number,
     );
   }
 }

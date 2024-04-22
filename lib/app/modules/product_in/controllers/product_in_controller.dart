@@ -80,14 +80,16 @@ class ProductInController extends BaseController
   }
 
   void _handleGetProductSuccessResponse(InventoryResponse response) {
-    addProduct(ScannedProductUiModel.fromProductResponseModel(response));
+    addProduct(
+        ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
+            response));
   }
 
   void revertAllItems() {
     if (scannedProducts.isNotEmpty) {
       ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
         data: scannedProducts
-            .map((e) => e.toScannedProductsRequestBody(true))
+            .map((e) => e.toScannedProductsRequestBodyWithCountChange(true))
             .toList(),
       );
 

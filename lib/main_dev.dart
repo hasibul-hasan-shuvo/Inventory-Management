@@ -13,7 +13,7 @@ import '/flavors/environment.dart';
 void main() async {
   EnvConfig devConfig = EnvConfig(
     appName: "Dental Inventory Dev",
-    baseUrl: "https://inventorybe-p372dbld2tofy-webapp.azurewebsites.net",
+    baseUrl: "https://devinventorymanagement.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
 

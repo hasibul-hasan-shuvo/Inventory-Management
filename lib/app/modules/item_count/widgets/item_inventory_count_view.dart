@@ -7,9 +7,9 @@ import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/item_count/controllers/item_count_controller.dart';
 import 'package:dental_inventory/app/modules/item_count/widgets/item_count_edit_dialog_view.dart';
+import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
   final ItemCountController _controller = Get.find();
-  final InventoryCardUIModel data;
+  final ScannedProductUiModel data;
 
   ItemInventoryCountView({
     super.key,
@@ -80,7 +80,7 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
           appLocalization.inventory,
-          data.currentStock.toString(),
+          data.number.toString(),
         ),
       ],
     );
@@ -125,7 +125,7 @@ class ItemInventoryCountView extends StatelessWidget with BaseWidgetMixin {
 
   void _onTapEdit(BuildContext context) {
     TextEditingController currentStockController = TextEditingController();
-    currentStockController.text = data.currentStock.toString();
+    currentStockController.text = data.number.toString();
 
     showDialog(
       context: context,
