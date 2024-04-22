@@ -14,9 +14,6 @@ class DataWedgeInterface {
         const val DATA_WEDGE_SCAN_EXTRA_LABEL_TYPE = "com.symbol.datawedge.label_type"
         const val DATA_WEDGE_SEND_CREATE_PROFILE = "com.symbol.datawedge.api.CREATE_PROFILE"
         const val DATA_WEDGE_SEND_SET_CONFIG = "com.symbol.datawedge.api.SET_CONFIG"
-        const val DATA_WEDGE_SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
-        const val DATA_WEDGE_ACTION_START_SCANNING = "START_SCANNING"
-        const val DATA_WEDGE_ACTION_STOP_SCANNING = "STOP_SCANNING"
     }
 
     fun sendCommandString(

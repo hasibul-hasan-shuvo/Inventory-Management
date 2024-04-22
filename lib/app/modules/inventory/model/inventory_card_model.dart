@@ -1,4 +1,3 @@
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 
 class InventoryCardUIModel {
@@ -29,16 +28,5 @@ class InventoryCardUIModel {
     min = response.minCount ?? 0;
     currentStock = response.stockCount ?? 0;
     fixedOrderSuggestions = response.fixedSuggestion ?? 0;
-  }
-
-  void updateCurrentStock(int newStock) {
-    currentStock = newStock;
-  }
-
-  ScannedProductsRequestBody toScannedProductsRequestBody() {
-    return ScannedProductsRequestBody(
-      itemId: itemId,
-      currentStock: currentStock,
-    );
   }
 }

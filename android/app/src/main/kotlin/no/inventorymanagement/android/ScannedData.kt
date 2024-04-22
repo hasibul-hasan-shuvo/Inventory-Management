@@ -3,8 +3,8 @@ package no.inventorymanagement.android
 import org.json.JSONObject;
 
 data class ScannedData(
-    val data: String,
-    val symbology: String,
+    val data: String?,
+    val symbology: String?,
     val dateTime: String,
 ) {
     fun toJson(): String {
