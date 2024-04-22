@@ -86,15 +86,16 @@ class ProductOutController extends BaseController {
   }
 
   void _handleGetProductSuccessResponse(InventoryResponse response) {
-    _scannedProductsController
-        .add(ScannedProductUiModel.fromProductResponseModel(response));
+    _scannedProductsController.add(
+        ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
+            response));
   }
 
   void retrieveAllItems() {
     if (scannedProducts.isNotEmpty) {
       ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
         data: scannedProducts
-            .map((e) => e.toScannedProductsRequestBody(false))
+            .map((e) => e.toScannedProductsRequestBodyWithCountChange(false))
             .toList(),
       );
 

@@ -6,8 +6,8 @@ import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
+import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class ItemCountEditDialogView extends StatelessWidget with BaseWidgetMixin {
   final TextEditingController controller;
-  final InventoryCardUIModel data;
+  final ScannedProductUiModel data;
   final RxInt _currentStockController = RxInt(0);
 
   ItemCountEditDialogView({
