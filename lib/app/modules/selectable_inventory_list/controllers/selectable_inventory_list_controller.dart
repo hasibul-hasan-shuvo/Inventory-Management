@@ -35,7 +35,9 @@ class SelectableInventoryListController extends BaseController {
   }
 
   void onLoading() {
-    _getNextSuggestedOrders();
+    if (pagingController.canLoadNextPage()) {
+      _getNextSuggestedOrders();
+    }
   }
 
   void updateProductNumber(
@@ -56,8 +58,14 @@ class SelectableInventoryListController extends BaseController {
 
     bool isItemExist = false;
     if (number == 0) {
-      pageArguments.controller.scannedProducts
-          .removeWhere((element) => element.itemId == data.itemId);
+      pageArguments.controller.removeProductByItemId(data.itemId);
+
+      for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
+        if (productUiModel.itemId == data.itemId) {
+          productUiModel.updateNumber(number);
+          break;
+        }
+      }
     } else {
       for (ScannedProductUiModel product
           in pageArguments.controller.scannedProducts) {
@@ -67,14 +75,14 @@ class SelectableInventoryListController extends BaseController {
           break;
         }
       }
-    }
-    pageArguments.controller.onRefresh();
-    for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
-      if (productUiModel.itemId == data.itemId) {
-        if ((number != 0 || pageArguments.minAvailableProduct > 0) &&
-            !isItemExist) onItemAdd(productUiModel);
-        productUiModel.updateNumber(number);
-        break;
+
+      for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
+        if (productUiModel.itemId == data.itemId) {
+          if (!isItemExist) {
+            onItemAdd(productUiModel);
+          }
+          break;
+        }
       }
     }
 
@@ -101,6 +109,7 @@ class SelectableInventoryListController extends BaseController {
   }
 
   Future<void> fetchInventoryList() async {
+    pagingController.initRefresh();
     InventoryListQueryParams queryParams = InventoryListQueryParams(
       search: searchQuery.value,
       page: pagingController.pageNumber,

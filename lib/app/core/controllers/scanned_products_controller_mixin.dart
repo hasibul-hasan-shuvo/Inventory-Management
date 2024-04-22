@@ -19,6 +19,7 @@ mixin ScannedProductsControllerMixin {
   void removeProductByItemId(String? itemId) {
     _scannedProductsController
         .removeWhere((scannedProduct) => itemId == scannedProduct.itemId);
+    onRefresh();
   }
 
   void onProductSelect(SelectableInventoryItemUiModel inventoryData);

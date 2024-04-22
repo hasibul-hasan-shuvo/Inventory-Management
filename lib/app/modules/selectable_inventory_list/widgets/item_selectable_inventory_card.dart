@@ -29,8 +29,13 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return Ripple(
-      // onTap: () => _controller.onItemAdd(inventoryData),
-      onTap: () {},
+      // onTap: () {
+      //   _controller.updateProductNumber(
+      //     inventoryData,
+      //     numberController.text,
+      //   );
+      // },
+      onTap: () => _onTapEdit(context),
       child: ElevatedContainer(
         child: Row(
           children: [

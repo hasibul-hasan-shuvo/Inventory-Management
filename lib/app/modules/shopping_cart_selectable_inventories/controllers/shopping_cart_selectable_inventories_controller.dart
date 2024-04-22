@@ -104,6 +104,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
   }
 
   Future<void> fetchInventoryList() async {
+    pagingController.initRefresh();
     InventoryListQueryParams queryParams = InventoryListQueryParams(
       search: searchQuery.value,
       page: pagingController.pageNumber,

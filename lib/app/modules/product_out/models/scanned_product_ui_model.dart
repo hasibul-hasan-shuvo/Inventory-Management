@@ -34,7 +34,7 @@ class ScannedProductUiModel {
     itemId = data.itemId;
     name = data.name;
     imageUrl = data.imageUrl;
-    number = data.number + 1;
+    number = data.number;
     available = data.available;
   }
 

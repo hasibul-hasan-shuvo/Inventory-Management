@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/controllers/scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
@@ -6,9 +7,11 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:get/get.dart';
 
-class ItemCountController extends BaseController {
+class ItemCountController extends BaseController
+    with ScannedProductsControllerMixin {
   final InventoryRepository _repository = Get.find();
 
   final RxList<InventoryCardUIModel> _inventoriesController =
@@ -89,5 +92,10 @@ class ItemCountController extends BaseController {
   void onUpdateCurrentStock(InventoryCardUIModel data, String newStock) {
     data.updateCurrentStock(newStock.toInt);
     _inventoriesController.refresh();
+  }
+
+  @override
+  void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
+    // TODO: implement onProductSelect
   }
 }

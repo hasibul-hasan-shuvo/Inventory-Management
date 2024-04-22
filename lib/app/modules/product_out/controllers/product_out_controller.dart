@@ -139,6 +139,7 @@ class ProductOutController extends BaseController
     }
 
     if (!itemExistOnScanned) {
+      inventoryData.updateNumber(inventoryData.number + 1);
       scannedProducts
           .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
     } else {

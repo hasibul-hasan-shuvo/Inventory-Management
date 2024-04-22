@@ -148,6 +148,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
       (latestStock > 0 && _numberController.value < AppValues.maxCountValue) ||
       minAvailableQuantity == 0;
 
-  int get latestStock =>
-      (inventoryData.available - _numberController.value).abs();
+  int get latestStock => minAvailableQuantity == 0
+      ? inventoryData.available + _numberController.value
+      : inventoryData.available - _numberController.value;
 }
