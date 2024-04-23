@@ -140,7 +140,6 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
 
   void _onTapEdit(BuildContext context) {
     TextEditingController numberController = TextEditingController();
-
     numberController.text = _getNumber();
 
     showDialog(
