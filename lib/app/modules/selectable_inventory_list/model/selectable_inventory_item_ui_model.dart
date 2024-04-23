@@ -27,6 +27,8 @@ class SelectableInventoryItemUiModel {
 
   ScannedProductsRequestBody toScannedProductsRequestBody(bool isPositive) {
     return ScannedProductsRequestBody(
-        itemId: itemId, countChange: isPositive ? number : number * -1);
+      itemId: itemId,
+      countChange: isPositive ? number : number * -1,
+    );
   }
 }

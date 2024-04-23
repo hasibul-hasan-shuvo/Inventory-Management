@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/controllers/selectable_inventory_list_controller.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/widgets/item_selectable_inventory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,13 +17,11 @@ class SelectableInventoryListView
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () {
-        return controller.isPageLoading && controller.inventoryItems.isEmpty
-            ? const SizedBox.shrink()
-            : controller.inventoryItems.isEmpty
-                ? _getPlaceHolder()
-                : _buildListOfProduct();
-      },
+      () => controller.isPageLoading && controller.inventoryItems.isEmpty
+          ? const SizedBox.shrink()
+          : controller.inventoryItems.isEmpty
+              ? _getPlaceHolder()
+              : _buildListOfProduct(),
     );
   }
 
@@ -58,23 +55,24 @@ class SelectableInventoryListView
 
   Widget _buildListOfProduct() {
     return PagingView(
-        controller: controller.refreshController,
-        enablePullDown: false,
-        enablePullUp: controller.pagingController.canLoadNextPage(),
-        onLoading: controller.onLoading,
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(
-            vertical: AppValues.padding.h,
-            horizontal: AppValues.padding.w,
-          ),
-          shrinkWrap: true,
-          itemCount: controller.inventoryItems.length,
-          itemBuilder: (context, index) {
-            return _buildInventoryCard(controller.inventoryItems[index]);
-          },
-        ));
+      controller: controller.refreshController,
+      enablePullDown: false,
+      enablePullUp: controller.pagingController.canLoadNextPage(),
+      onLoading: controller.onLoading,
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: AppValues.padding.h,
+          horizontal: AppValues.padding.w,
+        ),
+        shrinkWrap: true,
+        itemCount: controller.inventoryItems.length,
+        itemBuilder: _getItemBuilder,
+      ),
+    );
   }
 
-  Widget _buildInventoryCard(SelectableInventoryItemUiModel inventoryData) =>
-      ItemSelectableInventoryCard(inventoryData: inventoryData);
+  Widget _getItemBuilder(BuildContext context, int index) {
+    return ItemSelectableInventoryCard(
+        inventoryData: controller.inventoryItems[index]);
+  }
 }

@@ -28,7 +28,7 @@ class ItemCountView extends BaseView<ItemCountController> {
   @override
   Widget body(BuildContext context) {
     return Obx(
-      () => controller.inventories.isEmpty
+      () => controller.scannedProducts.isEmpty
           ? EmptyScannedListView()
           : _getInventoriesListView(),
     );
@@ -49,13 +49,13 @@ class ItemCountView extends BaseView<ItemCountController> {
         vertical: AppValues.padding.h,
       ),
       shrinkWrap: true,
-      itemCount: controller.inventories.length,
+      itemCount: controller.scannedProducts.length,
       itemBuilder: _getItemBuilder,
     );
   }
 
   Widget _getItemBuilder(BuildContext context, int index) {
-    return ItemInventoryCountView(data: controller.inventories[index]);
+    return ItemInventoryCountView(data: controller.scannedProducts[index]);
   }
 
   List<Widget> get _getActions {

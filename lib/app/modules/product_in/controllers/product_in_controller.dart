@@ -14,11 +14,6 @@ class ProductInController extends BaseController
     with ScannedProductsControllerMixin {
   final InventoryRepository _repository = Get.find();
 
-  // final RxList<ScannedProductUiModel> _scannedProductsController =
-  //     RxList.empty(growable: true);
-  //
-  // List<ScannedProductUiModel> get scannedProducts => _scannedProductsController;
-
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
       bool isListItem = false;
@@ -80,9 +75,8 @@ class ProductInController extends BaseController
   }
 
   void _handleGetProductSuccessResponse(InventoryResponse response) {
-    addProduct(
-        ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
-            response));
+    addProduct(ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
+        response));
   }
 
   void revertAllItems() {
@@ -114,21 +108,23 @@ class ProductInController extends BaseController
 
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
-    bool itemExistOnScanned = false;
-    for (var product in scannedProducts) {
-      if (inventoryData.itemId == product.itemId) {
-        itemExistOnScanned = true;
-        inventoryData.updateNumber(inventoryData.number + 1);
-        product.updateNumber(product.number + 1);
-        break;
-      }
-    }
-    if (!itemExistOnScanned) {
-      inventoryData.updateNumber(inventoryData.number + 1);
-      scannedProducts
-          .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
+    if (inventoryData.number == 0) {
+      removeProductByItemId(inventoryData.itemId);
     } else {
-      onRefresh();
+      bool isItemExist = false;
+      for (ScannedProductUiModel product in scannedProducts) {
+        if (product.itemId == inventoryData.itemId) {
+          isItemExist = true;
+          product.updateNumber(inventoryData.number);
+          onRefresh();
+          break;
+        }
+      }
+
+      if (!isItemExist) {
+        scannedProducts
+            .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
+      }
     }
   }
 }

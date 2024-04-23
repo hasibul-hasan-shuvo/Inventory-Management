@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/data/model/request/inventory_count_update_r
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/modules/product_out/controllers/product_out_controller.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_list_page_arguments.dart';
@@ -50,49 +51,20 @@ class SelectableInventoryListController extends BaseController {
 
     int number = numberString.toInt;
 
-    if (number > data.available && pageArguments.minAvailableProduct > 0) {
+    if (number > data.available &&
+        pageArguments.controller is ProductOutController) {
       showErrorMessage(appLocalization.messageItemOutValidation);
 
       return;
     }
 
-    bool isItemExist = false;
-    if (number == 0) {
-      pageArguments.controller.removeProductByItemId(data.itemId);
-
-      for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
-        if (productUiModel.itemId == data.itemId) {
-          productUiModel.updateNumber(number);
-          break;
-        }
-      }
-    } else {
-      for (ScannedProductUiModel product
-          in pageArguments.controller.scannedProducts) {
-        if (product.itemId == data.itemId) {
-          isItemExist = true;
-          product.updateNumber(number);
-          break;
-        }
-      }
-
-      for (SelectableInventoryItemUiModel productUiModel in inventoryItems) {
-        if (productUiModel.itemId == data.itemId) {
-          if (!isItemExist) {
-            onItemAdd(productUiModel);
-          }
-          break;
-        }
-      }
-    }
-
+    data.updateNumber(number);
     _inventoryItemsController.refresh();
+    onItemAdd(data);
   }
 
   void onItemAdd(SelectableInventoryItemUiModel inventoryData) {
     pageArguments.controller.onProductSelect(inventoryData);
-
-    _inventoryItemsController.refresh();
   }
 
   void changeSearchMode() {
@@ -142,10 +114,6 @@ class SelectableInventoryListController extends BaseController {
 
       temp.add(model);
     }
-    // List<ScannedProductUiModel> list = response.inventoryList
-    //         ?.map((e) => ScannedProductUiModel.fromProductResponseModel(e))
-    //         .toList() ??
-    //     [];
 
     _inventoryItemsController(temp);
   }
@@ -273,6 +241,4 @@ class SelectableInventoryListController extends BaseController {
   void _showInvalidValueErrorMessage(String itemName) {
     showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
-
-// void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {}
 }

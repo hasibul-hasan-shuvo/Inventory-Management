@@ -7,6 +7,7 @@ import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
+import 'package:dental_inventory/app/modules/item_count/controllers/item_count_controller.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/controllers/selectable_inventory_list_controller.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/widgets/selectable_inventory_edit_dialog_view.dart';
@@ -28,15 +29,10 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return Ripple(
-      // onTap: () {
-      //   _controller.updateProductNumber(
-      //     inventoryData,
-      //     numberController.text,
-      //   );
-      // },
-      onTap: () => _onTapEdit(context),
-      child: ElevatedContainer(
+    return ElevatedContainer(
+      height: AppValues.itemImageHeight.h,
+      child: Ripple(
+        onTap: _onTap,
         child: Row(
           children: [
             _buildProductImage(),
@@ -46,8 +42,8 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
             _buildEditButton(context)
           ],
         ),
-      ).marginOnly(bottom: AppValues.smallMargin.h),
-    );
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
   Widget _buildProductImage() {
@@ -135,9 +131,17 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
+  void _onTap() {
+    _controller.updateProductNumber(
+      inventoryData,
+      _getNumber(1),
+    );
+  }
+
   void _onTapEdit(BuildContext context) {
     TextEditingController numberController = TextEditingController();
-    numberController.text = inventoryData.number.toString();
+
+    numberController.text = _getNumber();
 
     showDialog(
       context: context,
@@ -159,5 +163,15 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
         );
       },
     );
+  }
+
+  String _getNumber([int additional = 0]) {
+    return _controller.pageArguments.controller is ItemCountController &&
+            inventoryData.number == 0
+        ? (inventoryData.available == 0
+                ? inventoryData.available + 1
+                : inventoryData.available)
+            .toString()
+        : (inventoryData.number + additional).toString();
   }
 }
