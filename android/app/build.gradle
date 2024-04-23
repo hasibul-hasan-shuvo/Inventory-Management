@@ -101,14 +101,15 @@ android {
 
     flavorDimensions = ["default"]
     productFlavors {
-        dev {
-            resValue "string", "app_name", "Dental Inventory Dev"
+        jacobsenDev {
+            resValue "string", "app_name", "Jacobsen Dental Dev"
             dimension "default"
-            applicationIdSuffix ".dev"
+            applicationIdSuffix ".jacobsen.dev"
         }
-        prod {
-            resValue "string", "app_name", "Dental Inventory"
+        jacobsenProd {
+            resValue "string", "app_name", "Jacobsen Dental"
             dimension "default"
+            applicationIdSuffix ".jacobsen"
         }
     }
     namespace 'no.inventorymanagement'
