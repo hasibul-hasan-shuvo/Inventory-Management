@@ -74,8 +74,6 @@ class DefaultFirebaseOptions {
         dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
     projectId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_PROJECT_ID']!,
     storageBucket: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_STORAGE_BUCKET']!,
-    androidClientId: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_CLIENT_ID']!,
     iosBundleId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_BUNDLE_ID']!,
     databaseURL: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_DATABASE_URL']!,
   );
@@ -87,8 +85,6 @@ class DefaultFirebaseOptions {
         dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
     projectId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_PROJECT_ID']!,
     storageBucket: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_STORAGE_BUCKET']!,
-    androidClientId: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_CLIENT_ID']!,
     iosBundleId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_BUNDLE_ID']!,
     databaseURL: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_DATABASE_URL']!,
   );
