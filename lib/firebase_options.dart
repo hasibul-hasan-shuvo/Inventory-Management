@@ -16,15 +16,15 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        if (env == Environment.PRODUCTION) {
-          return androidProd;
+        if (env == Environment.JACOBSEN_PRODUCTION) {
+          return androidJacobsenProd;
         }
-        return androidDev;
+        return androidJacobsenDev;
       case TargetPlatform.iOS:
-        if (env == Environment.PRODUCTION) {
-          return iosProd;
+        if (env == Environment.JACOBSEN_PRODUCTION) {
+          return iosJacobsenProd;
         }
-        return iosDev;
+        return iosJacobsenDev;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -47,45 +47,49 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions androidDev = FirebaseOptions(
-    apiKey: dotenv.env['DEV_FIREBASE_ANDROID_API_KEY']!,
-    appId: dotenv.env['DEV_FIREBASE_ANDROID_APP_ID']!,
-    messagingSenderId: dotenv.env['DEV_FIREBASE_ANDROID_MESSAGING_SENDER_ID']!,
-    projectId: dotenv.env['DEV_FIREBASE_ANDROID_PROJECT_ID']!,
-    storageBucket: dotenv.env['DEV_FIREBASE_ANDROID_STORAGE_BUCKET']!,
-    databaseURL: dotenv.env['DEV_FIREBASE_ANDROID_DATABASE_URL']!,
+  static FirebaseOptions androidJacobsenDev = FirebaseOptions(
+    apiKey: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_API_KEY']!,
+    appId: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_APP_ID']!,
+    messagingSenderId:
+        dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_MESSAGING_SENDER_ID']!,
+    projectId: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_PROJECT_ID']!,
+    storageBucket: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_STORAGE_BUCKET']!,
+    databaseURL: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_DATABASE_URL']!,
   );
 
-  static FirebaseOptions androidProd = FirebaseOptions(
-    apiKey: dotenv.env['PROD_FIREBASE_ANDROID_API_KEY']!,
-    appId: dotenv.env['PROD_FIREBASE_ANDROID_APP_ID']!,
-    messagingSenderId: dotenv.env['PROD_FIREBASE_ANDROID_MESSAGING_SENDER_ID']!,
-    projectId: dotenv.env['PROD_FIREBASE_ANDROID_PROJECT_ID']!,
-    storageBucket: dotenv.env['PROD_FIREBASE_ANDROID_STORAGE_BUCKET']!,
-    databaseURL: dotenv.env['PROD_FIREBASE_ANDROID_DATABASE_URL']!,
+  static FirebaseOptions androidJacobsenProd = FirebaseOptions(
+    apiKey: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_API_KEY']!,
+    appId: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_APP_ID']!,
+    messagingSenderId:
+        dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_MESSAGING_SENDER_ID']!,
+    projectId: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_PROJECT_ID']!,
+    storageBucket: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_STORAGE_BUCKET']!,
+    databaseURL: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_DATABASE_URL']!,
   );
 
-  static FirebaseOptions iosDev = FirebaseOptions(
-    apiKey: dotenv.env['DEV_FIREBASE_IOS_API_KEY']!,
-    appId: dotenv.env['DEV_FIREBASE_IOS_APP_ID']!,
-    messagingSenderId: dotenv.env['DEV_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
-    projectId: dotenv.env['DEV_FIREBASE_IOS_PROJECT_ID']!,
-    storageBucket: dotenv.env['DEV_FIREBASE_IOS_STORAGE_BUCKET']!,
-    androidClientId: dotenv.env['DEV_FIREBASE_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['DEV_FIREBASE_IOS_CLIENT_ID']!,
-    iosBundleId: dotenv.env['DEV_FIREBASE_IOS_BUNDLE_ID']!,
-    databaseURL: dotenv.env['DEV_FIREBASE_IOS_DATABASE_URL']!,
+  static FirebaseOptions iosJacobsenDev = FirebaseOptions(
+    apiKey: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_API_KEY']!,
+    appId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_APP_ID']!,
+    messagingSenderId:
+        dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
+    projectId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_PROJECT_ID']!,
+    storageBucket: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_STORAGE_BUCKET']!,
+    androidClientId: dotenv.env['JACOBSEN_DEV_FIREBASE_ANDROID_CLIENT_ID']!,
+    iosClientId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_CLIENT_ID']!,
+    iosBundleId: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_BUNDLE_ID']!,
+    databaseURL: dotenv.env['JACOBSEN_DEV_FIREBASE_IOS_DATABASE_URL']!,
   );
 
-  static FirebaseOptions iosProd = FirebaseOptions(
-    apiKey: dotenv.env['PROD_FIREBASE_IOS_API_KEY']!,
-    appId: dotenv.env['PROD_FIREBASE_IOS_APP_ID']!,
-    messagingSenderId: dotenv.env['PROD_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
-    projectId: dotenv.env['PROD_FIREBASE_IOS_PROJECT_ID']!,
-    storageBucket: dotenv.env['PROD_FIREBASE_IOS_STORAGE_BUCKET']!,
-    androidClientId: dotenv.env['PROD_FIREBASE_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['PROD_FIREBASE_IOS_CLIENT_ID']!,
-    iosBundleId: dotenv.env['PROD_FIREBASE_IOS_BUNDLE_ID']!,
-    databaseURL: dotenv.env['PROD_FIREBASE_IOS_DATABASE_URL']!,
+  static FirebaseOptions iosJacobsenProd = FirebaseOptions(
+    apiKey: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_API_KEY']!,
+    appId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_APP_ID']!,
+    messagingSenderId:
+        dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_MESSAGING_SENDER_ID']!,
+    projectId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_PROJECT_ID']!,
+    storageBucket: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_STORAGE_BUCKET']!,
+    androidClientId: dotenv.env['JACOBSEN_PROD_FIREBASE_ANDROID_CLIENT_ID']!,
+    iosClientId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_CLIENT_ID']!,
+    iosBundleId: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_BUNDLE_ID']!,
+    databaseURL: dotenv.env['JACOBSEN_PROD_FIREBASE_IOS_DATABASE_URL']!,
   );
 }
