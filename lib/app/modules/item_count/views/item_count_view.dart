@@ -81,6 +81,7 @@ class ItemCountView extends BaseView<ItemCountController> {
     SelectableInventoryListPageArguments pageArguments =
         SelectableInventoryListPageArguments(
       controller: controller,
+      title: appLocalization.homeMenuInventoryCount,
     );
 
     Get.toNamed(

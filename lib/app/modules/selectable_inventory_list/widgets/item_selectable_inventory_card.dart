@@ -151,6 +151,8 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
             inventoryData: inventoryData,
             controller: numberController,
             minAvailableQuantity: _controller.pageArguments.minAvailableProduct,
+            isInventoryCountController:
+                _controller.pageArguments.controller is ItemCountController,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {

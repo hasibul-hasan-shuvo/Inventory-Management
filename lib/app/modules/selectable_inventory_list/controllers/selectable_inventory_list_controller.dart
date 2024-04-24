@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
@@ -54,6 +55,12 @@ class SelectableInventoryListController extends BaseController {
     if (number > data.available &&
         pageArguments.controller is ProductOutController) {
       showErrorMessage(appLocalization.messageItemOutValidation);
+
+      return;
+    }
+
+    if (number > AppValues.maxCountValue) {
+      showErrorMessage(appLocalization.messageMaxCountThresholdValidation);
 
       return;
     }

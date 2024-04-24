@@ -102,6 +102,8 @@
   "placeHolderEmptyOrders": "Ingen bestillings funnet",
   "placeHolderEmptyShoppingCart": "Ingen aktiv handlekurv funnet",
   "placeHolderEmptySuggestedOrders": "Ingen bestillingsforslag",
+  "productIn": "Produkt i",
+  "productOut": "produktet ut",
   "remainingStockAfterWithdrawal": "Resterende beholdning etter uttak",
   "retry": "Prov på nytt",
   "search": "Søk",

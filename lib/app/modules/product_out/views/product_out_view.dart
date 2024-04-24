@@ -70,6 +70,7 @@ class ProductOutView extends BaseView<ProductOutController> {
     SelectableInventoryListPageArguments pageArguments =
         SelectableInventoryListPageArguments(
       controller: controller,
+      title: appLocalization.productOut,
       minAvailableProduct: 1,
     );
 

@@ -19,12 +19,14 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
   final TextEditingController controller;
   final RxInt _numberController = RxInt(0);
   final int minAvailableQuantity;
+  final bool isInventoryCountController;
 
   SelectableInventoryItemEditDialogView({
     super.key,
     required this.inventoryData,
     required this.controller,
     required this.minAvailableQuantity,
+    this.isInventoryCountController = false,
   }) {
     _numberController(controller.text.toInt);
   }
@@ -39,7 +41,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
         _getTitle(),
         _getNumberChangingView(),
         SizedBox(height: AppValues.smallMargin.h),
-        _getAvailableWithTitleView(),
+        if (!isInventoryCountController) _getAvailableWithTitleView(),
       ],
     );
   }

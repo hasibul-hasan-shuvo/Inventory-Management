@@ -38,7 +38,7 @@ class SelectableInventoryListView
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
       isSearchableMode: controller.isSearchable,
-      title: appLocalization.homeMenuSearchItem,
+      title: '${controller.pageArguments.title} - ${appLocalization.inventory}',
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);

@@ -71,6 +71,7 @@ class ProductInView extends BaseView<ProductInController> {
     SelectableInventoryListPageArguments pageArguments =
         SelectableInventoryListPageArguments(
       controller: controller,
+      title: appLocalization.productIn,
     );
 
     Get.toNamed(
