@@ -13,7 +13,7 @@ import '/flavors/environment.dart';
 void main() async {
   EnvConfig prodConfig = EnvConfig(
     appName: "Jacobsen Dental",
-    baseUrl: "https://inventorybe-p372dbld2tofy-webapp.azurewebsites.net",
+    baseUrl: "http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
 
