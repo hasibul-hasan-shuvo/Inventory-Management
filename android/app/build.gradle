@@ -102,12 +102,12 @@ android {
     flavorDimensions = ["default"]
     productFlavors {
         jacobsenDev {
-            resValue "string", "app_name", "Jacobsen Dental Dev"
+            resValue "string", "app_name", "Castra Dev"
             dimension "default"
             applicationIdSuffix ".jacobsen.dev"
         }
         jacobsenProd {
-            resValue "string", "app_name", "Jacobsen Dental"
+            resValue "string", "app_name", "Castra"
             dimension "default"
             applicationIdSuffix ".jacobsen"
         }
