@@ -41,7 +41,7 @@ for data and observes the response. Till then it may display a loader to the use
 
 <b>Model:</b> Model is basically backend logic. It controls the data source.
 
-# To configure and run this project [check here](README_CONFIGURATION_GUIDELINE.md)
+# To configure and run this project [check here](doc/README_CONFIGURATION_GUIDELINE.md)
 
 You will find at above link step by step instructions with screenshots.
 
@@ -75,10 +75,10 @@ Dev: Coming soon...
 
 Prod: Coming soon...
 
-# To get project onboard [check here](README_PROJECT_ONBOARDING.md)
+# To get project onboard [check here](doc/README_PROJECT_ONBOARDING.md)
 
-# [Architectural Decision Records](README_ARCHITECTURAL_DECISION_RECORDS.md)
+# [Architectural Decision Records](doc/README_ARCHITECTURAL_DECISION_RECORDS.md)
 
-# [Incident Reports](README_INCIDENT_REPORTS.md)
+# [Incident Reports](doc/README_INCIDENT_REPORTS.md)
 
-# [Release Overview](README_RELEASE_OVERVIEW.md)
+# [Release Overview](doc/README_RELEASE_OVERVIEW.md)
