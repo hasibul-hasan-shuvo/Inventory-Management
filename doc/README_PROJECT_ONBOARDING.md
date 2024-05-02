@@ -1,4 +1,5 @@
-Before getting the project onboard, please read the [Project architecture and Structure](README.md)
+Before getting the project onboard, please read
+the [Project architecture and Structure](../README.md)
 and [Build Project](README_CONFIGURATION_GUIDELINE.md) first. It’s important to understand the
 architecture properly to work on the project. If you are already done with it let’s dig into it.
 
