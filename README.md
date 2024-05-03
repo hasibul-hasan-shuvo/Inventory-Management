@@ -4,20 +4,6 @@ Dental Inventory description
 
 # Zebra SDK
 
-[//]: # (<b>Full)
-
-[//]: # (documentation:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/home&#41;)
-
-[//]: # ()
-[//]: # (<b>iOS)
-
-[//]: # (integration:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/iOS-ClaySDK-Integration&#41;)
-
-[//]: # ()
-[//]: # (<b>Android)
-
-[//]: # (integration:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/Android-ClaySDK-Integration&#41;)
-
 # Architecture of this project: MVVM
 
 MVVM (Model View ViewModel) is one of the most popular architectural patterns for Android App
@@ -59,21 +45,21 @@ Prod: `flutter run --flavor prod lib/main_prod.dart`
 
 # Base Urls
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net
 
 # API Documentations
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net/api/schema/swagger-ui/
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/api/schema/swagger-ui/
 
 # Admin Panels
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net/admin/
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/admin/
 
 # To get project onboard [check here](doc/README_PROJECT_ONBOARDING.md)
 
