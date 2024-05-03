@@ -1,8 +1,21 @@
 # Dental Inventory Management
 
-Dental Inventory description
+The Dental Inventory Management project is a comprehensive solution designed to streamline inventory
+operations in dental clinics or facilities. Leveraging Zebra devices for efficient scanning
+capabilities, it offers the following features:
+<br>
+<ul>
+<li><b>Inventory Management:</b> Maintain a detailed inventory list with the ability to add, delete, and update inventory items. This ensures accurate tracking of dental supplies and equipment.</li>
+<li><b>Scanning Capabilities:</b> Seamlessly manage product movement by scanning QR codes and barcodes using either the device's camera or the specialized Zebra IR scanner. This feature facilitates quick and error-free product identification during stock in and out processes.
+<li><b>Product Order Suggestion:</b> Utilize intelligent algorithms to analyze inventory levels and suggest product orders based on consumption trends and predefined thresholds. This helps in maintaining optimal stock levels and preventing shortages.</li>
+<li><b>Shopping Cart Integration:</b> Enable users to create and manage shopping carts directly within the application, allowing for convenient ordering of supplies and equipment from Jacobsen.</li>
+<li><b>Integration with ERP Systems:</b> Simplify inventory management by integrating with Enterprise Resource Planning (ERP) systems. This enables automatic synchronization of inventory data, including adding new inventory items and updating existing ones, saving time and reducing manual entry errors.</li>
+<li><b>Order Details:</b> Access comprehensive order details, including order history, status, and itemized lists. Users can track the progress of orders and quickly identify any discrepancies or issues.</li>
+<br>
+<br>
+Overall, the Dental Inventory Management project offers a user-friendly and efficient solution for dental clinics to effectively manage their inventory, optimize stock levels, and streamline procurement processes using advanced scanning technology and intelligent inventory management features.
+</ul>
 
-# Zebra SDK
 
 # Architecture of this project: MVVM
 
