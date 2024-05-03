@@ -75,6 +75,8 @@ Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/admin/
 
 # To get project onboard [check here](doc/README_PROJECT_ONBOARDING.md)
 
+# [Coding Guidelines](doc/README_CODING_GUIDELINES)
+
 # [Architectural Decision Records](doc/README_ARCHITECTURAL_DECISION_RECORDS.md)
 
 # [Incident Reports](doc/README_INCIDENT_REPORTS.md)
