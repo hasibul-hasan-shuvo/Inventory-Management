@@ -13,7 +13,6 @@ capabilities, it offers the following features:
   <li><b>Order Details:</b> Access comprehensive order details, including order history, status, and itemized lists. Users can track the progress of orders and quickly identify any discrepancies or issues.</li>
 </ul>
 <br>
-<br>
 Overall, the Dental Inventory Management project offers a user-friendly and efficient solution for dental clinics to effectively manage their inventory, optimize stock levels, and streamline procurement processes using advanced scanning technology and intelligent inventory management features.
 
 
@@ -75,6 +74,8 @@ Dev: https://devinventorymanagement.azurewebsites.net/admin/
 Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/admin/
 
 # To get project onboard [check here](doc/README_PROJECT_ONBOARDING.md)
+
+# [Coding Guidelines](doc/README_CODING_GUIDELINES.md)
 
 # [Architectural Decision Records](doc/README_ARCHITECTURAL_DECISION_RECORDS.md)
 
