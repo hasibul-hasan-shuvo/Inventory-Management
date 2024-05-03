@@ -5,7 +5,7 @@ operations in dental clinics or facilities. Leveraging Zebra devices for efficie
 capabilities, it offers the following features:
 <br>
 <ul>
-<li><b>Inventory Management:</b> Maintain a detailed inventory list with the ability to add, delete, and update inventory items. This ensures accurate tracking of dental supplies and equipment.</li>
+<li><b>Inventory Management:</b> Maintain a detailed inventory list with the ability to view, delete, and update inventory items. This ensures accurate tracking of dental supplies and equipment.</li>
 <li><b>Scanning Capabilities:</b> Seamlessly manage product movement by scanning QR codes and barcodes using either the device's camera or the specialized Zebra IR scanner. This feature facilitates quick and error-free product identification during stock in and out processes.
 <li><b>Product Order Suggestion:</b> Utilize intelligent algorithms to analyze inventory levels and suggest product orders based on consumption trends and predefined thresholds. This helps in maintaining optimal stock levels and preventing shortages.</li>
 <li><b>Shopping Cart Integration:</b> Enable users to create and manage shopping carts directly within the application, allowing for convenient ordering of supplies and equipment from Jacobsen.</li>
