@@ -21,6 +21,7 @@ conventions, formatting, documentation, and best practices.
     <li>Every page view must be extended the BaseView.</li>
     <li>Every controller must be extended the BaseController.</li>
     <li>Every widgets must be extended with BaseWidgetMixin class.</li>
+    <li>Must be maintain proper indentation in coding.</li>
 </ul>
 
 # General
@@ -28,4 +29,6 @@ conventions, formatting, documentation, and best practices.
 <ul>
     <li>No hard coded texts should be placed in view. All texts must be managed by app localization.</li>
     <li>All styles must be used from theme styles. No custom or hardcoded style should be in view.</li>
+    <li>Try to breakdown views as small as possible. It makes it easy to maintain and debug.</li>
+    <li>Try to breakdown the functions as small as possible.</li>
 </ul>
