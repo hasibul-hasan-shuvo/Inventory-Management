@@ -1,22 +1,20 @@
 # Dental Inventory Management
 
-Dental Inventory description
+The Dental Inventory Management project is a comprehensive solution designed to streamline inventory
+operations in dental clinics or facilities. Leveraging Zebra devices for efficient scanning
+capabilities, it offers the following features:
+<br>
+<ul>
+  <li><b>Inventory Management:</b> Maintain a detailed inventory list with the ability to view, delete, and update inventory items. This ensures accurate tracking of dental supplies and equipment.</li>
+  <li><b>Scanning Capabilities:</b> Seamlessly manage product movement by scanning QR codes and barcodes using either the device's camera or the specialized Zebra IR scanner. This feature facilitates quick and error-free product identification during stock in and out processes.
+  <li><b>Product Order Suggestion:</b> Utilize intelligent algorithms to analyze inventory levels and suggest product orders based on consumption trends and predefined thresholds. This helps in maintaining optimal stock levels and preventing shortages.</li>
+  <li><b>Shopping Cart Integration:</b> Enable users to create and manage shopping carts directly within the application, allowing for convenient ordering of supplies and equipment from Jacobsen.</li>
+  <li><b>Integration with ERP Systems:</b> Simplify inventory management by integrating with Enterprise Resource Planning (ERP) systems. This enables automatic synchronization of inventory data, including adding new inventory items and updating existing ones, saving time and reducing manual entry errors.</li>
+  <li><b>Order Details:</b> Access comprehensive order details, including order history, status, and itemized lists. Users can track the progress of orders and quickly identify any discrepancies or issues.</li>
+</ul>
+<br>
+Overall, the Dental Inventory Management project offers a user-friendly and efficient solution for dental clinics to effectively manage their inventory, optimize stock levels, and streamline procurement processes using advanced scanning technology and intelligent inventory management features.
 
-# Zebra SDK
-
-[//]: # (<b>Full)
-
-[//]: # (documentation:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/home&#41;)
-
-[//]: # ()
-[//]: # (<b>iOS)
-
-[//]: # (integration:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/iOS-ClaySDK-Integration&#41;)
-
-[//]: # ()
-[//]: # (<b>Android)
-
-[//]: # (integration:</b> [Read here]&#40;https://gitlab.com/claysolutions/public/clay-sdk/-/wikis/Android-ClaySDK-Integration&#41;)
 
 # Architecture of this project: MVVM
 
@@ -41,7 +39,7 @@ for data and observes the response. Till then it may display a loader to the use
 
 <b>Model:</b> Model is basically backend logic. It controls the data source.
 
-# To configure and run this project [check here](README_CONFIGURATION_GUIDELINE.md)
+# To configure and run this project [check here](doc/README_CONFIGURATION_GUIDELINE.md)
 
 You will find at above link step by step instructions with screenshots.
 
@@ -59,26 +57,28 @@ Prod: `flutter run --flavor prod lib/main_prod.dart`
 
 # Base Urls
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net
 
 # API Documentations
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net/api/schema/swagger-ui/
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/api/schema/swagger-ui/
 
 # Admin Panels
 
-Dev: Coming soon...
+Dev: https://devinventorymanagement.azurewebsites.net/admin/
 
-Prod: Coming soon...
+Prod: http://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net/admin/
 
-# To get project onboard [check here](README_PROJECT_ONBOARDING.md)
+# To get project onboard [check here](doc/README_PROJECT_ONBOARDING.md)
 
-# [Architectural Decision Records](README_ARCHITECTURAL_DECISION_RECORDS.md)
+# [Coding Guidelines](doc/README_CODING_GUIDELINES.md)
 
-# [Incident Reports](README_INCIDENT_REPORTS.md)
+# [Architectural Decision Records](doc/README_ARCHITECTURAL_DECISION_RECORDS.md)
 
-# [Release Overview](README_RELEASE_OVERVIEW.md)
+# [Incident Reports](doc/README_INCIDENT_REPORTS.md)
+
+# [Release Overview](doc/README_RELEASE_OVERVIEW.md)

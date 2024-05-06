@@ -1,4 +1,4 @@
-package no.inventorymanagement.android
+package no.inventorymanagement
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -10,6 +10,9 @@ import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
+import no.inventorymanagement.android.DataWedgeConfig
+import no.inventorymanagement.android.DataWedgeInterface
+import no.inventorymanagement.android.ScannedData
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

@@ -67,7 +67,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "no.inventorymanagement.android"
+        applicationId "no.inventorymanagement"
         minSdk 21
         minSdkVersion 21
         targetSdkVersion 33
@@ -99,19 +99,20 @@ android {
         jvmTarget = '17'
     }
 
-    flavorDimensions "default"
+    flavorDimensions = ["default"]
     productFlavors {
-        dev {
-            resValue "string", "app_name", "Dental Inventory Dev"
+        jacobsenDev {
+            resValue "string", "app_name", "Castra Dev"
             dimension "default"
-            applicationIdSuffix ".dev"
+            applicationIdSuffix ".jacobsen.dev"
         }
-        prod {
-            resValue "string", "app_name", "Dental Inventory"
+        jacobsenProd {
+            resValue "string", "app_name", "Castra"
             dimension "default"
+            applicationIdSuffix ".jacobsen"
         }
     }
-    namespace 'no.inventorymanagement.android'
+    namespace 'no.inventorymanagement'
     lint {
         checkReleaseBuilds false
     }

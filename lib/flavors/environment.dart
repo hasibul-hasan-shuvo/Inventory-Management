@@ -1,1 +1,4 @@
-enum Environment { DEVELOPMENT, PRODUCTION,QA }
+enum Environment {
+  JACOBSEN_DEVELOPMENT,
+  JACOBSEN_PRODUCTION,
+}
