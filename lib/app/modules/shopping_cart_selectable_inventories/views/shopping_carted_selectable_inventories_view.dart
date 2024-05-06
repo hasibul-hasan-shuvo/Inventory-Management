@@ -41,7 +41,7 @@ class ShoppingCartSelectableInventoriesView
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
       isSearchableMode: controller.isSearchable,
-      title: appLocalization.homeMenuSearchItem,
+      title: '${controller.pageArguments.title} - ${appLocalization.inventory}',
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);
@@ -62,25 +62,22 @@ class ShoppingCartSelectableInventoriesView
       enablePullDown: false,
       enablePullUp: controller.pagingController.canLoadNextPage(),
       onLoading: controller.onLoading,
-      child: Obx(() => ListView.builder(
-            padding: EdgeInsets.symmetric(
-              vertical: AppValues.padding.h,
-              horizontal: AppValues.padding.w,
-            ),
-            shrinkWrap: true,
-            itemCount: controller.inventoryItems.length,
-            itemBuilder: (context, index) {
-              return _buildInventoryCard(controller.inventoryItems[index]);
-            },
-          )),
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: AppValues.padding.h,
+          horizontal: AppValues.padding.w,
+        ),
+        shrinkWrap: true,
+        itemCount: controller.inventoryItems.length,
+        itemBuilder: (context, index) {
+          return _buildInventoryCard(controller.inventoryItems[index]);
+        },
+      ),
     );
   }
 
   Widget _buildInventoryCard(SelectableInventoryItemUiModel inventoryData) =>
-      GestureDetector(
-          onTap: () {
-            Get.back(result: inventoryData.itemId);
-          },
-          child: ShoppingCartItemSelectableInventoryCard(
-              inventoryData: inventoryData));
+      ShoppingCartItemSelectableInventoryCard(
+        inventoryData: inventoryData,
+      );
 }

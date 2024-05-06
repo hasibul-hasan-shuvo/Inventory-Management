@@ -13,44 +13,43 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class SelectableInventoryItemEditDialogView extends StatelessWidget
+class ShoppingCartSelectableInventoryEditDialogView extends StatelessWidget
     with BaseWidgetMixin {
-  final SelectableInventoryItemUiModel inventoryData;
-  final TextEditingController controller;
-  final RxInt _numberController = RxInt(0);
-  final int minAvailableQuantity;
-  final bool isInventoryCountController;
+  final TextEditingController numberController;
+  final SelectableInventoryItemUiModel data;
+  final String? suggestionLabel;
 
-  SelectableInventoryItemEditDialogView({
+  final RxInt _suggestionController = RxInt(0);
+
+  ShoppingCartSelectableInventoryEditDialogView({
     super.key,
-    required this.inventoryData,
-    required this.controller,
-    required this.minAvailableQuantity,
-    this.isInventoryCountController = false,
+    required this.numberController,
+    required this.data,
+    this.suggestionLabel,
   }) {
-    _numberController(controller.text.toInt);
+    _suggestionController(numberController.text.toInt);
   }
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _getProductTopView(),
-        _getTitle(),
-        _getNumberChangingView(),
-        SizedBox(height: AppValues.smallMargin.h),
-        if (!isInventoryCountController) _getAvailableWithTitleView(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getProductTopView(),
+          _getTitle(),
+          _getNumberChangingView(),
+        ],
+      ),
     );
   }
 
   Widget _getProductTopView() {
     return ProductTopView(
-      id: inventoryData.itemId,
-      name: inventoryData.name,
-      imageUrl: inventoryData.imageUrl,
+      id: data.id.toString(),
+      name: data.name,
+      imageUrl: data.imageUrl,
     );
   }
 
@@ -64,33 +63,54 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     );
   }
 
-  Widget _getAvailableWithTitleView() {
-    return Obx(
-      () => Text(
-        "${minAvailableQuantity == 0 ? appLocalization.titleEditProductInAvailableCount : appLocalization.titleEditProductOutAvailableCount}: $latestStock",
-        style: textTheme.bodyMedium,
-      ),
-    ).marginSymmetric(horizontal: AppValues.smallMargin.w);
-  }
-
   Widget _getNumberChangingView() {
     return ElevatedContainer(
       bgColor: theme.colorScheme.background,
       borderRadius: AppValues.radius_6.r,
-      child: _buildNumberChangerView().paddingSymmetric(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getTitleAndValue(
+            appLocalization.inventory,
+            "${data.available}",
+          ),
+          _getTitleAndValue(
+            suggestionLabel ?? appLocalization.labelSuggestion,
+            (data.connectedCartItem == null
+                    ? 0
+                    : data.connectedCartItem!.quantity)
+                .toString(),
+          ),
+          const Divider(),
+          _getSuggestionChangerAndPriceView(),
+        ],
+      ).paddingSymmetric(
         vertical: AppValues.padding.h,
       ),
     );
   }
 
-  Widget _buildNumberChangerView() {
+  Widget _getTitleAndValue(
+    String title,
+    String value,
+  ) {
+    return Text(
+      "$title: $value",
+      style: textTheme.bodyMedium,
+    ).marginSymmetric(
+      horizontal: AppValues.margin.w,
+    );
+  }
+
+  Widget _getSuggestionChangerAndPriceView() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _getDecrementButton(),
-        _getNumberView(),
+        _getSuggestion(),
         _getIncrementButton(),
       ],
-    ).marginSymmetric(horizontal: AppValues.margin.w);
+    );
   }
 
   Widget _getDecrementButton() {
@@ -101,7 +121,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
           fileName: AppIcons.roundedMinus,
           height: AppValues.iconLargeSize.h,
           width: AppValues.iconLargeSize.h,
-          color: _isDecrementButtonEnabled
+          color: _suggestionController.value > 0
               ? theme.colorScheme.primary
               : AppColors.basicGrey,
         ),
@@ -125,31 +145,27 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
     );
   }
 
-  Widget _getNumberView() {
+  Widget _getSuggestion() {
     return TextFieldWithTitle(
-      controller: controller,
+      controller: numberController,
       onChangedValue: (String value) {
-        _numberController(value.toInt);
+        _suggestionController(value.toInt);
       },
     );
   }
 
   void _onTapDecrement() {
-    _numberController(_numberController.value - 1);
-    controller.text = _numberController.value.toString();
+    _suggestionController(_suggestionController.value - 1);
+    numberController.text = _suggestionController.value.toString();
   }
 
   void _onTapIncrement() {
-    _numberController(_numberController.value + 1);
-    controller.text = _numberController.value.toString();
+    _suggestionController(_suggestionController.value + 1);
+    numberController.text = _suggestionController.value.toString();
   }
 
-  bool get _isDecrementButtonEnabled => _numberController.value > 0;
+  bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
 
   bool get _isIncrementButtonEnabled =>
-      (latestStock > 0 && _numberController.value < AppValues.maxCountValue);
-
-  int get latestStock => minAvailableQuantity == 0
-      ? inventoryData.available + _numberController.value
-      : inventoryData.available - _numberController.value;
+      _suggestionController.value < AppValues.maxCountValue;
 }

@@ -1,7 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
-import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -151,101 +150,5 @@ class SelectableInventoryListController extends BaseController {
               .toList() ??
           [],
     );
-  }
-
-  void updateInventoryData({
-    required SelectableInventoryItemUiModel data,
-    required String maxCount,
-    required String minCount,
-    required String stockCount,
-    required String fixedSuggestion,
-  }) {
-    if (_checkValuesValidity(
-      maxCount: maxCount,
-      minCount: minCount,
-      stockCount: stockCount,
-      fixedSuggestion: fixedSuggestion,
-    )) {
-      final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-        id: data.itemId,
-        maxCount: maxCount,
-        minCount: minCount,
-        stockCount: stockCount,
-        inventoryID: authRepository.getInventoryID(),
-        fixedSuggestion: fixedSuggestion,
-      );
-      callDataService(
-        _inventoryRepository.updateInventoryData(request),
-        onSuccess: _handleUpdateInventoryDataSuccessResponse,
-      );
-    }
-  }
-
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
-    for (var element in inventoryItems) {
-      if (element.itemId == response.product?.itemId.toString()) {
-        element.updateFromInventoryResponse(response);
-      }
-    }
-
-    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
-  }
-
-  bool _checkValuesValidity({
-    required String maxCount,
-    required String minCount,
-    required String stockCount,
-    required String fixedSuggestion,
-  }) {
-    if (!maxCount.isPositiveIntegerNumber) {
-      _showInvalidValueErrorMessage(appLocalization.max);
-
-      return false;
-    }
-
-    if (!minCount.isPositiveIntegerNumber) {
-      _showInvalidValueErrorMessage(appLocalization.min);
-
-      return false;
-    }
-
-    if (!stockCount.isPositiveIntegerNumber) {
-      _showInvalidValueErrorMessage(appLocalization.inventory);
-
-      return false;
-    }
-
-    if (!fixedSuggestion.isPositiveIntegerNumber) {
-      _showInvalidValueErrorMessage(appLocalization.fixedProposal);
-
-      return false;
-    }
-
-    if (!_checkMaxMinValidity(maxCount, minCount)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  bool _checkMaxMinValidity(String max, String min) {
-    try {
-      int maxCount = max.toInt;
-      int minCount = min.toInt;
-
-      if (maxCount < minCount) {
-        showErrorMessage(appLocalization.messageMaxMinValidation);
-
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  void _showInvalidValueErrorMessage(String itemName) {
-    showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
 }

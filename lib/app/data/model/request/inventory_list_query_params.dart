@@ -5,11 +5,13 @@ class InventoryListQueryParams {
     this.search,
     this.page,
     this.minAvailableQuantity,
+    this.isIncludeCountInCart = false,
   });
 
   String? search;
   int? page;
   int? minAvailableQuantity;
+  bool isIncludeCountInCart;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -18,6 +20,9 @@ class InventoryListQueryParams {
     map['page_size'] = AppValues.defaultPageSize;
     if (minAvailableQuantity != null) {
       map['min_stock_count'] = minAvailableQuantity;
+    }
+    if (isIncludeCountInCart) {
+      map['include_count_in_cart'] = isIncludeCountInCart;
     }
 
     return map;

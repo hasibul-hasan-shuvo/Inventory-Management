@@ -8,6 +8,7 @@ import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/model/shopping_cart_selectable_inventory_page_arguments.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,15 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   void _onPressedList() {
-    Get.toNamed(Routes.SHOPPING_CART_SELECTABLE_INVENTORIES);
+    ShoppingCartSelectableInventoryPageArguments pageArguments =
+        ShoppingCartSelectableInventoryPageArguments(
+            controller: controller,
+            title: appLocalization.homeMenuShoppingCart,
+            isIncludeCountInCart: true);
+    Get.toNamed(
+      Routes.SHOPPING_CART_SELECTABLE_INVENTORIES,
+      arguments: pageArguments,
+    );
   }
 
   List<Widget> _getActions(BuildContext context) {
