@@ -20,6 +20,10 @@ class GlobalInventoriesController extends BaseController {
 
   List<GlobalInventoryUiModel> get inventories => _inventoriesController;
 
+  final Rx<GlobalInventoryUiModel?> addInventoryController = Rx(null);
+
+  final Rx<GlobalInventoryUiModel?> alternativeInventoryController = Rx(null);
+
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     _searchQueryController('');
@@ -51,21 +55,33 @@ class GlobalInventoriesController extends BaseController {
     );
   }
 
-  void _getInventoryData(String id) {
+  void _getInventoryData(String id, bool isAlternativeProduct) {
     callDataService(
       _repository.getGlobalInventory(id),
-      onSuccess: _handleGetInventoryDataSuccessResponse,
+      onSuccess: (response) => _handleGetInventoryDataSuccessResponse(
+        response,
+        isAlternativeProduct,
+      ),
     );
   }
 
   void _handleGetInventoryDataSuccessResponse(
-      GlobalInventoryResponse response) {
-    // TODO: Process unavailable flow
+    GlobalInventoryResponse response,
+    bool isAlternativeProduct,
+  ) {
+    GlobalInventoryUiModel data =
+        GlobalInventoryUiModel.fromGlobalInventoryResponse(response);
+
+    if (isAlternativeProduct) {
+      alternativeInventoryController.trigger(data);
+    } else {
+      addInventoryController.trigger(data);
+    }
   }
 
-  void createInventory(String itemId) {
+  void createInventory(GlobalInventoryUiModel data) {
     CreateInventoryRequestBody requestBody =
-        CreateInventoryRequestBody(itemId: itemId);
+        CreateInventoryRequestBody(itemId: data.itemId);
 
     callDataService(
       _repository.createInventory(requestBody),
@@ -79,9 +95,29 @@ class GlobalInventoriesController extends BaseController {
     }
   }
 
+  void onTapAddProduct(GlobalInventoryUiModel data) {
+    if (data.isOutdated && data.alternativeProductId.isEmpty) {
+      showErrorMessage(appLocalization.messageInventoryUnavailable);
+
+      return;
+    }
+
+    if (data.isOutdated && data.alternativeProductId.isNotEmpty) {
+      _getInventoryData(
+        data.alternativeProductId,
+        true,
+      );
+    } else {
+      addInventoryController.trigger(data);
+    }
+  }
+
   void onScanned(String? code) {
     if (code != null) {
-      createInventory(code);
+      _getInventoryData(
+        code,
+        false,
+      );
     }
   }
 }

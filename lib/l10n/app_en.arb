@@ -59,6 +59,7 @@
       }
     }
   },
+  "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",

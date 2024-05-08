@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/global_inventories/widgets/item_global_inventory_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       closeKeyboard();
       controller.onScanned(code);
     });
+    _subscribeAddInventoryController();
+    _subscribeUnavailableInventoryController();
   }
 
   @override
@@ -91,6 +94,25 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       Routes.SCANNER,
     )?.then((code) {
       controller.onScanned(code);
+    });
+  }
+
+  void _subscribeAddInventoryController() {
+    controller.addInventoryController.listen((GlobalInventoryUiModel? data) {
+      if (data != null) {
+        // TODO: show add inventory dialog
+        logger.d("Adding: ${data.itemId}");
+      }
+    });
+  }
+
+  void _subscribeUnavailableInventoryController() {
+    controller.alternativeInventoryController
+        .listen((GlobalInventoryUiModel? data) {
+      if (data != null) {
+        // TODO: show unavailable inventory dialog
+        logger.d("Alternative: ${data.itemId}");
+      }
     });
   }
 }

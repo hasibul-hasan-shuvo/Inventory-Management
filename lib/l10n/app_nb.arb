@@ -59,6 +59,7 @@
       }
     }
   },
+  "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
