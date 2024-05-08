@@ -20,12 +20,6 @@ class GlobalInventoriesController extends BaseController {
 
   List<GlobalInventoryUiModel> get inventories => _inventoriesController;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _getInventoryData("100103");
-  }
-
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     _searchQueryController('');
