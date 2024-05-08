@@ -82,10 +82,10 @@ class GlobalInventoriesController extends BaseController {
 
   void createInventory({
     required GlobalInventoryUiModel data,
-    required String maxCount,
-    required String minCount,
-    required String stockCount,
-    required String fixedSuggestion,
+    String maxCount = '',
+    String minCount = '',
+    String stockCount = '',
+    String fixedSuggestion = '',
   }) {
     if (_checkValuesValidity(
       maxCount: maxCount,
