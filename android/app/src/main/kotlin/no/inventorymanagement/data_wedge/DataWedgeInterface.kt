@@ -1,4 +1,4 @@
-package no.inventorymanagement.android
+package no.inventorymanagement.data_wedge
 
 import android.content.Context
 import android.content.Intent
