@@ -85,10 +85,16 @@ class MainActivity : FlutterActivity() {
 
 
     private fun createDataWedgeProfile() {
+        val appName = packageManager
+            .getApplicationLabel(applicationInfo)
+            .toString()
+            .replace(" ", "")
+
+
         dataWedgeInterface.sendCommandString(
             this,
             DataWedgeInterface.DATA_WEDGE_SEND_CREATE_PROFILE,
-            DataWedgeConfig.PROFILE_NAME
+            appName
         )
 
         val barcodeConfig = DataWedgeConfig.getBarcodeConfig()
