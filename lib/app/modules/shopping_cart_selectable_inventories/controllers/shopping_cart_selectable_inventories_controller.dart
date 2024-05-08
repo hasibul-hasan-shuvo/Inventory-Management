@@ -205,12 +205,11 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
   void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
     pagingController.nextPage();
     pagingController.isLastPage = response.next == null;
-    _inventoryItemsController.addAll(
-      response.inventoryList
-              ?.map((e) => SelectableInventoryItemUiModel
-                  .fromShoppingProductResponseModel(e))
-              .toList() ??
-          [],
-    );
+    _inventoryItemsController.addAll(response.inventoryList
+            ?.map((e) =>
+                SelectableInventoryItemUiModel.fromShoppingProductResponseModel(
+                    e))
+            .toList() ??
+        []);
   }
 }
