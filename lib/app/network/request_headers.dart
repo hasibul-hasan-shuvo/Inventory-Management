@@ -35,7 +35,7 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == HttpStatus.unauthorized) {
-      String refreshToken = _repository.getAccessToken();
+      String refreshToken = _repository.getRefreshToken();
       if (err.requestOptions.path.contains(EndPoints.refreshToken)) {
         super.onError(err, handler);
       } else if (refreshToken.isNotEmpty) {
