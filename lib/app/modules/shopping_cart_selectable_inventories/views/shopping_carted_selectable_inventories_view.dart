@@ -69,7 +69,7 @@ class ShoppingCartSelectableInventoriesView
         ),
         shrinkWrap: true,
         itemCount: controller.inventoryItems.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) {
           return _buildInventoryCard(
             controller.inventoryItems[index],
           );

@@ -1,4 +1,3 @@
-import 'package:dental_inventory/app/data/model/response/connected_cart_tem.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class InventoryListResponse {
@@ -23,7 +22,7 @@ class InventoryListResponse {
 class InventoryResponse {
   int? id;
   ProductResponse? product;
-  ConnectedCartItem? connectedCartItem;
+  ConnectedCartItemResponse? connectedCartItem;
   String? created;
   String? modified;
   int? maxCount;
@@ -38,7 +37,7 @@ class InventoryResponse {
         ? ProductResponse.fromJson(json['product'])
         : null;
     connectedCartItem = json['connected_cart_item'] != null
-        ? ConnectedCartItem.fromJson(json['connected_cart_item'])
+        ? ConnectedCartItemResponse.fromJson(json['connected_cart_item'])
         : null;
     created = json['created'];
     modified = json['modified'];
@@ -48,4 +47,14 @@ class InventoryResponse {
     fixedSuggestion = json['fixed_suggestion'];
     inventory = json['inventory'];
   }
+}
+
+class ConnectedCartItemResponse {
+  ConnectedCartItemResponse.fromJson(dynamic json) {
+    id = json['id'];
+    quantity = json['quantity'];
+  }
+
+  int? id;
+  int? quantity;
 }

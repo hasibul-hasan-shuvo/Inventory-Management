@@ -1,5 +1,5 @@
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/connected_cart_tem.dart';
+import 'package:dental_inventory/app/data/model/response/connected_cart_item.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 
 class SelectableInventoryItemUiModel {
@@ -9,7 +9,7 @@ class SelectableInventoryItemUiModel {
   late final String imageUrl;
   late int number;
   late final int available;
-  late ConnectedCartItem? connectedCartItem;
+  late ConnectedCartItemUiModel connectedCartItem;
 
   SelectableInventoryItemUiModel.fromProductResponseModel(
       InventoryResponse response) {
@@ -29,23 +29,25 @@ class SelectableInventoryItemUiModel {
     imageUrl = response.product?.imageUrl ?? '';
     number = 0;
     available = response.stockCount ?? 0;
-    connectedCartItem = response.connectedCartItem;
+    connectedCartItem = ConnectedCartItemUiModel.fromConnectedCartItemResponse(
+      response.connectedCartItem,
+    );
   }
 
   void updateNumber(int newNumber) {
     number = newNumber;
   }
 
-  void addCartItem(ConnectedCartItem newCartedItem) {
+  void addCartItem(ConnectedCartItemUiModel newCartedItem) {
     connectedCartItem = newCartedItem;
   }
 
   void updateCartItem(int newQuantity) {
-    connectedCartItem!.quantity = newQuantity;
+    connectedCartItem.quantity = newQuantity;
   }
 
   void deleteCartItem() {
-    connectedCartItem = null;
+    connectedCartItem = ConnectedCartItemUiModel.empty();
   }
 
   ScannedProductsRequestBody toScannedProductsRequestBody(bool isPositive) {

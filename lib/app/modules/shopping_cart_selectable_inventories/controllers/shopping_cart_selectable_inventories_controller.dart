@@ -2,7 +2,7 @@ import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
-import 'package:dental_inventory/app/data/model/response/connected_cart_tem.dart';
+import 'package:dental_inventory/app/data/model/response/connected_cart_item.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -62,10 +62,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
   ) {
     pageArguments.controller.onItemAdded(response);
     data.addCartItem(
-      ConnectedCartItem.fromResponseModel(
-        response.id!,
-        response.quantity!,
-      ),
+      ConnectedCartItemUiModel.fromShoppingCartResponse(response),
     );
     _inventoryItemsController.refresh();
   }
@@ -81,7 +78,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
 
     callDataService(
       _shoppingCartRepository.updateItemInShoppingCart(
-        data.connectedCartItem!.id.toString(),
+        data.connectedCartItem.id.toString(),
         requestBody,
       ),
       onSuccess: (response) => _handleUpdateCartSuccessResponse(
@@ -101,17 +98,19 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
   }
 
   void _deleteCartItem(SelectableInventoryItemUiModel data) {
-    callDataService(
-      _shoppingCartRepository.deleteItemFromShoppingCart(
-        data.connectedCartItem!.id.toString(),
-      ),
-      onSuccess: (_) => _handleDeleteCartSuccessResponse(data),
-    );
+    if (data.connectedCartItem.isCartedItem()) {
+      callDataService(
+        _shoppingCartRepository.deleteItemFromShoppingCart(
+          data.connectedCartItem.id.toString(),
+        ),
+        onSuccess: (_) => _handleDeleteCartSuccessResponse(data),
+      );
+    }
   }
 
   void _handleDeleteCartSuccessResponse(SelectableInventoryItemUiModel data) {
     pageArguments.controller.handleDeleteCartItemSuccessResponse(
-      data.connectedCartItem!.id!,
+      data.connectedCartItem.id,
     );
     data.deleteCartItem();
     _inventoryItemsController.refresh();
@@ -132,7 +131,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
     if (number == 0) {
       _deleteCartItem(data);
     } else {
-      if (data.connectedCartItem == null) {
+      if (!data.connectedCartItem.isCartedItem()) {
         _addCartItem(data, number);
       } else {
         _updateCartItem(data, number);
@@ -177,9 +176,10 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
     pagingController.nextPage();
     pagingController.isLastPage = response.next == null;
     List<SelectableInventoryItemUiModel> list = response.inventoryList
-            ?.map((e) =>
-                SelectableInventoryItemUiModel.fromShoppingProductResponseModel(
-                    e))
+            ?.map(
+              (e) => SelectableInventoryItemUiModel
+                  .fromShoppingProductResponseModel(e),
+            )
             .toList() ??
         [];
 
