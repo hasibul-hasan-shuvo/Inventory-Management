@@ -10,9 +10,9 @@ import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
-import no.inventorymanagement.android.DataWedgeConfig
-import no.inventorymanagement.android.DataWedgeInterface
-import no.inventorymanagement.android.ScannedData
+import no.inventorymanagement.data_wedge.DataWedgeConfig
+import no.inventorymanagement.data_wedge.DataWedgeInterface
+import no.inventorymanagement.data_wedge.ScannedData
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
