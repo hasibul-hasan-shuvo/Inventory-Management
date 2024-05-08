@@ -1,6 +1,6 @@
-package no.inventorymanagement.android
+package no.inventorymanagement.data_wedge
 
-import org.json.JSONObject;
+import org.json.JSONObject
 
 data class ScannedData(
     val data: String?,
@@ -14,6 +14,6 @@ data class ScannedData(
                 "symbology" to symbology,
                 "date_time" to dateTime
             )
-        ).toString();
+        ).toString()
     }
 }
