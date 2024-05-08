@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -79,14 +80,32 @@ class GlobalInventoriesController extends BaseController {
     }
   }
 
-  void createInventory(GlobalInventoryUiModel data) {
-    CreateInventoryRequestBody requestBody =
-        CreateInventoryRequestBody(itemId: data.itemId);
+  void createInventory({
+    required GlobalInventoryUiModel data,
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (_checkValuesValidity(
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      fixedSuggestion: fixedSuggestion,
+    )) {
+      CreateInventoryRequestBody requestBody = CreateInventoryRequestBody(
+        itemId: data.itemId,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        fixedSuggestion: fixedSuggestion,
+      );
 
-    callDataService(
-      _repository.createInventory(requestBody),
-      onSuccess: _handleCreateInventorySuccessResponse,
-    );
+      callDataService(
+        _repository.createInventory(requestBody),
+        onSuccess: _handleCreateInventorySuccessResponse,
+      );
+    }
   }
 
   void _handleCreateInventorySuccessResponse(InventoryResponse response) {
@@ -119,5 +138,71 @@ class GlobalInventoriesController extends BaseController {
         false,
       );
     }
+  }
+
+  bool _checkValuesValidity({
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (maxCount.isEmpty &&
+        minCount.isEmpty &&
+        stockCount.isEmpty &&
+        fixedSuggestion.isEmpty) {
+      return true;
+    }
+
+    if (!maxCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.max);
+
+      return false;
+    }
+
+    if (!minCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.min);
+
+      return false;
+    }
+
+    if (stockCount.isNotNullOrEmpty && !stockCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.inventory);
+
+      return false;
+    }
+
+    if (fixedSuggestion.isNotNullOrEmpty &&
+        !fixedSuggestion.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.fixedProposal);
+
+      return false;
+    }
+
+    if (!_checkMaxMinValidity(maxCount, minCount)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _checkMaxMinValidity(String max, String min) {
+    try {
+      int maxCount = max.toInt;
+      int minCount = min.toInt;
+
+      if (maxCount < minCount) {
+        showErrorMessage(appLocalization.messageMaxMinValidation);
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void _showInvalidValueErrorMessage(String itemName) {
+    showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
 }
