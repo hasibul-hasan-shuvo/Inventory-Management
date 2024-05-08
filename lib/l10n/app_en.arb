@@ -66,6 +66,15 @@
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "messageMaxCountThresholdValidation": "Number can't be more than 999",
   "messageMaxMinValidation": "Max value can't less than min value",
+  "messageUnavailableProduct": "{itemId} is unfortunately not available",
+  "@messageUnavailableProduct": {
+    "placeholders": {
+      "itemId": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUnavailableProductRecommendation": "We recommend adding instead",
   "min": "Min",
   "mustBe11DigitsLong": "Must be 11 digits long",
   "no": "No",
@@ -125,6 +134,7 @@
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
   "titleScannerView": "Barcode scanner",
+  "titleUnavailableProduct": "Products are unavailable!",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",

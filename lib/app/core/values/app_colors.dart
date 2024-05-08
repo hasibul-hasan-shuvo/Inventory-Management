@@ -6,7 +6,7 @@ abstract class AppColors {
   static const Color colorWhite = Color(0xFFFFFFFF);
   static const Color colorBlack = Color(0xFF000000);
   static const Color lightGreyColor = Color(0xFFC4C4C4);
-  static const Color errorColor = Color(0xFFba1a1a);
+  static const Color errorColor = Color(0xFFE36161);
   static const Color errorColorDark = Color(0xFFffb4ab);
 
   static const Color defaultRippleColor = Color(0x0338686A);

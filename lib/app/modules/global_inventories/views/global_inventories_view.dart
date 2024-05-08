@@ -1,12 +1,15 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/global_inventories/widgets/global_inventory_add_dialog_view.dart';
+import 'package:dental_inventory/app/modules/global_inventories/widgets/global_unavailable_inventory_dialog_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/widgets/item_global_inventory_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +116,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
 
   void _subscribeUnavailableInventoryController() {
     controller.alternativeInventoryController
-        .listen((GlobalInventoryUiModel? data) {
+        .listen((GlobalUnavailableProductUiModel? data) {
       if (data != null) {
         _showAlternativeInventoryDialog(data);
       }
@@ -156,12 +159,31 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           );
         },
       );
+      controller.addInventoryController(null);
     }
   }
 
-  void _showAlternativeInventoryDialog(GlobalInventoryUiModel data) {
+  void _showAlternativeInventoryDialog(GlobalUnavailableProductUiModel data) {
     if (_context != null) {
-      // TODO: show alternative product dialog
+      showDialog(
+        context: _context!,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AppDialog(
+            title: appLocalization.titleUnavailableProduct,
+            content: GlobalUnavailableInventoryDialogView(data: data),
+            headerColor: AppColors.errorColor,
+            isCancelable: false,
+            negativeButtonIcon: Icons.close,
+            negativeButtonText: appLocalization.cancel,
+            positiveButtonText: appLocalization.buttonTextAddProduct,
+            onPositiveButtonTap: () {
+              controller.createInventory(data: data.availableProduct);
+            },
+          );
+        },
+      );
+      controller.alternativeInventoryController(null);
     }
   }
 }

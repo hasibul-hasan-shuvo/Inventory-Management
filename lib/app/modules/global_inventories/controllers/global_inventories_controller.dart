@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/data/model/response/global_inventory_respon
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
 import 'package:get/get.dart';
 
 class GlobalInventoriesController extends BaseController {
@@ -23,7 +24,8 @@ class GlobalInventoriesController extends BaseController {
 
   final Rx<GlobalInventoryUiModel?> addInventoryController = Rx(null);
 
-  final Rx<GlobalInventoryUiModel?> alternativeInventoryController = Rx(null);
+  final Rx<GlobalUnavailableProductUiModel?> alternativeInventoryController =
+      Rx(null);
 
   void changeSearchMode() {
     _searchModeController(!isSearchable);
@@ -56,11 +58,16 @@ class GlobalInventoriesController extends BaseController {
     );
   }
 
-  void _getInventoryData(String id, bool isAlternativeProduct) {
+  void _getInventoryData({
+    required String availableProductId,
+    String unavailableProductId = '',
+    bool isAlternativeProduct = false,
+  }) {
     callDataService(
-      _repository.getGlobalInventory(id),
+      _repository.getGlobalInventory(availableProductId),
       onSuccess: (response) => _handleGetInventoryDataSuccessResponse(
         response,
+        unavailableProductId,
         isAlternativeProduct,
       ),
     );
@@ -68,13 +75,19 @@ class GlobalInventoriesController extends BaseController {
 
   void _handleGetInventoryDataSuccessResponse(
     GlobalInventoryResponse response,
+    String unavailableProductId,
     bool isAlternativeProduct,
   ) {
     GlobalInventoryUiModel data =
         GlobalInventoryUiModel.fromGlobalInventoryResponse(response);
 
     if (isAlternativeProduct) {
-      alternativeInventoryController.trigger(data);
+      alternativeInventoryController.trigger(
+        GlobalUnavailableProductUiModel(
+          unavailableProductId: unavailableProductId,
+          availableProduct: data,
+        ),
+      );
     } else {
       addInventoryController.trigger(data);
     }
@@ -123,8 +136,9 @@ class GlobalInventoriesController extends BaseController {
 
     if (data.isOutdated && data.alternativeProductId.isNotEmpty) {
       _getInventoryData(
-        data.alternativeProductId,
-        true,
+        availableProductId: data.alternativeProductId,
+        unavailableProductId: data.itemId,
+        isAlternativeProduct: true,
       );
     } else {
       addInventoryController.trigger(data);
@@ -133,10 +147,7 @@ class GlobalInventoriesController extends BaseController {
 
   void onScanned(String? code) {
     if (code != null) {
-      _getInventoryData(
-        code,
-        false,
-      );
+      _getInventoryData(availableProductId: code);
     }
   }
 
