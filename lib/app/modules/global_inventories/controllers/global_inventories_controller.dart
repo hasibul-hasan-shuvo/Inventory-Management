@@ -20,6 +20,12 @@ class GlobalInventoriesController extends BaseController {
 
   List<GlobalInventoryUiModel> get inventories => _inventoriesController;
 
+  @override
+  void onInit() {
+    super.onInit();
+    _getInventoryData("100103");
+  }
+
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     _searchQueryController('');
@@ -49,6 +55,18 @@ class GlobalInventoriesController extends BaseController {
           .map((e) => GlobalInventoryUiModel.fromGlobalInventoryResponse(e))
           .toList(),
     );
+  }
+
+  void _getInventoryData(String id) {
+    callDataService(
+      _repository.getGlobalInventory(id),
+      onSuccess: _handleGetInventoryDataSuccessResponse,
+    );
+  }
+
+  void _handleGetInventoryDataSuccessResponse(
+      GlobalInventoryResponse response) {
+    // TODO: Process unavailable flow
   }
 
   void createInventory(String itemId) {

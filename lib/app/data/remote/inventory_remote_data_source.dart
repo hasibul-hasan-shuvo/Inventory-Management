@@ -23,6 +23,8 @@ abstract class InventoryRemoteDataSource {
 
   Future<List<GlobalInventoryResponse>> getGlobalInventoryList(String query);
 
+  Future<GlobalInventoryResponse> getGlobalInventory(String id);
+
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody);
 }
