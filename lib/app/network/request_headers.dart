@@ -13,7 +13,6 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     getCustomHeaders().then((customHeaders) {
       options.headers.addAll(customHeaders);
-      print("OnRequest");
       super.onRequest(options, handler);
     });
   }
