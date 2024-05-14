@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dental_inventory/flavors/environment.dart';
+import 'package:flutter/foundation.dart';
 
 import '/app/network/pretty_dio_logger.dart';
 import '/app/network/request_headers.dart';
@@ -12,13 +12,14 @@ class DioProvider {
 
   static const int _maxLineWidth = 90;
   static final _prettyDioLogger = PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: BuildConfig.instance.environment == Environment.DEVELOPMENT,
-      responseHeader: false,
-      error: true,
-      compact: true,
-      maxWidth: _maxLineWidth);
+    requestHeader: kDebugMode,
+    requestBody: kDebugMode,
+    responseBody: kDebugMode,
+    responseHeader: kDebugMode,
+    error: true,
+    compact: true,
+    maxWidth: _maxLineWidth,
+  );
 
   static final BaseOptions _options = BaseOptions(
     baseUrl: baseUrl,

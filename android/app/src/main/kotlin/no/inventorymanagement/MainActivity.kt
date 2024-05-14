@@ -1,4 +1,4 @@
-package no.inventorymanagement.android
+package no.inventorymanagement
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -10,6 +10,9 @@ import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
+import no.inventorymanagement.data_wedge.DataWedgeConfig
+import no.inventorymanagement.data_wedge.DataWedgeInterface
+import no.inventorymanagement.data_wedge.ScannedData
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -82,10 +85,18 @@ class MainActivity : FlutterActivity() {
 
 
     private fun createDataWedgeProfile() {
+        val appName = packageManager
+            .getApplicationLabel(applicationInfo)
+            .toString()
+
+
+        val profileName = appName.replace(" ", "")
+
+
         dataWedgeInterface.sendCommandString(
             this,
             DataWedgeInterface.DATA_WEDGE_SEND_CREATE_PROFILE,
-            DataWedgeConfig.PROFILE_NAME
+            profileName
         )
 
         val barcodeConfig = DataWedgeConfig.getBarcodeConfig()
@@ -93,7 +104,7 @@ class MainActivity : FlutterActivity() {
         val intentConfig = DataWedgeConfig.getIntentConfig()
 
         val profileConfig = Bundle()
-        profileConfig.putString(DataWedgeConfig.PROFILE_NAME_KEY, DataWedgeConfig.PROFILE_NAME)
+        profileConfig.putString(DataWedgeConfig.PROFILE_NAME_KEY, profileName)
         profileConfig.putString(DataWedgeConfig.PROFILE_ENABLED, DataWedgeConfig.TRUE_STRING)
         profileConfig.putString(DataWedgeConfig.CONFIG_MODE_KEY, DataWedgeConfig.CONFIG_MODE)
         profileConfig.putBundle(DataWedgeConfig.PLUGIN_CONFIG, barcodeConfig)
@@ -105,7 +116,7 @@ class MainActivity : FlutterActivity() {
             profileConfig
         )
 
-        Log.d("MainActivity", "Barcode config setup")
+        Log.d("MainActivity", "Barcode config setup $profileConfig")
 
         profileConfig.remove(DataWedgeConfig.PLUGIN_CONFIG)
         profileConfig.putBundle(DataWedgeConfig.PLUGIN_CONFIG, intentConfig)

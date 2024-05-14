@@ -1,4 +1,4 @@
-package no.inventorymanagement.android
+package no.inventorymanagement.data_wedge
 
 import android.os.Bundle
 
@@ -21,7 +21,6 @@ object DataWedgeConfig {
     const val PLUGIN_CONFIG = "PLUGIN_CONFIG"
     const val PROFILE_ENABLED = "PROFILE_ENABLED"
     const val PROFILE_INTENT_ACTION = "inventorymanagement.no.SCAN"
-    const val PROFILE_NAME = "DentalInventory"
     const val PROFILE_NAME_KEY = "PROFILE_NAME"
     const val TRUE_STRING = "true"
 

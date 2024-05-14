@@ -12,13 +12,13 @@ import '/flavors/environment.dart';
 
 void main() async {
   EnvConfig devConfig = EnvConfig(
-    appName: "Dental Inventory Dev",
+    appName: "Jacobsen Dental Dev",
     baseUrl: "https://devinventorymanagement.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
 
   BuildConfig.instantiate(
-    envType: Environment.DEVELOPMENT,
+    envType: Environment.JACOBSEN_DEVELOPMENT,
     envConfig: devConfig,
   );
 
@@ -26,7 +26,7 @@ void main() async {
 
   await GetStorage.init(PreferenceManager.DATABASE_NAME);
 
-  FirebaseService.enableFirebase(Environment.DEVELOPMENT);
+  FirebaseService.enableFirebase(Environment.JACOBSEN_DEVELOPMENT);
 
   runApp(MyApp());
 }
