@@ -1,6 +1,7 @@
 abstract class AppIcons {
   static const String aboutUs = "ic_about_us.svg";
   static const String barcodeScanner = "ic_barcode_scanner.svg";
+  static const String listBulleted = "ic_list_bulleted.svg";
   static const String close = "ic_close.svg";
   static const String contactUs = "ic_contact_us.svg";
   static const String edit = "ic_edit.svg";

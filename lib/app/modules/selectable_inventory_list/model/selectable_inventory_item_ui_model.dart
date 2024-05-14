@@ -1,60 +1,59 @@
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/connected_cart_item.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 
-class ScannedProductUiModel {
+class SelectableInventoryItemUiModel {
   late final int id;
   late final String itemId;
   late final String name;
   late final String imageUrl;
   late int number;
   late final int available;
+  late ConnectedCartItemUiModel connectedCartItem;
 
-  ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
+  SelectableInventoryItemUiModel.fromProductResponseModel(
       InventoryResponse response) {
     id = response.id ?? -1;
     itemId = response.product?.itemId ?? '';
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
-    number = 1;
+    number = 0;
     available = response.stockCount ?? 0;
   }
 
-  ScannedProductUiModel.fromProductResponseModel(InventoryResponse response) {
+  SelectableInventoryItemUiModel.fromShoppingProductResponseModel(
+      InventoryResponse response) {
     id = response.id ?? -1;
     itemId = response.product?.itemId ?? '';
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';
-    number = response.stockCount ?? 0;
+    number = 0;
     available = response.stockCount ?? 0;
-  }
-
-  ScannedProductUiModel.addProductFromInventory(
-      SelectableInventoryItemUiModel data) {
-    id = data.id;
-    itemId = data.itemId;
-    name = data.name;
-    imageUrl = data.imageUrl;
-    number = data.number;
-    available = data.available;
+    connectedCartItem = ConnectedCartItemUiModel.fromConnectedCartItemResponse(
+      response.connectedCartItem,
+    );
   }
 
   void updateNumber(int newNumber) {
     number = newNumber;
   }
 
-  ScannedProductsRequestBody toScannedProductsRequestBodyWithCountChange(
-      bool isPositive) {
+  void addCartItem(ConnectedCartItemUiModel newCartedItem) {
+    connectedCartItem = newCartedItem;
+  }
+
+  void updateCartItem(int newQuantity) {
+    connectedCartItem.quantity = newQuantity;
+  }
+
+  void deleteCartItem() {
+    connectedCartItem = ConnectedCartItemUiModel.empty();
+  }
+
+  ScannedProductsRequestBody toScannedProductsRequestBody(bool isPositive) {
     return ScannedProductsRequestBody(
       itemId: itemId,
       countChange: isPositive ? number : number * -1,
-    );
-  }
-
-  ScannedProductsRequestBody toScannedProductsRequestBodyWithCurrentStock() {
-    return ScannedProductsRequestBody(
-      itemId: itemId,
-      currentStock: number,
     );
   }
 }

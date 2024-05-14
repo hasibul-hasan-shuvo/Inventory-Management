@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/controllers/shopping_cart_scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
@@ -6,22 +7,20 @@ import 'package:dental_inventory/app/data/repository/shopping_cart_repository.da
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:get/get.dart';
 
-class ShoppingCartController extends BaseController {
+class ShoppingCartController extends BaseController
+    with ShoppingCartScannedProductsControllerMixin {
   final ShoppingCartRepository _repository = Get.find();
-
-  final RxList<ShoppingCartUiModel> _shoppingCartItemsController =
-      RxList.empty(growable: true);
-
-  List<ShoppingCartUiModel> get shoppingCartItems =>
-      _shoppingCartItemsController;
-
-  Rx<ShoppingCartUiModel?> newCartItemArrivedController = Rx(null);
 
   @override
   void onInit() {
     super.onInit();
     pagingController.initRefresh();
     _getCartItems(false);
+  }
+
+  @override
+  void onItemAdded(ShoppingCartResponse response) {
+    onRefresh();
   }
 
   void onRefresh() {
@@ -55,7 +54,7 @@ class ShoppingCartController extends BaseController {
             .toList() ??
         [];
 
-    _shoppingCartItemsController(list);
+    addAllProduct(list);
   }
 
   void _getNextCartItems() {
@@ -83,20 +82,16 @@ class ShoppingCartController extends BaseController {
   void confirmOrder() {
     callDataService(
       _repository.placeOrder(),
-      onSuccess: _handleConfirmOrderSuccessResponse,
+      onSuccess: handleConfirmOrderSuccessResponse,
     );
-  }
-
-  void _handleConfirmOrderSuccessResponse(bool isSuccess) {
-    if (isSuccess) {
-      _shoppingCartItemsController.clear();
-    }
   }
 
   void updateCartCount(ShoppingCartUiModel data, String count) {
     if (!count.isPositiveIntegerNumber) {
-      showErrorMessage(appLocalization
-          .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
+      showErrorMessage(
+        appLocalization
+            .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart),
+      );
 
       return;
     }
@@ -119,18 +114,8 @@ class ShoppingCartController extends BaseController {
         data.id.toString(),
         requestBody,
       ),
-      onSuccess: _handleUpdateCartSuccessResponse,
+      onSuccess: handleUpdateCartSuccessResponse,
     );
-  }
-
-  void _handleUpdateCartSuccessResponse(ShoppingCartResponse response) {
-    ShoppingCartUiModel? data = _shoppingCartItemsController.firstWhereOrNull(
-        (element) => element.itemId == response.product?.itemId);
-
-    if (data != null) {
-      data.updateCartCount(response.quantity ?? data.cartCount);
-      _shoppingCartItemsController.refresh();
-    }
   }
 
   void _deleteCartItem(ShoppingCartUiModel data) {
@@ -138,13 +123,8 @@ class ShoppingCartController extends BaseController {
       _repository.deleteItemFromShoppingCart(
         data.id.toString(),
       ),
-      onSuccess: (_) => _handleDeleteCartItemSuccessResponse(data),
+      onSuccess: (_) => handleDeleteCartItemSuccessResponse(data.id),
     );
-  }
-
-  void _handleDeleteCartItemSuccessResponse(ShoppingCartUiModel data) {
-    _shoppingCartItemsController
-        .removeWhere((element) => element.id == data.id);
   }
 
   void onScanned(String? code) {
@@ -161,7 +141,7 @@ class ShoppingCartController extends BaseController {
         _addCartItem(code!);
       }
 
-      _shoppingCartItemsController.refresh();
+      onRefreshProduct();
     }
   }
 

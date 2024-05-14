@@ -1,3 +1,7 @@
+import 'package:dental_inventory/app/modules/selectable_inventory_list/bindings/selectable_inventory_list_binding.dart';
+import 'package:dental_inventory/app/modules/selectable_inventory_list/views/selectable_inventory_list_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/bindings/shopping_cart_selectable_inventories_binding.dart';
+import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/views/shopping_carted_selectable_inventories_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/about_us/bindings/about_app_binding.dart';
@@ -100,6 +104,16 @@ class AppPages {
       name: _Paths.SCANNER,
       page: () => ScannerView(),
       binding: ScannerBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELECTABLE_INVENTORY_LIST,
+      page: () => SelectableInventoryListView(),
+      binding: SelectableInventoryListBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHOPPING_CART_SELECTABLE_INVENTORIES,
+      page: () => ShoppingCartSelectableInventoriesView(),
+      binding: ShoppingCartSelectableInventoriesBinding(),
     ),
     GetPage(
       name: _Paths.PRODUCT_OUT,
