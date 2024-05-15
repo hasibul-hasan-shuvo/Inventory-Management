@@ -85,6 +85,7 @@
   "openingHourMessage": "We are open from 08.00 to 16.00, Monday to Friday.",
   "orderStatusActive": "Active",
   "orderStatusDelivered": "Delivered",
+  "orderStatusPartiallyDelivered": "Partially delivered",
   "orderStatusNotDelivered": "Not delivered",
   "orderStatusReceived": "Received",
   "password": "Password",

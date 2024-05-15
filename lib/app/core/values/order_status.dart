@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 enum OrderStatus {
   ACTIVE,
   NOT_DELIVERED,
+  PARTIALLY_DELIVERED,
   DELIVERED,
   RECEIVED,
 }
@@ -14,6 +15,8 @@ extension OrderStatusExtensions on OrderStatus {
         return appLocalization.orderStatusActive;
       case OrderStatus.NOT_DELIVERED:
         return appLocalization.orderStatusNotDelivered;
+      case OrderStatus.PARTIALLY_DELIVERED:
+        return appLocalization.orderStatusPartiallyDelivered;
       case OrderStatus.DELIVERED:
         return appLocalization.orderStatusDelivered;
       case OrderStatus.RECEIVED:

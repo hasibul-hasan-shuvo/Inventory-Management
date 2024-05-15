@@ -87,6 +87,7 @@
   "orderStatusOrdered": "Bestilt",
   "orderStatusDelivered": "Levert",
   "orderStatusNotDelivered": "Ikke levert",
+  "orderStatusPartiallyDelivered": "Delvis levert",
   "orderStatusReceived": "Mottatt",
   "password": "Passord",
   "passwordConfirmPassword": "Bekreft passord",
