@@ -19,8 +19,8 @@ mixin BaseWidgetMixin on StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _textTheme = context.textTheme;
     _theme = context.theme;
+    _textTheme = _theme.textTheme;
 
     return Container(
       child: body(context),
