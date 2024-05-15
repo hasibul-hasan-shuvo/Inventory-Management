@@ -22,6 +22,8 @@ void main() async {
     envConfig: prodConfig,
   );
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: "conf/.env", mergeWith: envValues);
 
   await GetStorage.init(PreferenceManager.DATABASE_NAME);
