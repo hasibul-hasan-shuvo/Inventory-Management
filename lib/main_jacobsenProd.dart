@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/core/values/environment_values.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '/app/my_app.dart';
@@ -23,6 +24,8 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await ScreenUtil.ensureScreenSize();
 
   await dotenv.load(fileName: "conf/.env", mergeWith: envValues);
 
