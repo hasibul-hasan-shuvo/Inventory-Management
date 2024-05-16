@@ -40,6 +40,8 @@ class OrderUiModel {
                 itemId: e.product?.itemId ?? '',
                 name: e.product?.name ?? '',
                 quantity: e.quantity ?? 0,
+                deliveredQuantity: e.deliveredQuantity ?? 0,
+                notDeliveredQuantity: e.notDeliveredQuantity ?? 0,
                 price: e.product?.price?.toDouble() ?? 0.0,
                 imageUrl: e.product?.imageUrl ?? '',
               ),

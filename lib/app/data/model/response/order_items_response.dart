@@ -18,11 +18,15 @@ class OrderItemsResponse {
 class OrderItemResponse {
   OrderItemResponse.fromJson(dynamic json) {
     quantity = json['quantity'];
+    deliveredQuantity = json['delivered_quantity'];
+    notDeliveredQuantity = json['not_delivered_quantity'];
     product = json['product'] != null
         ? ProductResponse.fromJson(json['product'])
         : null;
   }
 
   int? quantity;
+  int? deliveredQuantity;
+  int? notDeliveredQuantity;
   ProductResponse? product;
 }

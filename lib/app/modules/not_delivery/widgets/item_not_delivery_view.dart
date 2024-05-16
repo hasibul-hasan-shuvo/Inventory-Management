@@ -104,7 +104,7 @@ class ItemNotDeliveryView extends StatelessWidget with BaseWidgetMixin {
         productImage: data.items[index].imageUrl,
         productName: data.items[index].name,
         productPrice: data.items[index].price.toString(),
-        productQuantity: data.items[index].quantity.toString(),
+        productQuantity: data.items[index].notDeliveredQuantity.toString(),
       ),
     );
   }
