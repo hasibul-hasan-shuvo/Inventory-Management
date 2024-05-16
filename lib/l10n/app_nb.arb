@@ -66,10 +66,10 @@
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
-  "messageUnavailableProduct": "{itemId} er desverre ikke tilgjengelig ",
+  "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "@messageUnavailableProduct": {
     "placeholders": {
-      "itemId": {
+      "name": {
         "type": "String"
       }
     }
