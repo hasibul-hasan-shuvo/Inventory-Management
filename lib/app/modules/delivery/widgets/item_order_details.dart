@@ -61,7 +61,7 @@ class ItemOrderDetails extends StatelessWidget with BaseWidgetMixin {
         productImage: orderUiModel.items[index].imageUrl,
         productName: orderUiModel.items[index].name,
         productPrice: orderUiModel.items[index].price.toString(),
-        productQuantity: orderUiModel.items[index].quantity.toString(),
+        productQuantity: orderUiModel.items[index].deliveredQuantity.toString(),
       ),
     );
   }
