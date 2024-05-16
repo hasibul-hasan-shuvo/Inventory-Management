@@ -31,7 +31,7 @@ class GlobalUnavailableInventoryDialogView extends StatelessWidget
 
   Widget _getNotAvailableMessage() {
     return Text(
-      appLocalization.messageUnavailableProduct(data.unavailableProductId),
+      appLocalization.messageUnavailableProduct(data.unavailableProductName),
       style: textTheme.bodyMedium,
     );
   }

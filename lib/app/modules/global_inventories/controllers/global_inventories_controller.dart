@@ -61,6 +61,7 @@ class GlobalInventoriesController extends BaseController {
   void _getInventoryData({
     required String availableProductId,
     String unavailableProductId = '',
+    String unavailableProductName = '',
     bool isAlternativeProduct = false,
   }) {
     callDataService(
@@ -68,6 +69,7 @@ class GlobalInventoriesController extends BaseController {
       onSuccess: (response) => _handleGetInventoryDataSuccessResponse(
         response,
         unavailableProductId,
+        unavailableProductName,
         isAlternativeProduct,
       ),
     );
@@ -76,6 +78,7 @@ class GlobalInventoriesController extends BaseController {
   void _handleGetInventoryDataSuccessResponse(
     GlobalInventoryResponse response,
     String unavailableProductId,
+    String unavailableProductName,
     bool isAlternativeProduct,
   ) {
     GlobalInventoryUiModel data =
@@ -84,7 +87,7 @@ class GlobalInventoriesController extends BaseController {
     if (isAlternativeProduct) {
       alternativeInventoryController.trigger(
         GlobalUnavailableProductUiModel(
-          unavailableProductId: unavailableProductId,
+          unavailableProductName: unavailableProductName,
           availableProduct: data,
         ),
       );
@@ -134,10 +137,11 @@ class GlobalInventoriesController extends BaseController {
       return;
     }
 
-    if (data.isOutdated && data.alternativeProductId.isNotEmpty) {
+    if (data.isOutdated && data.alternativeProductId.trim().isNotEmpty) {
       _getInventoryData(
         availableProductId: data.alternativeProductId,
         unavailableProductId: data.itemId,
+        unavailableProductName: data.name,
         isAlternativeProduct: true,
       );
     } else {
