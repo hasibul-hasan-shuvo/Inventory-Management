@@ -40,16 +40,20 @@ class _MyAppState extends State<MyApp> {
       ),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (BuildContext context, Widget? widget) => GetMaterialApp(
-        title: _envConfig.appName,
-        initialRoute: AppPages.INITIAL,
-        initialBinding: InitialBinding(),
-        getPages: AppPages.routes,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: _getSupportedLocal(),
-        theme: _getTheme(),
-        debugShowCheckedModeBanner: false,
-      ),
+      builder: (BuildContext context, Widget? widget) {
+        ScreenUtil.init(context);
+
+        return GetMaterialApp(
+          title: _envConfig.appName,
+          initialRoute: AppPages.INITIAL,
+          initialBinding: InitialBinding(),
+          getPages: AppPages.routes,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: _getSupportedLocal(),
+          theme: _getTheme(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 
