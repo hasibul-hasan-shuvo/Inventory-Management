@@ -27,6 +27,14 @@ class GlobalInventoriesController extends BaseController {
   final Rx<GlobalUnavailableProductUiModel?> alternativeInventoryController =
       Rx(null);
 
+  @override
+  void onClose() {
+    super.onClose();
+    logger.d("Closing global inventories controllers");
+    addInventoryController.close();
+    alternativeInventoryController.close();
+  }
+
   void changeSearchMode() {
     _searchModeController(!isSearchable);
     _searchQueryController('');

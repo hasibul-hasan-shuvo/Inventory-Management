@@ -19,6 +19,13 @@ class ShoppingCartController extends BaseController
   }
 
   @override
+  void onClose() {
+    super.onClose();
+    logger.d("Closing shopping cart controller");
+    newCartItemArrivedController.close();
+  }
+
+  @override
   void onItemAdded(ShoppingCartResponse response) {
     onRefresh();
   }
