@@ -22,6 +22,7 @@ class InventoryListResponse {
 class InventoryResponse {
   int? id;
   ProductResponse? product;
+  ConnectedCartItemResponse? connectedCartItem;
   String? created;
   String? modified;
   int? maxCount;
@@ -35,6 +36,9 @@ class InventoryResponse {
     product = json['product'] != null
         ? ProductResponse.fromJson(json['product'])
         : null;
+    connectedCartItem = json['connected_cart_item'] != null
+        ? ConnectedCartItemResponse.fromJson(json['connected_cart_item'])
+        : null;
     created = json['created'];
     modified = json['modified'];
     maxCount = json['max_count'];
@@ -43,4 +47,14 @@ class InventoryResponse {
     fixedSuggestion = json['fixed_suggestion'];
     inventory = json['inventory'];
   }
+}
+
+class ConnectedCartItemResponse {
+  ConnectedCartItemResponse.fromJson(dynamic json) {
+    id = json['id'];
+    quantity = json['quantity'];
+  }
+
+  int? id;
+  int? quantity;
 }

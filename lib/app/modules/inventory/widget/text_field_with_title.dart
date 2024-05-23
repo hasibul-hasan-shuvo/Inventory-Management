@@ -39,6 +39,10 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             minLines: 1,
+            onTap: () {
+              controller.selection = TextSelection(
+                  baseOffset: 0, extentOffset: controller.text.length);
+            },
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
