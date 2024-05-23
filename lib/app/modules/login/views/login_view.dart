@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/utils/input_validators.dart';
 import '../../../core/values/app_values.dart';
 import '../../main/views/main_app_bar.dart';
 import '../controllers/login_controller.dart';
@@ -84,9 +83,6 @@ class LoginView extends BaseView<LoginController> {
       controller: _loginController,
       labelText: appLocalization.email,
       hintText: appLocalization.enterEmail,
-      validator: (value) {
-        return InputValidators.email(value, appLocalization);
-      },
       onChanged: (value) {
         controller.email = value ?? "";
       },
