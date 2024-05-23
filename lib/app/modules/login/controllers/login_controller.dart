@@ -10,6 +10,13 @@ class LoginController extends BaseController {
 
   final authPageState = AuthPageState.initial().obs;
 
+  @override
+  void onClose() {
+    super.onClose();
+    logger.d("Closing login view");
+    authPageState.close();
+  }
+
   void login() {
     final requestBody = LoginRequestBody(
       email: email,
