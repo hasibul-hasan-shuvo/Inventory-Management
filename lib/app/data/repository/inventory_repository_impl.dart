@@ -55,6 +55,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
+  Future<GlobalInventoryResponse> getGlobalInventory(String id) {
+    return _remoteDataSource.getGlobalInventory(id);
+  }
+
+  @override
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody) {
     return _remoteDataSource.createInventory(requestBody);

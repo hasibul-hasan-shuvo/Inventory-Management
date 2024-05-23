@@ -5,6 +5,7 @@
   "bottomNavContactUs": "Kontakt oss",
   "bottomNavHome": "Hjemmeside",
   "bottomNavLogOut": "Logg ut",
+  "buttonTextAddProduct": "Legg til produkt",
   "buttonTextAddToCart": "Legg i handlekurv",
   "buttonTextSaveChanges": "Lagre endringer",
   "cancel": "Avbryt",
@@ -59,11 +60,21 @@
       }
     }
   },
+  "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
+  "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
+  "@messageUnavailableProduct": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUnavailableProductRecommendation": "Vi anbefaler å istedenfor legge til",
   "min": "Min",
   "mustBe11DigitsLong": "Må være minst 11 siffer langt",
   "no": "Nei",
@@ -125,6 +136,7 @@
   "titleItemRetrieval": "Varer ut",
   "titleItemRevertRetrieval": "Varer inn",
   "titleScannerView": "Strekkodeskanner",
+  "titleUnavailableProduct": "Produkter er utilgjengelig!",
   "total": "Totalt",
   "updateProduct": "Oppdater produkt",
   "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",

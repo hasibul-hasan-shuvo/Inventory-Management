@@ -1,9 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
 import 'package:get/get.dart';
 
 class GlobalInventoriesController extends BaseController {
@@ -19,6 +21,11 @@ class GlobalInventoriesController extends BaseController {
       RxList.empty(growable: true);
 
   List<GlobalInventoryUiModel> get inventories => _inventoriesController;
+
+  final Rx<GlobalInventoryUiModel?> addInventoryController = Rx(null);
+
+  final Rx<GlobalUnavailableProductUiModel?> alternativeInventoryController =
+      Rx(null);
 
   void changeSearchMode() {
     _searchModeController(!isSearchable);
@@ -51,14 +58,70 @@ class GlobalInventoriesController extends BaseController {
     );
   }
 
-  void createInventory(String itemId) {
-    CreateInventoryRequestBody requestBody =
-        CreateInventoryRequestBody(itemId: itemId);
-
+  void _getInventoryData({
+    required String availableProductId,
+    String unavailableProductId = '',
+    String unavailableProductName = '',
+    bool isAlternativeProduct = false,
+  }) {
     callDataService(
-      _repository.createInventory(requestBody),
-      onSuccess: _handleCreateInventorySuccessResponse,
+      _repository.getGlobalInventory(availableProductId),
+      onSuccess: (response) => _handleGetInventoryDataSuccessResponse(
+        response,
+        unavailableProductId,
+        unavailableProductName,
+        isAlternativeProduct,
+      ),
     );
+  }
+
+  void _handleGetInventoryDataSuccessResponse(
+    GlobalInventoryResponse response,
+    String unavailableProductId,
+    String unavailableProductName,
+    bool isAlternativeProduct,
+  ) {
+    GlobalInventoryUiModel data =
+        GlobalInventoryUiModel.fromGlobalInventoryResponse(response);
+
+    if (isAlternativeProduct) {
+      alternativeInventoryController.trigger(
+        GlobalUnavailableProductUiModel(
+          unavailableProductName: unavailableProductName,
+          availableProduct: data,
+        ),
+      );
+    } else {
+      addInventoryController.trigger(data);
+    }
+  }
+
+  void createInventory({
+    required GlobalInventoryUiModel data,
+    String maxCount = '',
+    String minCount = '',
+    String stockCount = '',
+    String fixedSuggestion = '',
+  }) {
+    if (_checkValuesValidity(
+      maxCount: maxCount,
+      minCount: minCount,
+      stockCount: stockCount,
+      fixedSuggestion: fixedSuggestion,
+    )) {
+      CreateInventoryRequestBody requestBody = CreateInventoryRequestBody(
+        itemId: data.itemId,
+        maxCount: maxCount,
+        minCount: minCount,
+        stockCount: stockCount,
+        fixedSuggestion: fixedSuggestion,
+      );
+
+      callDataService(
+        _repository.createInventory(requestBody),
+        onSuccess: _handleCreateInventorySuccessResponse,
+      );
+    }
   }
 
   void _handleCreateInventorySuccessResponse(InventoryResponse response) {
@@ -67,9 +130,94 @@ class GlobalInventoriesController extends BaseController {
     }
   }
 
+  void onTapAddProduct(GlobalInventoryUiModel data) {
+    if (data.isOutdated && data.alternativeProductId.isEmpty) {
+      showErrorMessage(appLocalization.messageInventoryUnavailable);
+
+      return;
+    }
+
+    if (data.isOutdated && data.alternativeProductId.trim().isNotEmpty) {
+      _getInventoryData(
+        availableProductId: data.alternativeProductId,
+        unavailableProductId: data.itemId,
+        unavailableProductName: data.name,
+        isAlternativeProduct: true,
+      );
+    } else {
+      addInventoryController.trigger(data);
+    }
+  }
+
   void onScanned(String? code) {
     if (code != null) {
-      createInventory(code);
+      _getInventoryData(availableProductId: code);
     }
+  }
+
+  bool _checkValuesValidity({
+    required String maxCount,
+    required String minCount,
+    required String stockCount,
+    required String fixedSuggestion,
+  }) {
+    if (maxCount.isEmpty &&
+        minCount.isEmpty &&
+        stockCount.isEmpty &&
+        fixedSuggestion.isEmpty) {
+      return true;
+    }
+
+    if (!maxCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.max);
+
+      return false;
+    }
+
+    if (!minCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.min);
+
+      return false;
+    }
+
+    if (stockCount.isNotNullOrEmpty && !stockCount.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.inventory);
+
+      return false;
+    }
+
+    if (fixedSuggestion.isNotNullOrEmpty &&
+        !fixedSuggestion.isPositiveIntegerNumber) {
+      _showInvalidValueErrorMessage(appLocalization.fixedProposal);
+
+      return false;
+    }
+
+    if (!_checkMaxMinValidity(maxCount, minCount)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _checkMaxMinValidity(String max, String min) {
+    try {
+      int maxCount = max.toInt;
+      int minCount = min.toInt;
+
+      if (maxCount < minCount) {
+        showErrorMessage(appLocalization.messageMaxMinValidation);
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void _showInvalidValueErrorMessage(String itemName) {
+    showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
   }
 }

@@ -125,6 +125,26 @@ class InventoryRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
+  Future<GlobalInventoryResponse> getGlobalInventory(String id) {
+    try {
+      String endpoint = '${EndPoints.globalInventory}/$id/';
+      var dioCall = dioClient.get(endpoint, queryParameters: {
+        "is_product_unique": true,
+      });
+
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseGlobalInventoryResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  GlobalInventoryResponse _parseGlobalInventoryResponse(
+      Response<dynamic> response) {
+    return GlobalInventoryResponse.fromJson(response.data);
+  }
+
+  @override
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody) {
     try {

@@ -20,6 +20,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
   final bool isCancelable;
   final bool willPopOnPositiveButtonTap;
   final bool willPopOnNegativeButtonTap;
+  final Color? headerColor;
 
   AppDialog({
     Key? key,
@@ -34,6 +35,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     this.isCancelable = true,
     this.willPopOnPositiveButtonTap = true,
     this.willPopOnNegativeButtonTap = true,
+    this.headerColor,
   }) : super(key: key);
 
   @override
@@ -55,7 +57,7 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: theme.primaryColor,
+        color: headerColor ?? theme.primaryColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(AppValues.margin_6),
           topRight: Radius.circular(AppValues.margin_6),
