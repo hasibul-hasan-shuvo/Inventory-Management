@@ -1,0 +1,4 @@
+enum DataSynchronizerKey {
+  INVENTORY,
+  CART,
+}
