@@ -41,7 +41,7 @@ class CustomFloatingButton extends StatelessWidget with BaseWidgetMixin {
 
   SpeedDialChild _speedDialChild(String icon, GestureTapCallback onPressed) {
     return SpeedDialChild(
-      backgroundColor: theme.primaryColor,
+      backgroundColor: theme.colorScheme.primary,
       child: AssetImageView(
         fileName: icon,
         height: AppValues.emoticonDefaultSize.h,
