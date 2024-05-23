@@ -50,7 +50,7 @@ Exception _parseDioErrorResponse(DioException dioError) {
     if (statusCode == -1 || statusCode == HttpStatus.ok) {
       statusCode = dioError.response?.data["statusCode"];
     }
-    status = dioError.response?.data["status"];
+    status = "${dioError.response?.data["status"]}";
     serverMessage = dioError.response?.data["message"];
   } catch (e, s) {
     logger.i("$e");
