@@ -80,7 +80,6 @@ class $InventoryEntityTable extends InventoryEntity
   late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
       'modified_milli_second', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -242,7 +241,6 @@ class InventoryEntityData extends DataClass
   final int createdMilliSecond;
   final String modified;
   final int modifiedMilliSecond;
-
   const InventoryEntityData(
       {required this.id,
       required this.product,
@@ -586,20 +584,12 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-
   $InventoryChangesEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _productMeta =
-      const VerificationMeta('product');
-  @override
-  late final GeneratedColumn<String> product = GeneratedColumn<String>(
-      'product', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _maxCountMeta =
       const VerificationMeta('maxCount');
   @override
@@ -636,11 +626,9 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
   late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
       'modified_milli_second', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-
   @override
   List<GeneratedColumn> get $columns => [
         id,
-        product,
         maxCount,
         minCount,
         stockCountChange,
@@ -648,14 +636,11 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
         modified,
         modifiedMilliSecond
       ];
-
   @override
   String get aliasedName => _alias ?? actualTableName;
-
   @override
   String get actualTableName => $name;
   static const String $name = 'inventory_changes_entity';
-
   @override
   VerificationContext validateIntegrity(
       Insertable<InventoryChangesEntityData> instance,
@@ -664,12 +649,6 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('product')) {
-      context.handle(_productMeta,
-          product.isAcceptableOrUnknown(data['product']!, _productMeta));
-    } else if (isInserting) {
-      context.missing(_productMeta);
     }
     if (data.containsKey('max_count')) {
       context.handle(_maxCountMeta,
@@ -718,7 +697,6 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
-
   @override
   InventoryChangesEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
@@ -726,8 +704,6 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
     return InventoryChangesEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      product: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}product'])!,
       maxCount: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}max_count'])!,
       minCount: attachedDatabase.typeMapping
@@ -752,29 +728,24 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
 class InventoryChangesEntityData extends DataClass
     implements Insertable<InventoryChangesEntityData> {
   final int id;
-  final String product;
   final int maxCount;
   final int minCount;
   final int stockCountChange;
   final int fixedSuggestion;
   final String modified;
   final int modifiedMilliSecond;
-
   const InventoryChangesEntityData(
       {required this.id,
-      required this.product,
       required this.maxCount,
       required this.minCount,
       required this.stockCountChange,
       required this.fixedSuggestion,
       required this.modified,
       required this.modifiedMilliSecond});
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['product'] = Variable<String>(product);
     map['max_count'] = Variable<int>(maxCount);
     map['min_count'] = Variable<int>(minCount);
     map['stock_count_change'] = Variable<int>(stockCountChange);
@@ -787,7 +758,6 @@ class InventoryChangesEntityData extends DataClass
   InventoryChangesEntityCompanion toCompanion(bool nullToAbsent) {
     return InventoryChangesEntityCompanion(
       id: Value(id),
-      product: Value(product),
       maxCount: Value(maxCount),
       minCount: Value(minCount),
       stockCountChange: Value(stockCountChange),
@@ -802,7 +772,6 @@ class InventoryChangesEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InventoryChangesEntityData(
       id: serializer.fromJson<int>(json['id']),
-      product: serializer.fromJson<String>(json['product']),
       maxCount: serializer.fromJson<int>(json['maxCount']),
       minCount: serializer.fromJson<int>(json['minCount']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
@@ -812,13 +781,11 @@ class InventoryChangesEntityData extends DataClass
           serializer.fromJson<int>(json['modifiedMilliSecond']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'product': serializer.toJson<String>(product),
       'maxCount': serializer.toJson<int>(maxCount),
       'minCount': serializer.toJson<int>(minCount),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
@@ -830,7 +797,6 @@ class InventoryChangesEntityData extends DataClass
 
   InventoryChangesEntityData copyWith(
           {int? id,
-          String? product,
           int? maxCount,
           int? minCount,
           int? stockCountChange,
@@ -839,7 +805,6 @@ class InventoryChangesEntityData extends DataClass
           int? modifiedMilliSecond}) =>
       InventoryChangesEntityData(
         id: id ?? this.id,
-        product: product ?? this.product,
         maxCount: maxCount ?? this.maxCount,
         minCount: minCount ?? this.minCount,
         stockCountChange: stockCountChange ?? this.stockCountChange,
@@ -847,12 +812,10 @@ class InventoryChangesEntityData extends DataClass
         modified: modified ?? this.modified,
         modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
-
   @override
   String toString() {
     return (StringBuffer('InventoryChangesEntityData(')
           ..write('id: $id, ')
-          ..write('product: $product, ')
           ..write('maxCount: $maxCount, ')
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
@@ -864,15 +827,13 @@ class InventoryChangesEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, product, maxCount, minCount,
-      stockCountChange, fixedSuggestion, modified, modifiedMilliSecond);
-
+  int get hashCode => Object.hash(id, maxCount, minCount, stockCountChange,
+      fixedSuggestion, modified, modifiedMilliSecond);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is InventoryChangesEntityData &&
           other.id == this.id &&
-          other.product == this.product &&
           other.maxCount == this.maxCount &&
           other.minCount == this.minCount &&
           other.stockCountChange == this.stockCountChange &&
@@ -884,17 +845,14 @@ class InventoryChangesEntityData extends DataClass
 class InventoryChangesEntityCompanion
     extends UpdateCompanion<InventoryChangesEntityData> {
   final Value<int> id;
-  final Value<String> product;
   final Value<int> maxCount;
   final Value<int> minCount;
   final Value<int> stockCountChange;
   final Value<int> fixedSuggestion;
   final Value<String> modified;
   final Value<int> modifiedMilliSecond;
-
   const InventoryChangesEntityCompanion({
     this.id = const Value.absent(),
-    this.product = const Value.absent(),
     this.maxCount = const Value.absent(),
     this.minCount = const Value.absent(),
     this.stockCountChange = const Value.absent(),
@@ -902,27 +860,22 @@ class InventoryChangesEntityCompanion
     this.modified = const Value.absent(),
     this.modifiedMilliSecond = const Value.absent(),
   });
-
   InventoryChangesEntityCompanion.insert({
     this.id = const Value.absent(),
-    required String product,
     required int maxCount,
     required int minCount,
     required int stockCountChange,
     required int fixedSuggestion,
     required String modified,
     required int modifiedMilliSecond,
-  })  : product = Value(product),
-        maxCount = Value(maxCount),
+  })  : maxCount = Value(maxCount),
         minCount = Value(minCount),
         stockCountChange = Value(stockCountChange),
         fixedSuggestion = Value(fixedSuggestion),
         modified = Value(modified),
         modifiedMilliSecond = Value(modifiedMilliSecond);
-
   static Insertable<InventoryChangesEntityData> custom({
     Expression<int>? id,
-    Expression<String>? product,
     Expression<int>? maxCount,
     Expression<int>? minCount,
     Expression<int>? stockCountChange,
@@ -932,7 +885,6 @@ class InventoryChangesEntityCompanion
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (product != null) 'product': product,
       if (maxCount != null) 'max_count': maxCount,
       if (minCount != null) 'min_count': minCount,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
@@ -945,7 +897,6 @@ class InventoryChangesEntityCompanion
 
   InventoryChangesEntityCompanion copyWith(
       {Value<int>? id,
-      Value<String>? product,
       Value<int>? maxCount,
       Value<int>? minCount,
       Value<int>? stockCountChange,
@@ -954,7 +905,6 @@ class InventoryChangesEntityCompanion
       Value<int>? modifiedMilliSecond}) {
     return InventoryChangesEntityCompanion(
       id: id ?? this.id,
-      product: product ?? this.product,
       maxCount: maxCount ?? this.maxCount,
       minCount: minCount ?? this.minCount,
       stockCountChange: stockCountChange ?? this.stockCountChange,
@@ -969,9 +919,6 @@ class InventoryChangesEntityCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (product.present) {
-      map['product'] = Variable<String>(product.value);
     }
     if (maxCount.present) {
       map['max_count'] = Variable<int>(maxCount.value);
@@ -998,7 +945,6 @@ class InventoryChangesEntityCompanion
   String toString() {
     return (StringBuffer('InventoryChangesEntityCompanion(')
           ..write('id: $id, ')
-          ..write('product: $product, ')
           ..write('maxCount: $maxCount, ')
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
@@ -1214,7 +1160,6 @@ class $$InventoryEntityTableFilterComposer
 class $$InventoryEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $InventoryEntityTable> {
   $$InventoryEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<int> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
@@ -1279,7 +1224,6 @@ class $$InventoryEntityTableOrderingComposer
 typedef $$InventoryChangesEntityTableInsertCompanionBuilder
     = InventoryChangesEntityCompanion Function({
   Value<int> id,
-  required String product,
   required int maxCount,
   required int minCount,
   required int stockCountChange,
@@ -1290,7 +1234,6 @@ typedef $$InventoryChangesEntityTableInsertCompanionBuilder
 typedef $$InventoryChangesEntityTableUpdateCompanionBuilder
     = InventoryChangesEntityCompanion Function({
   Value<int> id,
-  Value<String> product,
   Value<int> maxCount,
   Value<int> minCount,
   Value<int> stockCountChange,
@@ -1321,7 +1264,6 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
               $$InventoryChangesEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
-            Value<String> product = const Value.absent(),
             Value<int> maxCount = const Value.absent(),
             Value<int> minCount = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
@@ -1331,7 +1273,6 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
           }) =>
               InventoryChangesEntityCompanion(
             id: id,
-            product: product,
             maxCount: maxCount,
             minCount: minCount,
             stockCountChange: stockCountChange,
@@ -1341,7 +1282,6 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
-            required String product,
             required int maxCount,
             required int minCount,
             required int stockCountChange,
@@ -1351,7 +1291,6 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
           }) =>
               InventoryChangesEntityCompanion.insert(
             id: id,
-            product: product,
             maxCount: maxCount,
             minCount: minCount,
             stockCountChange: stockCountChange,
@@ -1378,14 +1317,8 @@ class $$InventoryChangesEntityTableProcessedTableManager
 class $$InventoryChangesEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $InventoryChangesEntityTable> {
   $$InventoryChangesEntityTableFilterComposer(super.$state);
-
   ColumnFilters<int> get id => $state.composableBuilder(
       column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get product => $state.composableBuilder(
-      column: $state.table.product,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -1428,11 +1361,6 @@ class $$InventoryChangesEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get product => $state.composableBuilder(
-      column: $state.table.product,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<int> get maxCount => $state.composableBuilder(
       column: $state.table.maxCount,
       builder: (column, joinBuilders) =>
@@ -1469,7 +1397,6 @@ class _$AppDatabaseManager {
   _$AppDatabaseManager(this._db);
   $$InventoryEntityTableTableManager get inventoryEntity =>
       $$InventoryEntityTableTableManager(_db, _db.inventoryEntity);
-
   $$InventoryChangesEntityTableTableManager get inventoryChangesEntity =>
       $$InventoryChangesEntityTableTableManager(
           _db, _db.inventoryChangesEntity);

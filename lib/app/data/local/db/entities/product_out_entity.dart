@@ -1,15 +1,9 @@
 import 'package:drift/drift.dart';
 
-class InventoryChangesEntity extends Table {
+class ProductOutEntity extends Table {
   IntColumn get id => integer()();
 
-  IntColumn get maxCount => integer()();
-
-  IntColumn get minCount => integer()();
-
   IntColumn get stockCountChange => integer()();
-
-  IntColumn get fixedSuggestion => integer()();
 
   TextColumn get modified => text()();
 
