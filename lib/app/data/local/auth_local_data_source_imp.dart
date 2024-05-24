@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
+import 'package:dental_inventory/app/data/local/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/app/data/model/response/user_response.dart';
 import 'package:get/get.dart';
