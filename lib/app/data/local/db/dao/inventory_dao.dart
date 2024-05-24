@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
 import 'package:drift/drift.dart';
 
@@ -6,6 +7,7 @@ part 'inventory_dao.g.dart';
 
 @DriftAccessor(tables: [
   InventoryEntity,
+  InventoryChangesEntity,
 ])
 class InventoryDao extends DatabaseAccessor<AppDatabase>
     with _$InventoryDaoMixin {
@@ -22,7 +24,53 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
+  Future<List<InventoryEntityData>> getInventories(int offset, int pageSize) {
+    List<OrderingTerm Function($InventoryEntityTable)> orders = [
+      (tbl) => OrderingTerm(
+            expression: inventoryEntity.id,
+            mode: OrderingMode.asc,
+          ),
+    ];
+
+    final query = select(inventoryEntity)
+      ..orderBy(orders)
+      ..limit(pageSize, offset: offset);
+
+    return query.get();
+  }
+
+  Future<bool> updateInventory(InventoryEntityData inventory) {
+    return update(inventoryEntity).replace(inventory);
+  }
+
   Future<void> deleteInventories() {
     return batch((batch) => batch.deleteAll(inventoryEntity));
+  }
+
+  Future<int> insertInventoryChange(
+      InventoryChangesEntityCompanion inventoryChange) {
+    return into(inventoryChangesEntity).insertOnConflictUpdate(inventoryChange);
+  }
+
+  Future<void> insertAllInventoryChanges(
+      List<InventoryChangesEntityCompanion> inventoryChanges) {
+    return batch((batch) {
+      batch.insertAllOnConflictUpdate(inventoryChangesEntity, inventoryChanges);
+    });
+  }
+
+  Future<List<InventoryChangesEntityData>> getInventoryChanges() {
+    final query = select(inventoryChangesEntity);
+
+    return query.get();
+  }
+
+  Future<void> deleteInventoryChangeById(int id) {
+    return (delete(inventoryChangesEntity)..where((tbl) => tbl.id.equals(id)))
+        .go();
+  }
+
+  Future<void> deleteInventoryChanges() {
+    return batch((batch) => batch.deleteAll(inventoryChangesEntity));
   }
 }

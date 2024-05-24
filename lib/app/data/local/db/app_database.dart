@@ -2,6 +2,11 @@ import 'dart:io';
 
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_count_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_in_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_out_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/shopping_cart_changes_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/shopping_cart_entity.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as path;
@@ -23,6 +28,11 @@ LazyDatabase _openConnection() {
 @DriftDatabase(tables: [
   InventoryEntity,
   InventoryChangesEntity,
+  ProductInEntity,
+  ProductOutEntity,
+  ProductCountEntity,
+  ShoppingCartEntity,
+  ShoppingCartChangesEntity,
 ])
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
