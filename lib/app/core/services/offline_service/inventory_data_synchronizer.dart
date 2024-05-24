@@ -11,6 +11,6 @@ class InventoryDataSynchronizer implements DataSynchronizer {
   @override
   Future syncData() {
     // TODO: implement syncData
-    throw UnimplementedError();
+    return Future.value();
   }
 }
