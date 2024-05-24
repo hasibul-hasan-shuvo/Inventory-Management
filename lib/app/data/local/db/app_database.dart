@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -21,6 +22,7 @@ LazyDatabase _openConnection() {
 
 @DriftDatabase(tables: [
   InventoryEntity,
+  InventoryChangesEntity,
 ])
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
