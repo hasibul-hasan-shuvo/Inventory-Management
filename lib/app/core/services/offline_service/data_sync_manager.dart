@@ -20,12 +20,12 @@ class DataSyncManager {
     _connectivitySubscription =
         _connectivityManager.connectivityStream.listen((isOnline) {
       if (isOnline) {
-        _syncAllDataWithServer();
+        syncAllDataWithServer();
       }
     });
   }
 
-  void _syncAllDataWithServer() {
+  void syncAllDataWithServer() {
     for (DataSynchronizerKey key in DataSynchronizerKey.values) {
       DataSynchronizer synchronizer = DataSynchronizer.create(key);
       synchronizer.syncData();

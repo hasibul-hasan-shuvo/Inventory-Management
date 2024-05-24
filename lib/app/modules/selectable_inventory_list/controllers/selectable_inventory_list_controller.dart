@@ -1,8 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/controllers/product_out_controller.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
@@ -102,13 +102,15 @@ class SelectableInventoryListController extends BaseController {
   }
 
   void _handleFetchInventoryListSuccessResponse(
-      InventoryListResponse response) {
+      List<InventoryEntityData> response) {
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
     List<SelectableInventoryItemUiModel> temp = [];
-    for (InventoryResponse res in response.inventoryList!) {
+
+    for (InventoryEntityData data in response) {
       SelectableInventoryItemUiModel model =
-          SelectableInventoryItemUiModel.fromProductResponseModel(res);
+          SelectableInventoryItemUiModel.fromInventoryEntityData(data);
 
       for (ScannedProductUiModel product
           in pageArguments.controller.scannedProducts) {
@@ -140,15 +142,27 @@ class SelectableInventoryListController extends BaseController {
     );
   }
 
-  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+  void _handleNextInventoryListSuccessResponse(
+      List<InventoryEntityData> response) {
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
-    _inventoryItemsController.addAll(
-      response.inventoryList
-              ?.map((e) =>
-                  SelectableInventoryItemUiModel.fromProductResponseModel(e))
-              .toList() ??
-          [],
-    );
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
+    List<SelectableInventoryItemUiModel> temp = [];
+
+    for (InventoryEntityData data in response) {
+      SelectableInventoryItemUiModel model =
+          SelectableInventoryItemUiModel.fromInventoryEntityData(data);
+
+      for (ScannedProductUiModel product
+          in pageArguments.controller.scannedProducts) {
+        if (model.itemId == product.itemId) {
+          model.number = product.number;
+          break;
+        }
+      }
+
+      temp.add(model);
+    }
+    _inventoryItemsController.addAll(temp);
   }
 }

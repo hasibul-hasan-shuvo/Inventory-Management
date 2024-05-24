@@ -1,5 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -76,13 +78,14 @@ class InventoryController extends BaseController {
   }
 
   void _handleFetchInventoryListSuccessResponse(
-      InventoryListResponse response) {
+      List<InventoryEntityData> response) {
+    List<InventoryCardUIModel> list = [];
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
-    List<InventoryCardUIModel> list = response.inventoryList
-            ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
-            .toList() ??
-        [];
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
+    for (InventoryEntityData inventory in response) {
+      list.add(InventoryCardUIModel.fromInventoryEntityData(inventory));
+    }
     _inventoryItemsController(list);
   }
 
@@ -101,15 +104,16 @@ class InventoryController extends BaseController {
     );
   }
 
-  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+  void _handleNextInventoryListSuccessResponse(
+      List<InventoryEntityData> response) {
+    List<InventoryCardUIModel> list = [];
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
-    _inventoryItemsController.addAll(
-      response.inventoryList
-              ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
-              .toList() ??
-          [],
-    );
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
+    for (InventoryEntityData inventory in response) {
+      list.add(InventoryCardUIModel.fromInventoryEntityData(inventory));
+    }
+    _inventoryItemsController.addAll(list);
   }
 
   void updateInventoryData({

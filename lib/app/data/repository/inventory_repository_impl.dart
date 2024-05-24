@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
@@ -12,13 +14,31 @@ import 'package:get/get.dart';
 
 class InventoryRepositoryImpl implements InventoryRepository {
   final InventoryRemoteDataSource _remoteDataSource = Get.find();
+  final InventoryLocalDataSource _localDataSource = Get.find();
+
   final AuthRepository _authRepository = Get.find();
 
   @override
-  Future<InventoryListResponse> getInventoryList({
+  Future getAllInventories() {
+    return _remoteDataSource
+        .getInventoryList(queryParams: InventoryListQueryParams())
+        .then((response) {
+      if (response.inventoryList != null &&
+          response.inventoryList?.isNotEmpty == true) {
+        List<InventoryEntityCompanion> inventories = response.inventoryList!
+            .map((e) => e.toInventoryEntityCompanion())
+            .toList();
+
+        return _localDataSource.insertAllInventories(inventories);
+      }
+    });
+  }
+
+  @override
+  Future<List<InventoryEntityData>> getInventoryList({
     required InventoryListQueryParams queryParams,
-  }) async {
-    return _remoteDataSource.getInventoryList(queryParams: queryParams);
+  }) {
+    return _localDataSource.getInventories(queryParams);
   }
 
   @override

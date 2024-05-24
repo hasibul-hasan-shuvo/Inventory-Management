@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:dental_inventory/app/core/utils/date_parser.dart';
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
+import 'package:drift/drift.dart';
 
 class InventoryListResponse {
   InventoryListResponse.fromJson(dynamic json) {
@@ -47,6 +52,27 @@ class InventoryResponse {
     fixedSuggestion = json['fixed_suggestion'];
     inventory = json['inventory'];
   }
+
+  InventoryEntityCompanion toInventoryEntityCompanion() {
+    DateTime createdDate = DateParser.getDateTimeFromDateString(created);
+    DateTime modifiedDate = DateParser.getDateTimeFromDateString(modified);
+
+    return InventoryEntityCompanion.insert(
+      id: Value(id ?? 0),
+      itemId: product?.itemId ?? '',
+      product: jsonEncode(product?.toJson() ?? {}),
+      connectedCartItem: jsonEncode(connectedCartItem?.toJson() ?? {}),
+      maxCount: maxCount ?? 0,
+      minCount: minCount ?? 0,
+      stockCount: stockCount ?? 0,
+      fixedSuggestion: fixedSuggestion ?? 0,
+      inventory: inventory ?? 0,
+      created: created ?? '',
+      createdMilliSecond: createdDate.millisecondsSinceEpoch,
+      modified: modified ?? '',
+      modifiedMilliSecond: modifiedDate.millisecondsSinceEpoch,
+    );
+  }
 }
 
 class ConnectedCartItemResponse {
@@ -57,4 +83,11 @@ class ConnectedCartItemResponse {
 
   int? id;
   int? quantity;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'quantity': quantity,
+    };
+  }
 }

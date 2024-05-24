@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class InventoryCardUIModel {
   late final int id;
@@ -11,16 +15,19 @@ class InventoryCardUIModel {
   late int fixedOrderSuggestions;
   late final double price;
 
-  InventoryCardUIModel.fromInventoryResponse(InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
-    max = response.maxCount ?? 0;
-    min = response.minCount ?? 0;
-    currentStock = response.stockCount ?? 0;
-    fixedOrderSuggestions = response.fixedSuggestion ?? 0;
-    price = response.product?.price?.toDouble() ?? 0.0;
+  InventoryCardUIModel.fromInventoryEntityData(InventoryEntityData data) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
+
+    id = data.id;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
+    max = data.maxCount;
+    min = data.minCount;
+    currentStock = data.stockCount;
+    fixedOrderSuggestions = data.fixedSuggestion;
+    price = product.price?.toDouble() ?? 0.0;
   }
 
   updateFromInventoryResponse(InventoryResponse response) {

@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
@@ -58,6 +59,14 @@ abstract class DateParser {
     }
 
     return formattedDate;
+  }
+
+  static DateTime getDateTimeFromDateString(String? date) {
+    if (date.isNullOrEmpty) return getCurrentDateTime;
+
+    DateTime convertedDateTime = DateTime.parse(date!);
+
+    return convertedDateTime;
   }
 
   static DateTime get getCurrentDateTime => DateTime.now();

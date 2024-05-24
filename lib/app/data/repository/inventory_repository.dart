@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
@@ -7,7 +8,9 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 
 abstract class InventoryRepository {
-  Future<InventoryListResponse> getInventoryList({
+  Future getAllInventories();
+
+  Future<List<InventoryEntityData>> getInventoryList({
     required InventoryListQueryParams queryParams,
   });
 
