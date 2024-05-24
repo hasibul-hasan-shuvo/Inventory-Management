@@ -3,6 +3,8 @@ import 'package:drift/drift.dart';
 class InventoryEntity extends Table {
   IntColumn get id => integer()();
 
+  TextColumn get itemId => text()();
+
   TextColumn get product => text()();
 
   TextColumn get connectedCartItem => text()();
