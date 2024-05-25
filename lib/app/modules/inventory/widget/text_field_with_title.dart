@@ -22,13 +22,14 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
   Widget body(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (title.isNotNullOrEmpty)
-          Text(
-            title ?? '',
-            style: textTheme.bodyMedium,
+          Expanded(
+            child: Text(
+              title ?? '',
+              style: textTheme.bodyMedium,
+            ),
           ),
         if (title.isNotNullOrEmpty) const SizedBox(width: AppValues.margin_10),
         SizedBox(

@@ -37,9 +37,13 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
         mainAxisSize: MainAxisSize.min,
         children: [
           icon ?? const SizedBox(),
-          Text(
-            title,
-            style: textTheme.bodyMedium,
+          Flexible(
+            child: Text(
+              title,
+              style: textTheme.bodyMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),
