@@ -129,7 +129,8 @@ class InventoryController extends BaseController {
       fixedSuggestion: fixedSuggestion,
     )) {
       final InventoryUpdateRequestBody request = InventoryUpdateRequestBody(
-        id: data.itemId,
+        id: data.id,
+        itemId: data.itemId,
         maxCount: maxCount.toInt,
         minCount: minCount.toInt,
         stockCount: stockCount.toInt,

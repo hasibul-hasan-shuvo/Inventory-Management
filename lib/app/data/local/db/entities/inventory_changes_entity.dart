@@ -3,6 +3,8 @@ import 'package:drift/drift.dart';
 class InventoryChangesEntity extends Table {
   IntColumn get id => integer()();
 
+  TextColumn get itemId => text()();
+
   IntColumn get maxCount => integer().nullable()();
 
   IntColumn get minCount => integer().nullable()();

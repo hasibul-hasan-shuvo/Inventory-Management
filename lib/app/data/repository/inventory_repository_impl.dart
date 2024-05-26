@@ -58,17 +58,29 @@ class InventoryRepositoryImpl implements InventoryRepository {
   Future<InventoryEntityData?> updateInventoryData(
       int id, InventoryUpdateRequestBody request) {
     InventoryEntityCompanion inventory = request.toInventoryEntityCompanion();
+    InventoryChangesEntityCompanion inventoryChanges =
+        request.toInventoryChangesEntityCompanion();
 
-    return _localDataSource
-        .updateInventory(
-      id,
-      inventory,
-    )
-        .then((value) {
-      _remoteDataSource.updateInventoryData(request);
+    return _localDataSource.updateInventory(id, inventory).then((_) {
+      return _localDataSource
+          .insertInventoryChanges(inventoryChanges)
+          .then((_) {
+        _syncInventories();
 
-      return getInventoryById(id);
+        return getInventoryById(id);
+      });
     });
+  }
+
+  @override
+  Future<InventoryResponse> updateInventoryDataToServer(
+      InventoryUpdateRequestBody request) {
+    return _remoteDataSource.updateInventoryData(request);
+  }
+
+  @override
+  Future<int> deleteInventoryChangesById(int id) {
+    return _localDataSource.deleteInventoryChangesById(id);
   }
 
   @override
@@ -102,9 +114,14 @@ class InventoryRepositoryImpl implements InventoryRepository {
         ),
       )
           .then((_) {
-        DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
+        _syncInventories();
       });
     });
+  }
+
+  @override
+  Future<List<InventoryChangesEntityData>> getAllInventoryChanges() {
+    return _localDataSource.getAllInventoryChanges();
   }
 
   @override
@@ -132,5 +149,9 @@ class InventoryRepositoryImpl implements InventoryRepository {
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody) {
     return _remoteDataSource.createInventory(requestBody);
+  }
+
+  void _syncInventories() {
+    DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
   }
 }

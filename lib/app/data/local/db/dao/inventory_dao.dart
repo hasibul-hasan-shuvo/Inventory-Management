@@ -75,16 +75,27 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return (delete(inventoryEntity)..where((tbl) => tbl.id.equals(id))).go();
   }
 
-  Future<int> insertInventoryChange(
-      InventoryChangesEntityCompanion inventoryChange) {
-    return into(inventoryChangesEntity).insertOnConflictUpdate(inventoryChange);
-  }
-
-  Future<void> insertAllInventoryChanges(
-      List<InventoryChangesEntityCompanion> inventoryChanges) {
-    return batch((batch) {
-      batch.insertAllOnConflictUpdate(inventoryChangesEntity, inventoryChanges);
-    });
+  Future<int> insertInventoryChanges(
+      InventoryChangesEntityCompanion inventoryChanges) {
+    return into(inventoryChangesEntity).insert(
+      inventoryChanges,
+      onConflict: DoUpdate(
+        (old) => InventoryChangesEntityCompanion.custom(
+          minCount: inventoryChanges.minCount.present
+              ? Variable(inventoryChanges.minCount.value)
+              : old.minCount,
+          maxCount: inventoryChanges.maxCount.present
+              ? Variable(inventoryChanges.maxCount.value)
+              : old.maxCount,
+          fixedSuggestion: inventoryChanges.fixedSuggestion.present
+              ? Variable(inventoryChanges.fixedSuggestion.value)
+              : old.fixedSuggestion,
+          stockCountChange: old.stockCountChange +
+              Variable(inventoryChanges.stockCountChange.value),
+          modified: Variable(DateTime.now().toUtc()),
+        ),
+      ),
+    );
   }
 
   Future<List<InventoryChangesEntityData>> getInventoryChanges() {
@@ -93,7 +104,7 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<void> deleteInventoryChangeById(int id) {
+  Future<int> deleteInventoryChangesById(int id) {
     return (delete(inventoryChangesEntity)..where((tbl) => tbl.id.equals(id)))
         .go();
   }

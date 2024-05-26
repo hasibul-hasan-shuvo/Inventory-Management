@@ -18,6 +18,8 @@ abstract class InventoryRepository {
 
   Future deleteInventory({required int id});
 
+  Future<List<InventoryChangesEntityData>> getAllInventoryChanges();
+
   Future<List<DeletedInventoryEntityData>> getDeletedInventories();
 
   Future<int> deleteIdFromDeletedInventory(int id);
@@ -30,6 +32,11 @@ abstract class InventoryRepository {
     int id,
     InventoryUpdateRequestBody request,
   );
+
+  Future<InventoryResponse> updateInventoryDataToServer(
+      InventoryUpdateRequestBody request);
+
+  Future<int> deleteInventoryChangesById(int id);
 
   Future<InventoryResponse> getProduct(String itemId);
 

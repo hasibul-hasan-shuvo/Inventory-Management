@@ -2,43 +2,70 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:drift/drift.dart';
 
 class InventoryUpdateRequestBody {
-  final String inventoryID;
-  final String id;
-  final int maxCount;
-  final int minCount;
-  final int stockCount;
-  final int stockCountChange;
-  final int fixedSuggestion;
+  String? inventoryID;
+  int id;
+  String itemId;
+  int? maxCount;
+  int? minCount;
+  int? stockCount;
+  int? stockCountChange;
+  int? fixedSuggestion;
 
   InventoryUpdateRequestBody({
-    required this.inventoryID,
     required this.id,
-    required this.maxCount,
-    required this.minCount,
-    required this.stockCount,
-    required this.stockCountChange,
-    required this.fixedSuggestion,
+    required this.itemId,
+    this.inventoryID,
+    this.maxCount,
+    this.minCount,
+    this.stockCount,
+    this.stockCountChange,
+    this.fixedSuggestion,
   });
 
-  String get productID => id;
+  String get productID => itemId;
 
   InventoryEntityCompanion toInventoryEntityCompanion() {
     return InventoryEntityCompanion(
+      maxCount: Value(maxCount ?? 0),
+      minCount: Value(minCount ?? 0),
+      stockCount: Value(stockCount ?? 0),
+      fixedSuggestion: Value(fixedSuggestion ?? 0),
+    );
+  }
+
+  InventoryChangesEntityCompanion toInventoryChangesEntityCompanion() {
+    return InventoryChangesEntityCompanion.insert(
+      id: Value(id),
+      itemId: itemId,
       maxCount: Value(maxCount),
       minCount: Value(minCount),
-      stockCount: Value(stockCount),
+      stockCountChange: Value(stockCountChange ?? 0),
       fixedSuggestion: Value(fixedSuggestion),
+      modified: Value(DateTime.now().toUtc()),
     );
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['inventory'] = inventoryID;
     data['id'] = id;
-    data['max_count'] = maxCount;
-    data['min_count'] = minCount;
-    data['stock_count'] = stockCount;
-    data['fixed_suggestion'] = fixedSuggestion;
+
+    if (inventoryID != null) {
+      data['inventory'] = inventoryID;
+    }
+
+    if (maxCount != null) {
+      data['max_count'] = maxCount;
+    }
+    if (minCount != null) {
+      data['min_count'] = minCount;
+    }
+    if (stockCountChange != null) {
+      data['count_change'] = stockCountChange;
+    }
+
+    if (fixedSuggestion != null) {
+      data['fixed_suggestion'] = fixedSuggestion;
+    }
 
     return data;
   }
