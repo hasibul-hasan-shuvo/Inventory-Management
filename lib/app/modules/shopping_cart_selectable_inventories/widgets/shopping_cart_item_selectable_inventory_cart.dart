@@ -59,6 +59,7 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildInventoryName(),
+          SizedBox(height: AppValues.margin_10.h),
           _buildIdAndCountView(),
         ],
       ),
@@ -75,31 +76,29 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
   }
 
   Widget _buildIdAndCountView() {
-    return Expanded(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildIdView(),
-          SizedBox(width: AppValues.smallMargin.w),
-          Expanded(
-            child: Column(
-              children: [
-                _buildLabelAndCount(
-                  appLocalization.inventory,
-                  inventoryData.available.toString(),
-                ),
-                _buildLabelAndCount(
-                  appLocalization.homeMenuShoppingCart,
-                  (inventoryData.connectedCartItem == null
-                          ? 0
-                          : inventoryData.connectedCartItem!.quantity)
-                      .toString(),
-                ),
-              ],
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildIdView(),
+        SizedBox(width: AppValues.smallMargin.w),
+        Expanded(
+          child: Column(
+            children: [
+              _buildLabelAndCount(
+                appLocalization.inventory,
+                inventoryData.available.toString(),
+              ),
+              _buildLabelAndCount(
+                appLocalization.homeMenuShoppingCart,
+                (inventoryData.connectedCartItem.isCartedItem()
+                        ? inventoryData.connectedCartItem.quantity
+                        : 0)
+                    .toString(),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -133,9 +132,9 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
 
   void _onTapEdit(BuildContext context) {
     TextEditingController numberController = TextEditingController();
-    numberController.text = (inventoryData.connectedCartItem == null
-            ? 0
-            : inventoryData.connectedCartItem!.quantity)
+    numberController.text = (inventoryData.connectedCartItem.isCartedItem()
+            ? inventoryData.connectedCartItem.quantity
+            : 0)
         .toString();
 
     showDialog(
