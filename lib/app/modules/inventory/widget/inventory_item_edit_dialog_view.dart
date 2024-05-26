@@ -1,7 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product_top_view.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +10,7 @@ import '../../../core/values/app_values.dart';
 
 // ignore: must_be_immutable
 class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
-  InventoryCardUIModel inventoryData;
+  InventoryUIModel inventoryData;
   final TextEditingController minController;
   final TextEditingController maxController;
   final TextEditingController fixedSuggestionController;

@@ -22,4 +22,12 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
       queryParams.pageSize,
     );
   }
+
+  @override
+  Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
+    return _inventoryDao.updateInventory(
+      id,
+      inventory,
+    );
+  }
 }

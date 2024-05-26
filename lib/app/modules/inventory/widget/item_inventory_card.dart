@@ -2,7 +2,7 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,7 @@ import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
-  final InventoryCardUIModel data;
+  final InventoryUIModel data;
   final InventoryController _controller = Get.find<InventoryController>();
 
   ItemInventoryCard({

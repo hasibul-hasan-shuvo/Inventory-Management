@@ -4,7 +4,7 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
-class InventoryCardUIModel {
+class InventoryUIModel {
   late final int id;
   late final String itemId;
   late final String name;
@@ -15,7 +15,7 @@ class InventoryCardUIModel {
   late int fixedOrderSuggestions;
   late final double price;
 
-  InventoryCardUIModel.fromInventoryEntityData(InventoryEntityData data) {
+  InventoryUIModel.fromInventoryEntityData(InventoryEntityData data) {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 

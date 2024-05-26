@@ -6,4 +6,9 @@ abstract class InventoryLocalDataSource {
 
   Future<List<InventoryEntityData>> getInventories(
       InventoryListQueryParams queryParams);
+
+  Future<int> updateInventory(
+    int id,
+    InventoryEntityCompanion inventory,
+  );
 }

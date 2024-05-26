@@ -46,16 +46,9 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<bool> updateInventory(InventoryEntityData inventory) {
-    return update(inventoryEntity).replace(inventory);
-  }
-
-  Future<int> updateInventoryStockCount(int id, int stockCount) {
-    return (update(inventoryEntity)..where((tbl) => tbl.id.equals(id))).write(
-      InventoryEntityCompanion(
-        stockCount: Value(stockCount),
-      ),
-    );
+  Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
+    return (update(inventoryEntity)..where((tbl) => tbl.id.equals(id)))
+        .write(inventory);
   }
 
   Future<void> deleteInventories() {

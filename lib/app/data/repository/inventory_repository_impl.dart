@@ -1,8 +1,8 @@
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
-import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
@@ -43,7 +43,16 @@ class InventoryRepositoryImpl implements InventoryRepository {
 
   @override
   Future<InventoryResponse> updateInventoryData(
-      InventoryCountUpdateRequest request) {
+      int id, InventoryUpdateRequestBody request) {
+    InventoryEntityCompanion inventory = request.toInventoryEntityCompanion();
+
+    _localDataSource
+        .updateInventory(
+          id,
+          inventory,
+        )
+        .then((value) {});
+
     return _remoteDataSource.updateInventoryData(request);
   }
 

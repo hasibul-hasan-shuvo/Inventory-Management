@@ -3,7 +3,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,7 +66,7 @@ class InventoryView extends BaseView<InventoryController> {
     );
   }
 
-  Widget _buildInventoryCard(InventoryCardUIModel inventoryData) =>
+  Widget _buildInventoryCard(InventoryUIModel inventoryData) =>
       ItemInventoryCard(data: inventoryData);
 
   Widget _getPlaceHolder() {
