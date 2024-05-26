@@ -54,8 +54,8 @@ class InventoryResponse {
   }
 
   InventoryEntityCompanion toInventoryEntityCompanion() {
-    DateTime createdDate = DateParser.getDateTimeFromDateString(created);
-    DateTime modifiedDate = DateParser.getDateTimeFromDateString(modified);
+    DateTime createdDateTime = DateParser.getDateTimeFromDateString(created);
+    DateTime modifiedDateTime = DateParser.getDateTimeFromDateString(modified);
 
     return InventoryEntityCompanion.insert(
       id: Value(id ?? 0),
@@ -67,10 +67,8 @@ class InventoryResponse {
       stockCount: stockCount ?? 0,
       fixedSuggestion: fixedSuggestion ?? 0,
       inventory: inventory ?? 0,
-      created: created ?? '',
-      createdMilliSecond: createdDate.millisecondsSinceEpoch,
-      modified: modified ?? '',
-      modifiedMilliSecond: modifiedDate.millisecondsSinceEpoch,
+      created: Value(createdDateTime),
+      modified: Value(modifiedDateTime),
     );
   }
 }

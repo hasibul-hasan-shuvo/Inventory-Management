@@ -64,27 +64,19 @@ class $InventoryEntityTable extends InventoryEntity
   static const VerificationMeta _createdMeta =
       const VerificationMeta('created');
   @override
-  late final GeneratedColumn<String> created = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
       'created', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _createdMilliSecondMeta =
-      const VerificationMeta('createdMilliSecond');
-  @override
-  late final GeneratedColumn<int> createdMilliSecond = GeneratedColumn<int>(
-      'created_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
-  @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -97,9 +89,7 @@ class $InventoryEntityTable extends InventoryEntity
         fixedSuggestion,
         inventory,
         created,
-        createdMilliSecond,
-        modified,
-        modifiedMilliSecond
+        modified
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -172,30 +162,10 @@ class $InventoryEntityTable extends InventoryEntity
     if (data.containsKey('created')) {
       context.handle(_createdMeta,
           created.isAcceptableOrUnknown(data['created']!, _createdMeta));
-    } else if (isInserting) {
-      context.missing(_createdMeta);
-    }
-    if (data.containsKey('created_milli_second')) {
-      context.handle(
-          _createdMilliSecondMeta,
-          createdMilliSecond.isAcceptableOrUnknown(
-              data['created_milli_second']!, _createdMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_createdMilliSecondMeta);
     }
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -225,13 +195,9 @@ class $InventoryEntityTable extends InventoryEntity
       inventory: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}inventory'])!,
       created: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}created'])!,
-      createdMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}created_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -252,10 +218,8 @@ class InventoryEntityData extends DataClass
   final int stockCount;
   final int fixedSuggestion;
   final int inventory;
-  final String created;
-  final int createdMilliSecond;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime created;
+  final DateTime modified;
   const InventoryEntityData(
       {required this.id,
       required this.itemId,
@@ -267,9 +231,7 @@ class InventoryEntityData extends DataClass
       required this.fixedSuggestion,
       required this.inventory,
       required this.created,
-      required this.createdMilliSecond,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -282,10 +244,8 @@ class InventoryEntityData extends DataClass
     map['stock_count'] = Variable<int>(stockCount);
     map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
     map['inventory'] = Variable<int>(inventory);
-    map['created'] = Variable<String>(created);
-    map['created_milli_second'] = Variable<int>(createdMilliSecond);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['created'] = Variable<DateTime>(created);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -301,9 +261,7 @@ class InventoryEntityData extends DataClass
       fixedSuggestion: Value(fixedSuggestion),
       inventory: Value(inventory),
       created: Value(created),
-      createdMilliSecond: Value(createdMilliSecond),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -320,11 +278,8 @@ class InventoryEntityData extends DataClass
       stockCount: serializer.fromJson<int>(json['stockCount']),
       fixedSuggestion: serializer.fromJson<int>(json['fixedSuggestion']),
       inventory: serializer.fromJson<int>(json['inventory']),
-      created: serializer.fromJson<String>(json['created']),
-      createdMilliSecond: serializer.fromJson<int>(json['createdMilliSecond']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      created: serializer.fromJson<DateTime>(json['created']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -340,10 +295,8 @@ class InventoryEntityData extends DataClass
       'stockCount': serializer.toJson<int>(stockCount),
       'fixedSuggestion': serializer.toJson<int>(fixedSuggestion),
       'inventory': serializer.toJson<int>(inventory),
-      'created': serializer.toJson<String>(created),
-      'createdMilliSecond': serializer.toJson<int>(createdMilliSecond),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'created': serializer.toJson<DateTime>(created),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
@@ -357,10 +310,8 @@ class InventoryEntityData extends DataClass
           int? stockCount,
           int? fixedSuggestion,
           int? inventory,
-          String? created,
-          int? createdMilliSecond,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          DateTime? created,
+          DateTime? modified}) =>
       InventoryEntityData(
         id: id ?? this.id,
         itemId: itemId ?? this.itemId,
@@ -372,9 +323,7 @@ class InventoryEntityData extends DataClass
         fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
         inventory: inventory ?? this.inventory,
         created: created ?? this.created,
-        createdMilliSecond: createdMilliSecond ?? this.createdMilliSecond,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
@@ -389,9 +338,7 @@ class InventoryEntityData extends DataClass
           ..write('fixedSuggestion: $fixedSuggestion, ')
           ..write('inventory: $inventory, ')
           ..write('created: $created, ')
-          ..write('createdMilliSecond: $createdMilliSecond, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -408,9 +355,7 @@ class InventoryEntityData extends DataClass
       fixedSuggestion,
       inventory,
       created,
-      createdMilliSecond,
-      modified,
-      modifiedMilliSecond);
+      modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -425,9 +370,7 @@ class InventoryEntityData extends DataClass
           other.fixedSuggestion == this.fixedSuggestion &&
           other.inventory == this.inventory &&
           other.created == this.created &&
-          other.createdMilliSecond == this.createdMilliSecond &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
@@ -440,10 +383,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   final Value<int> stockCount;
   final Value<int> fixedSuggestion;
   final Value<int> inventory;
-  final Value<String> created;
-  final Value<int> createdMilliSecond;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> created;
+  final Value<DateTime> modified;
   const InventoryEntityCompanion({
     this.id = const Value.absent(),
     this.itemId = const Value.absent(),
@@ -455,9 +396,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     this.fixedSuggestion = const Value.absent(),
     this.inventory = const Value.absent(),
     this.created = const Value.absent(),
-    this.createdMilliSecond = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   InventoryEntityCompanion.insert({
     this.id = const Value.absent(),
@@ -469,10 +408,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     required int stockCount,
     required int fixedSuggestion,
     required int inventory,
-    required String created,
-    required int createdMilliSecond,
-    required String modified,
-    required int modifiedMilliSecond,
+    this.created = const Value.absent(),
+    this.modified = const Value.absent(),
   })  : itemId = Value(itemId),
         product = Value(product),
         connectedCartItem = Value(connectedCartItem),
@@ -480,11 +417,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
         minCount = Value(minCount),
         stockCount = Value(stockCount),
         fixedSuggestion = Value(fixedSuggestion),
-        inventory = Value(inventory),
-        created = Value(created),
-        createdMilliSecond = Value(createdMilliSecond),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+        inventory = Value(inventory);
   static Insertable<InventoryEntityData> custom({
     Expression<int>? id,
     Expression<String>? itemId,
@@ -495,10 +428,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     Expression<int>? stockCount,
     Expression<int>? fixedSuggestion,
     Expression<int>? inventory,
-    Expression<String>? created,
-    Expression<int>? createdMilliSecond,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? created,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -511,11 +442,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
       if (inventory != null) 'inventory': inventory,
       if (created != null) 'created': created,
-      if (createdMilliSecond != null)
-        'created_milli_second': createdMilliSecond,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
@@ -529,10 +456,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       Value<int>? stockCount,
       Value<int>? fixedSuggestion,
       Value<int>? inventory,
-      Value<String>? created,
-      Value<int>? createdMilliSecond,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<DateTime>? created,
+      Value<DateTime>? modified}) {
     return InventoryEntityCompanion(
       id: id ?? this.id,
       itemId: itemId ?? this.itemId,
@@ -544,9 +469,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
       inventory: inventory ?? this.inventory,
       created: created ?? this.created,
-      createdMilliSecond: createdMilliSecond ?? this.createdMilliSecond,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -581,16 +504,10 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       map['inventory'] = Variable<int>(inventory.value);
     }
     if (created.present) {
-      map['created'] = Variable<String>(created.value);
-    }
-    if (createdMilliSecond.present) {
-      map['created_milli_second'] = Variable<int>(createdMilliSecond.value);
+      map['created'] = Variable<DateTime>(created.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -608,9 +525,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
           ..write('fixedSuggestion: $fixedSuggestion, ')
           ..write('inventory: $inventory, ')
           ..write('created: $created, ')
-          ..write('createdMilliSecond: $createdMilliSecond, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -631,48 +546,39 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
       const VerificationMeta('maxCount');
   @override
   late final GeneratedColumn<int> maxCount = GeneratedColumn<int>(
-      'max_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'max_count', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _minCountMeta =
       const VerificationMeta('minCount');
   @override
   late final GeneratedColumn<int> minCount = GeneratedColumn<int>(
-      'min_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'min_count', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _stockCountChangeMeta =
       const VerificationMeta('stockCountChange');
   @override
   late final GeneratedColumn<int> stockCountChange = GeneratedColumn<int>(
       'stock_count_change', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
   static const VerificationMeta _fixedSuggestionMeta =
       const VerificationMeta('fixedSuggestion');
   @override
   late final GeneratedColumn<int> fixedSuggestion = GeneratedColumn<int>(
-      'fixed_suggestion', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'fixed_suggestion', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        maxCount,
-        minCount,
-        stockCountChange,
-        fixedSuggestion,
-        modified,
-        modifiedMilliSecond
-      ];
+  List<GeneratedColumn> get $columns =>
+      [id, maxCount, minCount, stockCountChange, fixedSuggestion, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -690,44 +596,26 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
     if (data.containsKey('max_count')) {
       context.handle(_maxCountMeta,
           maxCount.isAcceptableOrUnknown(data['max_count']!, _maxCountMeta));
-    } else if (isInserting) {
-      context.missing(_maxCountMeta);
     }
     if (data.containsKey('min_count')) {
       context.handle(_minCountMeta,
           minCount.isAcceptableOrUnknown(data['min_count']!, _minCountMeta));
-    } else if (isInserting) {
-      context.missing(_minCountMeta);
     }
     if (data.containsKey('stock_count_change')) {
       context.handle(
           _stockCountChangeMeta,
           stockCountChange.isAcceptableOrUnknown(
               data['stock_count_change']!, _stockCountChangeMeta));
-    } else if (isInserting) {
-      context.missing(_stockCountChangeMeta);
     }
     if (data.containsKey('fixed_suggestion')) {
       context.handle(
           _fixedSuggestionMeta,
           fixedSuggestion.isAcceptableOrUnknown(
               data['fixed_suggestion']!, _fixedSuggestionMeta));
-    } else if (isInserting) {
-      context.missing(_fixedSuggestionMeta);
     }
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -742,17 +630,15 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       maxCount: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}max_count'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}max_count']),
       minCount: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}min_count'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}min_count']),
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       fixedSuggestion: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion']),
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -765,42 +651,50 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
 class InventoryChangesEntityData extends DataClass
     implements Insertable<InventoryChangesEntityData> {
   final int id;
-  final int maxCount;
-  final int minCount;
+  final int? maxCount;
+  final int? minCount;
   final int stockCountChange;
-  final int fixedSuggestion;
-  final String modified;
-  final int modifiedMilliSecond;
+  final int? fixedSuggestion;
+  final DateTime modified;
   const InventoryChangesEntityData(
       {required this.id,
-      required this.maxCount,
-      required this.minCount,
+      this.maxCount,
+      this.minCount,
       required this.stockCountChange,
-      required this.fixedSuggestion,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      this.fixedSuggestion,
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['max_count'] = Variable<int>(maxCount);
-    map['min_count'] = Variable<int>(minCount);
+    if (!nullToAbsent || maxCount != null) {
+      map['max_count'] = Variable<int>(maxCount);
+    }
+    if (!nullToAbsent || minCount != null) {
+      map['min_count'] = Variable<int>(minCount);
+    }
     map['stock_count_change'] = Variable<int>(stockCountChange);
-    map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    if (!nullToAbsent || fixedSuggestion != null) {
+      map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
+    }
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
   InventoryChangesEntityCompanion toCompanion(bool nullToAbsent) {
     return InventoryChangesEntityCompanion(
       id: Value(id),
-      maxCount: Value(maxCount),
-      minCount: Value(minCount),
+      maxCount: maxCount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maxCount),
+      minCount: minCount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minCount),
       stockCountChange: Value(stockCountChange),
-      fixedSuggestion: Value(fixedSuggestion),
+      fixedSuggestion: fixedSuggestion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fixedSuggestion),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -809,13 +703,11 @@ class InventoryChangesEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InventoryChangesEntityData(
       id: serializer.fromJson<int>(json['id']),
-      maxCount: serializer.fromJson<int>(json['maxCount']),
-      minCount: serializer.fromJson<int>(json['minCount']),
+      maxCount: serializer.fromJson<int?>(json['maxCount']),
+      minCount: serializer.fromJson<int?>(json['minCount']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
-      fixedSuggestion: serializer.fromJson<int>(json['fixedSuggestion']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      fixedSuggestion: serializer.fromJson<int?>(json['fixedSuggestion']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -823,31 +715,30 @@ class InventoryChangesEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'maxCount': serializer.toJson<int>(maxCount),
-      'minCount': serializer.toJson<int>(minCount),
+      'maxCount': serializer.toJson<int?>(maxCount),
+      'minCount': serializer.toJson<int?>(minCount),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
-      'fixedSuggestion': serializer.toJson<int>(fixedSuggestion),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'fixedSuggestion': serializer.toJson<int?>(fixedSuggestion),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   InventoryChangesEntityData copyWith(
           {int? id,
-          int? maxCount,
-          int? minCount,
+          Value<int?> maxCount = const Value.absent(),
+          Value<int?> minCount = const Value.absent(),
           int? stockCountChange,
-          int? fixedSuggestion,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          Value<int?> fixedSuggestion = const Value.absent(),
+          DateTime? modified}) =>
       InventoryChangesEntityData(
         id: id ?? this.id,
-        maxCount: maxCount ?? this.maxCount,
-        minCount: minCount ?? this.minCount,
+        maxCount: maxCount.present ? maxCount.value : this.maxCount,
+        minCount: minCount.present ? minCount.value : this.minCount,
         stockCountChange: stockCountChange ?? this.stockCountChange,
-        fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
+        fixedSuggestion: fixedSuggestion.present
+            ? fixedSuggestion.value
+            : this.fixedSuggestion,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
@@ -857,15 +748,14 @@ class InventoryChangesEntityData extends DataClass
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, maxCount, minCount, stockCountChange,
-      fixedSuggestion, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(
+      id, maxCount, minCount, stockCountChange, fixedSuggestion, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -875,19 +765,17 @@ class InventoryChangesEntityData extends DataClass
           other.minCount == this.minCount &&
           other.stockCountChange == this.stockCountChange &&
           other.fixedSuggestion == this.fixedSuggestion &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class InventoryChangesEntityCompanion
     extends UpdateCompanion<InventoryChangesEntityData> {
   final Value<int> id;
-  final Value<int> maxCount;
-  final Value<int> minCount;
+  final Value<int?> maxCount;
+  final Value<int?> minCount;
   final Value<int> stockCountChange;
-  final Value<int> fixedSuggestion;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<int?> fixedSuggestion;
+  final Value<DateTime> modified;
   const InventoryChangesEntityCompanion({
     this.id = const Value.absent(),
     this.maxCount = const Value.absent(),
@@ -895,30 +783,22 @@ class InventoryChangesEntityCompanion
     this.stockCountChange = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   InventoryChangesEntityCompanion.insert({
     this.id = const Value.absent(),
-    required int maxCount,
-    required int minCount,
-    required int stockCountChange,
-    required int fixedSuggestion,
-    required String modified,
-    required int modifiedMilliSecond,
-  })  : maxCount = Value(maxCount),
-        minCount = Value(minCount),
-        stockCountChange = Value(stockCountChange),
-        fixedSuggestion = Value(fixedSuggestion),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+    this.maxCount = const Value.absent(),
+    this.minCount = const Value.absent(),
+    this.stockCountChange = const Value.absent(),
+    this.fixedSuggestion = const Value.absent(),
+    this.modified = const Value.absent(),
+  });
   static Insertable<InventoryChangesEntityData> custom({
     Expression<int>? id,
     Expression<int>? maxCount,
     Expression<int>? minCount,
     Expression<int>? stockCountChange,
     Expression<int>? fixedSuggestion,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -927,19 +807,16 @@ class InventoryChangesEntityCompanion
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
   InventoryChangesEntityCompanion copyWith(
       {Value<int>? id,
-      Value<int>? maxCount,
-      Value<int>? minCount,
+      Value<int?>? maxCount,
+      Value<int?>? minCount,
       Value<int>? stockCountChange,
-      Value<int>? fixedSuggestion,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<int?>? fixedSuggestion,
+      Value<DateTime>? modified}) {
     return InventoryChangesEntityCompanion(
       id: id ?? this.id,
       maxCount: maxCount ?? this.maxCount,
@@ -947,7 +824,6 @@ class InventoryChangesEntityCompanion
       stockCountChange: stockCountChange ?? this.stockCountChange,
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -970,10 +846,7 @@ class InventoryChangesEntityCompanion
       map['fixed_suggestion'] = Variable<int>(fixedSuggestion.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -986,8 +859,7 @@ class InventoryChangesEntityCompanion
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -1013,18 +885,13 @@ class $ProductInEntityTable extends ProductInEntity
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, stockCountChange, modified, modifiedMilliSecond];
+  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1050,16 +917,6 @@ class $ProductInEntityTable extends ProductInEntity
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -1075,9 +932,7 @@ class $ProductInEntityTable extends ProductInEntity
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -1091,20 +946,17 @@ class ProductInEntityData extends DataClass
     implements Insertable<ProductInEntityData> {
   final int id;
   final int stockCountChange;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime modified;
   const ProductInEntityData(
       {required this.id,
       required this.stockCountChange,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['stock_count_change'] = Variable<int>(stockCountChange);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -1113,7 +965,6 @@ class ProductInEntityData extends DataClass
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -1123,9 +974,7 @@ class ProductInEntityData extends DataClass
     return ProductInEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -1134,90 +983,72 @@ class ProductInEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductInEntityData copyWith(
-          {int? id,
-          int? stockCountChange,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          {int? id, int? stockCountChange, DateTime? modified}) =>
       ProductInEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
     return (StringBuffer('ProductInEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, stockCountChange, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(id, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductInEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> modified;
   const ProductInEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   ProductInEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
-    required String modified,
-    required int modifiedMilliSecond,
-  })  : stockCountChange = Value(stockCountChange),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+    this.modified = const Value.absent(),
+  }) : stockCountChange = Value(stockCountChange);
   static Insertable<ProductInEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
   ProductInEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<DateTime>? modified}) {
     return ProductInEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -1231,10 +1062,7 @@ class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -1244,8 +1072,7 @@ class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
     return (StringBuffer('ProductInEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -1271,18 +1098,13 @@ class $ProductOutEntityTable extends ProductOutEntity
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, stockCountChange, modified, modifiedMilliSecond];
+  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1308,16 +1130,6 @@ class $ProductOutEntityTable extends ProductOutEntity
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -1333,9 +1145,7 @@ class $ProductOutEntityTable extends ProductOutEntity
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -1349,20 +1159,17 @@ class ProductOutEntityData extends DataClass
     implements Insertable<ProductOutEntityData> {
   final int id;
   final int stockCountChange;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime modified;
   const ProductOutEntityData(
       {required this.id,
       required this.stockCountChange,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['stock_count_change'] = Variable<int>(stockCountChange);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -1371,7 +1178,6 @@ class ProductOutEntityData extends DataClass
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -1381,9 +1187,7 @@ class ProductOutEntityData extends DataClass
     return ProductOutEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -1392,90 +1196,72 @@ class ProductOutEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductOutEntityData copyWith(
-          {int? id,
-          int? stockCountChange,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          {int? id, int? stockCountChange, DateTime? modified}) =>
       ProductOutEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
     return (StringBuffer('ProductOutEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, stockCountChange, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(id, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductOutEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> modified;
   const ProductOutEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   ProductOutEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
-    required String modified,
-    required int modifiedMilliSecond,
-  })  : stockCountChange = Value(stockCountChange),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+    this.modified = const Value.absent(),
+  }) : stockCountChange = Value(stockCountChange);
   static Insertable<ProductOutEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
   ProductOutEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<DateTime>? modified}) {
     return ProductOutEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -1489,10 +1275,7 @@ class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -1502,8 +1285,7 @@ class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
     return (StringBuffer('ProductOutEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -1529,18 +1311,13 @@ class $ProductCountEntityTable extends ProductCountEntity
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, stockCountChange, modified, modifiedMilliSecond];
+  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1566,16 +1343,6 @@ class $ProductCountEntityTable extends ProductCountEntity
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -1591,9 +1358,7 @@ class $ProductCountEntityTable extends ProductCountEntity
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -1607,20 +1372,17 @@ class ProductCountEntityData extends DataClass
     implements Insertable<ProductCountEntityData> {
   final int id;
   final int stockCountChange;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime modified;
   const ProductCountEntityData(
       {required this.id,
       required this.stockCountChange,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['stock_count_change'] = Variable<int>(stockCountChange);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -1629,7 +1391,6 @@ class ProductCountEntityData extends DataClass
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -1639,9 +1400,7 @@ class ProductCountEntityData extends DataClass
     return ProductCountEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -1650,91 +1409,73 @@ class ProductCountEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductCountEntityData copyWith(
-          {int? id,
-          int? stockCountChange,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          {int? id, int? stockCountChange, DateTime? modified}) =>
       ProductCountEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
     return (StringBuffer('ProductCountEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, stockCountChange, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(id, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductCountEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class ProductCountEntityCompanion
     extends UpdateCompanion<ProductCountEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> modified;
   const ProductCountEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   ProductCountEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
-    required String modified,
-    required int modifiedMilliSecond,
-  })  : stockCountChange = Value(stockCountChange),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+    this.modified = const Value.absent(),
+  }) : stockCountChange = Value(stockCountChange);
   static Insertable<ProductCountEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
   ProductCountEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<DateTime>? modified}) {
     return ProductCountEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -1748,10 +1489,7 @@ class ProductCountEntityCompanion
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -1761,8 +1499,7 @@ class ProductCountEntityCompanion
     return (StringBuffer('ProductCountEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -1800,18 +1537,14 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
-  @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, inventoryId, product, quantity, modified, modifiedMilliSecond];
+      [id, inventoryId, product, quantity, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1849,16 +1582,6 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -1878,9 +1601,7 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
       quantity: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}quantity'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -1896,15 +1617,13 @@ class ShoppingCartEntityData extends DataClass
   final int inventoryId;
   final String product;
   final int quantity;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime modified;
   const ShoppingCartEntityData(
       {required this.id,
       required this.inventoryId,
       required this.product,
       required this.quantity,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1912,8 +1631,7 @@ class ShoppingCartEntityData extends DataClass
     map['inventory_id'] = Variable<int>(inventoryId);
     map['product'] = Variable<String>(product);
     map['quantity'] = Variable<int>(quantity);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -1924,7 +1642,6 @@ class ShoppingCartEntityData extends DataClass
       product: Value(product),
       quantity: Value(quantity),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -1936,9 +1653,7 @@ class ShoppingCartEntityData extends DataClass
       inventoryId: serializer.fromJson<int>(json['inventoryId']),
       product: serializer.fromJson<String>(json['product']),
       quantity: serializer.fromJson<int>(json['quantity']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -1949,8 +1664,7 @@ class ShoppingCartEntityData extends DataClass
       'inventoryId': serializer.toJson<int>(inventoryId),
       'product': serializer.toJson<String>(product),
       'quantity': serializer.toJson<int>(quantity),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
@@ -1959,15 +1673,13 @@ class ShoppingCartEntityData extends DataClass
           int? inventoryId,
           String? product,
           int? quantity,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          DateTime? modified}) =>
       ShoppingCartEntityData(
         id: id ?? this.id,
         inventoryId: inventoryId ?? this.inventoryId,
         product: product ?? this.product,
         quantity: quantity ?? this.quantity,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
@@ -1976,15 +1688,13 @@ class ShoppingCartEntityData extends DataClass
           ..write('inventoryId: $inventoryId, ')
           ..write('product: $product, ')
           ..write('quantity: $quantity, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, inventoryId, product, quantity, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(id, inventoryId, product, quantity, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1993,8 +1703,7 @@ class ShoppingCartEntityData extends DataClass
           other.inventoryId == this.inventoryId &&
           other.product == this.product &&
           other.quantity == this.quantity &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class ShoppingCartEntityCompanion
@@ -2003,35 +1712,29 @@ class ShoppingCartEntityCompanion
   final Value<int> inventoryId;
   final Value<String> product;
   final Value<int> quantity;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> modified;
   const ShoppingCartEntityCompanion({
     this.id = const Value.absent(),
     this.inventoryId = const Value.absent(),
     this.product = const Value.absent(),
     this.quantity = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   ShoppingCartEntityCompanion.insert({
     this.id = const Value.absent(),
     required int inventoryId,
     required String product,
     required int quantity,
-    required String modified,
-    required int modifiedMilliSecond,
+    this.modified = const Value.absent(),
   })  : inventoryId = Value(inventoryId),
         product = Value(product),
-        quantity = Value(quantity),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+        quantity = Value(quantity);
   static Insertable<ShoppingCartEntityData> custom({
     Expression<int>? id,
     Expression<int>? inventoryId,
     Expression<String>? product,
     Expression<int>? quantity,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2039,8 +1742,6 @@ class ShoppingCartEntityCompanion
       if (product != null) 'product': product,
       if (quantity != null) 'quantity': quantity,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
@@ -2049,15 +1750,13 @@ class ShoppingCartEntityCompanion
       Value<int>? inventoryId,
       Value<String>? product,
       Value<int>? quantity,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      Value<DateTime>? modified}) {
     return ShoppingCartEntityCompanion(
       id: id ?? this.id,
       inventoryId: inventoryId ?? this.inventoryId,
       product: product ?? this.product,
       quantity: quantity ?? this.quantity,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -2077,10 +1776,7 @@ class ShoppingCartEntityCompanion
       map['quantity'] = Variable<int>(quantity.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -2092,8 +1788,7 @@ class ShoppingCartEntityCompanion
           ..write('inventoryId: $inventoryId, ')
           ..write('product: $product, ')
           ..write('quantity: $quantity, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -2121,18 +1816,13 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
   static const VerificationMeta _modifiedMeta =
       const VerificationMeta('modified');
   @override
-  late final GeneratedColumn<String> modified = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> modified = GeneratedColumn<DateTime>(
       'modified', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _modifiedMilliSecondMeta =
-      const VerificationMeta('modifiedMilliSecond');
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  late final GeneratedColumn<int> modifiedMilliSecond = GeneratedColumn<int>(
-      'modified_milli_second', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, quantityChange, modified, modifiedMilliSecond];
+  List<GeneratedColumn> get $columns => [id, quantityChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2158,16 +1848,6 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
     if (data.containsKey('modified')) {
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMeta);
-    }
-    if (data.containsKey('modified_milli_second')) {
-      context.handle(
-          _modifiedMilliSecondMeta,
-          modifiedMilliSecond.isAcceptableOrUnknown(
-              data['modified_milli_second']!, _modifiedMilliSecondMeta));
-    } else if (isInserting) {
-      context.missing(_modifiedMilliSecondMeta);
     }
     return context;
   }
@@ -2184,9 +1864,7 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
       quantityChange: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}quantity_change'])!,
       modified: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}modified'])!,
-      modifiedMilliSecond: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}modified_milli_second'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
     );
   }
 
@@ -2200,20 +1878,15 @@ class ShoppingCartChangesEntityData extends DataClass
     implements Insertable<ShoppingCartChangesEntityData> {
   final int id;
   final int quantityChange;
-  final String modified;
-  final int modifiedMilliSecond;
+  final DateTime modified;
   const ShoppingCartChangesEntityData(
-      {required this.id,
-      required this.quantityChange,
-      required this.modified,
-      required this.modifiedMilliSecond});
+      {required this.id, required this.quantityChange, required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['quantity_change'] = Variable<int>(quantityChange);
-    map['modified'] = Variable<String>(modified);
-    map['modified_milli_second'] = Variable<int>(modifiedMilliSecond);
+    map['modified'] = Variable<DateTime>(modified);
     return map;
   }
 
@@ -2222,7 +1895,6 @@ class ShoppingCartChangesEntityData extends DataClass
       id: Value(id),
       quantityChange: Value(quantityChange),
       modified: Value(modified),
-      modifiedMilliSecond: Value(modifiedMilliSecond),
     );
   }
 
@@ -2232,9 +1904,7 @@ class ShoppingCartChangesEntityData extends DataClass
     return ShoppingCartChangesEntityData(
       id: serializer.fromJson<int>(json['id']),
       quantityChange: serializer.fromJson<int>(json['quantityChange']),
-      modified: serializer.fromJson<String>(json['modified']),
-      modifiedMilliSecond:
-          serializer.fromJson<int>(json['modifiedMilliSecond']),
+      modified: serializer.fromJson<DateTime>(json['modified']),
     );
   }
   @override
@@ -2243,91 +1913,71 @@ class ShoppingCartChangesEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'quantityChange': serializer.toJson<int>(quantityChange),
-      'modified': serializer.toJson<String>(modified),
-      'modifiedMilliSecond': serializer.toJson<int>(modifiedMilliSecond),
+      'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ShoppingCartChangesEntityData copyWith(
-          {int? id,
-          int? quantityChange,
-          String? modified,
-          int? modifiedMilliSecond}) =>
+          {int? id, int? quantityChange, DateTime? modified}) =>
       ShoppingCartChangesEntityData(
         id: id ?? this.id,
         quantityChange: quantityChange ?? this.quantityChange,
         modified: modified ?? this.modified,
-        modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
       );
   @override
   String toString() {
     return (StringBuffer('ShoppingCartChangesEntityData(')
           ..write('id: $id, ')
           ..write('quantityChange: $quantityChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, quantityChange, modified, modifiedMilliSecond);
+  int get hashCode => Object.hash(id, quantityChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ShoppingCartChangesEntityData &&
           other.id == this.id &&
           other.quantityChange == this.quantityChange &&
-          other.modified == this.modified &&
-          other.modifiedMilliSecond == this.modifiedMilliSecond);
+          other.modified == this.modified);
 }
 
 class ShoppingCartChangesEntityCompanion
     extends UpdateCompanion<ShoppingCartChangesEntityData> {
   final Value<int> id;
   final Value<int> quantityChange;
-  final Value<String> modified;
-  final Value<int> modifiedMilliSecond;
+  final Value<DateTime> modified;
   const ShoppingCartChangesEntityCompanion({
     this.id = const Value.absent(),
     this.quantityChange = const Value.absent(),
     this.modified = const Value.absent(),
-    this.modifiedMilliSecond = const Value.absent(),
   });
   ShoppingCartChangesEntityCompanion.insert({
     this.id = const Value.absent(),
     required int quantityChange,
-    required String modified,
-    required int modifiedMilliSecond,
-  })  : quantityChange = Value(quantityChange),
-        modified = Value(modified),
-        modifiedMilliSecond = Value(modifiedMilliSecond);
+    this.modified = const Value.absent(),
+  }) : quantityChange = Value(quantityChange);
   static Insertable<ShoppingCartChangesEntityData> custom({
     Expression<int>? id,
     Expression<int>? quantityChange,
-    Expression<String>? modified,
-    Expression<int>? modifiedMilliSecond,
+    Expression<DateTime>? modified,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (quantityChange != null) 'quantity_change': quantityChange,
       if (modified != null) 'modified': modified,
-      if (modifiedMilliSecond != null)
-        'modified_milli_second': modifiedMilliSecond,
     });
   }
 
   ShoppingCartChangesEntityCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? quantityChange,
-      Value<String>? modified,
-      Value<int>? modifiedMilliSecond}) {
+      {Value<int>? id, Value<int>? quantityChange, Value<DateTime>? modified}) {
     return ShoppingCartChangesEntityCompanion(
       id: id ?? this.id,
       quantityChange: quantityChange ?? this.quantityChange,
       modified: modified ?? this.modified,
-      modifiedMilliSecond: modifiedMilliSecond ?? this.modifiedMilliSecond,
     );
   }
 
@@ -2341,10 +1991,7 @@ class ShoppingCartChangesEntityCompanion
       map['quantity_change'] = Variable<int>(quantityChange.value);
     }
     if (modified.present) {
-      map['modified'] = Variable<String>(modified.value);
-    }
-    if (modifiedMilliSecond.present) {
-      map['modified_milli_second'] = Variable<int>(modifiedMilliSecond.value);
+      map['modified'] = Variable<DateTime>(modified.value);
     }
     return map;
   }
@@ -2354,8 +2001,7 @@ class ShoppingCartChangesEntityCompanion
     return (StringBuffer('ShoppingCartChangesEntityCompanion(')
           ..write('id: $id, ')
           ..write('quantityChange: $quantityChange, ')
-          ..write('modified: $modified, ')
-          ..write('modifiedMilliSecond: $modifiedMilliSecond')
+          ..write('modified: $modified')
           ..write(')'))
         .toString();
   }
@@ -2404,10 +2050,8 @@ typedef $$InventoryEntityTableInsertCompanionBuilder = InventoryEntityCompanion
   required int stockCount,
   required int fixedSuggestion,
   required int inventory,
-  required String created,
-  required int createdMilliSecond,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> created,
+  Value<DateTime> modified,
 });
 typedef $$InventoryEntityTableUpdateCompanionBuilder = InventoryEntityCompanion
     Function({
@@ -2420,10 +2064,8 @@ typedef $$InventoryEntityTableUpdateCompanionBuilder = InventoryEntityCompanion
   Value<int> stockCount,
   Value<int> fixedSuggestion,
   Value<int> inventory,
-  Value<String> created,
-  Value<int> createdMilliSecond,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> created,
+  Value<DateTime> modified,
 });
 
 class $$InventoryEntityTableTableManager extends RootTableManager<
@@ -2456,10 +2098,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             Value<int> stockCount = const Value.absent(),
             Value<int> fixedSuggestion = const Value.absent(),
             Value<int> inventory = const Value.absent(),
-            Value<String> created = const Value.absent(),
-            Value<int> createdMilliSecond = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> created = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               InventoryEntityCompanion(
             id: id,
@@ -2472,9 +2112,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             fixedSuggestion: fixedSuggestion,
             inventory: inventory,
             created: created,
-            createdMilliSecond: createdMilliSecond,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
@@ -2486,10 +2124,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             required int stockCount,
             required int fixedSuggestion,
             required int inventory,
-            required String created,
-            required int createdMilliSecond,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> created = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               InventoryEntityCompanion.insert(
             id: id,
@@ -2502,9 +2138,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             fixedSuggestion: fixedSuggestion,
             inventory: inventory,
             created: created,
-            createdMilliSecond: createdMilliSecond,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -2569,23 +2203,13 @@ class $$InventoryEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get created => $state.composableBuilder(
+  ColumnFilters<DateTime> get created => $state.composableBuilder(
       column: $state.table.created,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get createdMilliSecond => $state.composableBuilder(
-      column: $state.table.createdMilliSecond,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -2638,23 +2262,13 @@ class $$InventoryEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get created => $state.composableBuilder(
+  ColumnOrderings<DateTime> get created => $state.composableBuilder(
       column: $state.table.created,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get createdMilliSecond => $state.composableBuilder(
-      column: $state.table.createdMilliSecond,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -2662,22 +2276,20 @@ class $$InventoryEntityTableOrderingComposer
 typedef $$InventoryChangesEntityTableInsertCompanionBuilder
     = InventoryChangesEntityCompanion Function({
   Value<int> id,
-  required int maxCount,
-  required int minCount,
-  required int stockCountChange,
-  required int fixedSuggestion,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<int?> maxCount,
+  Value<int?> minCount,
+  Value<int> stockCountChange,
+  Value<int?> fixedSuggestion,
+  Value<DateTime> modified,
 });
 typedef $$InventoryChangesEntityTableUpdateCompanionBuilder
     = InventoryChangesEntityCompanion Function({
   Value<int> id,
-  Value<int> maxCount,
-  Value<int> minCount,
+  Value<int?> maxCount,
+  Value<int?> minCount,
   Value<int> stockCountChange,
-  Value<int> fixedSuggestion,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<int?> fixedSuggestion,
+  Value<DateTime> modified,
 });
 
 class $$InventoryChangesEntityTableTableManager extends RootTableManager<
@@ -2702,12 +2314,11 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
               $$InventoryChangesEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
-            Value<int> maxCount = const Value.absent(),
-            Value<int> minCount = const Value.absent(),
+            Value<int?> maxCount = const Value.absent(),
+            Value<int?> minCount = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
-            Value<int> fixedSuggestion = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<int?> fixedSuggestion = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion(
             id: id,
@@ -2716,16 +2327,14 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
-            required int maxCount,
-            required int minCount,
-            required int stockCountChange,
-            required int fixedSuggestion,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<int?> maxCount = const Value.absent(),
+            Value<int?> minCount = const Value.absent(),
+            Value<int> stockCountChange = const Value.absent(),
+            Value<int?> fixedSuggestion = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion.insert(
             id: id,
@@ -2734,7 +2343,6 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -2780,13 +2388,8 @@ class $$InventoryChangesEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -2819,13 +2422,8 @@ class $$InventoryChangesEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -2834,15 +2432,13 @@ typedef $$ProductInEntityTableInsertCompanionBuilder = ProductInEntityCompanion
     Function({
   Value<int> id,
   required int stockCountChange,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 typedef $$ProductInEntityTableUpdateCompanionBuilder = ProductInEntityCompanion
     Function({
   Value<int> id,
   Value<int> stockCountChange,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 
 class $$ProductInEntityTableTableManager extends RootTableManager<
@@ -2868,26 +2464,22 @@ class $$ProductInEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductInEntityCompanion(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required int stockCountChange,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductInEntityCompanion.insert(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -2917,13 +2509,8 @@ class $$ProductInEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -2941,13 +2528,8 @@ class $$ProductInEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -2956,15 +2538,13 @@ typedef $$ProductOutEntityTableInsertCompanionBuilder
     = ProductOutEntityCompanion Function({
   Value<int> id,
   required int stockCountChange,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 typedef $$ProductOutEntityTableUpdateCompanionBuilder
     = ProductOutEntityCompanion Function({
   Value<int> id,
   Value<int> stockCountChange,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 
 class $$ProductOutEntityTableTableManager extends RootTableManager<
@@ -2990,26 +2570,22 @@ class $$ProductOutEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductOutEntityCompanion(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required int stockCountChange,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductOutEntityCompanion.insert(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -3040,13 +2616,8 @@ class $$ProductOutEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -3064,13 +2635,8 @@ class $$ProductOutEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -3079,15 +2645,13 @@ typedef $$ProductCountEntityTableInsertCompanionBuilder
     = ProductCountEntityCompanion Function({
   Value<int> id,
   required int stockCountChange,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 typedef $$ProductCountEntityTableUpdateCompanionBuilder
     = ProductCountEntityCompanion Function({
   Value<int> id,
   Value<int> stockCountChange,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 
 class $$ProductCountEntityTableTableManager extends RootTableManager<
@@ -3113,26 +2677,22 @@ class $$ProductCountEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductCountEntityCompanion(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required int stockCountChange,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ProductCountEntityCompanion.insert(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -3163,13 +2723,8 @@ class $$ProductCountEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -3187,13 +2742,8 @@ class $$ProductCountEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -3204,8 +2754,7 @@ typedef $$ShoppingCartEntityTableInsertCompanionBuilder
   required int inventoryId,
   required String product,
   required int quantity,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 typedef $$ShoppingCartEntityTableUpdateCompanionBuilder
     = ShoppingCartEntityCompanion Function({
@@ -3213,8 +2762,7 @@ typedef $$ShoppingCartEntityTableUpdateCompanionBuilder
   Value<int> inventoryId,
   Value<String> product,
   Value<int> quantity,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 
 class $$ShoppingCartEntityTableTableManager extends RootTableManager<
@@ -3242,8 +2790,7 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
             Value<int> inventoryId = const Value.absent(),
             Value<String> product = const Value.absent(),
             Value<int> quantity = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ShoppingCartEntityCompanion(
             id: id,
@@ -3251,15 +2798,13 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
             product: product,
             quantity: quantity,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required int inventoryId,
             required String product,
             required int quantity,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ShoppingCartEntityCompanion.insert(
             id: id,
@@ -3267,7 +2812,6 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
             product: product,
             quantity: quantity,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -3308,13 +2852,8 @@ class $$ShoppingCartEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -3342,13 +2881,8 @@ class $$ShoppingCartEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -3357,15 +2891,13 @@ typedef $$ShoppingCartChangesEntityTableInsertCompanionBuilder
     = ShoppingCartChangesEntityCompanion Function({
   Value<int> id,
   required int quantityChange,
-  required String modified,
-  required int modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 typedef $$ShoppingCartChangesEntityTableUpdateCompanionBuilder
     = ShoppingCartChangesEntityCompanion Function({
   Value<int> id,
   Value<int> quantityChange,
-  Value<String> modified,
-  Value<int> modifiedMilliSecond,
+  Value<DateTime> modified,
 });
 
 class $$ShoppingCartChangesEntityTableTableManager extends RootTableManager<
@@ -3391,26 +2923,22 @@ class $$ShoppingCartChangesEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<int> quantityChange = const Value.absent(),
-            Value<String> modified = const Value.absent(),
-            Value<int> modifiedMilliSecond = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ShoppingCartChangesEntityCompanion(
             id: id,
             quantityChange: quantityChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required int quantityChange,
-            required String modified,
-            required int modifiedMilliSecond,
+            Value<DateTime> modified = const Value.absent(),
           }) =>
               ShoppingCartChangesEntityCompanion.insert(
             id: id,
             quantityChange: quantityChange,
             modified: modified,
-            modifiedMilliSecond: modifiedMilliSecond,
           ),
         ));
 }
@@ -3441,13 +2969,8 @@ class $$ShoppingCartChangesEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get modified => $state.composableBuilder(
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -3465,13 +2988,8 @@ class $$ShoppingCartChangesEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get modified => $state.composableBuilder(
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get modifiedMilliSecond => $state.composableBuilder(
-      column: $state.table.modifiedMilliSecond,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

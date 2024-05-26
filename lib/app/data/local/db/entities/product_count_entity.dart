@@ -5,9 +5,8 @@ class ProductCountEntity extends Table {
 
   IntColumn get stockCountChange => integer()();
 
-  TextColumn get modified => text()();
-
-  IntColumn get modifiedMilliSecond => integer()();
+  DateTimeColumn get modified =>
+      dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

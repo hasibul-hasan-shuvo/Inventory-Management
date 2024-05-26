@@ -3,17 +3,16 @@ import 'package:drift/drift.dart';
 class InventoryChangesEntity extends Table {
   IntColumn get id => integer()();
 
-  IntColumn get maxCount => integer()();
+  IntColumn get maxCount => integer().nullable()();
 
-  IntColumn get minCount => integer()();
+  IntColumn get minCount => integer().nullable()();
 
-  IntColumn get stockCountChange => integer()();
+  IntColumn get stockCountChange => integer().withDefault(const Constant(0))();
 
-  IntColumn get fixedSuggestion => integer()();
+  IntColumn get fixedSuggestion => integer().nullable()();
 
-  TextColumn get modified => text()();
-
-  IntColumn get modifiedMilliSecond => integer()();
+  DateTimeColumn get modified =>
+      dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

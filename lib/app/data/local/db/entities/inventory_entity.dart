@@ -19,13 +19,11 @@ class InventoryEntity extends Table {
 
   IntColumn get inventory => integer()();
 
-  TextColumn get created => text()();
+  DateTimeColumn get created =>
+      dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
-  IntColumn get createdMilliSecond => integer()();
-
-  TextColumn get modified => text()();
-
-  IntColumn get modifiedMilliSecond => integer()();
+  DateTimeColumn get modified =>
+      dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};
