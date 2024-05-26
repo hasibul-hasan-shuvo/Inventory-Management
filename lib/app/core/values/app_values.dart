@@ -118,4 +118,6 @@ abstract class AppValues {
   static const int maxPasswordLength = 16;
   static const int maxCountLength = 3;
   static const int maxCountValue = 999;
+
+  static const int dataSyncDeBouncerTime = 5;
 }
