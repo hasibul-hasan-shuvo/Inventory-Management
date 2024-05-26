@@ -5,6 +5,8 @@ class InventoryEntity extends Table {
 
   TextColumn get itemId => text()();
 
+  TextColumn get productName => text()();
+
   TextColumn get product => text()();
 
   TextColumn get connectedCartItem => text()();

@@ -19,6 +19,12 @@ class $InventoryEntityTable extends InventoryEntity
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
       'item_id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _productNameMeta =
+      const VerificationMeta('productName');
+  @override
+  late final GeneratedColumn<String> productName = GeneratedColumn<String>(
+      'product_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _productMeta =
       const VerificationMeta('product');
   @override
@@ -81,6 +87,7 @@ class $InventoryEntityTable extends InventoryEntity
   List<GeneratedColumn> get $columns => [
         id,
         itemId,
+        productName,
         product,
         connectedCartItem,
         maxCount,
@@ -110,6 +117,14 @@ class $InventoryEntityTable extends InventoryEntity
           itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
     } else if (isInserting) {
       context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('product_name')) {
+      context.handle(
+          _productNameMeta,
+          productName.isAcceptableOrUnknown(
+              data['product_name']!, _productNameMeta));
+    } else if (isInserting) {
+      context.missing(_productNameMeta);
     }
     if (data.containsKey('product')) {
       context.handle(_productMeta,
@@ -180,6 +195,8 @@ class $InventoryEntityTable extends InventoryEntity
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       itemId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
+      productName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}product_name'])!,
       product: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}product'])!,
       connectedCartItem: attachedDatabase.typeMapping.read(
@@ -211,6 +228,7 @@ class InventoryEntityData extends DataClass
     implements Insertable<InventoryEntityData> {
   final int id;
   final String itemId;
+  final String productName;
   final String product;
   final String connectedCartItem;
   final int maxCount;
@@ -223,6 +241,7 @@ class InventoryEntityData extends DataClass
   const InventoryEntityData(
       {required this.id,
       required this.itemId,
+      required this.productName,
       required this.product,
       required this.connectedCartItem,
       required this.maxCount,
@@ -237,6 +256,7 @@ class InventoryEntityData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['item_id'] = Variable<String>(itemId);
+    map['product_name'] = Variable<String>(productName);
     map['product'] = Variable<String>(product);
     map['connected_cart_item'] = Variable<String>(connectedCartItem);
     map['max_count'] = Variable<int>(maxCount);
@@ -253,6 +273,7 @@ class InventoryEntityData extends DataClass
     return InventoryEntityCompanion(
       id: Value(id),
       itemId: Value(itemId),
+      productName: Value(productName),
       product: Value(product),
       connectedCartItem: Value(connectedCartItem),
       maxCount: Value(maxCount),
@@ -271,6 +292,7 @@ class InventoryEntityData extends DataClass
     return InventoryEntityData(
       id: serializer.fromJson<int>(json['id']),
       itemId: serializer.fromJson<String>(json['itemId']),
+      productName: serializer.fromJson<String>(json['productName']),
       product: serializer.fromJson<String>(json['product']),
       connectedCartItem: serializer.fromJson<String>(json['connectedCartItem']),
       maxCount: serializer.fromJson<int>(json['maxCount']),
@@ -288,6 +310,7 @@ class InventoryEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'itemId': serializer.toJson<String>(itemId),
+      'productName': serializer.toJson<String>(productName),
       'product': serializer.toJson<String>(product),
       'connectedCartItem': serializer.toJson<String>(connectedCartItem),
       'maxCount': serializer.toJson<int>(maxCount),
@@ -303,6 +326,7 @@ class InventoryEntityData extends DataClass
   InventoryEntityData copyWith(
           {int? id,
           String? itemId,
+          String? productName,
           String? product,
           String? connectedCartItem,
           int? maxCount,
@@ -315,6 +339,7 @@ class InventoryEntityData extends DataClass
       InventoryEntityData(
         id: id ?? this.id,
         itemId: itemId ?? this.itemId,
+        productName: productName ?? this.productName,
         product: product ?? this.product,
         connectedCartItem: connectedCartItem ?? this.connectedCartItem,
         maxCount: maxCount ?? this.maxCount,
@@ -330,6 +355,7 @@ class InventoryEntityData extends DataClass
     return (StringBuffer('InventoryEntityData(')
           ..write('id: $id, ')
           ..write('itemId: $itemId, ')
+          ..write('productName: $productName, ')
           ..write('product: $product, ')
           ..write('connectedCartItem: $connectedCartItem, ')
           ..write('maxCount: $maxCount, ')
@@ -347,6 +373,7 @@ class InventoryEntityData extends DataClass
   int get hashCode => Object.hash(
       id,
       itemId,
+      productName,
       product,
       connectedCartItem,
       maxCount,
@@ -362,6 +389,7 @@ class InventoryEntityData extends DataClass
       (other is InventoryEntityData &&
           other.id == this.id &&
           other.itemId == this.itemId &&
+          other.productName == this.productName &&
           other.product == this.product &&
           other.connectedCartItem == this.connectedCartItem &&
           other.maxCount == this.maxCount &&
@@ -376,6 +404,7 @@ class InventoryEntityData extends DataClass
 class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   final Value<int> id;
   final Value<String> itemId;
+  final Value<String> productName;
   final Value<String> product;
   final Value<String> connectedCartItem;
   final Value<int> maxCount;
@@ -388,6 +417,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   const InventoryEntityCompanion({
     this.id = const Value.absent(),
     this.itemId = const Value.absent(),
+    this.productName = const Value.absent(),
     this.product = const Value.absent(),
     this.connectedCartItem = const Value.absent(),
     this.maxCount = const Value.absent(),
@@ -401,6 +431,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   InventoryEntityCompanion.insert({
     this.id = const Value.absent(),
     required String itemId,
+    required String productName,
     required String product,
     required String connectedCartItem,
     required int maxCount,
@@ -411,6 +442,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
   })  : itemId = Value(itemId),
+        productName = Value(productName),
         product = Value(product),
         connectedCartItem = Value(connectedCartItem),
         maxCount = Value(maxCount),
@@ -421,6 +453,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   static Insertable<InventoryEntityData> custom({
     Expression<int>? id,
     Expression<String>? itemId,
+    Expression<String>? productName,
     Expression<String>? product,
     Expression<String>? connectedCartItem,
     Expression<int>? maxCount,
@@ -434,6 +467,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (itemId != null) 'item_id': itemId,
+      if (productName != null) 'product_name': productName,
       if (product != null) 'product': product,
       if (connectedCartItem != null) 'connected_cart_item': connectedCartItem,
       if (maxCount != null) 'max_count': maxCount,
@@ -449,6 +483,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   InventoryEntityCompanion copyWith(
       {Value<int>? id,
       Value<String>? itemId,
+      Value<String>? productName,
       Value<String>? product,
       Value<String>? connectedCartItem,
       Value<int>? maxCount,
@@ -461,6 +496,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     return InventoryEntityCompanion(
       id: id ?? this.id,
       itemId: itemId ?? this.itemId,
+      productName: productName ?? this.productName,
       product: product ?? this.product,
       connectedCartItem: connectedCartItem ?? this.connectedCartItem,
       maxCount: maxCount ?? this.maxCount,
@@ -481,6 +517,9 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     }
     if (itemId.present) {
       map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (productName.present) {
+      map['product_name'] = Variable<String>(productName.value);
     }
     if (product.present) {
       map['product'] = Variable<String>(product.value);
@@ -517,6 +556,7 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     return (StringBuffer('InventoryEntityCompanion(')
           ..write('id: $id, ')
           ..write('itemId: $itemId, ')
+          ..write('productName: $productName, ')
           ..write('product: $product, ')
           ..write('connectedCartItem: $connectedCartItem, ')
           ..write('maxCount: $maxCount, ')
@@ -2043,6 +2083,7 @@ typedef $$InventoryEntityTableInsertCompanionBuilder = InventoryEntityCompanion
     Function({
   Value<int> id,
   required String itemId,
+  required String productName,
   required String product,
   required String connectedCartItem,
   required int maxCount,
@@ -2057,6 +2098,7 @@ typedef $$InventoryEntityTableUpdateCompanionBuilder = InventoryEntityCompanion
     Function({
   Value<int> id,
   Value<String> itemId,
+  Value<String> productName,
   Value<String> product,
   Value<String> connectedCartItem,
   Value<int> maxCount,
@@ -2091,6 +2133,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<String> itemId = const Value.absent(),
+            Value<String> productName = const Value.absent(),
             Value<String> product = const Value.absent(),
             Value<String> connectedCartItem = const Value.absent(),
             Value<int> maxCount = const Value.absent(),
@@ -2104,6 +2147,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
               InventoryEntityCompanion(
             id: id,
             itemId: itemId,
+            productName: productName,
             product: product,
             connectedCartItem: connectedCartItem,
             maxCount: maxCount,
@@ -2117,6 +2161,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required String itemId,
+            required String productName,
             required String product,
             required String connectedCartItem,
             required int maxCount,
@@ -2130,6 +2175,7 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
               InventoryEntityCompanion.insert(
             id: id,
             itemId: itemId,
+            productName: productName,
             product: product,
             connectedCartItem: connectedCartItem,
             maxCount: maxCount,
@@ -2165,6 +2211,11 @@ class $$InventoryEntityTableFilterComposer
 
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get productName => $state.composableBuilder(
+      column: $state.table.productName,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -2224,6 +2275,11 @@ class $$InventoryEntityTableOrderingComposer
 
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get productName => $state.composableBuilder(
+      column: $state.table.productName,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

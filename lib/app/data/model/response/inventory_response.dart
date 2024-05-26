@@ -60,6 +60,7 @@ class InventoryResponse {
     return InventoryEntityCompanion.insert(
       id: Value(id ?? 0),
       itemId: product?.itemId ?? '',
+      productName: product?.name ?? '',
       product: jsonEncode(product?.toJson() ?? {}),
       connectedCartItem: jsonEncode(connectedCartItem?.toJson() ?? {}),
       maxCount: maxCount ?? 0,

@@ -18,6 +18,7 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
     int offset = (queryParams.page - 1) * queryParams.pageSize;
 
     return _inventoryDao.getInventories(
+      queryParams.search,
       offset,
       queryParams.pageSize,
     );

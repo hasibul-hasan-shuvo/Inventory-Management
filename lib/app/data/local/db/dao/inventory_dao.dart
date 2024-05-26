@@ -24,7 +24,11 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
-  Future<List<InventoryEntityData>> getInventories(int offset, int pageSize) {
+  Future<List<InventoryEntityData>> getInventories(
+    String? search,
+    int offset,
+    int pageSize,
+  ) {
     List<OrderingTerm Function($InventoryEntityTable)> orders = [
       (tbl) => OrderingTerm(
             expression: inventoryEntity.id,
@@ -32,7 +36,11 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
           ),
     ];
 
+    Expression<bool> condition = inventoryEntity.productName.like('%$search%') |
+        inventoryEntity.itemId.contains('%$search%');
+
     final query = select(inventoryEntity)
+      ..where((tbl) => condition)
       ..orderBy(orders)
       ..limit(pageSize, offset: offset);
 
