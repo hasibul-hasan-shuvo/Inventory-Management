@@ -62,6 +62,7 @@ class SearchAbleAppBar extends StatelessWidget
     return IconButton(
       onPressed: () {
         _searchController.clear();
+        _onChanged('');
       },
       icon: Icon(
         Icons.clear,
