@@ -16,7 +16,11 @@ abstract class InventoryRepository {
 
   Future deleteInventory({required String id});
 
-  Future<InventoryResponse> updateInventoryData(
+  Future<InventoryEntityData?> getInventoryById(int id);
+
+  Future<InventoryEntityData?> getInventoryByItemId(String itemId);
+
+  Future<InventoryEntityData?> updateInventoryData(
     int id,
     InventoryUpdateRequestBody request,
   );

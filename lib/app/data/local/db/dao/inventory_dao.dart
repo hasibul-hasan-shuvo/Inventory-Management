@@ -47,11 +47,17 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<List<InventoryEntityData>> getInventoryByItemId(String itemId) {
+  Future<InventoryEntityData?> getInventoryById(int id) {
+    final query = select(inventoryEntity)..where((tbl) => tbl.id.equals(id));
+
+    return query.getSingleOrNull();
+  }
+
+  Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
     final query = select(inventoryEntity)
       ..where((tbl) => tbl.itemId.equals(itemId));
 
-    return query.get();
+    return query.getSingleOrNull();
   }
 
   Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {

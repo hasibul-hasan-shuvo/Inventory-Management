@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class InventoryUIModel {
@@ -30,10 +29,10 @@ class InventoryUIModel {
     price = product.price?.toDouble() ?? 0.0;
   }
 
-  updateFromInventoryResponse(InventoryResponse response) {
-    max = response.maxCount ?? 0;
-    min = response.minCount ?? 0;
-    currentStock = response.stockCount ?? 0;
-    fixedOrderSuggestions = response.fixedSuggestion ?? 0;
+  updateFromInventoryEntityData(InventoryEntityData response) {
+    max = response.maxCount;
+    min = response.minCount;
+    currentStock = response.stockCount;
+    fixedOrderSuggestions = response.fixedSuggestion;
   }
 }

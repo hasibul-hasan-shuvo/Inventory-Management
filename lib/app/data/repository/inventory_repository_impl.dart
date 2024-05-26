@@ -42,18 +42,30 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryResponse> updateInventoryData(
+  Future<InventoryEntityData?> getInventoryById(int id) {
+    return _localDataSource.getInventoryById(id);
+  }
+
+  @override
+  Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
+    return _localDataSource.getInventoryByItemId(itemId);
+  }
+
+  @override
+  Future<InventoryEntityData?> updateInventoryData(
       int id, InventoryUpdateRequestBody request) {
     InventoryEntityCompanion inventory = request.toInventoryEntityCompanion();
 
-    _localDataSource
+    return _localDataSource
         .updateInventory(
-          id,
-          inventory,
-        )
-        .then((value) {});
+      id,
+      inventory,
+    )
+        .then((value) {
+      _remoteDataSource.updateInventoryData(request);
 
-    return _remoteDataSource.updateInventoryData(request);
+      return getInventoryById(id);
+    });
   }
 
   @override

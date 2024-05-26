@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:get/get.dart';
@@ -145,14 +144,17 @@ class InventoryController extends BaseController {
     }
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
-    for (var element in inventoryItems) {
-      if (element.itemId == response.product?.itemId.toString()) {
-        element.updateFromInventoryResponse(response);
+  void _handleUpdateInventoryDataSuccessResponse(
+      InventoryEntityData? response) {
+    if (response != null) {
+      for (var element in inventoryItems) {
+        if (element.itemId == response.itemId.toString()) {
+          element.updateFromInventoryEntityData(response);
+        }
       }
-    }
 
-    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+      showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+    }
   }
 
   bool _checkValuesValidity({

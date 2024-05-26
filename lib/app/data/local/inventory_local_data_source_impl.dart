@@ -25,6 +25,16 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   }
 
   @override
+  Future<InventoryEntityData?> getInventoryById(int id) {
+    return _inventoryDao.getInventoryById(id);
+  }
+
+  @override
+  Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
+    return _inventoryDao.getInventoryByItemId(itemId);
+  }
+
+  @override
   Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
     return _inventoryDao.updateInventory(
       id,
