@@ -14,7 +14,13 @@ abstract class InventoryRepository {
     required InventoryListQueryParams queryParams,
   });
 
-  Future deleteInventory({required String id});
+  Future deleteInventoryFromServer(int id);
+
+  Future deleteInventory({required int id});
+
+  Future<List<DeletedInventoryEntityData>> getDeletedInventories();
+
+  Future<int> deleteDeletedInventory(int id);
 
   Future<InventoryEntityData?> getInventoryById(int id);
 

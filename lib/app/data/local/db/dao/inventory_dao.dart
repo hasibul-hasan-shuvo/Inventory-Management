@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/local/db/entities/deleted_inventory_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
 import 'package:drift/drift.dart';
@@ -8,6 +9,7 @@ part 'inventory_dao.g.dart';
 @DriftAccessor(tables: [
   InventoryEntity,
   InventoryChangesEntity,
+  DeletedInventoryEntity,
 ])
 class InventoryDao extends DatabaseAccessor<AppDatabase>
     with _$InventoryDaoMixin {
@@ -69,6 +71,10 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return batch((batch) => batch.deleteAll(inventoryEntity));
   }
 
+  Future<int> deleteInventoryById(int id) {
+    return (delete(inventoryEntity)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
   Future<int> insertInventoryChange(
       InventoryChangesEntityCompanion inventoryChange) {
     return into(inventoryChangesEntity).insertOnConflictUpdate(inventoryChange);
@@ -94,5 +100,21 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> deleteInventoryChanges() {
     return batch((batch) => batch.deleteAll(inventoryChangesEntity));
+  }
+
+  Future<int> insertInventoryToDeletedInventoryEntity(
+      DeletedInventoryEntityCompanion inventory) {
+    return into(deletedInventoryEntity).insertOnConflictUpdate(inventory);
+  }
+
+  Future<List<DeletedInventoryEntityData>> getDeletedInventories() {
+    final query = select(deletedInventoryEntity);
+
+    return query.get();
+  }
+
+  Future<int> deleteDeletedInventory(int id) {
+    return (delete(deletedInventoryEntity)..where((tbl) => tbl.id.equals(id)))
+        .go();
   }
 }

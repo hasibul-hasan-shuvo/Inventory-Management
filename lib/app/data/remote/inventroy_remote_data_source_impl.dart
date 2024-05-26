@@ -87,7 +87,7 @@ class InventoryRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future deleteInventory({required String id}) {
+  Future deleteInventory({required int id}) {
     final endpoint = '/inventory/items/$id/delete/';
     var dioCall = dioClient.delete(endpoint);
     try {

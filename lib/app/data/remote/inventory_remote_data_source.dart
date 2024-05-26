@@ -11,7 +11,7 @@ abstract class InventoryRemoteDataSource {
     required InventoryListQueryParams queryParams,
   });
 
-  Future deleteInventory({required String id});
+  Future deleteInventory({required int id});
 
   Future<InventoryResponse> updateInventoryData(
       InventoryUpdateRequestBody request);

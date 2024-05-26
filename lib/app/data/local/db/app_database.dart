@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dental_inventory/app/data/local/db/entities/deleted_inventory_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/product_count_entity.dart';
@@ -28,6 +29,7 @@ LazyDatabase _openConnection() {
 @DriftDatabase(tables: [
   InventoryEntity,
   InventoryChangesEntity,
+  DeletedInventoryEntity,
   ProductInEntity,
   ProductOutEntity,
   ProductCountEntity,

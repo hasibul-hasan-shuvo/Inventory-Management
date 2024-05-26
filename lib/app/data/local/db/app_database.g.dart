@@ -905,6 +905,161 @@ class InventoryChangesEntityCompanion
   }
 }
 
+class $DeletedInventoryEntityTable extends DeletedInventoryEntity
+    with TableInfo<$DeletedInventoryEntityTable, DeletedInventoryEntityData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+
+  $DeletedInventoryEntityTable(this.attachedDatabase, [this._alias]);
+
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+
+  @override
+  List<GeneratedColumn> get $columns => [id];
+
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'deleted_inventory_entity';
+
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DeletedInventoryEntityData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+
+  @override
+  DeletedInventoryEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DeletedInventoryEntityData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+    );
+  }
+
+  @override
+  $DeletedInventoryEntityTable createAlias(String alias) {
+    return $DeletedInventoryEntityTable(attachedDatabase, alias);
+  }
+}
+
+class DeletedInventoryEntityData extends DataClass
+    implements Insertable<DeletedInventoryEntityData> {
+  final int id;
+
+  const DeletedInventoryEntityData({required this.id});
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    return map;
+  }
+
+  DeletedInventoryEntityCompanion toCompanion(bool nullToAbsent) {
+    return DeletedInventoryEntityCompanion(
+      id: Value(id),
+    );
+  }
+
+  factory DeletedInventoryEntityData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DeletedInventoryEntityData(
+      id: serializer.fromJson<int>(json['id']),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+    };
+  }
+
+  DeletedInventoryEntityData copyWith({int? id}) => DeletedInventoryEntityData(
+        id: id ?? this.id,
+      );
+
+  @override
+  String toString() {
+    return (StringBuffer('DeletedInventoryEntityData(')
+          ..write('id: $id')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DeletedInventoryEntityData && other.id == this.id);
+}
+
+class DeletedInventoryEntityCompanion
+    extends UpdateCompanion<DeletedInventoryEntityData> {
+  final Value<int> id;
+
+  const DeletedInventoryEntityCompanion({
+    this.id = const Value.absent(),
+  });
+
+  DeletedInventoryEntityCompanion.insert({
+    this.id = const Value.absent(),
+  });
+
+  static Insertable<DeletedInventoryEntityData> custom({
+    Expression<int>? id,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+    });
+  }
+
+  DeletedInventoryEntityCompanion copyWith({Value<int>? id}) {
+    return DeletedInventoryEntityCompanion(
+      id: id ?? this.id,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DeletedInventoryEntityCompanion(')
+          ..write('id: $id')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ProductInEntityTable extends ProductInEntity
     with TableInfo<$ProductInEntityTable, ProductInEntityData> {
   @override
@@ -2054,6 +2209,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $InventoryEntityTable(this);
   late final $InventoryChangesEntityTable inventoryChangesEntity =
       $InventoryChangesEntityTable(this);
+  late final $DeletedInventoryEntityTable deletedInventoryEntity =
+      $DeletedInventoryEntityTable(this);
   late final $ProductInEntityTable productInEntity =
       $ProductInEntityTable(this);
   late final $ProductOutEntityTable productOutEntity =
@@ -2071,6 +2228,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         inventoryEntity,
         inventoryChangesEntity,
+        deletedInventoryEntity,
         productInEntity,
         productOutEntity,
         productCountEntity,
@@ -2480,6 +2638,83 @@ class $$InventoryChangesEntityTableOrderingComposer
 
   ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$DeletedInventoryEntityTableInsertCompanionBuilder
+    = DeletedInventoryEntityCompanion Function({
+  Value<int> id,
+});
+typedef $$DeletedInventoryEntityTableUpdateCompanionBuilder
+    = DeletedInventoryEntityCompanion Function({
+  Value<int> id,
+});
+
+class $$DeletedInventoryEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $DeletedInventoryEntityTable,
+    DeletedInventoryEntityData,
+    $$DeletedInventoryEntityTableFilterComposer,
+    $$DeletedInventoryEntityTableOrderingComposer,
+    $$DeletedInventoryEntityTableProcessedTableManager,
+    $$DeletedInventoryEntityTableInsertCompanionBuilder,
+    $$DeletedInventoryEntityTableUpdateCompanionBuilder> {
+  $$DeletedInventoryEntityTableTableManager(
+      _$AppDatabase db, $DeletedInventoryEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$DeletedInventoryEntityTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$DeletedInventoryEntityTableOrderingComposer(
+              ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$DeletedInventoryEntityTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+          }) =>
+              DeletedInventoryEntityCompanion(
+            id: id,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+          }) =>
+              DeletedInventoryEntityCompanion.insert(
+            id: id,
+          ),
+        ));
+}
+
+class $$DeletedInventoryEntityTableProcessedTableManager
+    extends ProcessedTableManager<
+        _$AppDatabase,
+        $DeletedInventoryEntityTable,
+        DeletedInventoryEntityData,
+        $$DeletedInventoryEntityTableFilterComposer,
+        $$DeletedInventoryEntityTableOrderingComposer,
+        $$DeletedInventoryEntityTableProcessedTableManager,
+        $$DeletedInventoryEntityTableInsertCompanionBuilder,
+        $$DeletedInventoryEntityTableUpdateCompanionBuilder> {
+  $$DeletedInventoryEntityTableProcessedTableManager(super.$state);
+}
+
+class $$DeletedInventoryEntityTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $DeletedInventoryEntityTable> {
+  $$DeletedInventoryEntityTableFilterComposer(super.$state);
+
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$DeletedInventoryEntityTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $DeletedInventoryEntityTable> {
+  $$DeletedInventoryEntityTableOrderingComposer(super.$state);
+
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -3058,6 +3293,10 @@ class _$AppDatabaseManager {
   $$InventoryChangesEntityTableTableManager get inventoryChangesEntity =>
       $$InventoryChangesEntityTableTableManager(
           _db, _db.inventoryChangesEntity);
+
+  $$DeletedInventoryEntityTableTableManager get deletedInventoryEntity =>
+      $$DeletedInventoryEntityTableTableManager(
+          _db, _db.deletedInventoryEntity);
   $$ProductInEntityTableTableManager get productInEntity =>
       $$ProductInEntityTableTableManager(_db, _db.productInEntity);
   $$ProductOutEntityTableTableManager get productOutEntity =>

@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
@@ -10,6 +12,7 @@ import 'package:dental_inventory/app/data/model/response/product_retrieval_respo
 import 'package:dental_inventory/app/data/remote/inventory_remote_data_source.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:drift/drift.dart' as drift;
 import 'package:get/get.dart';
 
 class InventoryRepositoryImpl implements InventoryRepository {
@@ -85,8 +88,33 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future deleteInventory({required String id}) {
+  Future deleteInventoryFromServer(int id) {
     return _remoteDataSource.deleteInventory(id: id);
+  }
+
+  @override
+  Future deleteInventory({required int id}) {
+    return _localDataSource.deleteInventory(id).then((_) {
+      return _localDataSource
+          .addInventoryIdToDeletedInventoryEntity(
+        DeletedInventoryEntityCompanion.insert(
+          id: drift.Value(id),
+        ),
+      )
+          .then((_) {
+        DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
+      });
+    });
+  }
+
+  @override
+  Future<List<DeletedInventoryEntityData>> getDeletedInventories() {
+    return _localDataSource.getDeletedInventories();
+  }
+
+  @override
+  Future<int> deleteDeletedInventory(int id) {
+    return _localDataSource.deleteDeletedInventory(id);
   }
 
   @override

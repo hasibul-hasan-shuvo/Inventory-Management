@@ -50,7 +50,7 @@ class InventoryController extends BaseController {
 
   void deleteInventoryItem(InventoryUIModel data) {
     callDataService(
-      _inventoryRepository.deleteInventory(id: data.id.toString()),
+      _inventoryRepository.deleteInventory(id: data.id),
       onSuccess: (e) => _deleteSuccessHandler(data),
     );
   }

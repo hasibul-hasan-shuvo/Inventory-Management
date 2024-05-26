@@ -7,4 +7,7 @@ mixin _$InventoryDaoMixin on DatabaseAccessor<AppDatabase> {
   $InventoryEntityTable get inventoryEntity => attachedDatabase.inventoryEntity;
   $InventoryChangesEntityTable get inventoryChangesEntity =>
       attachedDatabase.inventoryChangesEntity;
+
+  $DeletedInventoryEntityTable get deletedInventoryEntity =>
+      attachedDatabase.deletedInventoryEntity;
 }

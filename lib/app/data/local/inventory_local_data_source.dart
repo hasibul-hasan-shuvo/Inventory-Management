@@ -15,4 +15,13 @@ abstract class InventoryLocalDataSource {
     int id,
     InventoryEntityCompanion inventory,
   );
+
+  Future<int> deleteInventory(int id);
+
+  Future<int> addInventoryIdToDeletedInventoryEntity(
+      DeletedInventoryEntityCompanion inventory);
+
+  Future<List<DeletedInventoryEntityData>> getDeletedInventories();
+
+  Future<int> deleteDeletedInventory(int id);
 }
