@@ -20,7 +20,7 @@ abstract class InventoryRepository {
 
   Future<List<DeletedInventoryEntityData>> getDeletedInventories();
 
-  Future<int> deleteDeletedInventory(int id);
+  Future<int> deleteIdFromDeletedInventory(int id);
 
   Future<InventoryEntityData?> getInventoryById(int id);
 

@@ -113,8 +113,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<int> deleteDeletedInventory(int id) {
-    return _localDataSource.deleteDeletedInventory(id);
+  Future<int> deleteIdFromDeletedInventory(int id) {
+    return _localDataSource.deleteIdFromDeletedInventory(id);
   }
 
   @override

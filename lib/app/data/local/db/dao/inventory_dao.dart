@@ -113,7 +113,7 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<int> deleteDeletedInventory(int id) {
+  Future<int> deleteIdFromDeletedInventory(int id) {
     return (delete(deletedInventoryEntity)..where((tbl) => tbl.id.equals(id)))
         .go();
   }

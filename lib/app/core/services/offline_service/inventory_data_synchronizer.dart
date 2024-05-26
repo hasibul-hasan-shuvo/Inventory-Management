@@ -31,7 +31,7 @@ class InventoryDataSynchronizer implements DataSynchronizer {
             await _inventoryRepository
                 .deleteInventoryFromServer(deletedInventory.id);
             await _inventoryRepository
-                .deleteDeletedInventory(deletedInventory.id);
+                .deleteIdFromDeletedInventory(deletedInventory.id);
           } catch (e) {
             _logger.e("DeletedInventoryFailed: $e");
           }
