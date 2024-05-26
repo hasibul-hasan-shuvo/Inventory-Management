@@ -1,11 +1,27 @@
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/db/dao/inventory_dao.dart';
 import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart';
+import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:get/get.dart';
 
 class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   final InventoryDao _inventoryDao = InventoryDao(Get.find());
+  final PreferenceManager _preferenceManager = Get.find();
+
+  @override
+  String getLastSyncTimeStamp() {
+    return _preferenceManager
+        .getString(PreferenceManager.INVENTORY_LAST_SYNC_TIME_STAMP);
+  }
+
+  @override
+  void setLastSyncTimeStamp(String lastSyncTimeStamp) {
+    _preferenceManager.setString(
+      PreferenceManager.INVENTORY_LAST_SYNC_TIME_STAMP,
+      lastSyncTimeStamp,
+    );
+  }
 
   @override
   Future insertAllInventories(List<InventoryEntityCompanion> inventories) {

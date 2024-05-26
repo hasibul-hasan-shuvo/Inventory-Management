@@ -6,6 +6,10 @@ abstract class PreferenceManager {
   static const String REFRESH_TOKEN = 'refresh';
   static const String INVENTORY_ID = 'inventory_id';
   static const String USER_DATA = 'user_data';
+  static const String INVENTORY_LAST_SYNC_TIME_STAMP =
+      'inventory_last_sync_time_stamp';
+  static const String SHOPPING_CART_LAST_SYNC_TIME_STAMP =
+      'shopping_cart_last_sync_time_stamp';
 
   String getString(String key, {String defaultValue = ""});
 

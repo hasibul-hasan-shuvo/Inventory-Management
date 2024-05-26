@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
+import 'package:dental_inventory/app/core/utils/date_parser.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
@@ -12,6 +13,7 @@ import 'package:dental_inventory/app/data/model/response/product_retrieval_respo
 import 'package:dental_inventory/app/data/remote/inventory_remote_data_source.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:get/get.dart';
 
@@ -23,9 +25,23 @@ class InventoryRepositoryImpl implements InventoryRepository {
 
   @override
   Future getAllInventories() {
+    String lastSyncTimeStamp = _localDataSource.getLastSyncTimeStamp();
+    BuildConfig.instance.config.logger.d("Utc: ${DateTime.now().toUtc()}");
+
     return _remoteDataSource
-        .getInventoryList(queryParams: InventoryListQueryParams())
+        .getInventoryList(
+      queryParams: InventoryListQueryParams(
+        lastModifiedDate: lastSyncTimeStamp,
+      ),
+    )
         .then((response) {
+      String lastSyncTimeStamp = DateParser.getDateStringFromDateTime(
+        dateTime: DateTime.now().toUtc(),
+        outputDateFormat: DateParser.offsetDateFormat,
+      );
+
+      _localDataSource.setLastSyncTimeStamp(lastSyncTimeStamp);
+
       if (response.inventoryList != null &&
           response.inventoryList?.isNotEmpty == true) {
         List<InventoryEntityCompanion> inventories = response.inventoryList!

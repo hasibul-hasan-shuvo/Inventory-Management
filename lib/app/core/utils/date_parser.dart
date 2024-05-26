@@ -50,10 +50,7 @@ abstract class DateParser {
 
     String formattedDate = "";
     try {
-      var dateTimeLocal = dateTime.toLocal();
-
-      formattedDate =
-          DateFormat(outputDateFormat, localeName).format(dateTimeLocal);
+      formattedDate = DateFormat(outputDateFormat, localeName).format(dateTime);
     } catch (e) {
       Logger().e("$e");
     }
