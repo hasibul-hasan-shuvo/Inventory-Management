@@ -41,7 +41,6 @@ class InventoryView extends BaseView<InventoryController> {
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);
-        closeKeyboard();
       },
     );
   }

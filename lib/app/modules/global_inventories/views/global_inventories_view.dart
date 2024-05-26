@@ -41,7 +41,6 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
           updateSearchQuery: (value) {
-            closeKeyboard();
             controller.updateSearchQuery(value);
           },
         ),
