@@ -1,18 +1,45 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/scanned_products_controller_mixin.dart';
+import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
-import 'package:dental_inventory/app/data/local/db/app_database.dart';
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
-import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_in_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:get/get.dart';
 
 class ProductInController extends BaseController
     with ScannedProductsControllerMixin {
-  final InventoryRepository _repository = Get.find();
+  final ProductInRepository _repository = Get.find();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _getAllScannedProducts();
+  }
+
+  @override
+  InternalFinalCallback<void> get onDelete {
+    ZebraScanner().close();
+
+    return super.onDelete;
+  }
+
+  void _getAllScannedProducts() {
+    callDataService(
+      _repository.getProducts(),
+      onSuccess: _handleGetAllScannedProductsSuccessResponse,
+    );
+  }
+
+  void _handleGetAllScannedProductsSuccessResponse(
+      List<ScannedProductEntityData> products) {
+    for (ScannedProductEntityData product in products) {
+      addProduct(ScannedProductUiModel.fromScannedProductEntityData(product));
+    }
+  }
 
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
@@ -69,33 +96,32 @@ class ProductInController extends BaseController
 
   void _getProduct(String itemId) {
     callDataService(
-      _repository.getInventoryByItemId(itemId),
+      _repository.getProductById(itemId),
       onSuccess: _handleGetProductSuccessResponse,
     );
   }
 
-  void _handleGetProductSuccessResponse(InventoryEntityData? response) {
+  void _handleGetProductSuccessResponse(ScannedProductEntityData? response) {
     if (response != null) {
-      addProduct(ScannedProductUiModel.fromInventoryEntityDataWithDefaultNumber(
-          response));
+      addProduct(ScannedProductUiModel.fromScannedProductEntityData(response));
     } else {
       showErrorMessage(appLocalization.messageItemNotFound);
     }
   }
 
   void revertAllItems() {
-    if (scannedProducts.isNotEmpty) {
-      ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-        data: scannedProducts
-            .map((e) => e.toScannedProductsRequestBodyWithCountChange(true))
-            .toList(),
-      );
-
-      callDataService(
-        _repository.retrieveProduct(requestBody),
-        onSuccess: _handleRevertAllItemsSuccessResponse,
-      );
-    }
+    // if (scannedProducts.isNotEmpty) {
+    //   ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
+    //     data: scannedProducts
+    //         .map((e) => e.toScannedProductsRequestBodyWithCountChange(true))
+    //         .toList(),
+    //   );
+    //
+    //   callDataService(
+    //     _repository.retrieveProduct(requestBody),
+    //     onSuccess: _handleRevertAllItemsSuccessResponse,
+    //   );
+    // }
   }
 
   void _handleRevertAllItemsSuccessResponse(ProductRetrievalResponse response) {

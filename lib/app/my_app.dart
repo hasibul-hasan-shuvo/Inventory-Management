@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dental_inventory/app/core/base/app_theme_data.dart';
 import 'package:dental_inventory/app/core/model/theme.dart';
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_languages.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
@@ -40,6 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _dataSyncManager?.dispose();
+    ZebraScanner().dismiss();
     super.dispose();
   }
 

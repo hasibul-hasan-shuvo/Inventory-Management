@@ -110,7 +110,11 @@ abstract class BaseController extends GetxController {
       showErrorMessage(exception.message);
     } on NotFoundException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      showErrorMessage(
+        exception.message.isEmpty
+            ? appLocalization.messageItemNotFound
+            : exception.message,
+      );
     } on ApiException catch (exception) {
       _exception = exception;
       showErrorMessage(exception.message);
