@@ -67,4 +67,6 @@ abstract class DateParser {
   }
 
   static DateTime get getCurrentDateTime => DateTime.now();
+
+  static DateTime get getCurrentUtcDateTime => DateTime.now().toUtc();
 }

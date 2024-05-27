@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/utils/date_parser.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:drift/drift.dart';
 
@@ -41,7 +42,7 @@ class InventoryUpdateRequestBody {
       minCount: Value(minCount),
       stockCountChange: Value(stockCountChange ?? 0),
       fixedSuggestion: Value(fixedSuggestion),
-      modified: Value(DateTime.now().toUtc()),
+      modified: Value(DateParser.getCurrentUtcDateTime),
     );
   }
 
