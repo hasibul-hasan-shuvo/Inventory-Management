@@ -3,17 +3,21 @@ import 'package:dental_inventory/app/core/controllers/scanned_products_controlle
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
-import 'package:dental_inventory/app/data/local/db/app_database.dart';
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
-import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
+import 'package:dental_inventory/app/data/repository/product_count_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:get/get.dart';
 
 class ItemCountController extends BaseController
     with ScannedProductsControllerMixin {
-  final InventoryRepository _repository = Get.find();
+  final ProductCountRepository _repository = Get.find();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _getAllScannedProducts();
+  }
 
   @override
   InternalFinalCallback<void> get onDelete {
@@ -22,20 +26,38 @@ class ItemCountController extends BaseController
     return super.onDelete;
   }
 
+  void _getAllScannedProducts() {
+    callDataService(
+      _repository.getProducts(),
+      onSuccess: _handleGetAllScannedProductsSuccessResponse,
+    );
+  }
+
+  void _handleGetAllScannedProductsSuccessResponse(
+      List<ScannedProductEntityData> products) {
+    for (ScannedProductEntityData product in products) {
+      addProduct(ScannedProductUiModel.fromScannedProductEntityData(
+        product,
+        addStockCount: true,
+      ));
+    }
+  }
+
   void onScanned(String? code) {
     if (code.isNotNullOrEmpty) {
       bool isListItem = false;
-      for (ScannedProductUiModel inventory in scannedProducts) {
-        if (inventory.itemId == code) {
+      for (ScannedProductUiModel product in scannedProducts) {
+        if (product.itemId == code) {
           isListItem = true;
-          inventory.updateNumber(inventory.number + 1);
+          _updateProduct(
+            product,
+            product.number - product.available,
+          );
           break;
         }
       }
       if (!isListItem) {
         _getProduct(code!);
-      } else {
-        onRefresh();
       }
     }
   }
@@ -46,20 +68,25 @@ class ItemCountController extends BaseController
 
       return;
     }
-    inventory.updateNumber(inventory.number + 1);
-    onRefresh();
+    _updateProduct(
+      inventory,
+      (inventory.number - inventory.available) + 1,
+    );
   }
 
   void _getProduct(String itemId) {
     callDataService(
-      _repository.getInventoryByItemId(itemId),
+      _repository.getProductById(itemId),
       onSuccess: _handleGetProductSuccessResponse,
     );
   }
 
-  void _handleGetProductSuccessResponse(InventoryEntityData? response) {
+  void _handleGetProductSuccessResponse(ScannedProductEntityData? response) {
     if (response != null) {
-      addProduct(ScannedProductUiModel.fromInventoryEntityData(response));
+      addProduct(ScannedProductUiModel.fromScannedProductEntityData(
+        response,
+        addStockCount: true,
+      ));
     } else {
       showErrorMessage(appLocalization.messageItemNotFound);
     }
@@ -67,63 +94,97 @@ class ItemCountController extends BaseController
 
   void updateAll() {
     if (scannedProducts.isNotEmpty) {
-      ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-        data: scannedProducts
-            .map((e) => e.toScannedProductsRequestBodyWithCurrentStock())
-            .toList(),
-      );
-
       callDataService(
-        _repository.retrieveProduct(requestBody),
+        _repository.updateAll(),
         onSuccess: _handleUpdateAllSuccessResponse,
       );
     }
   }
 
-  void _handleUpdateAllSuccessResponse(ProductRetrievalResponse response) {
-    if (response.updatedList == null || response.updatedList!.isEmpty) {
+  void _handleUpdateAllSuccessResponse(
+      List<ScannedProductEntityData> response) {
+    if (response.isNotEmpty) {
       showErrorMessage(appLocalization.messageItemsUpdateUnsuccessful);
     } else {
-      showSuccessMessage(response.message ?? appLocalization.success);
-
-      response.updatedList?.forEach((element) {
-        removeProductByItemId(element.itemId);
-      });
-
-      if (scannedProducts.isEmpty) {
-        Get.back();
-      }
+      showSuccessMessage(appLocalization.success);
+    }
+    updateScannedProductsList(response
+        .map((e) => ScannedProductUiModel.fromScannedProductEntityData(
+              e,
+              addStockCount: true,
+            ))
+        .toList());
+    if (scannedProducts.isEmpty) {
+      Get.back();
     }
   }
 
   void onUpdateCurrentStock(ScannedProductUiModel data, String newStock) {
-    if (newStock.toInt > 0) {
-      data.updateNumber(newStock.toInt);
-      onRefresh();
+    if (!newStock.isPositiveIntegerNumber) {
+      showErrorMessage(appLocalization.messageInvalidNumber);
+
+      return;
+    }
+    if (newStock.toInt == 0) {
+      _removeProduct(data.id, data.itemId);
     } else {
-      removeProductByItemId(data.itemId);
+      _updateProduct(
+        data,
+        newStock.toInt - data.available,
+      );
     }
   }
 
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
     if (inventoryData.number == 0) {
-      removeProductByItemId(inventoryData.itemId);
+      _removeProduct(inventoryData.id, inventoryData.itemId);
     } else {
       bool isItemExist = false;
       for (ScannedProductUiModel product in scannedProducts) {
         if (product.itemId == inventoryData.itemId) {
           isItemExist = true;
-          product.updateNumber(inventoryData.number);
-          onRefresh();
+          _updateProduct(
+            product,
+            inventoryData.number - inventoryData.available,
+          );
           break;
         }
       }
 
       if (!isItemExist) {
-        scannedProducts
-            .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
+        _addProductFromInventory(inventoryData);
       }
     }
+  }
+
+  void _addProductFromInventory(SelectableInventoryItemUiModel inventory) {
+    callDataService(
+      _repository.addProductByInventoryId(
+        inventory.id,
+        inventory.number - inventory.available,
+      ),
+      onSuccess: _handleGetProductSuccessResponse,
+    );
+  }
+
+  void _removeProduct(int id, String itemId) {
+    callDataService(
+      _repository.deleteProductById(id),
+      onSuccess: (_) => removeProductByItemId(itemId),
+    );
+  }
+
+  void _updateProduct(ScannedProductUiModel product, int stockCountChange) {
+    callDataService(
+      _repository.updateProduct(
+        product.id,
+        stockCountChange,
+      ),
+      onSuccess: (_) {
+        product.updateNumber(product.available + stockCountChange);
+        onRefresh();
+      },
+    );
   }
 }
