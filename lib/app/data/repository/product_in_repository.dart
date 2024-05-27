@@ -13,4 +13,6 @@ abstract class ProductInRepository {
   Future<int> deleteProductById(int id);
 
   Future<void> deleteProducts();
+
+  Future<List<ScannedProductEntityData>> revertAllItems();
 }

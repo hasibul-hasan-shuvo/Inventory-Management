@@ -27,10 +27,12 @@ class InventoryUpdateRequestBody {
 
   InventoryEntityCompanion toInventoryEntityCompanion() {
     return InventoryEntityCompanion(
-      maxCount: Value(maxCount ?? 0),
-      minCount: Value(minCount ?? 0),
+      maxCount: maxCount != null ? Value(maxCount!) : const Value.absent(),
+      minCount: minCount != null ? Value(minCount!) : const Value.absent(),
       stockCount: Value(stockCount ?? 0),
-      fixedSuggestion: Value(fixedSuggestion ?? 0),
+      fixedSuggestion: fixedSuggestion != null
+          ? Value(fixedSuggestion!)
+          : const Value.absent(),
     );
   }
 

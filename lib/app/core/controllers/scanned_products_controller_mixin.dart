@@ -12,6 +12,10 @@ mixin ScannedProductsControllerMixin {
     _scannedProductsController.refresh();
   }
 
+  void updateScannedProductsList(List<ScannedProductUiModel> newList) {
+    _scannedProductsController(newList);
+  }
+
   void addProduct(ScannedProductUiModel data) {
     _scannedProductsController.add(data);
   }

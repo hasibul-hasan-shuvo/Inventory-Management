@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
-import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/repository/product_in_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
@@ -102,30 +101,24 @@ class ProductInController extends BaseController
   }
 
   void revertAllItems() {
-    // if (scannedProducts.isNotEmpty) {
-    //   ProductsRetrievalRequestBody requestBody = ProductsRetrievalRequestBody(
-    //     data: scannedProducts
-    //         .map((e) => e.toScannedProductsRequestBodyWithCountChange(true))
-    //         .toList(),
-    //   );
-    //
-    //   callDataService(
-    //     _repository.retrieveProduct(requestBody),
-    //     onSuccess: _handleRevertAllItemsSuccessResponse,
-    //   );
-    // }
+    if (scannedProducts.isNotEmpty) {
+      callDataService(
+        _repository.revertAllItems(),
+        onSuccess: _handleRevertAllItemsSuccessResponse,
+      );
+    }
   }
 
-  void _handleRevertAllItemsSuccessResponse(ProductRetrievalResponse response) {
-    if (response.updatedList == null || response.updatedList!.isEmpty) {
+  void _handleRevertAllItemsSuccessResponse(
+      List<ScannedProductEntityData> response) {
+    if (response.isNotEmpty) {
       showErrorMessage(appLocalization.messageItemsUpdateUnsuccessful);
     } else {
-      showSuccessMessage(response.message ?? appLocalization.success);
-
-      response.updatedList?.forEach((element) {
-        removeProductByItemId(element.itemId);
-      });
+      showSuccessMessage(appLocalization.success);
     }
+    updateScannedProductsList(response
+        .map((e) => ScannedProductUiModel.fromScannedProductEntityData(e))
+        .toList());
   }
 
   @override
