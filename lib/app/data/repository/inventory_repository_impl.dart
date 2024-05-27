@@ -100,11 +100,6 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryResponse> getProduct(String itemId) {
-    return _remoteDataSource.getProduct(itemId);
-  }
-
-  @override
   Future<ProductRetrievalResponse> retrieveProduct(
       ProductsRetrievalRequestBody requestBody) {
     String inventoryId = _authRepository.getInventoryID();

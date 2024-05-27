@@ -2,8 +2,8 @@ import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
@@ -69,14 +69,18 @@ class ProductInController extends BaseController
 
   void _getProduct(String itemId) {
     callDataService(
-      _repository.getProduct(itemId),
+      _repository.getInventoryByItemId(itemId),
       onSuccess: _handleGetProductSuccessResponse,
     );
   }
 
-  void _handleGetProductSuccessResponse(InventoryResponse response) {
-    addProduct(ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
-        response));
+  void _handleGetProductSuccessResponse(InventoryEntityData? response) {
+    if (response != null) {
+      addProduct(ScannedProductUiModel.fromInventoryEntityDataWithDefaultNumber(
+          response));
+    } else {
+      showErrorMessage(appLocalization.messageItemNotFound);
+    }
   }
 
   void revertAllItems() {

@@ -38,8 +38,6 @@ abstract class InventoryRepository {
 
   Future<int> deleteInventoryChangesById(int id);
 
-  Future<InventoryResponse> getProduct(String itemId);
-
   Future<ProductRetrievalResponse> retrieveProduct(
       ProductsRetrievalRequestBody requestBody);
 

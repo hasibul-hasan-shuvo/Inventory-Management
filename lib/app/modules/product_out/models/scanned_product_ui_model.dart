@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 
 class ScannedProductUiModel {
@@ -10,23 +14,42 @@ class ScannedProductUiModel {
   late int number;
   late final int available;
 
-  ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
-      InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
-    number = 1;
-    available = response.stockCount ?? 0;
+  ScannedProductUiModel.fromProductEntityDataWithDefaultNumber(
+      ProductEntityData data) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
+
+    id = data.id;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
+    number = data.stockCountChange;
+    available = data.stockCount;
   }
 
-  ScannedProductUiModel.fromProductResponseModel(InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
-    number = response.stockCount ?? 0;
-    available = response.stockCount ?? 0;
+  ScannedProductUiModel.fromInventoryEntityDataWithDefaultNumber(
+      InventoryEntityData data) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
+
+    id = data.id;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
+    number = 1;
+    available = data.stockCount;
+  }
+
+  ScannedProductUiModel.fromInventoryEntityData(InventoryEntityData data) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
+
+    id = data.id;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
+    number = data.stockCount;
+    available = data.stockCount;
   }
 
   ScannedProductUiModel.addProductFromInventory(
