@@ -1,10 +1,10 @@
-class ProductEntityData {
+class ScannedProductEntityData {
   final int id;
   final String product;
   final int stockCountChange;
   final int stockCount;
 
-  ProductEntityData({
+  ScannedProductEntityData({
     required this.id,
     required this.product,
     required this.stockCountChange,

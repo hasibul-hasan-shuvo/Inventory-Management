@@ -15,7 +15,7 @@ class ScannedProductUiModel {
   late final int available;
 
   ScannedProductUiModel.fromProductEntityDataWithDefaultNumber(
-      ProductEntityData data) {
+      ScannedProductEntityData data) {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 

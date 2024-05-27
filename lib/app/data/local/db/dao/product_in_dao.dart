@@ -22,7 +22,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
     return update(productInScannedItemEntity).replace(product);
   }
 
-  Future<List<ProductEntityData>> getProducts() {
+  Future<List<ScannedProductEntityData>> getProducts() {
     final query = select(productInScannedItemEntity).join([
       leftOuterJoin(inventoryEntity,
           inventoryEntity.id.equalsExp(productInScannedItemEntity.id))
@@ -34,7 +34,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
             e.readTable(productInScannedItemEntity);
         InventoryEntityData inventory = e.readTable(inventoryEntity);
 
-        return ProductEntityData(
+        return ScannedProductEntityData(
           id: scannedProduct.id,
           product: inventory.product,
           stockCountChange: scannedProduct.stockCountChange,
