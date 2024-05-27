@@ -6,7 +6,7 @@ import 'package:dental_inventory/app/data/model/request/inventory_list_query_par
 import 'package:get/get.dart';
 
 class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
-  final InventoryDao _inventoryDao = InventoryDao(Get.find());
+  final InventoryDao _dao = InventoryDao(Get.find());
   final PreferenceManager _preferenceManager = Get.find();
 
   @override
@@ -25,7 +25,7 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
 
   @override
   Future insertAllInventories(List<InventoryEntityCompanion> inventories) {
-    return _inventoryDao.insertAllInventories(inventories);
+    return _dao.insertAllInventories(inventories);
   }
 
   @override
@@ -33,7 +33,7 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
       InventoryListQueryParams queryParams) {
     int offset = (queryParams.page - 1) * queryParams.pageSize;
 
-    return _inventoryDao.getInventories(
+    return _dao.getInventories(
       queryParams.search,
       offset,
       queryParams.pageSize,
@@ -42,17 +42,17 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
 
   @override
   Future<InventoryEntityData?> getInventoryById(int id) {
-    return _inventoryDao.getInventoryById(id);
+    return _dao.getInventoryById(id);
   }
 
   @override
   Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
-    return _inventoryDao.getInventoryByItemId(itemId);
+    return _dao.getInventoryByItemId(itemId);
   }
 
   @override
   Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
-    return _inventoryDao.updateInventory(
+    return _dao.updateInventory(
       id,
       inventory,
     );
@@ -61,37 +61,37 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   @override
   Future<int> insertInventoryChanges(
       InventoryChangesEntityCompanion inventoryChanges) {
-    return _inventoryDao.insertInventoryChanges(inventoryChanges);
+    return _dao.insertInventoryChanges(inventoryChanges);
   }
 
   @override
   Future<int> deleteInventoryChangesById(int id) {
-    return _inventoryDao.deleteInventoryChangesById(id);
+    return _dao.deleteInventoryChangesById(id);
   }
 
   @override
   Future<List<InventoryChangesEntityData>> getAllInventoryChanges() {
-    return _inventoryDao.getInventoryChanges();
+    return _dao.getInventoryChanges();
   }
 
   @override
   Future<int> deleteInventory(int id) {
-    return _inventoryDao.deleteInventoryById(id);
+    return _dao.deleteInventoryById(id);
   }
 
   @override
   Future<int> addInventoryIdToDeletedInventoryEntity(
       DeletedInventoryEntityCompanion inventory) {
-    return _inventoryDao.insertInventoryToDeletedInventoryEntity(inventory);
+    return _dao.insertInventoryToDeletedInventoryEntity(inventory);
   }
 
   @override
   Future<List<DeletedInventoryEntityData>> getDeletedInventories() {
-    return _inventoryDao.getDeletedInventories();
+    return _dao.getDeletedInventories();
   }
 
   @override
   Future<int> deleteIdFromDeletedInventory(int id) {
-    return _inventoryDao.deleteIdFromDeletedInventory(id);
+    return _dao.deleteIdFromDeletedInventory(id);
   }
 }

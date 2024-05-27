@@ -18,8 +18,10 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
     return into(productInScannedItemEntity).insertOnConflictUpdate(product);
   }
 
-  Future<bool> updateProduct(ProductInScannedItemEntityData product) {
-    return update(productInScannedItemEntity).replace(product);
+  Future<int> updateProduct(int id, ProductInScannedItemEntityData product) {
+    return (update(productInScannedItemEntity)
+          ..where((tbl) => tbl.id.equals(id)))
+        .write(product);
   }
 
   Future<List<ScannedProductEntityData>> getProducts() {
