@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:dental_inventory/app/data/local/db/entities/deleted_inventory_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
-import 'package:dental_inventory/app/data/local/db/entities/product_count_entity.dart';
-import 'package:dental_inventory/app/data/local/db/entities/product_in_entity.dart';
-import 'package:dental_inventory/app/data/local/db/entities/product_out_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_count_scanned_item_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_in_scanned_item_entity.dart';
+import 'package:dental_inventory/app/data/local/db/entities/product_out_scanned_item_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/shopping_cart_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/shopping_cart_entity.dart';
 import 'package:drift/drift.dart';
@@ -30,9 +30,9 @@ LazyDatabase _openConnection() {
   InventoryEntity,
   InventoryChangesEntity,
   DeletedInventoryEntity,
-  ProductInEntity,
-  ProductOutEntity,
-  ProductCountEntity,
+  ProductInScannedItemEntity,
+  ProductOutScannedItemEntity,
+  ProductCountScannedItemEntity,
   ShoppingCartEntity,
   ShoppingCartChangesEntity,
 ])

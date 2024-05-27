@@ -1086,12 +1086,14 @@ class DeletedInventoryEntityCompanion
   }
 }
 
-class $ProductInEntityTable extends ProductInEntity
-    with TableInfo<$ProductInEntityTable, ProductInEntityData> {
+class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
+    with
+        TableInfo<$ProductInScannedItemEntityTable,
+            ProductInScannedItemEntityData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProductInEntityTable(this.attachedDatabase, [this._alias]);
+  $ProductInScannedItemEntityTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1117,10 +1119,10 @@ class $ProductInEntityTable extends ProductInEntity
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'product_in_entity';
+  static const String $name = 'product_in_scanned_item_entity';
   @override
   VerificationContext validateIntegrity(
-      Insertable<ProductInEntityData> instance,
+      Insertable<ProductInScannedItemEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1145,9 +1147,10 @@ class $ProductInEntityTable extends ProductInEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ProductInEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ProductInScannedItemEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProductInEntityData(
+    return ProductInScannedItemEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
@@ -1158,17 +1161,17 @@ class $ProductInEntityTable extends ProductInEntity
   }
 
   @override
-  $ProductInEntityTable createAlias(String alias) {
-    return $ProductInEntityTable(attachedDatabase, alias);
+  $ProductInScannedItemEntityTable createAlias(String alias) {
+    return $ProductInScannedItemEntityTable(attachedDatabase, alias);
   }
 }
 
-class ProductInEntityData extends DataClass
-    implements Insertable<ProductInEntityData> {
+class ProductInScannedItemEntityData extends DataClass
+    implements Insertable<ProductInScannedItemEntityData> {
   final int id;
   final int stockCountChange;
   final DateTime modified;
-  const ProductInEntityData(
+  const ProductInScannedItemEntityData(
       {required this.id,
       required this.stockCountChange,
       required this.modified});
@@ -1181,18 +1184,18 @@ class ProductInEntityData extends DataClass
     return map;
   }
 
-  ProductInEntityCompanion toCompanion(bool nullToAbsent) {
-    return ProductInEntityCompanion(
+  ProductInScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
+    return ProductInScannedItemEntityCompanion(
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
   }
 
-  factory ProductInEntityData.fromJson(Map<String, dynamic> json,
+  factory ProductInScannedItemEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProductInEntityData(
+    return ProductInScannedItemEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
@@ -1208,16 +1211,16 @@ class ProductInEntityData extends DataClass
     };
   }
 
-  ProductInEntityData copyWith(
+  ProductInScannedItemEntityData copyWith(
           {int? id, int? stockCountChange, DateTime? modified}) =>
-      ProductInEntityData(
+      ProductInScannedItemEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
-    return (StringBuffer('ProductInEntityData(')
+    return (StringBuffer('ProductInScannedItemEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -1230,27 +1233,28 @@ class ProductInEntityData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ProductInEntityData &&
+      (other is ProductInScannedItemEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
-class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
+class ProductInScannedItemEntityCompanion
+    extends UpdateCompanion<ProductInScannedItemEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
-  const ProductInEntityCompanion({
+  const ProductInScannedItemEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
   });
-  ProductInEntityCompanion.insert({
+  ProductInScannedItemEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
     this.modified = const Value.absent(),
   }) : stockCountChange = Value(stockCountChange);
-  static Insertable<ProductInEntityData> custom({
+  static Insertable<ProductInScannedItemEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
@@ -1262,11 +1266,11 @@ class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
     });
   }
 
-  ProductInEntityCompanion copyWith(
+  ProductInScannedItemEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
       Value<DateTime>? modified}) {
-    return ProductInEntityCompanion(
+    return ProductInScannedItemEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
@@ -1290,7 +1294,7 @@ class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('ProductInEntityCompanion(')
+    return (StringBuffer('ProductInScannedItemEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -1299,12 +1303,14 @@ class ProductInEntityCompanion extends UpdateCompanion<ProductInEntityData> {
   }
 }
 
-class $ProductOutEntityTable extends ProductOutEntity
-    with TableInfo<$ProductOutEntityTable, ProductOutEntityData> {
+class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
+    with
+        TableInfo<$ProductOutScannedItemEntityTable,
+            ProductOutScannedItemEntityData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProductOutEntityTable(this.attachedDatabase, [this._alias]);
+  $ProductOutScannedItemEntityTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1330,10 +1336,10 @@ class $ProductOutEntityTable extends ProductOutEntity
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'product_out_entity';
+  static const String $name = 'product_out_scanned_item_entity';
   @override
   VerificationContext validateIntegrity(
-      Insertable<ProductOutEntityData> instance,
+      Insertable<ProductOutScannedItemEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1358,9 +1364,10 @@ class $ProductOutEntityTable extends ProductOutEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ProductOutEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ProductOutScannedItemEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProductOutEntityData(
+    return ProductOutScannedItemEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
@@ -1371,17 +1378,17 @@ class $ProductOutEntityTable extends ProductOutEntity
   }
 
   @override
-  $ProductOutEntityTable createAlias(String alias) {
-    return $ProductOutEntityTable(attachedDatabase, alias);
+  $ProductOutScannedItemEntityTable createAlias(String alias) {
+    return $ProductOutScannedItemEntityTable(attachedDatabase, alias);
   }
 }
 
-class ProductOutEntityData extends DataClass
-    implements Insertable<ProductOutEntityData> {
+class ProductOutScannedItemEntityData extends DataClass
+    implements Insertable<ProductOutScannedItemEntityData> {
   final int id;
   final int stockCountChange;
   final DateTime modified;
-  const ProductOutEntityData(
+  const ProductOutScannedItemEntityData(
       {required this.id,
       required this.stockCountChange,
       required this.modified});
@@ -1394,18 +1401,18 @@ class ProductOutEntityData extends DataClass
     return map;
   }
 
-  ProductOutEntityCompanion toCompanion(bool nullToAbsent) {
-    return ProductOutEntityCompanion(
+  ProductOutScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
+    return ProductOutScannedItemEntityCompanion(
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
   }
 
-  factory ProductOutEntityData.fromJson(Map<String, dynamic> json,
+  factory ProductOutScannedItemEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProductOutEntityData(
+    return ProductOutScannedItemEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
@@ -1421,16 +1428,16 @@ class ProductOutEntityData extends DataClass
     };
   }
 
-  ProductOutEntityData copyWith(
+  ProductOutScannedItemEntityData copyWith(
           {int? id, int? stockCountChange, DateTime? modified}) =>
-      ProductOutEntityData(
+      ProductOutScannedItemEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
-    return (StringBuffer('ProductOutEntityData(')
+    return (StringBuffer('ProductOutScannedItemEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -1443,27 +1450,28 @@ class ProductOutEntityData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ProductOutEntityData &&
+      (other is ProductOutScannedItemEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
-class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
+class ProductOutScannedItemEntityCompanion
+    extends UpdateCompanion<ProductOutScannedItemEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
-  const ProductOutEntityCompanion({
+  const ProductOutScannedItemEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
   });
-  ProductOutEntityCompanion.insert({
+  ProductOutScannedItemEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
     this.modified = const Value.absent(),
   }) : stockCountChange = Value(stockCountChange);
-  static Insertable<ProductOutEntityData> custom({
+  static Insertable<ProductOutScannedItemEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
@@ -1475,11 +1483,11 @@ class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
     });
   }
 
-  ProductOutEntityCompanion copyWith(
+  ProductOutScannedItemEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
       Value<DateTime>? modified}) {
-    return ProductOutEntityCompanion(
+    return ProductOutScannedItemEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
@@ -1503,7 +1511,7 @@ class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('ProductOutEntityCompanion(')
+    return (StringBuffer('ProductOutScannedItemEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -1512,12 +1520,14 @@ class ProductOutEntityCompanion extends UpdateCompanion<ProductOutEntityData> {
   }
 }
 
-class $ProductCountEntityTable extends ProductCountEntity
-    with TableInfo<$ProductCountEntityTable, ProductCountEntityData> {
+class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
+    with
+        TableInfo<$ProductCountScannedItemEntityTable,
+            ProductCountScannedItemEntityData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProductCountEntityTable(this.attachedDatabase, [this._alias]);
+  $ProductCountScannedItemEntityTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1543,10 +1553,10 @@ class $ProductCountEntityTable extends ProductCountEntity
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'product_count_entity';
+  static const String $name = 'product_count_scanned_item_entity';
   @override
   VerificationContext validateIntegrity(
-      Insertable<ProductCountEntityData> instance,
+      Insertable<ProductCountScannedItemEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1571,9 +1581,10 @@ class $ProductCountEntityTable extends ProductCountEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ProductCountEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ProductCountScannedItemEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProductCountEntityData(
+    return ProductCountScannedItemEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
@@ -1584,17 +1595,17 @@ class $ProductCountEntityTable extends ProductCountEntity
   }
 
   @override
-  $ProductCountEntityTable createAlias(String alias) {
-    return $ProductCountEntityTable(attachedDatabase, alias);
+  $ProductCountScannedItemEntityTable createAlias(String alias) {
+    return $ProductCountScannedItemEntityTable(attachedDatabase, alias);
   }
 }
 
-class ProductCountEntityData extends DataClass
-    implements Insertable<ProductCountEntityData> {
+class ProductCountScannedItemEntityData extends DataClass
+    implements Insertable<ProductCountScannedItemEntityData> {
   final int id;
   final int stockCountChange;
   final DateTime modified;
-  const ProductCountEntityData(
+  const ProductCountScannedItemEntityData(
       {required this.id,
       required this.stockCountChange,
       required this.modified});
@@ -1607,18 +1618,18 @@ class ProductCountEntityData extends DataClass
     return map;
   }
 
-  ProductCountEntityCompanion toCompanion(bool nullToAbsent) {
-    return ProductCountEntityCompanion(
+  ProductCountScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
+    return ProductCountScannedItemEntityCompanion(
       id: Value(id),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
   }
 
-  factory ProductCountEntityData.fromJson(Map<String, dynamic> json,
+  factory ProductCountScannedItemEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProductCountEntityData(
+    return ProductCountScannedItemEntityData(
       id: serializer.fromJson<int>(json['id']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
@@ -1634,16 +1645,16 @@ class ProductCountEntityData extends DataClass
     };
   }
 
-  ProductCountEntityData copyWith(
+  ProductCountScannedItemEntityData copyWith(
           {int? id, int? stockCountChange, DateTime? modified}) =>
-      ProductCountEntityData(
+      ProductCountScannedItemEntityData(
         id: id ?? this.id,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
-    return (StringBuffer('ProductCountEntityData(')
+    return (StringBuffer('ProductCountScannedItemEntityData(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -1656,28 +1667,28 @@ class ProductCountEntityData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ProductCountEntityData &&
+      (other is ProductCountScannedItemEntityData &&
           other.id == this.id &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
-class ProductCountEntityCompanion
-    extends UpdateCompanion<ProductCountEntityData> {
+class ProductCountScannedItemEntityCompanion
+    extends UpdateCompanion<ProductCountScannedItemEntityData> {
   final Value<int> id;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
-  const ProductCountEntityCompanion({
+  const ProductCountScannedItemEntityCompanion({
     this.id = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
   });
-  ProductCountEntityCompanion.insert({
+  ProductCountScannedItemEntityCompanion.insert({
     this.id = const Value.absent(),
     required int stockCountChange,
     this.modified = const Value.absent(),
   }) : stockCountChange = Value(stockCountChange);
-  static Insertable<ProductCountEntityData> custom({
+  static Insertable<ProductCountScannedItemEntityData> custom({
     Expression<int>? id,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
@@ -1689,11 +1700,11 @@ class ProductCountEntityCompanion
     });
   }
 
-  ProductCountEntityCompanion copyWith(
+  ProductCountScannedItemEntityCompanion copyWith(
       {Value<int>? id,
       Value<int>? stockCountChange,
       Value<DateTime>? modified}) {
-    return ProductCountEntityCompanion(
+    return ProductCountScannedItemEntityCompanion(
       id: id ?? this.id,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
@@ -1717,7 +1728,7 @@ class ProductCountEntityCompanion
 
   @override
   String toString() {
-    return (StringBuffer('ProductCountEntityCompanion(')
+    return (StringBuffer('ProductCountScannedItemEntityCompanion(')
           ..write('id: $id, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
@@ -2237,12 +2248,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $InventoryChangesEntityTable(this);
   late final $DeletedInventoryEntityTable deletedInventoryEntity =
       $DeletedInventoryEntityTable(this);
-  late final $ProductInEntityTable productInEntity =
-      $ProductInEntityTable(this);
-  late final $ProductOutEntityTable productOutEntity =
-      $ProductOutEntityTable(this);
-  late final $ProductCountEntityTable productCountEntity =
-      $ProductCountEntityTable(this);
+  late final $ProductInScannedItemEntityTable productInScannedItemEntity =
+      $ProductInScannedItemEntityTable(this);
+  late final $ProductOutScannedItemEntityTable productOutScannedItemEntity =
+      $ProductOutScannedItemEntityTable(this);
+  late final $ProductCountScannedItemEntityTable productCountScannedItemEntity =
+      $ProductCountScannedItemEntityTable(this);
   late final $ShoppingCartEntityTable shoppingCartEntity =
       $ShoppingCartEntityTable(this);
   late final $ShoppingCartChangesEntityTable shoppingCartChangesEntity =
@@ -2255,9 +2266,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         inventoryEntity,
         inventoryChangesEntity,
         deletedInventoryEntity,
-        productInEntity,
-        productOutEntity,
-        productCountEntity,
+        productInScannedItemEntity,
+        productOutScannedItemEntity,
+        productCountScannedItemEntity,
         shoppingCartEntity,
         shoppingCartChangesEntity
       ];
@@ -2759,258 +2770,45 @@ class $$DeletedInventoryEntityTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$ProductInEntityTableInsertCompanionBuilder = ProductInEntityCompanion
-    Function({
+typedef $$ProductInScannedItemEntityTableInsertCompanionBuilder
+    = ProductInScannedItemEntityCompanion Function({
   Value<int> id,
   required int stockCountChange,
   Value<DateTime> modified,
 });
-typedef $$ProductInEntityTableUpdateCompanionBuilder = ProductInEntityCompanion
-    Function({
+typedef $$ProductInScannedItemEntityTableUpdateCompanionBuilder
+    = ProductInScannedItemEntityCompanion Function({
   Value<int> id,
   Value<int> stockCountChange,
   Value<DateTime> modified,
 });
 
-class $$ProductInEntityTableTableManager extends RootTableManager<
+class $$ProductInScannedItemEntityTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $ProductInEntityTable,
-    ProductInEntityData,
-    $$ProductInEntityTableFilterComposer,
-    $$ProductInEntityTableOrderingComposer,
-    $$ProductInEntityTableProcessedTableManager,
-    $$ProductInEntityTableInsertCompanionBuilder,
-    $$ProductInEntityTableUpdateCompanionBuilder> {
-  $$ProductInEntityTableTableManager(
-      _$AppDatabase db, $ProductInEntityTable table)
+    $ProductInScannedItemEntityTable,
+    ProductInScannedItemEntityData,
+    $$ProductInScannedItemEntityTableFilterComposer,
+    $$ProductInScannedItemEntityTableOrderingComposer,
+    $$ProductInScannedItemEntityTableProcessedTableManager,
+    $$ProductInScannedItemEntityTableInsertCompanionBuilder,
+    $$ProductInScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductInScannedItemEntityTableTableManager(
+      _$AppDatabase db, $ProductInScannedItemEntityTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$ProductInEntityTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ProductInEntityTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ProductInEntityTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            Value<int> stockCountChange = const Value.absent(),
-            Value<DateTime> modified = const Value.absent(),
-          }) =>
-              ProductInEntityCompanion(
-            id: id,
-            stockCountChange: stockCountChange,
-            modified: modified,
-          ),
-          getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            required int stockCountChange,
-            Value<DateTime> modified = const Value.absent(),
-          }) =>
-              ProductInEntityCompanion.insert(
-            id: id,
-            stockCountChange: stockCountChange,
-            modified: modified,
-          ),
-        ));
-}
-
-class $$ProductInEntityTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $ProductInEntityTable,
-    ProductInEntityData,
-    $$ProductInEntityTableFilterComposer,
-    $$ProductInEntityTableOrderingComposer,
-    $$ProductInEntityTableProcessedTableManager,
-    $$ProductInEntityTableInsertCompanionBuilder,
-    $$ProductInEntityTableUpdateCompanionBuilder> {
-  $$ProductInEntityTableProcessedTableManager(super.$state);
-}
-
-class $$ProductInEntityTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ProductInEntityTable> {
-  $$ProductInEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get stockCountChange => $state.composableBuilder(
-      column: $state.table.stockCountChange,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get modified => $state.composableBuilder(
-      column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$ProductInEntityTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ProductInEntityTable> {
-  $$ProductInEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get stockCountChange => $state.composableBuilder(
-      column: $state.table.stockCountChange,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
-      column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-typedef $$ProductOutEntityTableInsertCompanionBuilder
-    = ProductOutEntityCompanion Function({
-  Value<int> id,
-  required int stockCountChange,
-  Value<DateTime> modified,
-});
-typedef $$ProductOutEntityTableUpdateCompanionBuilder
-    = ProductOutEntityCompanion Function({
-  Value<int> id,
-  Value<int> stockCountChange,
-  Value<DateTime> modified,
-});
-
-class $$ProductOutEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ProductOutEntityTable,
-    ProductOutEntityData,
-    $$ProductOutEntityTableFilterComposer,
-    $$ProductOutEntityTableOrderingComposer,
-    $$ProductOutEntityTableProcessedTableManager,
-    $$ProductOutEntityTableInsertCompanionBuilder,
-    $$ProductOutEntityTableUpdateCompanionBuilder> {
-  $$ProductOutEntityTableTableManager(
-      _$AppDatabase db, $ProductOutEntityTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ProductOutEntityTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ProductOutEntityTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ProductOutEntityTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            Value<int> stockCountChange = const Value.absent(),
-            Value<DateTime> modified = const Value.absent(),
-          }) =>
-              ProductOutEntityCompanion(
-            id: id,
-            stockCountChange: stockCountChange,
-            modified: modified,
-          ),
-          getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            required int stockCountChange,
-            Value<DateTime> modified = const Value.absent(),
-          }) =>
-              ProductOutEntityCompanion.insert(
-            id: id,
-            stockCountChange: stockCountChange,
-            modified: modified,
-          ),
-        ));
-}
-
-class $$ProductOutEntityTableProcessedTableManager
-    extends ProcessedTableManager<
-        _$AppDatabase,
-        $ProductOutEntityTable,
-        ProductOutEntityData,
-        $$ProductOutEntityTableFilterComposer,
-        $$ProductOutEntityTableOrderingComposer,
-        $$ProductOutEntityTableProcessedTableManager,
-        $$ProductOutEntityTableInsertCompanionBuilder,
-        $$ProductOutEntityTableUpdateCompanionBuilder> {
-  $$ProductOutEntityTableProcessedTableManager(super.$state);
-}
-
-class $$ProductOutEntityTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ProductOutEntityTable> {
-  $$ProductOutEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get stockCountChange => $state.composableBuilder(
-      column: $state.table.stockCountChange,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get modified => $state.composableBuilder(
-      column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$ProductOutEntityTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ProductOutEntityTable> {
-  $$ProductOutEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get stockCountChange => $state.composableBuilder(
-      column: $state.table.stockCountChange,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
-      column: $state.table.modified,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-typedef $$ProductCountEntityTableInsertCompanionBuilder
-    = ProductCountEntityCompanion Function({
-  Value<int> id,
-  required int stockCountChange,
-  Value<DateTime> modified,
-});
-typedef $$ProductCountEntityTableUpdateCompanionBuilder
-    = ProductCountEntityCompanion Function({
-  Value<int> id,
-  Value<int> stockCountChange,
-  Value<DateTime> modified,
-});
-
-class $$ProductCountEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ProductCountEntityTable,
-    ProductCountEntityData,
-    $$ProductCountEntityTableFilterComposer,
-    $$ProductCountEntityTableOrderingComposer,
-    $$ProductCountEntityTableProcessedTableManager,
-    $$ProductCountEntityTableInsertCompanionBuilder,
-    $$ProductCountEntityTableUpdateCompanionBuilder> {
-  $$ProductCountEntityTableTableManager(
-      _$AppDatabase db, $ProductCountEntityTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ProductCountEntityTableFilterComposer(ComposerState(db, table)),
-          orderingComposer: $$ProductCountEntityTableOrderingComposer(
+          filteringComposer: $$ProductInScannedItemEntityTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$ProductInScannedItemEntityTableOrderingComposer(
               ComposerState(db, table)),
           getChildManagerBuilder: (p) =>
-              $$ProductCountEntityTableProcessedTableManager(p),
+              $$ProductInScannedItemEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
           }) =>
-              ProductCountEntityCompanion(
+              ProductInScannedItemEntityCompanion(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
@@ -3020,7 +2818,7 @@ class $$ProductCountEntityTableTableManager extends RootTableManager<
             required int stockCountChange,
             Value<DateTime> modified = const Value.absent(),
           }) =>
-              ProductCountEntityCompanion.insert(
+              ProductInScannedItemEntityCompanion.insert(
             id: id,
             stockCountChange: stockCountChange,
             modified: modified,
@@ -3028,22 +2826,22 @@ class $$ProductCountEntityTableTableManager extends RootTableManager<
         ));
 }
 
-class $$ProductCountEntityTableProcessedTableManager
+class $$ProductInScannedItemEntityTableProcessedTableManager
     extends ProcessedTableManager<
         _$AppDatabase,
-        $ProductCountEntityTable,
-        ProductCountEntityData,
-        $$ProductCountEntityTableFilterComposer,
-        $$ProductCountEntityTableOrderingComposer,
-        $$ProductCountEntityTableProcessedTableManager,
-        $$ProductCountEntityTableInsertCompanionBuilder,
-        $$ProductCountEntityTableUpdateCompanionBuilder> {
-  $$ProductCountEntityTableProcessedTableManager(super.$state);
+        $ProductInScannedItemEntityTable,
+        ProductInScannedItemEntityData,
+        $$ProductInScannedItemEntityTableFilterComposer,
+        $$ProductInScannedItemEntityTableOrderingComposer,
+        $$ProductInScannedItemEntityTableProcessedTableManager,
+        $$ProductInScannedItemEntityTableInsertCompanionBuilder,
+        $$ProductInScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductInScannedItemEntityTableProcessedTableManager(super.$state);
 }
 
-class $$ProductCountEntityTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ProductCountEntityTable> {
-  $$ProductCountEntityTableFilterComposer(super.$state);
+class $$ProductInScannedItemEntityTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
+  $$ProductInScannedItemEntityTableFilterComposer(super.$state);
   ColumnFilters<int> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
@@ -3060,9 +2858,225 @@ class $$ProductCountEntityTableFilterComposer
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
-class $$ProductCountEntityTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ProductCountEntityTable> {
-  $$ProductCountEntityTableOrderingComposer(super.$state);
+class $$ProductInScannedItemEntityTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
+  $$ProductInScannedItemEntityTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get stockCountChange => $state.composableBuilder(
+      column: $state.table.stockCountChange,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
+      column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$ProductOutScannedItemEntityTableInsertCompanionBuilder
+    = ProductOutScannedItemEntityCompanion Function({
+  Value<int> id,
+  required int stockCountChange,
+  Value<DateTime> modified,
+});
+typedef $$ProductOutScannedItemEntityTableUpdateCompanionBuilder
+    = ProductOutScannedItemEntityCompanion Function({
+  Value<int> id,
+  Value<int> stockCountChange,
+  Value<DateTime> modified,
+});
+
+class $$ProductOutScannedItemEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ProductOutScannedItemEntityTable,
+    ProductOutScannedItemEntityData,
+    $$ProductOutScannedItemEntityTableFilterComposer,
+    $$ProductOutScannedItemEntityTableOrderingComposer,
+    $$ProductOutScannedItemEntityTableProcessedTableManager,
+    $$ProductOutScannedItemEntityTableInsertCompanionBuilder,
+    $$ProductOutScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductOutScannedItemEntityTableTableManager(
+      _$AppDatabase db, $ProductOutScannedItemEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$ProductOutScannedItemEntityTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$ProductOutScannedItemEntityTableOrderingComposer(
+              ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$ProductOutScannedItemEntityTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<int> stockCountChange = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
+          }) =>
+              ProductOutScannedItemEntityCompanion(
+            id: id,
+            stockCountChange: stockCountChange,
+            modified: modified,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required int stockCountChange,
+            Value<DateTime> modified = const Value.absent(),
+          }) =>
+              ProductOutScannedItemEntityCompanion.insert(
+            id: id,
+            stockCountChange: stockCountChange,
+            modified: modified,
+          ),
+        ));
+}
+
+class $$ProductOutScannedItemEntityTableProcessedTableManager
+    extends ProcessedTableManager<
+        _$AppDatabase,
+        $ProductOutScannedItemEntityTable,
+        ProductOutScannedItemEntityData,
+        $$ProductOutScannedItemEntityTableFilterComposer,
+        $$ProductOutScannedItemEntityTableOrderingComposer,
+        $$ProductOutScannedItemEntityTableProcessedTableManager,
+        $$ProductOutScannedItemEntityTableInsertCompanionBuilder,
+        $$ProductOutScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductOutScannedItemEntityTableProcessedTableManager(super.$state);
+}
+
+class $$ProductOutScannedItemEntityTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
+  $$ProductOutScannedItemEntityTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get stockCountChange => $state.composableBuilder(
+      column: $state.table.stockCountChange,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
+      column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$ProductOutScannedItemEntityTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
+  $$ProductOutScannedItemEntityTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get stockCountChange => $state.composableBuilder(
+      column: $state.table.stockCountChange,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get modified => $state.composableBuilder(
+      column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$ProductCountScannedItemEntityTableInsertCompanionBuilder
+    = ProductCountScannedItemEntityCompanion Function({
+  Value<int> id,
+  required int stockCountChange,
+  Value<DateTime> modified,
+});
+typedef $$ProductCountScannedItemEntityTableUpdateCompanionBuilder
+    = ProductCountScannedItemEntityCompanion Function({
+  Value<int> id,
+  Value<int> stockCountChange,
+  Value<DateTime> modified,
+});
+
+class $$ProductCountScannedItemEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ProductCountScannedItemEntityTable,
+    ProductCountScannedItemEntityData,
+    $$ProductCountScannedItemEntityTableFilterComposer,
+    $$ProductCountScannedItemEntityTableOrderingComposer,
+    $$ProductCountScannedItemEntityTableProcessedTableManager,
+    $$ProductCountScannedItemEntityTableInsertCompanionBuilder,
+    $$ProductCountScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductCountScannedItemEntityTableTableManager(
+      _$AppDatabase db, $ProductCountScannedItemEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$ProductCountScannedItemEntityTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer:
+              $$ProductCountScannedItemEntityTableOrderingComposer(
+                  ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$ProductCountScannedItemEntityTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<int> stockCountChange = const Value.absent(),
+            Value<DateTime> modified = const Value.absent(),
+          }) =>
+              ProductCountScannedItemEntityCompanion(
+            id: id,
+            stockCountChange: stockCountChange,
+            modified: modified,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required int stockCountChange,
+            Value<DateTime> modified = const Value.absent(),
+          }) =>
+              ProductCountScannedItemEntityCompanion.insert(
+            id: id,
+            stockCountChange: stockCountChange,
+            modified: modified,
+          ),
+        ));
+}
+
+class $$ProductCountScannedItemEntityTableProcessedTableManager
+    extends ProcessedTableManager<
+        _$AppDatabase,
+        $ProductCountScannedItemEntityTable,
+        ProductCountScannedItemEntityData,
+        $$ProductCountScannedItemEntityTableFilterComposer,
+        $$ProductCountScannedItemEntityTableOrderingComposer,
+        $$ProductCountScannedItemEntityTableProcessedTableManager,
+        $$ProductCountScannedItemEntityTableInsertCompanionBuilder,
+        $$ProductCountScannedItemEntityTableUpdateCompanionBuilder> {
+  $$ProductCountScannedItemEntityTableProcessedTableManager(super.$state);
+}
+
+class $$ProductCountScannedItemEntityTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ProductCountScannedItemEntityTable> {
+  $$ProductCountScannedItemEntityTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get stockCountChange => $state.composableBuilder(
+      column: $state.table.stockCountChange,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get modified => $state.composableBuilder(
+      column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$ProductCountScannedItemEntityTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase,
+        $ProductCountScannedItemEntityTable> {
+  $$ProductCountScannedItemEntityTableOrderingComposer(super.$state);
   ColumnOrderings<int> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
@@ -3336,12 +3350,18 @@ class _$AppDatabaseManager {
   $$DeletedInventoryEntityTableTableManager get deletedInventoryEntity =>
       $$DeletedInventoryEntityTableTableManager(
           _db, _db.deletedInventoryEntity);
-  $$ProductInEntityTableTableManager get productInEntity =>
-      $$ProductInEntityTableTableManager(_db, _db.productInEntity);
-  $$ProductOutEntityTableTableManager get productOutEntity =>
-      $$ProductOutEntityTableTableManager(_db, _db.productOutEntity);
-  $$ProductCountEntityTableTableManager get productCountEntity =>
-      $$ProductCountEntityTableTableManager(_db, _db.productCountEntity);
+  $$ProductInScannedItemEntityTableTableManager
+      get productInScannedItemEntity =>
+          $$ProductInScannedItemEntityTableTableManager(
+              _db, _db.productInScannedItemEntity);
+  $$ProductOutScannedItemEntityTableTableManager
+      get productOutScannedItemEntity =>
+          $$ProductOutScannedItemEntityTableTableManager(
+              _db, _db.productOutScannedItemEntity);
+  $$ProductCountScannedItemEntityTableTableManager
+      get productCountScannedItemEntity =>
+          $$ProductCountScannedItemEntityTableTableManager(
+              _db, _db.productCountScannedItemEntity);
   $$ShoppingCartEntityTableTableManager get shoppingCartEntity =>
       $$ShoppingCartEntityTableTableManager(_db, _db.shoppingCartEntity);
   $$ShoppingCartChangesEntityTableTableManager get shoppingCartChangesEntity =>

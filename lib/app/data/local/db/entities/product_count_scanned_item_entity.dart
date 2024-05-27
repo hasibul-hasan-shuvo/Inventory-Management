@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class ProductInEntity extends Table {
+class ProductCountScannedItemEntity extends Table {
   IntColumn get id => integer()();
 
   IntColumn get stockCountChange => integer()();
