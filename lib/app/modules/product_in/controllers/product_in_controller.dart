@@ -64,15 +64,10 @@ class ProductInController extends BaseController
     }
     int number = numberString.toInt;
 
-    for (ScannedProductUiModel product in scannedProducts) {
-      if (product.itemId == data.itemId) {
-        if (number == 0) {
-          _removeProduct(product.id, product.itemId);
-        } else {
-          _updateProduct(product, number);
-        }
-        break;
-      }
+    if (number == 0) {
+      _removeProduct(data.id, data.itemId);
+    } else {
+      _updateProduct(data, number);
     }
   }
 
