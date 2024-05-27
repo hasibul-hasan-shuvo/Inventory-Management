@@ -69,6 +69,16 @@ class AuthRepositoryImpl implements AuthRepository {
     return _localDataSource.getInventoryID().toString();
   }
 
+  @override
+  bool getIsUserAccountSet() {
+    return _localDataSource.getIsUserAccountSet();
+  }
+
+  @override
+  void setIsUserAccountSet() {
+    return _localDataSource.setIsUserAccountSet();
+  }
+
   Future<UserResponse> _getAndSaveUserData() {
     return _remoteDataSource.getUserData().then((response) {
       _localDataSource.storeUserData(response);

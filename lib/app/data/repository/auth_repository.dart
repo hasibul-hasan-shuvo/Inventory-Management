@@ -13,5 +13,9 @@ abstract class AuthRepository {
 
   String getInventoryID();
 
+  bool getIsUserAccountSet();
+
+  void setIsUserAccountSet();
+
   void logout();
 }

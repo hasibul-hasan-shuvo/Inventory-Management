@@ -1,11 +1,9 @@
-import 'package:dental_inventory/app/modules/selectable_inventory_list/bindings/selectable_inventory_list_binding.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/views/selectable_inventory_list_view.dart';
-import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/bindings/shopping_cart_selectable_inventories_binding.dart';
-import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/views/shopping_carted_selectable_inventories_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/about_us/bindings/about_app_binding.dart';
 import '../modules/about_us/views/about_app_view.dart';
+import '../modules/account_setup/bindings/account_setup_binding.dart';
+import '../modules/account_setup/views/account_setup_view.dart';
 import '../modules/contact_us/bindings/contact_us_binding.dart';
 import '../modules/contact_us/views/contact_us_view.dart';
 import '../modules/delivery/bindings/delivery_binding.dart';
@@ -30,8 +28,12 @@ import '../modules/product_out/bindings/product_out_binding.dart';
 import '../modules/product_out/views/product_out_view.dart';
 import '../modules/scanner/bindings/scanner_binding.dart';
 import '../modules/scanner/views/scanner_view.dart';
+import '../modules/selectable_inventory_list/bindings/selectable_inventory_list_binding.dart';
+import '../modules/selectable_inventory_list/views/selectable_inventory_list_view.dart';
 import '../modules/shopping_cart/bindings/shopping_cart_binding.dart';
 import '../modules/shopping_cart/views/shopping_cart_view.dart';
+import '../modules/shopping_cart_selectable_inventories/bindings/shopping_cart_selectable_inventories_binding.dart';
+import '../modules/shopping_cart_selectable_inventories/views/shopping_carted_selectable_inventories_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/suggested_orders/bindings/suggested_orders_binding.dart';
@@ -134,6 +136,11 @@ class AppPages {
       name: _Paths.GLOBAL_INVENTORIES,
       page: () => GlobalInventoriesView(),
       binding: GlobalInventoriesBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACCOUNT_SETUP,
+      page: () => AccountSetupView(),
+      binding: AccountSetupBinding(),
     ),
   ];
 }

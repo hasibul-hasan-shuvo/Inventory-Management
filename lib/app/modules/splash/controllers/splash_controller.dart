@@ -19,10 +19,14 @@ class SplashController extends BaseController {
   Future<void> _navigateToNextPage() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       String token = _authRepository.getAccessToken();
-      if (token.isNotEmpty) {
-        navigationController.trigger(Routes.MAIN);
-      } else {
+      bool isUserAccountSet = _authRepository.getIsUserAccountSet();
+
+      if (token.isEmpty) {
         navigationController.trigger(Routes.LOGIN);
+      } else if (token.isNotEmpty && !isUserAccountSet) {
+        navigationController.trigger(Routes.ACCOUNT_SETUP);
+      } else {
+        navigationController.trigger(Routes.MAIN);
       }
     });
   }

@@ -165,7 +165,7 @@ class LoginView extends BaseView<LoginController> {
   void _subscribeToLoginState() {
     controller.authPageState.listen((state) {
       if (state.status == PageStatus.success) {
-        Get.offAllNamed(Routes.MAIN);
+        Get.offAllNamed(Routes.ACCOUNT_SETUP);
         controller.resetAuthPageState();
       } else if (state.status == PageStatus.error) {
         controller.showErrorMessage(state.message ?? '');

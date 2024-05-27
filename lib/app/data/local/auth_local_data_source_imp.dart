@@ -48,5 +48,19 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     _preferenceManager.remove(PreferenceManager.REFRESH_TOKEN);
     _preferenceManager.remove(PreferenceManager.INVENTORY_ID);
     _preferenceManager.remove(PreferenceManager.USER_DATA);
+    _preferenceManager.remove(PreferenceManager.IS_USER_ACCOUNT_SET);
+  }
+
+  @override
+  bool getIsUserAccountSet() {
+    return _preferenceManager.getBool(PreferenceManager.IS_USER_ACCOUNT_SET);
+  }
+
+  @override
+  void setIsUserAccountSet() {
+    return _preferenceManager.setBool(
+      PreferenceManager.IS_USER_ACCOUNT_SET,
+      true,
+    );
   }
 }
