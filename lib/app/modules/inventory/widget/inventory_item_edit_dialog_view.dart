@@ -48,7 +48,6 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _buildQuantityStatus() {
     return ElevatedContainer(
-      height: AppValues.space_110.h,
       bgColor: theme.colorScheme.background,
       borderRadius: AppValues.radius_6.r,
       child: Row(
@@ -73,7 +72,6 @@ class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
         padding: EdgeInsets.all(AppValues.halfPadding.sp),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFieldWithTitle(
