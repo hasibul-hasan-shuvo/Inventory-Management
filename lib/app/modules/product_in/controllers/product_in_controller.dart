@@ -59,10 +59,6 @@ class ProductInController extends BaseController
     }
   }
 
-  void onUpdateProduct(List<ScannedProductUiModel> items) {
-    onRefresh();
-  }
-
   void updateProductNumber(String id, String numberString) {
     if (!numberString.isPositiveIntegerNumber) {
       showErrorMessage(appLocalization.messageInvalidNumber);
@@ -71,16 +67,17 @@ class ProductInController extends BaseController
     }
     int number = numberString.toInt;
 
-    if (number == 0) {
-      scannedProducts.removeWhere((element) => element.itemId == id);
-    } else {
-      for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == id) {
+    for (ScannedProductUiModel product in scannedProducts) {
+      if (product.itemId == id) {
+        if (number == 0) {
+          _removeProduct(product.id, product.itemId);
+        } else {
           product.updateNumber(number);
-          break;
         }
+        break;
       }
     }
+
     onRefresh();
   }
 
@@ -139,7 +136,7 @@ class ProductInController extends BaseController
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
     if (inventoryData.number == 0) {
-      removeProductByItemId(inventoryData.itemId);
+      _removeProduct(inventoryData.id, inventoryData.itemId);
     } else {
       bool isItemExist = false;
       for (ScannedProductUiModel product in scannedProducts) {
@@ -159,8 +156,18 @@ class ProductInController extends BaseController
 
   void _addProductFromInventory(SelectableInventoryItemUiModel inventory) {
     callDataService(
-      _repository.addProductByInventoryId(inventory.id),
+      _repository.addProductByInventoryId(
+        inventory.id,
+        inventory.number,
+      ),
       onSuccess: _handleGetProductSuccessResponse,
+    );
+  }
+
+  void _removeProduct(int id, String itemId) {
+    callDataService(
+      _repository.deleteProductById(id),
+      onSuccess: (_) => removeProductByItemId(itemId),
     );
   }
 }

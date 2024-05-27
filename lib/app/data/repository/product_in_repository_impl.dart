@@ -13,11 +13,12 @@ class ProductInRepositoryImpl implements ProductInRepository {
   final ProductInLocalDataSource _localDataSource = Get.find();
 
   @override
-  Future<ScannedProductEntityData?> addProductByInventoryId(int id) {
+  Future<ScannedProductEntityData?> addProductByInventoryId(
+      int id, int stockCountChange) {
     ProductInScannedItemEntityCompanion scannedProduct =
         ProductInScannedItemEntityCompanion.insert(
       id: drift.Value(id),
-      stockCountChange: 1,
+      stockCountChange: stockCountChange,
       modified: drift.Value(DateParser.getCurrentUtcDateTime),
     );
 
@@ -35,7 +36,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
         throw NotFoundException('', '');
       }
 
-      return addProductByInventoryId(inventory.id);
+      return addProductByInventoryId(inventory.id, 1);
     });
   }
 
@@ -45,7 +46,8 @@ class ProductInRepositoryImpl implements ProductInRepository {
   }
 
   @override
-  Future<int> updateProduct(int id, int stockCountChange) {
+  Future<ScannedProductEntityData?> updateProduct(
+      int id, int stockCountChange) {
     ProductInScannedItemEntityCompanion product =
         ProductInScannedItemEntityCompanion(
       id: drift.Value(id),
@@ -53,7 +55,9 @@ class ProductInRepositoryImpl implements ProductInRepository {
       modified: drift.Value(DateParser.getCurrentUtcDateTime),
     );
 
-    return _localDataSource.updateProduct(product);
+    return _localDataSource.updateProduct(product).then((value) {
+      return _localDataSource.getProductById(id);
+    });
   }
 
   @override
