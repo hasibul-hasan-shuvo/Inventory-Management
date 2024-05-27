@@ -153,7 +153,7 @@ class ItemProductInView extends StatelessWidget with BaseWidgetMixin {
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
             _controller.updateProductNumber(
-              data.itemId,
+              data,
               numberController.text,
             );
           },

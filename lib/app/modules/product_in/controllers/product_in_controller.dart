@@ -56,7 +56,7 @@ class ProductInController extends BaseController
     }
   }
 
-  void updateProductNumber(String id, String numberString) {
+  void updateProductNumber(ScannedProductUiModel data, String numberString) {
     if (!numberString.isPositiveIntegerNumber) {
       showErrorMessage(appLocalization.messageInvalidNumber);
 
@@ -65,7 +65,7 @@ class ProductInController extends BaseController
     int number = numberString.toInt;
 
     for (ScannedProductUiModel product in scannedProducts) {
-      if (product.itemId == id) {
+      if (product.itemId == data.itemId) {
         if (number == 0) {
           _removeProduct(product.id, product.itemId);
         } else {
