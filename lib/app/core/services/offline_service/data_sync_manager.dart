@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/services/connectivity_manager.dart';
 import 'package:dental_inventory/app/core/services/offline_service/data_synchronizer.dart';
 import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:get/get.dart';
 
 class DataSyncManager {
   static final DataSyncManager _instance = DataSyncManager._internal();
@@ -16,47 +17,68 @@ class DataSyncManager {
 
   final ConnectivityManager _connectivityManager = ConnectivityManager();
   StreamSubscription<bool>? _connectivitySubscription;
-  bool isSyncing = false;
+  bool _isSyncing = false;
   Timer? _deBouncer;
+  RxBool isDataSynced = RxBool(false);
+  int _loadCounter = 0;
 
   void _init() {
     _connectivitySubscription =
         _connectivityManager.connectivityStream.listen((isOnline) {
-      if (isOnline) {
-        syncAllDataWithServer();
-      }
+      syncAllDataWithServer();
     });
   }
 
   void syncAllDataWithServer() {
-    if (!isSyncing) {
+    if (!_isSyncing && _connectivityManager.isOnline) {
       _startDeBouncer();
+      startLoader();
       for (DataSynchronizerKey key in DataSynchronizerKey.values) {
         DataSynchronizer synchronizer = DataSynchronizer.create(key);
-        synchronizer.syncData();
+        synchronizer.syncData().then(
+              (value) => updateLoader(DataSynchronizerKey.values.length),
+              onError: (_) => updateLoader(DataSynchronizerKey.values.length),
+            );
       }
     }
   }
 
   void syncDataWithServer(List<DataSynchronizerKey> keys) {
-    if (_connectivityManager.isOnline && !isSyncing) {
+    if (_connectivityManager.isOnline && !_isSyncing) {
       _startDeBouncer();
+      startLoader();
       for (DataSynchronizerKey key in keys) {
         DataSynchronizer synchronizer = DataSynchronizer.create(key);
-        synchronizer.syncData();
+        synchronizer.syncData().then(
+              (value) => updateLoader(keys.length),
+              onError: (_) => updateLoader(keys.length),
+            );
       }
     }
   }
 
+  void startLoader() {
+    _loadCounter = 0;
+    isDataSynced.trigger(false);
+  }
+
+  void updateLoader(int totalCount) {
+    _loadCounter++;
+    if (_loadCounter >= totalCount) {
+      isDataSynced.trigger(true);
+      _loadCounter = 0;
+    }
+  }
+
   void _startDeBouncer() {
-    isSyncing = true;
+    _isSyncing = true;
     if (_deBouncer?.isActive == true) {
       _deBouncer?.cancel();
     }
     _deBouncer = Timer(
       const Duration(seconds: AppValues.dataSyncDeBouncerTime),
       () {
-        isSyncing = false;
+        _isSyncing = false;
       },
     );
   }
@@ -65,5 +87,6 @@ class DataSyncManager {
     _connectivitySubscription?.cancel();
     _connectivityManager.dispose();
     _deBouncer?.cancel();
+    isDataSynced.close();
   }
 }

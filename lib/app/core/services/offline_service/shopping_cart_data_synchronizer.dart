@@ -11,6 +11,6 @@ class ShoppingCartDataSynchronizer implements DataSynchronizer {
   @override
   Future syncData() {
     // TODO: implement syncData
-    return Future.value();
+    return Future.delayed(const Duration(seconds: 1));
   }
 }

@@ -44,6 +44,9 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
 
   @override
   void removeUserData() {
+    _preferenceManager.remove(PreferenceManager.INVENTORY_LAST_SYNC_TIME_STAMP);
+    _preferenceManager
+        .remove(PreferenceManager.SHOPPING_CART_LAST_SYNC_TIME_STAMP);
     _preferenceManager.remove(PreferenceManager.KEY_TOKEN);
     _preferenceManager.remove(PreferenceManager.REFRESH_TOKEN);
     _preferenceManager.remove(PreferenceManager.INVENTORY_ID);
