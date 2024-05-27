@@ -40,10 +40,12 @@ class InventoryUpdateRequestBody {
     return InventoryChangesEntityCompanion.insert(
       id: Value(id),
       itemId: itemId,
-      maxCount: Value(maxCount),
-      minCount: Value(minCount),
+      maxCount: maxCount != null ? Value(maxCount!) : const Value.absent(),
+      minCount: minCount != null ? Value(minCount!) : const Value.absent(),
       stockCountChange: Value(stockCountChange ?? 0),
-      fixedSuggestion: Value(fixedSuggestion),
+      fixedSuggestion: fixedSuggestion != null
+          ? Value(fixedSuggestion!)
+          : const Value.absent(),
       modified: Value(DateParser.getCurrentUtcDateTime),
     );
   }
