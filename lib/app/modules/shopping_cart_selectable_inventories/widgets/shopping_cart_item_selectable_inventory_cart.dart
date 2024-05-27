@@ -59,7 +59,6 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildInventoryName(),
-          SizedBox(height: AppValues.margin_10.h),
           _buildIdAndCountView(),
         ],
       ),
