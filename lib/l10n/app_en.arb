@@ -62,6 +62,7 @@
   },
   "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemNotFound": "Item not found!",
+  "messageItemOutOfStock": "Item out of stock!",
   "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",

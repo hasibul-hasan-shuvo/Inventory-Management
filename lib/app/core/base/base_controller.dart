@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/paging_controller.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
+import 'package:dental_inventory/app/network/exceptions/out_of_stock_exception.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -118,6 +119,9 @@ abstract class BaseController extends GetxController {
     } on ApiException catch (exception) {
       _exception = exception;
       showErrorMessage(exception.message);
+    } on OutOfStockException catch (exception) {
+      _exception = exception;
+      showErrorMessage(appLocalization.messageItemOutOfStock);
     } on AppException catch (exception) {
       _exception = exception;
       showErrorMessage(exception.message);

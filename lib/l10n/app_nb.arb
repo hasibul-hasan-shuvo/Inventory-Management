@@ -62,6 +62,7 @@
   },
   "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemNotFound": "Element ikke funnet!",
+  "messageItemOutOfStock": "Vare utsolgt!",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
