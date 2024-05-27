@@ -13,6 +13,20 @@ class ProductInRepositoryImpl implements ProductInRepository {
   final ProductInLocalDataSource _localDataSource = Get.find();
 
   @override
+  Future<ScannedProductEntityData?> addProductByInventoryId(int id) {
+    ProductInScannedItemEntityCompanion scannedProduct =
+        ProductInScannedItemEntityCompanion.insert(
+      id: drift.Value(id),
+      stockCountChange: 1,
+      modified: drift.Value(DateParser.getCurrentUtcDateTime),
+    );
+
+    return _localDataSource.insertProduct(scannedProduct).then((value) {
+      return _localDataSource.getProductById(id);
+    });
+  }
+
+  @override
   Future<ScannedProductEntityData?> getProductById(String itemId) {
     return _inventoryRepository
         .getInventoryByItemId(itemId)
@@ -21,16 +35,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
         throw NotFoundException('', '');
       }
 
-      ProductInScannedItemEntityCompanion scannedProduct =
-          ProductInScannedItemEntityCompanion.insert(
-        id: drift.Value(inventory.id),
-        stockCountChange: 1,
-        modified: drift.Value(DateParser.getCurrentUtcDateTime),
-      );
-
-      return _localDataSource.insertProduct(scannedProduct).then((value) {
-        return _localDataSource.getProductById(inventory.id);
-      });
+      return addProductByInventoryId(inventory.id);
     });
   }
 

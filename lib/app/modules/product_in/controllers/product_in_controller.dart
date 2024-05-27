@@ -152,9 +152,15 @@ class ProductInController extends BaseController
       }
 
       if (!isItemExist) {
-        scannedProducts
-            .add(ScannedProductUiModel.addProductFromInventory(inventoryData));
+        _addProductFromInventory(inventoryData);
       }
     }
+  }
+
+  void _addProductFromInventory(SelectableInventoryItemUiModel inventory) {
+    callDataService(
+      _repository.addProductByInventoryId(inventory.id),
+      onSuccess: _handleGetProductSuccessResponse,
+    );
   }
 }
