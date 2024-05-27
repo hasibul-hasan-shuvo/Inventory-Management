@@ -31,13 +31,7 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   @override
   Future<List<InventoryEntityData>> getInventories(
       InventoryListQueryParams queryParams) {
-    int offset = (queryParams.page - 1) * queryParams.pageSize;
-
-    return _dao.getInventories(
-      queryParams.search,
-      offset,
-      queryParams.pageSize,
-    );
+    return _dao.getInventories(queryParams);
   }
 
   @override

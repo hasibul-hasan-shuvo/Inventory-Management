@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/db/entities/deleted_inventory_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:drift/drift.dart';
 
 part 'inventory_dao.g.dart';
@@ -27,10 +28,9 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<List<InventoryEntityData>> getInventories(
-    String? search,
-    int offset,
-    int pageSize,
-  ) {
+      InventoryListQueryParams queryParams) {
+    int offset = (queryParams.page - 1) * queryParams.pageSize;
+
     List<OrderingTerm Function($InventoryEntityTable)> orders = [
       (tbl) => OrderingTerm(
             expression: inventoryEntity.id,
@@ -38,13 +38,16 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
           ),
     ];
 
-    Expression<bool> condition = inventoryEntity.productName.like('%$search%') |
-        inventoryEntity.itemId.contains('%$search%');
+    Expression<bool> condition =
+        (inventoryEntity.productName.like('%${queryParams.search}%') |
+                inventoryEntity.itemId.contains('%${queryParams.search}%')) &
+            inventoryEntity.stockCount
+                .isBiggerOrEqualValue(queryParams.minAvailableQuantity ?? 0);
 
     final query = select(inventoryEntity)
       ..where((tbl) => condition)
       ..orderBy(orders)
-      ..limit(pageSize, offset: offset);
+      ..limit(queryParams.pageSize, offset: offset);
 
     return query.get();
   }
