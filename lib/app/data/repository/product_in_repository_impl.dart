@@ -46,8 +46,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
   }
 
   @override
-  Future<ScannedProductEntityData?> updateProduct(
-      int id, int stockCountChange) {
+  Future<int> updateProduct(int id, int stockCountChange) {
     ProductInScannedItemEntityCompanion product =
         ProductInScannedItemEntityCompanion(
       id: drift.Value(id),
@@ -55,9 +54,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
       modified: drift.Value(DateParser.getCurrentUtcDateTime),
     );
 
-    return _localDataSource.updateProduct(product).then((value) {
-      return _localDataSource.getProductById(id);
-    });
+    return _localDataSource.updateProduct(product);
   }
 
   @override

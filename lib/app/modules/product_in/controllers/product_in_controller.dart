@@ -47,14 +47,12 @@ class ProductInController extends BaseController
       for (ScannedProductUiModel product in scannedProducts) {
         if (product.itemId == code) {
           isListItem = true;
-          product.updateNumber(product.number + 1);
+          _updateProduct(product, product.number + 1);
           break;
         }
       }
       if (!isListItem) {
         _getProduct(code!);
-      } else {
-        onRefresh();
       }
     }
   }
@@ -72,13 +70,11 @@ class ProductInController extends BaseController
         if (number == 0) {
           _removeProduct(product.id, product.itemId);
         } else {
-          product.updateNumber(number);
+          _updateProduct(product, number);
         }
         break;
       }
     }
-
-    onRefresh();
   }
 
   void incrementProductNumber(ScannedProductUiModel product) {
@@ -87,8 +83,7 @@ class ProductInController extends BaseController
 
       return;
     }
-    product.updateNumber(product.number + 1);
-    onRefresh();
+    _updateProduct(product, product.number + 1);
   }
 
   void _getProduct(String itemId) {
@@ -142,8 +137,7 @@ class ProductInController extends BaseController
       for (ScannedProductUiModel product in scannedProducts) {
         if (product.itemId == inventoryData.itemId) {
           isItemExist = true;
-          product.updateNumber(inventoryData.number);
-          onRefresh();
+          _updateProduct(product, inventoryData.number);
           break;
         }
       }
@@ -168,6 +162,19 @@ class ProductInController extends BaseController
     callDataService(
       _repository.deleteProductById(id),
       onSuccess: (_) => removeProductByItemId(itemId),
+    );
+  }
+
+  void _updateProduct(ScannedProductUiModel product, int stockCountChange) {
+    callDataService(
+      _repository.updateProduct(
+        product.id,
+        stockCountChange,
+      ),
+      onSuccess: (_) {
+        product.updateNumber(stockCountChange);
+        onRefresh();
+      },
     );
   }
 }

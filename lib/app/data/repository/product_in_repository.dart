@@ -8,7 +8,7 @@ abstract class ProductInRepository {
 
   Future<List<ScannedProductEntityData>> getProducts();
 
-  Future<ScannedProductEntityData?> updateProduct(int id, int stockCountChange);
+  Future<int> updateProduct(int id, int stockCountChange);
 
   Future<int> deleteProductById(int id);
 
