@@ -33,16 +33,18 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _getProductTopView(),
-        _getTitle(),
-        _getNumberChangingView(),
-        SizedBox(height: AppValues.smallMargin.h),
-        if (!isInventoryCountController) _getAvailableWithTitleView(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getProductTopView(),
+          _getTitle(),
+          _getNumberChangingView(),
+          SizedBox(height: AppValues.smallMargin.h),
+          if (!isInventoryCountController) _getAvailableWithTitleView(),
+        ],
+      ),
     );
   }
 
