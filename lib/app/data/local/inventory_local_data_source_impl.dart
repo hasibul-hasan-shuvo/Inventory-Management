@@ -88,4 +88,14 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   Future<int> deleteIdFromDeletedInventory(int id) {
     return _dao.deleteIdFromDeletedInventory(id);
   }
+
+  @override
+  Future<void> deleteAllInventories() {
+    return _dao.deleteInventories();
+  }
+
+  @override
+  Future<void> deleteAllInventoryChanges() {
+    return _dao.deleteInventoryChanges();
+  }
 }

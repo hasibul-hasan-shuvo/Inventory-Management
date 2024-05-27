@@ -6,12 +6,9 @@ import 'package:dental_inventory/app/data/local/inventory_local_data_source.dart
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 import 'package:dental_inventory/app/data/remote/inventory_remote_data_source.dart';
-import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:get/get.dart';
@@ -19,8 +16,6 @@ import 'package:get/get.dart';
 class InventoryRepositoryImpl implements InventoryRepository {
   final InventoryRemoteDataSource _remoteDataSource = Get.find();
   final InventoryLocalDataSource _localDataSource = Get.find();
-
-  final AuthRepository _authRepository = Get.find();
 
   @override
   Future getAllInventories() {
@@ -98,17 +93,6 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<ProductRetrievalResponse> retrieveProduct(
-      ProductsRetrievalRequestBody requestBody) {
-    String inventoryId = _authRepository.getInventoryID();
-
-    return _remoteDataSource.retrieveProduct(
-      inventoryId,
-      requestBody,
-    );
-  }
-
-  @override
   Future deleteInventoryFromServer(int id) {
     return _remoteDataSource.deleteInventory(id: id);
   }
@@ -126,6 +110,16 @@ class InventoryRepositoryImpl implements InventoryRepository {
         _syncInventories();
       });
     });
+  }
+
+  @override
+  Future<void> deleteAllInventories() {
+    return _localDataSource.deleteAllInventories();
+  }
+
+  @override
+  Future<void> deleteAllInventoryChanges() {
+    return _localDataSource.deleteAllInventoryChanges();
   }
 
   @override

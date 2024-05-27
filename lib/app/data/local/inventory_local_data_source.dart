@@ -35,4 +35,8 @@ abstract class InventoryLocalDataSource {
   Future<List<DeletedInventoryEntityData>> getDeletedInventories();
 
   Future<int> deleteIdFromDeletedInventory(int id);
+
+  Future<void> deleteAllInventories();
+
+  Future<void> deleteAllInventoryChanges();
 }
