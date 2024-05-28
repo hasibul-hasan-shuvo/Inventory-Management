@@ -77,7 +77,7 @@ class LoginView extends BaseView<LoginController> {
 
   Widget _buildEmailTextField() {
     return AppTextField(
-      prefix: const Icon(Icons.email_outlined),
+      prefix: const Icon(Icons.person_rounded),
       keyboardType: TextInputType.emailAddress,
       controller: _loginController,
       labelText: appLocalization.email,
