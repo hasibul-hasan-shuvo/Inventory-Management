@@ -50,7 +50,10 @@ class InventoryController extends BaseController {
 
   void deleteInventoryItem(InventoryUIModel data) {
     callDataService(
-      _inventoryRepository.deleteInventory(id: data.id),
+      _inventoryRepository.deleteInventory(
+        id: data.id,
+        itemId: data.itemId,
+      ),
       onSuccess: (e) => _deleteSuccessHandler(data),
     );
   }
@@ -129,17 +132,15 @@ class InventoryController extends BaseController {
       fixedSuggestion: fixedSuggestion,
     )) {
       final InventoryUpdateRequestBody request = InventoryUpdateRequestBody(
-        id: data.id,
         itemId: data.itemId,
         maxCount: maxCount.toInt,
         minCount: minCount.toInt,
         stockCount: stockCount.toInt,
-        inventoryID: authRepository.getInventoryID(),
         stockCountChange: stockCount.toInt - data.currentStock,
         fixedSuggestion: fixedSuggestion.toInt,
       );
       callDataService(
-        _inventoryRepository.updateInventoryData(data.id, request),
+        _inventoryRepository.updateInventoryData(request),
         onSuccess: _handleUpdateInventoryDataSuccessResponse,
       );
     }

@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 class InventoryChangesEntity extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().nullable()();
 
   TextColumn get itemId => text()();
 
@@ -17,5 +17,5 @@ class InventoryChangesEntity extends Table {
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
-  Set<Column<Object>>? get primaryKey => {id};
+  Set<Column<Object>>? get primaryKey => {itemId};
 }

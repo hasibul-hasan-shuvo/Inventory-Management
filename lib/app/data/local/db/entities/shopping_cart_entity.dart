@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
 
 class ShoppingCartEntity extends Table {
-  IntColumn get id => integer()();
+  TextColumn get itemId => text()();
 
-  IntColumn get inventoryId => integer()();
+  IntColumn get cartId => integer().nullable()();
 
   TextColumn get product => text()();
 
@@ -13,5 +13,5 @@ class ShoppingCartEntity extends Table {
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
-  Set<Column<Object>>? get primaryKey => {id};
+  Set<Column<Object>>? get primaryKey => {itemId};
 }

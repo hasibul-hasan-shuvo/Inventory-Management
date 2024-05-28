@@ -14,7 +14,7 @@ abstract class InventoryRepository {
 
   Future deleteInventoryFromServer(int id);
 
-  Future deleteInventory({required int id});
+  Future deleteInventory({required int? id, required String itemId});
 
   Future<List<InventoryChangesEntityData>> getAllInventoryChanges();
 
@@ -22,19 +22,15 @@ abstract class InventoryRepository {
 
   Future<int> deleteIdFromDeletedInventory(int id);
 
-  Future<InventoryEntityData?> getInventoryById(int id);
-
   Future<InventoryEntityData?> getInventoryByItemId(String itemId);
 
   Future<InventoryEntityData?> updateInventoryData(
-    int id,
-    InventoryUpdateRequestBody request,
-  );
+      InventoryUpdateRequestBody request);
 
   Future<InventoryResponse> updateInventoryDataToServer(
       InventoryUpdateRequestBody request);
 
-  Future<int> deleteInventoryChangesById(int id);
+  Future<int> deleteInventoryChangesByItemId(String itemId);
 
   Future<void> deleteAllInventories();
 

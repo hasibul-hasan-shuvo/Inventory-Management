@@ -6,6 +6,5 @@ part of 'product_count_dao.dart';
 mixin _$ProductCountDaoMixin on DatabaseAccessor<AppDatabase> {
   $ProductCountScannedItemEntityTable get productCountScannedItemEntity =>
       attachedDatabase.productCountScannedItemEntity;
-
   $InventoryEntityTable get inventoryEntity => attachedDatabase.inventoryEntity;
 }

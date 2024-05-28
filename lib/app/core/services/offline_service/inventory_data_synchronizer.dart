@@ -40,7 +40,6 @@ class InventoryDataSynchronizer implements DataSynchronizer {
           in inventoryChangesList) {
         try {
           InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
-            id: inventoryChanges.id,
             itemId: inventoryChanges.itemId,
             minCount: inventoryChanges.minCount,
             maxCount: inventoryChanges.maxCount,
@@ -50,7 +49,7 @@ class InventoryDataSynchronizer implements DataSynchronizer {
           await _inventoryRepository.updateInventoryDataToServer(requestBody);
           _logger.d("ChangesList: $inventoryChangesList");
           await _inventoryRepository
-              .deleteInventoryChangesById(inventoryChanges.id);
+              .deleteInventoryChangesByItemId(inventoryChanges.itemId);
         } catch (e) {
           _logger.e("InventoryChangesFailed: $e");
         }

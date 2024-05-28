@@ -3,8 +3,6 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:drift/drift.dart';
 
 class InventoryUpdateRequestBody {
-  String? inventoryID;
-  int id;
   String itemId;
   int? maxCount;
   int? minCount;
@@ -13,9 +11,7 @@ class InventoryUpdateRequestBody {
   int? fixedSuggestion;
 
   InventoryUpdateRequestBody({
-    required this.id,
     required this.itemId,
-    this.inventoryID,
     this.maxCount,
     this.minCount,
     this.stockCount,
@@ -38,7 +34,6 @@ class InventoryUpdateRequestBody {
 
   InventoryChangesEntityCompanion toInventoryChangesEntityCompanion() {
     return InventoryChangesEntityCompanion.insert(
-      id: Value(id),
       itemId: itemId,
       maxCount: maxCount != null ? Value(maxCount!) : const Value.absent(),
       minCount: minCount != null ? Value(minCount!) : const Value.absent(),
@@ -52,11 +47,6 @@ class InventoryUpdateRequestBody {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['id'] = id;
-
-    if (inventoryID != null) {
-      data['inventory'] = inventoryID;
-    }
 
     if (maxCount != null) {
       data['max_count'] = maxCount;

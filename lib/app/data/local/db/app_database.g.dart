@@ -12,7 +12,7 @@ class $InventoryEntityTable extends InventoryEntity
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
+      'id', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
@@ -31,42 +31,32 @@ class $InventoryEntityTable extends InventoryEntity
   late final GeneratedColumn<String> product = GeneratedColumn<String>(
       'product', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _connectedCartItemMeta =
-      const VerificationMeta('connectedCartItem');
-  @override
-  late final GeneratedColumn<String> connectedCartItem =
-      GeneratedColumn<String>('connected_cart_item', aliasedName, false,
-          type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _maxCountMeta =
       const VerificationMeta('maxCount');
   @override
   late final GeneratedColumn<int> maxCount = GeneratedColumn<int>(
-      'max_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'max_count', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _minCountMeta =
       const VerificationMeta('minCount');
   @override
   late final GeneratedColumn<int> minCount = GeneratedColumn<int>(
-      'min_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'min_count', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _stockCountMeta =
       const VerificationMeta('stockCount');
   @override
   late final GeneratedColumn<int> stockCount = GeneratedColumn<int>(
       'stock_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
   static const VerificationMeta _fixedSuggestionMeta =
       const VerificationMeta('fixedSuggestion');
   @override
   late final GeneratedColumn<int> fixedSuggestion = GeneratedColumn<int>(
-      'fixed_suggestion', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _inventoryMeta =
-      const VerificationMeta('inventory');
-  @override
-  late final GeneratedColumn<int> inventory = GeneratedColumn<int>(
-      'inventory', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'fixed_suggestion', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _createdMeta =
       const VerificationMeta('created');
   @override
@@ -89,12 +79,10 @@ class $InventoryEntityTable extends InventoryEntity
         itemId,
         productName,
         product,
-        connectedCartItem,
         maxCount,
         minCount,
         stockCount,
         fixedSuggestion,
-        inventory,
         created,
         modified
       ];
@@ -132,47 +120,25 @@ class $InventoryEntityTable extends InventoryEntity
     } else if (isInserting) {
       context.missing(_productMeta);
     }
-    if (data.containsKey('connected_cart_item')) {
-      context.handle(
-          _connectedCartItemMeta,
-          connectedCartItem.isAcceptableOrUnknown(
-              data['connected_cart_item']!, _connectedCartItemMeta));
-    } else if (isInserting) {
-      context.missing(_connectedCartItemMeta);
-    }
     if (data.containsKey('max_count')) {
       context.handle(_maxCountMeta,
           maxCount.isAcceptableOrUnknown(data['max_count']!, _maxCountMeta));
-    } else if (isInserting) {
-      context.missing(_maxCountMeta);
     }
     if (data.containsKey('min_count')) {
       context.handle(_minCountMeta,
           minCount.isAcceptableOrUnknown(data['min_count']!, _minCountMeta));
-    } else if (isInserting) {
-      context.missing(_minCountMeta);
     }
     if (data.containsKey('stock_count')) {
       context.handle(
           _stockCountMeta,
           stockCount.isAcceptableOrUnknown(
               data['stock_count']!, _stockCountMeta));
-    } else if (isInserting) {
-      context.missing(_stockCountMeta);
     }
     if (data.containsKey('fixed_suggestion')) {
       context.handle(
           _fixedSuggestionMeta,
           fixedSuggestion.isAcceptableOrUnknown(
               data['fixed_suggestion']!, _fixedSuggestionMeta));
-    } else if (isInserting) {
-      context.missing(_fixedSuggestionMeta);
-    }
-    if (data.containsKey('inventory')) {
-      context.handle(_inventoryMeta,
-          inventory.isAcceptableOrUnknown(data['inventory']!, _inventoryMeta));
-    } else if (isInserting) {
-      context.missing(_inventoryMeta);
     }
     if (data.containsKey('created')) {
       context.handle(_createdMeta,
@@ -186,31 +152,27 @@ class $InventoryEntityTable extends InventoryEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   InventoryEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return InventoryEntityData(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}id']),
       itemId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       productName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}product_name'])!,
       product: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}product'])!,
-      connectedCartItem: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}connected_cart_item'])!,
       maxCount: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}max_count'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}max_count']),
       minCount: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}min_count'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}min_count']),
       stockCount: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}stock_count'])!,
       fixedSuggestion: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion'])!,
-      inventory: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}inventory'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion']),
       created: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
       modified: attachedDatabase.typeMapping
@@ -226,44 +188,46 @@ class $InventoryEntityTable extends InventoryEntity
 
 class InventoryEntityData extends DataClass
     implements Insertable<InventoryEntityData> {
-  final int id;
+  final int? id;
   final String itemId;
   final String productName;
   final String product;
-  final String connectedCartItem;
-  final int maxCount;
-  final int minCount;
+  final int? maxCount;
+  final int? minCount;
   final int stockCount;
-  final int fixedSuggestion;
-  final int inventory;
+  final int? fixedSuggestion;
   final DateTime created;
   final DateTime modified;
   const InventoryEntityData(
-      {required this.id,
+      {this.id,
       required this.itemId,
       required this.productName,
       required this.product,
-      required this.connectedCartItem,
-      required this.maxCount,
-      required this.minCount,
+      this.maxCount,
+      this.minCount,
       required this.stockCount,
-      required this.fixedSuggestion,
-      required this.inventory,
+      this.fixedSuggestion,
       required this.created,
       required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
     map['item_id'] = Variable<String>(itemId);
     map['product_name'] = Variable<String>(productName);
     map['product'] = Variable<String>(product);
-    map['connected_cart_item'] = Variable<String>(connectedCartItem);
-    map['max_count'] = Variable<int>(maxCount);
-    map['min_count'] = Variable<int>(minCount);
+    if (!nullToAbsent || maxCount != null) {
+      map['max_count'] = Variable<int>(maxCount);
+    }
+    if (!nullToAbsent || minCount != null) {
+      map['min_count'] = Variable<int>(minCount);
+    }
     map['stock_count'] = Variable<int>(stockCount);
-    map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
-    map['inventory'] = Variable<int>(inventory);
+    if (!nullToAbsent || fixedSuggestion != null) {
+      map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
+    }
     map['created'] = Variable<DateTime>(created);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -271,16 +235,20 @@ class InventoryEntityData extends DataClass
 
   InventoryEntityCompanion toCompanion(bool nullToAbsent) {
     return InventoryEntityCompanion(
-      id: Value(id),
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       itemId: Value(itemId),
       productName: Value(productName),
       product: Value(product),
-      connectedCartItem: Value(connectedCartItem),
-      maxCount: Value(maxCount),
-      minCount: Value(minCount),
+      maxCount: maxCount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maxCount),
+      minCount: minCount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minCount),
       stockCount: Value(stockCount),
-      fixedSuggestion: Value(fixedSuggestion),
-      inventory: Value(inventory),
+      fixedSuggestion: fixedSuggestion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fixedSuggestion),
       created: Value(created),
       modified: Value(modified),
     );
@@ -290,16 +258,14 @@ class InventoryEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InventoryEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      id: serializer.fromJson<int?>(json['id']),
       itemId: serializer.fromJson<String>(json['itemId']),
       productName: serializer.fromJson<String>(json['productName']),
       product: serializer.fromJson<String>(json['product']),
-      connectedCartItem: serializer.fromJson<String>(json['connectedCartItem']),
-      maxCount: serializer.fromJson<int>(json['maxCount']),
-      minCount: serializer.fromJson<int>(json['minCount']),
+      maxCount: serializer.fromJson<int?>(json['maxCount']),
+      minCount: serializer.fromJson<int?>(json['minCount']),
       stockCount: serializer.fromJson<int>(json['stockCount']),
-      fixedSuggestion: serializer.fromJson<int>(json['fixedSuggestion']),
-      inventory: serializer.fromJson<int>(json['inventory']),
+      fixedSuggestion: serializer.fromJson<int?>(json['fixedSuggestion']),
       created: serializer.fromJson<DateTime>(json['created']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -308,45 +274,41 @@ class InventoryEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<int?>(id),
       'itemId': serializer.toJson<String>(itemId),
       'productName': serializer.toJson<String>(productName),
       'product': serializer.toJson<String>(product),
-      'connectedCartItem': serializer.toJson<String>(connectedCartItem),
-      'maxCount': serializer.toJson<int>(maxCount),
-      'minCount': serializer.toJson<int>(minCount),
+      'maxCount': serializer.toJson<int?>(maxCount),
+      'minCount': serializer.toJson<int?>(minCount),
       'stockCount': serializer.toJson<int>(stockCount),
-      'fixedSuggestion': serializer.toJson<int>(fixedSuggestion),
-      'inventory': serializer.toJson<int>(inventory),
+      'fixedSuggestion': serializer.toJson<int?>(fixedSuggestion),
       'created': serializer.toJson<DateTime>(created),
       'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   InventoryEntityData copyWith(
-          {int? id,
+          {Value<int?> id = const Value.absent(),
           String? itemId,
           String? productName,
           String? product,
-          String? connectedCartItem,
-          int? maxCount,
-          int? minCount,
+          Value<int?> maxCount = const Value.absent(),
+          Value<int?> minCount = const Value.absent(),
           int? stockCount,
-          int? fixedSuggestion,
-          int? inventory,
+          Value<int?> fixedSuggestion = const Value.absent(),
           DateTime? created,
           DateTime? modified}) =>
       InventoryEntityData(
-        id: id ?? this.id,
+        id: id.present ? id.value : this.id,
         itemId: itemId ?? this.itemId,
         productName: productName ?? this.productName,
         product: product ?? this.product,
-        connectedCartItem: connectedCartItem ?? this.connectedCartItem,
-        maxCount: maxCount ?? this.maxCount,
-        minCount: minCount ?? this.minCount,
+        maxCount: maxCount.present ? maxCount.value : this.maxCount,
+        minCount: minCount.present ? minCount.value : this.minCount,
         stockCount: stockCount ?? this.stockCount,
-        fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
-        inventory: inventory ?? this.inventory,
+        fixedSuggestion: fixedSuggestion.present
+            ? fixedSuggestion.value
+            : this.fixedSuggestion,
         created: created ?? this.created,
         modified: modified ?? this.modified,
       );
@@ -357,12 +319,10 @@ class InventoryEntityData extends DataClass
           ..write('itemId: $itemId, ')
           ..write('productName: $productName, ')
           ..write('product: $product, ')
-          ..write('connectedCartItem: $connectedCartItem, ')
           ..write('maxCount: $maxCount, ')
           ..write('minCount: $minCount, ')
           ..write('stockCount: $stockCount, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('inventory: $inventory, ')
           ..write('created: $created, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -370,19 +330,8 @@ class InventoryEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(
-      id,
-      itemId,
-      productName,
-      product,
-      connectedCartItem,
-      maxCount,
-      minCount,
-      stockCount,
-      fixedSuggestion,
-      inventory,
-      created,
-      modified);
+  int get hashCode => Object.hash(id, itemId, productName, product, maxCount,
+      minCount, stockCount, fixedSuggestion, created, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -391,121 +340,106 @@ class InventoryEntityData extends DataClass
           other.itemId == this.itemId &&
           other.productName == this.productName &&
           other.product == this.product &&
-          other.connectedCartItem == this.connectedCartItem &&
           other.maxCount == this.maxCount &&
           other.minCount == this.minCount &&
           other.stockCount == this.stockCount &&
           other.fixedSuggestion == this.fixedSuggestion &&
-          other.inventory == this.inventory &&
           other.created == this.created &&
           other.modified == this.modified);
 }
 
 class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
-  final Value<int> id;
+  final Value<int?> id;
   final Value<String> itemId;
   final Value<String> productName;
   final Value<String> product;
-  final Value<String> connectedCartItem;
-  final Value<int> maxCount;
-  final Value<int> minCount;
+  final Value<int?> maxCount;
+  final Value<int?> minCount;
   final Value<int> stockCount;
-  final Value<int> fixedSuggestion;
-  final Value<int> inventory;
+  final Value<int?> fixedSuggestion;
   final Value<DateTime> created;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const InventoryEntityCompanion({
     this.id = const Value.absent(),
     this.itemId = const Value.absent(),
     this.productName = const Value.absent(),
     this.product = const Value.absent(),
-    this.connectedCartItem = const Value.absent(),
     this.maxCount = const Value.absent(),
     this.minCount = const Value.absent(),
     this.stockCount = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
-    this.inventory = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   InventoryEntityCompanion.insert({
     this.id = const Value.absent(),
     required String itemId,
     required String productName,
     required String product,
-    required String connectedCartItem,
-    required int maxCount,
-    required int minCount,
-    required int stockCount,
-    required int fixedSuggestion,
-    required int inventory,
+    this.maxCount = const Value.absent(),
+    this.minCount = const Value.absent(),
+    this.stockCount = const Value.absent(),
+    this.fixedSuggestion = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   })  : itemId = Value(itemId),
         productName = Value(productName),
-        product = Value(product),
-        connectedCartItem = Value(connectedCartItem),
-        maxCount = Value(maxCount),
-        minCount = Value(minCount),
-        stockCount = Value(stockCount),
-        fixedSuggestion = Value(fixedSuggestion),
-        inventory = Value(inventory);
+        product = Value(product);
   static Insertable<InventoryEntityData> custom({
     Expression<int>? id,
     Expression<String>? itemId,
     Expression<String>? productName,
     Expression<String>? product,
-    Expression<String>? connectedCartItem,
     Expression<int>? maxCount,
     Expression<int>? minCount,
     Expression<int>? stockCount,
     Expression<int>? fixedSuggestion,
-    Expression<int>? inventory,
     Expression<DateTime>? created,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (itemId != null) 'item_id': itemId,
       if (productName != null) 'product_name': productName,
       if (product != null) 'product': product,
-      if (connectedCartItem != null) 'connected_cart_item': connectedCartItem,
       if (maxCount != null) 'max_count': maxCount,
       if (minCount != null) 'min_count': minCount,
       if (stockCount != null) 'stock_count': stockCount,
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
-      if (inventory != null) 'inventory': inventory,
       if (created != null) 'created': created,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   InventoryEntityCompanion copyWith(
-      {Value<int>? id,
+      {Value<int?>? id,
       Value<String>? itemId,
       Value<String>? productName,
       Value<String>? product,
-      Value<String>? connectedCartItem,
-      Value<int>? maxCount,
-      Value<int>? minCount,
+      Value<int?>? maxCount,
+      Value<int?>? minCount,
       Value<int>? stockCount,
-      Value<int>? fixedSuggestion,
-      Value<int>? inventory,
+      Value<int?>? fixedSuggestion,
       Value<DateTime>? created,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return InventoryEntityCompanion(
       id: id ?? this.id,
       itemId: itemId ?? this.itemId,
       productName: productName ?? this.productName,
       product: product ?? this.product,
-      connectedCartItem: connectedCartItem ?? this.connectedCartItem,
       maxCount: maxCount ?? this.maxCount,
       minCount: minCount ?? this.minCount,
       stockCount: stockCount ?? this.stockCount,
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
-      inventory: inventory ?? this.inventory,
       created: created ?? this.created,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -524,9 +458,6 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     if (product.present) {
       map['product'] = Variable<String>(product.value);
     }
-    if (connectedCartItem.present) {
-      map['connected_cart_item'] = Variable<String>(connectedCartItem.value);
-    }
     if (maxCount.present) {
       map['max_count'] = Variable<int>(maxCount.value);
     }
@@ -539,14 +470,14 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     if (fixedSuggestion.present) {
       map['fixed_suggestion'] = Variable<int>(fixedSuggestion.value);
     }
-    if (inventory.present) {
-      map['inventory'] = Variable<int>(inventory.value);
-    }
     if (created.present) {
       map['created'] = Variable<DateTime>(created.value);
     }
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
@@ -558,14 +489,13 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
           ..write('itemId: $itemId, ')
           ..write('productName: $productName, ')
           ..write('product: $product, ')
-          ..write('connectedCartItem: $connectedCartItem, ')
           ..write('maxCount: $maxCount, ')
           ..write('minCount: $minCount, ')
           ..write('stockCount: $stockCount, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('inventory: $inventory, ')
           ..write('created: $created, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -580,7 +510,7 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
+      'id', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
@@ -679,14 +609,14 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   InventoryChangesEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return InventoryChangesEntityData(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}id']),
       itemId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       maxCount: attachedDatabase.typeMapping
@@ -710,7 +640,7 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
 
 class InventoryChangesEntityData extends DataClass
     implements Insertable<InventoryChangesEntityData> {
-  final int id;
+  final int? id;
   final String itemId;
   final int? maxCount;
   final int? minCount;
@@ -718,7 +648,7 @@ class InventoryChangesEntityData extends DataClass
   final int? fixedSuggestion;
   final DateTime modified;
   const InventoryChangesEntityData(
-      {required this.id,
+      {this.id,
       required this.itemId,
       this.maxCount,
       this.minCount,
@@ -728,7 +658,9 @@ class InventoryChangesEntityData extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
     map['item_id'] = Variable<String>(itemId);
     if (!nullToAbsent || maxCount != null) {
       map['max_count'] = Variable<int>(maxCount);
@@ -746,7 +678,7 @@ class InventoryChangesEntityData extends DataClass
 
   InventoryChangesEntityCompanion toCompanion(bool nullToAbsent) {
     return InventoryChangesEntityCompanion(
-      id: Value(id),
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       itemId: Value(itemId),
       maxCount: maxCount == null && nullToAbsent
           ? const Value.absent()
@@ -766,7 +698,7 @@ class InventoryChangesEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InventoryChangesEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      id: serializer.fromJson<int?>(json['id']),
       itemId: serializer.fromJson<String>(json['itemId']),
       maxCount: serializer.fromJson<int?>(json['maxCount']),
       minCount: serializer.fromJson<int?>(json['minCount']),
@@ -779,7 +711,7 @@ class InventoryChangesEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<int?>(id),
       'itemId': serializer.toJson<String>(itemId),
       'maxCount': serializer.toJson<int?>(maxCount),
       'minCount': serializer.toJson<int?>(minCount),
@@ -790,7 +722,7 @@ class InventoryChangesEntityData extends DataClass
   }
 
   InventoryChangesEntityData copyWith(
-          {int? id,
+          {Value<int?> id = const Value.absent(),
           String? itemId,
           Value<int?> maxCount = const Value.absent(),
           Value<int?> minCount = const Value.absent(),
@@ -798,7 +730,7 @@ class InventoryChangesEntityData extends DataClass
           Value<int?> fixedSuggestion = const Value.absent(),
           DateTime? modified}) =>
       InventoryChangesEntityData(
-        id: id ?? this.id,
+        id: id.present ? id.value : this.id,
         itemId: itemId ?? this.itemId,
         maxCount: maxCount.present ? maxCount.value : this.maxCount,
         minCount: minCount.present ? minCount.value : this.minCount,
@@ -840,13 +772,14 @@ class InventoryChangesEntityData extends DataClass
 
 class InventoryChangesEntityCompanion
     extends UpdateCompanion<InventoryChangesEntityData> {
-  final Value<int> id;
+  final Value<int?> id;
   final Value<String> itemId;
   final Value<int?> maxCount;
   final Value<int?> minCount;
   final Value<int> stockCountChange;
   final Value<int?> fixedSuggestion;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const InventoryChangesEntityCompanion({
     this.id = const Value.absent(),
     this.itemId = const Value.absent(),
@@ -855,6 +788,7 @@ class InventoryChangesEntityCompanion
     this.stockCountChange = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   InventoryChangesEntityCompanion.insert({
     this.id = const Value.absent(),
@@ -864,6 +798,7 @@ class InventoryChangesEntityCompanion
     this.stockCountChange = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   }) : itemId = Value(itemId);
   static Insertable<InventoryChangesEntityData> custom({
     Expression<int>? id,
@@ -873,6 +808,7 @@ class InventoryChangesEntityCompanion
     Expression<int>? stockCountChange,
     Expression<int>? fixedSuggestion,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -882,17 +818,19 @@ class InventoryChangesEntityCompanion
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   InventoryChangesEntityCompanion copyWith(
-      {Value<int>? id,
+      {Value<int?>? id,
       Value<String>? itemId,
       Value<int?>? maxCount,
       Value<int?>? minCount,
       Value<int>? stockCountChange,
       Value<int?>? fixedSuggestion,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return InventoryChangesEntityCompanion(
       id: id ?? this.id,
       itemId: itemId ?? this.itemId,
@@ -901,6 +839,7 @@ class InventoryChangesEntityCompanion
       stockCountChange: stockCountChange ?? this.stockCountChange,
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -928,6 +867,9 @@ class InventoryChangesEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -940,7 +882,8 @@ class InventoryChangesEntityCompanion
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1094,11 +1037,12 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductInScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _stockCountChangeMeta =
       const VerificationMeta('stockCountChange');
   @override
@@ -1114,7 +1058,7 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
+  List<GeneratedColumn> get $columns => [itemId, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1126,8 +1070,11 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
     }
     if (data.containsKey('stock_count_change')) {
       context.handle(
@@ -1145,14 +1092,14 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   ProductInScannedItemEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProductInScannedItemEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
@@ -1168,17 +1115,17 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
 
 class ProductInScannedItemEntityData extends DataClass
     implements Insertable<ProductInScannedItemEntityData> {
-  final int id;
+  final String itemId;
   final int stockCountChange;
   final DateTime modified;
   const ProductInScannedItemEntityData(
-      {required this.id,
+      {required this.itemId,
       required this.stockCountChange,
       required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['item_id'] = Variable<String>(itemId);
     map['stock_count_change'] = Variable<int>(stockCountChange);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -1186,7 +1133,7 @@ class ProductInScannedItemEntityData extends DataClass
 
   ProductInScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
     return ProductInScannedItemEntityCompanion(
-      id: Value(id),
+      itemId: Value(itemId),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
@@ -1196,7 +1143,7 @@ class ProductInScannedItemEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ProductInScannedItemEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      itemId: serializer.fromJson<String>(json['itemId']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -1205,23 +1152,23 @@ class ProductInScannedItemEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'itemId': serializer.toJson<String>(itemId),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
       'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductInScannedItemEntityData copyWith(
-          {int? id, int? stockCountChange, DateTime? modified}) =>
+          {String? itemId, int? stockCountChange, DateTime? modified}) =>
       ProductInScannedItemEntityData(
-        id: id ?? this.id,
+        itemId: itemId ?? this.itemId,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
     return (StringBuffer('ProductInScannedItemEntityData(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -1229,59 +1176,67 @@ class ProductInScannedItemEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, stockCountChange, modified);
+  int get hashCode => Object.hash(itemId, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductInScannedItemEntityData &&
-          other.id == this.id &&
+          other.itemId == this.itemId &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
 class ProductInScannedItemEntityCompanion
     extends UpdateCompanion<ProductInScannedItemEntityData> {
-  final Value<int> id;
+  final Value<String> itemId;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const ProductInScannedItemEntityCompanion({
-    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ProductInScannedItemEntityCompanion.insert({
-    this.id = const Value.absent(),
+    required String itemId,
     required int stockCountChange,
     this.modified = const Value.absent(),
-  }) : stockCountChange = Value(stockCountChange);
+    this.rowid = const Value.absent(),
+  })  : itemId = Value(itemId),
+        stockCountChange = Value(stockCountChange);
   static Insertable<ProductInScannedItemEntityData> custom({
-    Expression<int>? id,
+    Expression<String>? itemId,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ProductInScannedItemEntityCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? itemId,
       Value<int>? stockCountChange,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return ProductInScannedItemEntityCompanion(
-      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
     }
     if (stockCountChange.present) {
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
@@ -1289,15 +1244,19 @@ class ProductInScannedItemEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ProductInScannedItemEntityCompanion(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1311,11 +1270,12 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductOutScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _stockCountChangeMeta =
       const VerificationMeta('stockCountChange');
   @override
@@ -1331,7 +1291,7 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
+  List<GeneratedColumn> get $columns => [itemId, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1343,8 +1303,11 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
     }
     if (data.containsKey('stock_count_change')) {
       context.handle(
@@ -1362,14 +1325,14 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   ProductOutScannedItemEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProductOutScannedItemEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
@@ -1385,17 +1348,17 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
 
 class ProductOutScannedItemEntityData extends DataClass
     implements Insertable<ProductOutScannedItemEntityData> {
-  final int id;
+  final String itemId;
   final int stockCountChange;
   final DateTime modified;
   const ProductOutScannedItemEntityData(
-      {required this.id,
+      {required this.itemId,
       required this.stockCountChange,
       required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['item_id'] = Variable<String>(itemId);
     map['stock_count_change'] = Variable<int>(stockCountChange);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -1403,7 +1366,7 @@ class ProductOutScannedItemEntityData extends DataClass
 
   ProductOutScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
     return ProductOutScannedItemEntityCompanion(
-      id: Value(id),
+      itemId: Value(itemId),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
@@ -1413,7 +1376,7 @@ class ProductOutScannedItemEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ProductOutScannedItemEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      itemId: serializer.fromJson<String>(json['itemId']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -1422,23 +1385,23 @@ class ProductOutScannedItemEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'itemId': serializer.toJson<String>(itemId),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
       'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductOutScannedItemEntityData copyWith(
-          {int? id, int? stockCountChange, DateTime? modified}) =>
+          {String? itemId, int? stockCountChange, DateTime? modified}) =>
       ProductOutScannedItemEntityData(
-        id: id ?? this.id,
+        itemId: itemId ?? this.itemId,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
     return (StringBuffer('ProductOutScannedItemEntityData(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -1446,59 +1409,67 @@ class ProductOutScannedItemEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, stockCountChange, modified);
+  int get hashCode => Object.hash(itemId, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductOutScannedItemEntityData &&
-          other.id == this.id &&
+          other.itemId == this.itemId &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
 class ProductOutScannedItemEntityCompanion
     extends UpdateCompanion<ProductOutScannedItemEntityData> {
-  final Value<int> id;
+  final Value<String> itemId;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const ProductOutScannedItemEntityCompanion({
-    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ProductOutScannedItemEntityCompanion.insert({
-    this.id = const Value.absent(),
+    required String itemId,
     required int stockCountChange,
     this.modified = const Value.absent(),
-  }) : stockCountChange = Value(stockCountChange);
+    this.rowid = const Value.absent(),
+  })  : itemId = Value(itemId),
+        stockCountChange = Value(stockCountChange);
   static Insertable<ProductOutScannedItemEntityData> custom({
-    Expression<int>? id,
+    Expression<String>? itemId,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ProductOutScannedItemEntityCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? itemId,
       Value<int>? stockCountChange,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return ProductOutScannedItemEntityCompanion(
-      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
     }
     if (stockCountChange.present) {
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
@@ -1506,15 +1477,19 @@ class ProductOutScannedItemEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ProductOutScannedItemEntityCompanion(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1528,11 +1503,12 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductCountScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _stockCountChangeMeta =
       const VerificationMeta('stockCountChange');
   @override
@@ -1548,7 +1524,7 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  List<GeneratedColumn> get $columns => [id, stockCountChange, modified];
+  List<GeneratedColumn> get $columns => [itemId, stockCountChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1560,8 +1536,11 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
     }
     if (data.containsKey('stock_count_change')) {
       context.handle(
@@ -1579,14 +1558,14 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   ProductCountScannedItemEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProductCountScannedItemEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       stockCountChange: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}stock_count_change'])!,
       modified: attachedDatabase.typeMapping
@@ -1602,17 +1581,17 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
 
 class ProductCountScannedItemEntityData extends DataClass
     implements Insertable<ProductCountScannedItemEntityData> {
-  final int id;
+  final String itemId;
   final int stockCountChange;
   final DateTime modified;
   const ProductCountScannedItemEntityData(
-      {required this.id,
+      {required this.itemId,
       required this.stockCountChange,
       required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['item_id'] = Variable<String>(itemId);
     map['stock_count_change'] = Variable<int>(stockCountChange);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -1620,7 +1599,7 @@ class ProductCountScannedItemEntityData extends DataClass
 
   ProductCountScannedItemEntityCompanion toCompanion(bool nullToAbsent) {
     return ProductCountScannedItemEntityCompanion(
-      id: Value(id),
+      itemId: Value(itemId),
       stockCountChange: Value(stockCountChange),
       modified: Value(modified),
     );
@@ -1630,7 +1609,7 @@ class ProductCountScannedItemEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ProductCountScannedItemEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      itemId: serializer.fromJson<String>(json['itemId']),
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -1639,23 +1618,23 @@ class ProductCountScannedItemEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'itemId': serializer.toJson<String>(itemId),
       'stockCountChange': serializer.toJson<int>(stockCountChange),
       'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ProductCountScannedItemEntityData copyWith(
-          {int? id, int? stockCountChange, DateTime? modified}) =>
+          {String? itemId, int? stockCountChange, DateTime? modified}) =>
       ProductCountScannedItemEntityData(
-        id: id ?? this.id,
+        itemId: itemId ?? this.itemId,
         stockCountChange: stockCountChange ?? this.stockCountChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
     return (StringBuffer('ProductCountScannedItemEntityData(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -1663,59 +1642,67 @@ class ProductCountScannedItemEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, stockCountChange, modified);
+  int get hashCode => Object.hash(itemId, stockCountChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProductCountScannedItemEntityData &&
-          other.id == this.id &&
+          other.itemId == this.itemId &&
           other.stockCountChange == this.stockCountChange &&
           other.modified == this.modified);
 }
 
 class ProductCountScannedItemEntityCompanion
     extends UpdateCompanion<ProductCountScannedItemEntityData> {
-  final Value<int> id;
+  final Value<String> itemId;
   final Value<int> stockCountChange;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const ProductCountScannedItemEntityCompanion({
-    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
     this.stockCountChange = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ProductCountScannedItemEntityCompanion.insert({
-    this.id = const Value.absent(),
+    required String itemId,
     required int stockCountChange,
     this.modified = const Value.absent(),
-  }) : stockCountChange = Value(stockCountChange);
+    this.rowid = const Value.absent(),
+  })  : itemId = Value(itemId),
+        stockCountChange = Value(stockCountChange);
   static Insertable<ProductCountScannedItemEntityData> custom({
-    Expression<int>? id,
+    Expression<String>? itemId,
     Expression<int>? stockCountChange,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ProductCountScannedItemEntityCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? itemId,
       Value<int>? stockCountChange,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return ProductCountScannedItemEntityCompanion(
-      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
       stockCountChange: stockCountChange ?? this.stockCountChange,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
     }
     if (stockCountChange.present) {
       map['stock_count_change'] = Variable<int>(stockCountChange.value);
@@ -1723,15 +1710,19 @@ class ProductCountScannedItemEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ProductCountScannedItemEntityCompanion(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('stockCountChange: $stockCountChange, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1743,17 +1734,17 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ShoppingCartEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _cartIdMeta = const VerificationMeta('cartId');
+  @override
+  late final GeneratedColumn<int> cartId = GeneratedColumn<int>(
+      'cart_id', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _inventoryIdMeta =
-      const VerificationMeta('inventoryId');
-  @override
-  late final GeneratedColumn<int> inventoryId = GeneratedColumn<int>(
-      'inventory_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _productMeta =
       const VerificationMeta('product');
   @override
@@ -1776,7 +1767,7 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, inventoryId, product, quantity, modified];
+      [itemId, cartId, product, quantity, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1788,16 +1779,15 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('inventory_id')) {
-      context.handle(
-          _inventoryIdMeta,
-          inventoryId.isAcceptableOrUnknown(
-              data['inventory_id']!, _inventoryIdMeta));
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
     } else if (isInserting) {
-      context.missing(_inventoryIdMeta);
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('cart_id')) {
+      context.handle(_cartIdMeta,
+          cartId.isAcceptableOrUnknown(data['cart_id']!, _cartIdMeta));
     }
     if (data.containsKey('product')) {
       context.handle(_productMeta,
@@ -1819,15 +1809,15 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   ShoppingCartEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ShoppingCartEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      inventoryId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}inventory_id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
+      cartId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}cart_id']),
       product: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}product'])!,
       quantity: attachedDatabase.typeMapping
@@ -1845,22 +1835,24 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
 
 class ShoppingCartEntityData extends DataClass
     implements Insertable<ShoppingCartEntityData> {
-  final int id;
-  final int inventoryId;
+  final String itemId;
+  final int? cartId;
   final String product;
   final int quantity;
   final DateTime modified;
   const ShoppingCartEntityData(
-      {required this.id,
-      required this.inventoryId,
+      {required this.itemId,
+      this.cartId,
       required this.product,
       required this.quantity,
       required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['inventory_id'] = Variable<int>(inventoryId);
+    map['item_id'] = Variable<String>(itemId);
+    if (!nullToAbsent || cartId != null) {
+      map['cart_id'] = Variable<int>(cartId);
+    }
     map['product'] = Variable<String>(product);
     map['quantity'] = Variable<int>(quantity);
     map['modified'] = Variable<DateTime>(modified);
@@ -1869,8 +1861,9 @@ class ShoppingCartEntityData extends DataClass
 
   ShoppingCartEntityCompanion toCompanion(bool nullToAbsent) {
     return ShoppingCartEntityCompanion(
-      id: Value(id),
-      inventoryId: Value(inventoryId),
+      itemId: Value(itemId),
+      cartId:
+          cartId == null && nullToAbsent ? const Value.absent() : Value(cartId),
       product: Value(product),
       quantity: Value(quantity),
       modified: Value(modified),
@@ -1881,8 +1874,8 @@ class ShoppingCartEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ShoppingCartEntityData(
-      id: serializer.fromJson<int>(json['id']),
-      inventoryId: serializer.fromJson<int>(json['inventoryId']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      cartId: serializer.fromJson<int?>(json['cartId']),
       product: serializer.fromJson<String>(json['product']),
       quantity: serializer.fromJson<int>(json['quantity']),
       modified: serializer.fromJson<DateTime>(json['modified']),
@@ -1892,8 +1885,8 @@ class ShoppingCartEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'inventoryId': serializer.toJson<int>(inventoryId),
+      'itemId': serializer.toJson<String>(itemId),
+      'cartId': serializer.toJson<int?>(cartId),
       'product': serializer.toJson<String>(product),
       'quantity': serializer.toJson<int>(quantity),
       'modified': serializer.toJson<DateTime>(modified),
@@ -1901,14 +1894,14 @@ class ShoppingCartEntityData extends DataClass
   }
 
   ShoppingCartEntityData copyWith(
-          {int? id,
-          int? inventoryId,
+          {String? itemId,
+          Value<int?> cartId = const Value.absent(),
           String? product,
           int? quantity,
           DateTime? modified}) =>
       ShoppingCartEntityData(
-        id: id ?? this.id,
-        inventoryId: inventoryId ?? this.inventoryId,
+        itemId: itemId ?? this.itemId,
+        cartId: cartId.present ? cartId.value : this.cartId,
         product: product ?? this.product,
         quantity: quantity ?? this.quantity,
         modified: modified ?? this.modified,
@@ -1916,8 +1909,8 @@ class ShoppingCartEntityData extends DataClass
   @override
   String toString() {
     return (StringBuffer('ShoppingCartEntityData(')
-          ..write('id: $id, ')
-          ..write('inventoryId: $inventoryId, ')
+          ..write('itemId: $itemId, ')
+          ..write('cartId: $cartId, ')
           ..write('product: $product, ')
           ..write('quantity: $quantity, ')
           ..write('modified: $modified')
@@ -1926,13 +1919,13 @@ class ShoppingCartEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, inventoryId, product, quantity, modified);
+  int get hashCode => Object.hash(itemId, cartId, product, quantity, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ShoppingCartEntityData &&
-          other.id == this.id &&
-          other.inventoryId == this.inventoryId &&
+          other.itemId == this.itemId &&
+          other.cartId == this.cartId &&
           other.product == this.product &&
           other.quantity == this.quantity &&
           other.modified == this.modified);
@@ -1940,66 +1933,73 @@ class ShoppingCartEntityData extends DataClass
 
 class ShoppingCartEntityCompanion
     extends UpdateCompanion<ShoppingCartEntityData> {
-  final Value<int> id;
-  final Value<int> inventoryId;
+  final Value<String> itemId;
+  final Value<int?> cartId;
   final Value<String> product;
   final Value<int> quantity;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const ShoppingCartEntityCompanion({
-    this.id = const Value.absent(),
-    this.inventoryId = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.cartId = const Value.absent(),
     this.product = const Value.absent(),
     this.quantity = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ShoppingCartEntityCompanion.insert({
-    this.id = const Value.absent(),
-    required int inventoryId,
+    required String itemId,
+    this.cartId = const Value.absent(),
     required String product,
     required int quantity,
     this.modified = const Value.absent(),
-  })  : inventoryId = Value(inventoryId),
+    this.rowid = const Value.absent(),
+  })  : itemId = Value(itemId),
         product = Value(product),
         quantity = Value(quantity);
   static Insertable<ShoppingCartEntityData> custom({
-    Expression<int>? id,
-    Expression<int>? inventoryId,
+    Expression<String>? itemId,
+    Expression<int>? cartId,
     Expression<String>? product,
     Expression<int>? quantity,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (inventoryId != null) 'inventory_id': inventoryId,
+      if (itemId != null) 'item_id': itemId,
+      if (cartId != null) 'cart_id': cartId,
       if (product != null) 'product': product,
       if (quantity != null) 'quantity': quantity,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ShoppingCartEntityCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? inventoryId,
+      {Value<String>? itemId,
+      Value<int?>? cartId,
       Value<String>? product,
       Value<int>? quantity,
-      Value<DateTime>? modified}) {
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return ShoppingCartEntityCompanion(
-      id: id ?? this.id,
-      inventoryId: inventoryId ?? this.inventoryId,
+      itemId: itemId ?? this.itemId,
+      cartId: cartId ?? this.cartId,
       product: product ?? this.product,
       quantity: quantity ?? this.quantity,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
     }
-    if (inventoryId.present) {
-      map['inventory_id'] = Variable<int>(inventoryId.value);
+    if (cartId.present) {
+      map['cart_id'] = Variable<int>(cartId.value);
     }
     if (product.present) {
       map['product'] = Variable<String>(product.value);
@@ -2010,17 +2010,21 @@ class ShoppingCartEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ShoppingCartEntityCompanion(')
-          ..write('id: $id, ')
-          ..write('inventoryId: $inventoryId, ')
+          ..write('itemId: $itemId, ')
+          ..write('cartId: $cartId, ')
           ..write('product: $product, ')
           ..write('quantity: $quantity, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -2034,11 +2038,12 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ShoppingCartChangesEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _quantityChangeMeta =
       const VerificationMeta('quantityChange');
   @override
@@ -2054,7 +2059,7 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  List<GeneratedColumn> get $columns => [id, quantityChange, modified];
+  List<GeneratedColumn> get $columns => [itemId, quantityChange, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2066,8 +2071,11 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
     }
     if (data.containsKey('quantity_change')) {
       context.handle(
@@ -2085,14 +2093,14 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {itemId};
   @override
   ShoppingCartChangesEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ShoppingCartChangesEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       quantityChange: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}quantity_change'])!,
       modified: attachedDatabase.typeMapping
@@ -2108,15 +2116,17 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
 
 class ShoppingCartChangesEntityData extends DataClass
     implements Insertable<ShoppingCartChangesEntityData> {
-  final int id;
+  final String itemId;
   final int quantityChange;
   final DateTime modified;
   const ShoppingCartChangesEntityData(
-      {required this.id, required this.quantityChange, required this.modified});
+      {required this.itemId,
+      required this.quantityChange,
+      required this.modified});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['item_id'] = Variable<String>(itemId);
     map['quantity_change'] = Variable<int>(quantityChange);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -2124,7 +2134,7 @@ class ShoppingCartChangesEntityData extends DataClass
 
   ShoppingCartChangesEntityCompanion toCompanion(bool nullToAbsent) {
     return ShoppingCartChangesEntityCompanion(
-      id: Value(id),
+      itemId: Value(itemId),
       quantityChange: Value(quantityChange),
       modified: Value(modified),
     );
@@ -2134,7 +2144,7 @@ class ShoppingCartChangesEntityData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ShoppingCartChangesEntityData(
-      id: serializer.fromJson<int>(json['id']),
+      itemId: serializer.fromJson<String>(json['itemId']),
       quantityChange: serializer.fromJson<int>(json['quantityChange']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -2143,23 +2153,23 @@ class ShoppingCartChangesEntityData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'itemId': serializer.toJson<String>(itemId),
       'quantityChange': serializer.toJson<int>(quantityChange),
       'modified': serializer.toJson<DateTime>(modified),
     };
   }
 
   ShoppingCartChangesEntityData copyWith(
-          {int? id, int? quantityChange, DateTime? modified}) =>
+          {String? itemId, int? quantityChange, DateTime? modified}) =>
       ShoppingCartChangesEntityData(
-        id: id ?? this.id,
+        itemId: itemId ?? this.itemId,
         quantityChange: quantityChange ?? this.quantityChange,
         modified: modified ?? this.modified,
       );
   @override
   String toString() {
     return (StringBuffer('ShoppingCartChangesEntityData(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('quantityChange: $quantityChange, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -2167,57 +2177,67 @@ class ShoppingCartChangesEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, quantityChange, modified);
+  int get hashCode => Object.hash(itemId, quantityChange, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ShoppingCartChangesEntityData &&
-          other.id == this.id &&
+          other.itemId == this.itemId &&
           other.quantityChange == this.quantityChange &&
           other.modified == this.modified);
 }
 
 class ShoppingCartChangesEntityCompanion
     extends UpdateCompanion<ShoppingCartChangesEntityData> {
-  final Value<int> id;
+  final Value<String> itemId;
   final Value<int> quantityChange;
   final Value<DateTime> modified;
+  final Value<int> rowid;
   const ShoppingCartChangesEntityCompanion({
-    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
     this.quantityChange = const Value.absent(),
     this.modified = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ShoppingCartChangesEntityCompanion.insert({
-    this.id = const Value.absent(),
+    required String itemId,
     required int quantityChange,
     this.modified = const Value.absent(),
-  }) : quantityChange = Value(quantityChange);
+    this.rowid = const Value.absent(),
+  })  : itemId = Value(itemId),
+        quantityChange = Value(quantityChange);
   static Insertable<ShoppingCartChangesEntityData> custom({
-    Expression<int>? id,
+    Expression<String>? itemId,
     Expression<int>? quantityChange,
     Expression<DateTime>? modified,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
       if (quantityChange != null) 'quantity_change': quantityChange,
       if (modified != null) 'modified': modified,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ShoppingCartChangesEntityCompanion copyWith(
-      {Value<int>? id, Value<int>? quantityChange, Value<DateTime>? modified}) {
+      {Value<String>? itemId,
+      Value<int>? quantityChange,
+      Value<DateTime>? modified,
+      Value<int>? rowid}) {
     return ShoppingCartChangesEntityCompanion(
-      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
       quantityChange: quantityChange ?? this.quantityChange,
       modified: modified ?? this.modified,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
     }
     if (quantityChange.present) {
       map['quantity_change'] = Variable<int>(quantityChange.value);
@@ -2225,15 +2245,19 @@ class ShoppingCartChangesEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ShoppingCartChangesEntityCompanion(')
-          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
           ..write('quantityChange: $quantityChange, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -2276,33 +2300,31 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$InventoryEntityTableInsertCompanionBuilder = InventoryEntityCompanion
     Function({
-  Value<int> id,
+  Value<int?> id,
   required String itemId,
   required String productName,
   required String product,
-  required String connectedCartItem,
-  required int maxCount,
-  required int minCount,
-  required int stockCount,
-  required int fixedSuggestion,
-  required int inventory,
+  Value<int?> maxCount,
+  Value<int?> minCount,
+  Value<int> stockCount,
+  Value<int?> fixedSuggestion,
   Value<DateTime> created,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$InventoryEntityTableUpdateCompanionBuilder = InventoryEntityCompanion
     Function({
-  Value<int> id,
+  Value<int?> id,
   Value<String> itemId,
   Value<String> productName,
   Value<String> product,
-  Value<String> connectedCartItem,
-  Value<int> maxCount,
-  Value<int> minCount,
+  Value<int?> maxCount,
+  Value<int?> minCount,
   Value<int> stockCount,
-  Value<int> fixedSuggestion,
-  Value<int> inventory,
+  Value<int?> fixedSuggestion,
   Value<DateTime> created,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$InventoryEntityTableTableManager extends RootTableManager<
@@ -2326,60 +2348,56 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$InventoryEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             Value<String> itemId = const Value.absent(),
             Value<String> productName = const Value.absent(),
             Value<String> product = const Value.absent(),
-            Value<String> connectedCartItem = const Value.absent(),
-            Value<int> maxCount = const Value.absent(),
-            Value<int> minCount = const Value.absent(),
+            Value<int?> maxCount = const Value.absent(),
+            Value<int?> minCount = const Value.absent(),
             Value<int> stockCount = const Value.absent(),
-            Value<int> fixedSuggestion = const Value.absent(),
-            Value<int> inventory = const Value.absent(),
+            Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               InventoryEntityCompanion(
             id: id,
             itemId: itemId,
             productName: productName,
             product: product,
-            connectedCartItem: connectedCartItem,
             maxCount: maxCount,
             minCount: minCount,
             stockCount: stockCount,
             fixedSuggestion: fixedSuggestion,
-            inventory: inventory,
             created: created,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             required String itemId,
             required String productName,
             required String product,
-            required String connectedCartItem,
-            required int maxCount,
-            required int minCount,
-            required int stockCount,
-            required int fixedSuggestion,
-            required int inventory,
+            Value<int?> maxCount = const Value.absent(),
+            Value<int?> minCount = const Value.absent(),
+            Value<int> stockCount = const Value.absent(),
+            Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               InventoryEntityCompanion.insert(
             id: id,
             itemId: itemId,
             productName: productName,
             product: product,
-            connectedCartItem: connectedCartItem,
             maxCount: maxCount,
             minCount: minCount,
             stockCount: stockCount,
             fixedSuggestion: fixedSuggestion,
-            inventory: inventory,
             created: created,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -2419,11 +2437,6 @@ class $$InventoryEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get connectedCartItem => $state.composableBuilder(
-      column: $state.table.connectedCartItem,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
   ColumnFilters<int> get maxCount => $state.composableBuilder(
       column: $state.table.maxCount,
       builder: (column, joinBuilders) =>
@@ -2441,11 +2454,6 @@ class $$InventoryEntityTableFilterComposer
 
   ColumnFilters<int> get fixedSuggestion => $state.composableBuilder(
       column: $state.table.fixedSuggestion,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get inventory => $state.composableBuilder(
-      column: $state.table.inventory,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -2483,11 +2491,6 @@ class $$InventoryEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get connectedCartItem => $state.composableBuilder(
-      column: $state.table.connectedCartItem,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<int> get maxCount => $state.composableBuilder(
       column: $state.table.maxCount,
       builder: (column, joinBuilders) =>
@@ -2508,11 +2511,6 @@ class $$InventoryEntityTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get inventory => $state.composableBuilder(
-      column: $state.table.inventory,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<DateTime> get created => $state.composableBuilder(
       column: $state.table.created,
       builder: (column, joinBuilders) =>
@@ -2526,23 +2524,25 @@ class $$InventoryEntityTableOrderingComposer
 
 typedef $$InventoryChangesEntityTableInsertCompanionBuilder
     = InventoryChangesEntityCompanion Function({
-  Value<int> id,
+  Value<int?> id,
   required String itemId,
   Value<int?> maxCount,
   Value<int?> minCount,
   Value<int> stockCountChange,
   Value<int?> fixedSuggestion,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$InventoryChangesEntityTableUpdateCompanionBuilder
     = InventoryChangesEntityCompanion Function({
-  Value<int> id,
+  Value<int?> id,
   Value<String> itemId,
   Value<int?> maxCount,
   Value<int?> minCount,
   Value<int> stockCountChange,
   Value<int?> fixedSuggestion,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$InventoryChangesEntityTableTableManager extends RootTableManager<
@@ -2566,13 +2566,14 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$InventoryChangesEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             Value<String> itemId = const Value.absent(),
             Value<int?> maxCount = const Value.absent(),
             Value<int?> minCount = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion(
             id: id,
@@ -2582,15 +2583,17 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             required String itemId,
             Value<int?> maxCount = const Value.absent(),
             Value<int?> minCount = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion.insert(
             id: id,
@@ -2600,6 +2603,7 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -2772,15 +2776,17 @@ class $$DeletedInventoryEntityTableOrderingComposer
 
 typedef $$ProductInScannedItemEntityTableInsertCompanionBuilder
     = ProductInScannedItemEntityCompanion Function({
-  Value<int> id,
+  required String itemId,
   required int stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$ProductInScannedItemEntityTableUpdateCompanionBuilder
     = ProductInScannedItemEntityCompanion Function({
-  Value<int> id,
+  Value<String> itemId,
   Value<int> stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$ProductInScannedItemEntityTableTableManager extends RootTableManager<
@@ -2804,24 +2810,28 @@ class $$ProductInScannedItemEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$ProductInScannedItemEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductInScannedItemEntityCompanion(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            required String itemId,
             required int stockCountChange,
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductInScannedItemEntityCompanion.insert(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -2842,8 +2852,9 @@ class $$ProductInScannedItemEntityTableProcessedTableManager
 class $$ProductInScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
   $$ProductInScannedItemEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnFilters<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -2861,8 +2872,9 @@ class $$ProductInScannedItemEntityTableFilterComposer
 class $$ProductInScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
   $$ProductInScannedItemEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnOrderings<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -2879,15 +2891,17 @@ class $$ProductInScannedItemEntityTableOrderingComposer
 
 typedef $$ProductOutScannedItemEntityTableInsertCompanionBuilder
     = ProductOutScannedItemEntityCompanion Function({
-  Value<int> id,
+  required String itemId,
   required int stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$ProductOutScannedItemEntityTableUpdateCompanionBuilder
     = ProductOutScannedItemEntityCompanion Function({
-  Value<int> id,
+  Value<String> itemId,
   Value<int> stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$ProductOutScannedItemEntityTableTableManager extends RootTableManager<
@@ -2911,24 +2925,28 @@ class $$ProductOutScannedItemEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$ProductOutScannedItemEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductOutScannedItemEntityCompanion(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            required String itemId,
             required int stockCountChange,
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductOutScannedItemEntityCompanion.insert(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -2949,8 +2967,9 @@ class $$ProductOutScannedItemEntityTableProcessedTableManager
 class $$ProductOutScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
   $$ProductOutScannedItemEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnFilters<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -2968,8 +2987,9 @@ class $$ProductOutScannedItemEntityTableFilterComposer
 class $$ProductOutScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
   $$ProductOutScannedItemEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnOrderings<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -2986,15 +3006,17 @@ class $$ProductOutScannedItemEntityTableOrderingComposer
 
 typedef $$ProductCountScannedItemEntityTableInsertCompanionBuilder
     = ProductCountScannedItemEntityCompanion Function({
-  Value<int> id,
+  required String itemId,
   required int stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$ProductCountScannedItemEntityTableUpdateCompanionBuilder
     = ProductCountScannedItemEntityCompanion Function({
-  Value<int> id,
+  Value<String> itemId,
   Value<int> stockCountChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$ProductCountScannedItemEntityTableTableManager extends RootTableManager<
@@ -3019,24 +3041,28 @@ class $$ProductCountScannedItemEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$ProductCountScannedItemEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
             Value<int> stockCountChange = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductCountScannedItemEntityCompanion(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            required String itemId,
             required int stockCountChange,
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ProductCountScannedItemEntityCompanion.insert(
-            id: id,
+            itemId: itemId,
             stockCountChange: stockCountChange,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -3057,8 +3083,9 @@ class $$ProductCountScannedItemEntityTableProcessedTableManager
 class $$ProductCountScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductCountScannedItemEntityTable> {
   $$ProductCountScannedItemEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnFilters<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -3077,8 +3104,9 @@ class $$ProductCountScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase,
         $ProductCountScannedItemEntityTable> {
   $$ProductCountScannedItemEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnOrderings<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -3095,19 +3123,21 @@ class $$ProductCountScannedItemEntityTableOrderingComposer
 
 typedef $$ShoppingCartEntityTableInsertCompanionBuilder
     = ShoppingCartEntityCompanion Function({
-  Value<int> id,
-  required int inventoryId,
+  required String itemId,
+  Value<int?> cartId,
   required String product,
   required int quantity,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$ShoppingCartEntityTableUpdateCompanionBuilder
     = ShoppingCartEntityCompanion Function({
-  Value<int> id,
-  Value<int> inventoryId,
+  Value<String> itemId,
+  Value<int?> cartId,
   Value<String> product,
   Value<int> quantity,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$ShoppingCartEntityTableTableManager extends RootTableManager<
@@ -3131,32 +3161,36 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$ShoppingCartEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            Value<int> inventoryId = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
+            Value<int?> cartId = const Value.absent(),
             Value<String> product = const Value.absent(),
             Value<int> quantity = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ShoppingCartEntityCompanion(
-            id: id,
-            inventoryId: inventoryId,
+            itemId: itemId,
+            cartId: cartId,
             product: product,
             quantity: quantity,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            required int inventoryId,
+            required String itemId,
+            Value<int?> cartId = const Value.absent(),
             required String product,
             required int quantity,
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ShoppingCartEntityCompanion.insert(
-            id: id,
-            inventoryId: inventoryId,
+            itemId: itemId,
+            cartId: cartId,
             product: product,
             quantity: quantity,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -3177,13 +3211,14 @@ class $$ShoppingCartEntityTableProcessedTableManager
 class $$ShoppingCartEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ShoppingCartEntityTable> {
   $$ShoppingCartEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnFilters<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get inventoryId => $state.composableBuilder(
-      column: $state.table.inventoryId,
+  ColumnFilters<int> get cartId => $state.composableBuilder(
+      column: $state.table.cartId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -3206,13 +3241,14 @@ class $$ShoppingCartEntityTableFilterComposer
 class $$ShoppingCartEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ShoppingCartEntityTable> {
   $$ShoppingCartEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnOrderings<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get inventoryId => $state.composableBuilder(
-      column: $state.table.inventoryId,
+  ColumnOrderings<int> get cartId => $state.composableBuilder(
+      column: $state.table.cartId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -3234,15 +3270,17 @@ class $$ShoppingCartEntityTableOrderingComposer
 
 typedef $$ShoppingCartChangesEntityTableInsertCompanionBuilder
     = ShoppingCartChangesEntityCompanion Function({
-  Value<int> id,
+  required String itemId,
   required int quantityChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 typedef $$ShoppingCartChangesEntityTableUpdateCompanionBuilder
     = ShoppingCartChangesEntityCompanion Function({
-  Value<int> id,
+  Value<String> itemId,
   Value<int> quantityChange,
   Value<DateTime> modified,
+  Value<int> rowid,
 });
 
 class $$ShoppingCartChangesEntityTableTableManager extends RootTableManager<
@@ -3266,24 +3304,28 @@ class $$ShoppingCartChangesEntityTableTableManager extends RootTableManager<
           getChildManagerBuilder: (p) =>
               $$ShoppingCartChangesEntityTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
             Value<int> quantityChange = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ShoppingCartChangesEntityCompanion(
-            id: id,
+            itemId: itemId,
             quantityChange: quantityChange,
             modified: modified,
+            rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
+            required String itemId,
             required int quantityChange,
             Value<DateTime> modified = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
               ShoppingCartChangesEntityCompanion.insert(
-            id: id,
+            itemId: itemId,
             quantityChange: quantityChange,
             modified: modified,
+            rowid: rowid,
           ),
         ));
 }
@@ -3304,8 +3346,9 @@ class $$ShoppingCartChangesEntityTableProcessedTableManager
 class $$ShoppingCartChangesEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ShoppingCartChangesEntityTable> {
   $$ShoppingCartChangesEntityTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnFilters<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -3323,8 +3366,9 @@ class $$ShoppingCartChangesEntityTableFilterComposer
 class $$ShoppingCartChangesEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ShoppingCartChangesEntityTable> {
   $$ShoppingCartChangesEntityTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
+
+  ColumnOrderings<String> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

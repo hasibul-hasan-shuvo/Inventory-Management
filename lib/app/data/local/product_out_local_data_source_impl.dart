@@ -8,8 +8,8 @@ class ProductOutLocalDataSourceImpl implements ProductOutLocalDataSource {
   final ProductOutDao _dao = ProductOutDao(Get.find());
 
   @override
-  Future<ScannedProductEntityData?> getProductById(int id) {
-    return _dao.getProductById(id);
+  Future<ScannedProductEntityData?> getProductByItemId(String itemId) {
+    return _dao.getProductByItemId(itemId);
   }
 
   @override
@@ -28,8 +28,8 @@ class ProductOutLocalDataSourceImpl implements ProductOutLocalDataSource {
   }
 
   @override
-  Future<int> deleteProductById(int id) {
-    return _dao.deleteProductById(id);
+  Future<int> deleteProductByItemId(String itemId) {
+    return _dao.deleteProductByItemId(itemId);
   }
 
   @override

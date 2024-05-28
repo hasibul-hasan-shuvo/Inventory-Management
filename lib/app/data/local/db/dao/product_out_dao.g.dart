@@ -6,6 +6,5 @@ part of 'product_out_dao.dart';
 mixin _$ProductOutDaoMixin on DatabaseAccessor<AppDatabase> {
   $ProductOutScannedItemEntityTable get productOutScannedItemEntity =>
       attachedDatabase.productOutScannedItemEntity;
-
   $InventoryEntityTable get inventoryEntity => attachedDatabase.inventoryEntity;
 }

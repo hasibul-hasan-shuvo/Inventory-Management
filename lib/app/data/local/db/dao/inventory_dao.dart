@@ -33,7 +33,7 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
 
     List<OrderingTerm Function($InventoryEntityTable)> orders = [
       (tbl) => OrderingTerm(
-            expression: inventoryEntity.id,
+            expression: inventoryEntity.productName,
             mode: OrderingMode.asc,
           ),
     ];
@@ -52,12 +52,6 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<InventoryEntityData?> getInventoryById(int id) {
-    final query = select(inventoryEntity)..where((tbl) => tbl.id.equals(id));
-
-    return query.getSingleOrNull();
-  }
-
   Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
     final query = select(inventoryEntity)
       ..where((tbl) => tbl.itemId.equals(itemId));
@@ -65,8 +59,9 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.getSingleOrNull();
   }
 
-  Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
-    return (update(inventoryEntity)..where((tbl) => tbl.id.equals(id)))
+  Future<int> updateInventory(
+      String itemId, InventoryEntityCompanion inventory) {
+    return (update(inventoryEntity)..where((tbl) => tbl.itemId.equals(itemId)))
         .write(inventory);
   }
 
@@ -74,8 +69,9 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return batch((batch) => batch.deleteAll(inventoryEntity));
   }
 
-  Future<int> deleteInventoryById(int id) {
-    return (delete(inventoryEntity)..where((tbl) => tbl.id.equals(id))).go();
+  Future<int> deleteInventoryByItemId(String itemId) {
+    return (delete(inventoryEntity)..where((tbl) => tbl.itemId.equals(itemId)))
+        .go();
   }
 
   Future<int> insertInventoryChanges(
@@ -107,8 +103,9 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     return query.get();
   }
 
-  Future<int> deleteInventoryChangesById(int id) {
-    return (delete(inventoryChangesEntity)..where((tbl) => tbl.id.equals(id)))
+  Future<int> deleteInventoryChangesById(String itemId) {
+    return (delete(inventoryChangesEntity)
+          ..where((tbl) => tbl.itemId.equals(itemId)))
         .go();
   }
 
