@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dental_inventory/app/core/base/app_theme_data.dart';
 import 'package:dental_inventory/app/core/model/theme.dart';
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/app_languages.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
@@ -28,6 +30,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
   final PreferenceManager _preference = PreferenceManagerImpl();
+  DataSyncManager? _dataSyncManager;
+
+  @override
+  void initState() {
+    super.initState();
+    _dataSyncManager = DataSyncManager();
+  }
+
+  @override
+  void dispose() {
+    _dataSyncManager?.dispose();
+    ZebraScanner().dismiss();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

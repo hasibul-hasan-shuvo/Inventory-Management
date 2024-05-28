@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/shopping_cart_scanned_products_controller_mixin.dart';
+import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
@@ -16,6 +17,20 @@ class ShoppingCartController extends BaseController
     super.onInit();
     pagingController.initRefresh();
     _getCartItems(false);
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    logger.d("Closing shopping cart controller");
+    newCartItemArrivedController.close();
+  }
+
+  @override
+  InternalFinalCallback<void> get onDelete {
+    ZebraScanner().close();
+
+    return super.onDelete;
   }
 
   @override

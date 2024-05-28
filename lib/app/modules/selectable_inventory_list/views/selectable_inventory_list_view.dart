@@ -42,7 +42,6 @@ class SelectableInventoryListView
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);
-        closeKeyboard();
       },
     );
   }

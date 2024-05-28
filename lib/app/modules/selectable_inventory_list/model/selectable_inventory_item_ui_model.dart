@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/connected_cart_item.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class SelectableInventoryItemUiModel {
   late final int id;
@@ -11,14 +15,23 @@ class SelectableInventoryItemUiModel {
   late final int available;
   late ConnectedCartItemUiModel connectedCartItem;
 
-  SelectableInventoryItemUiModel.fromProductResponseModel(
-      InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
+  SelectableInventoryItemUiModel.fromInventoryEntityData(
+      InventoryEntityData data) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
+
+    ConnectedCartItemUiModel connectedCartItemUiModel =
+        ConnectedCartItemUiModel.fromConnectedCartItemResponse(
+      ConnectedCartItemResponse.fromJson(jsonDecode(data.connectedCartItem)),
+    );
+
+    id = data.id;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
     number = 0;
-    available = response.stockCount ?? 0;
+    available = data.stockCount;
+    connectedCartItem = connectedCartItemUiModel;
   }
 
   SelectableInventoryItemUiModel.fromShoppingProductResponseModel(

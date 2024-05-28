@@ -4,15 +4,15 @@ import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
-import 'package:dental_inventory/app/core/widget/app_textfield.dart';
+import 'package:dental_inventory/app/core/widget/app_text_field.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/utils/input_validators.dart';
 import '../../../core/values/app_values.dart';
 import '../../main/views/main_app_bar.dart';
 import '../controllers/login_controller.dart';
@@ -56,20 +56,18 @@ class LoginView extends BaseView<LoginController> {
           padding: const EdgeInsets.all(AppValues.padding),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildEmailTextField(),
-                SizedBox(
-                  height: AppValues.height_16.h,
-                ),
-                _buildPasswordTextField(),
-                SizedBox(
-                  height: AppValues.margin_20.h,
-                ),
-                _buildSignInButton()
-              ],
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildEmailTextField(),
+                  SizedBox(height: AppValues.height_16.h),
+                  _buildPasswordTextField(),
+                  SizedBox(height: AppValues.margin_20.h),
+                  _buildSignInButton()
+                ],
+              ),
             ),
           ),
         ),
@@ -79,19 +77,20 @@ class LoginView extends BaseView<LoginController> {
 
   Widget _buildEmailTextField() {
     return AppTextField(
-      prefix: const Icon(Icons.email_outlined),
+      prefix: const Icon(Icons.person_rounded),
       keyboardType: TextInputType.emailAddress,
       controller: _loginController,
       labelText: appLocalization.email,
       hintText: appLocalization.enterEmail,
-      validator: (value) {
-        return InputValidators.email(value, appLocalization);
-      },
       onChanged: (value) {
         controller.email = value ?? "";
       },
       maxLength: AppValues.maxEmailLength,
       inputAction: TextInputAction.next,
+      autofillHints: const [
+        AutofillHints.email,
+        AutofillHints.username,
+      ],
     );
   }
 
@@ -108,6 +107,7 @@ class LoginView extends BaseView<LoginController> {
       maxLength: AppValues.maxPasswordLength,
       inputAction: TextInputAction.go,
       onSubmit: (_) => _onLoginButtonTap(),
+      autofillHints: const [AutofillHints.password],
     );
   }
 
@@ -162,6 +162,7 @@ class LoginView extends BaseView<LoginController> {
   void _onLoginButtonTap() {
     closeKeyboard();
     if (_formKey.currentState!.validate()) {
+      TextInput.finishAutofillContext();
       controller.login();
     }
   }
@@ -169,7 +170,7 @@ class LoginView extends BaseView<LoginController> {
   void _subscribeToLoginState() {
     controller.authPageState.listen((state) {
       if (state.status == PageStatus.success) {
-        Get.offAllNamed(Routes.MAIN);
+        Get.offAllNamed(Routes.ACCOUNT_SETUP);
         controller.resetAuthPageState();
       } else if (state.status == PageStatus.error) {
         controller.showErrorMessage(state.message ?? '');

@@ -6,6 +6,12 @@ import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
 import 'package:dental_inventory/app/data/repository/order_repository_impl.dart';
+import 'package:dental_inventory/app/data/repository/product_count_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_count_repository_impl.dart';
+import 'package:dental_inventory/app/data/repository/product_in_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_in_repository_impl.dart';
+import 'package:dental_inventory/app/data/repository/product_out_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_out_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
@@ -42,6 +48,21 @@ class RepositoryBindings implements Bindings {
 
     Get.lazyPut<HomeRepository>(
       () => HomeRepositoryImpl(),
+      fenix: true,
+    );
+
+    Get.lazyPut<ProductInRepository>(
+      () => ProductInRepositoryImpl(),
+      fenix: true,
+    );
+
+    Get.lazyPut<ProductOutRepository>(
+      () => ProductOutRepositoryImpl(),
+      fenix: true,
+    );
+
+    Get.lazyPut<ProductCountRepository>(
+      () => ProductCountRepositoryImpl(),
       fenix: true,
     );
   }

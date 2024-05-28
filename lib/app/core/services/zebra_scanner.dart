@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -11,6 +12,7 @@ class ZebraScanner {
   static final ZebraScanner _instance = ZebraScanner._internal();
   ScannerDelegate? _scannerDelegate;
   ErrorDelegate? _errorDelegate;
+  StreamSubscription? scannerSubscription;
 
   static const EventChannel scanChannel =
       EventChannel('inventorymanagement.no/scan');
@@ -29,7 +31,7 @@ class ZebraScanner {
 
   ZebraScanner._internal() {
     if (Platform.isAndroid) {
-      scanChannel.receiveBroadcastStream().listen(
+      scannerSubscription = scanChannel.receiveBroadcastStream().listen(
             _onEvent,
             onError: _onError,
           );
@@ -46,5 +48,15 @@ class ZebraScanner {
   void _onError(Object error) {
     BuildConfig.instance.config.logger.d("BarcodeError: $error");
     _errorDelegate?.call(error);
+  }
+
+  void close() {
+    BuildConfig.instance.config.logger.i("ScannerDelegatesClosed");
+    _scannerDelegate = null;
+    _errorDelegate = null;
+  }
+
+  void dismiss() {
+    scannerSubscription?.cancel();
   }
 }

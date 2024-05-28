@@ -58,9 +58,11 @@ class ItemSelectableInventoryCard extends StatelessWidget with BaseWidgetMixin {
   Widget _buildItemDetails() {
     return Expanded(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildInventoryName(),
+          SizedBox(height: AppValues.margin_10.h),
           _buildIdAndInventoryCountView(),
         ],
       ),

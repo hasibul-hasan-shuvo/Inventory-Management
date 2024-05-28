@@ -1,17 +1,18 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
-import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
-  final RxList<InventoryCardUIModel> _inventoryItemsController =
+  final RxList<InventoryUIModel> _inventoryItemsController =
       RxList.empty(growable: true);
 
-  List<InventoryCardUIModel> get inventoryItems => _inventoryItemsController;
+  List<InventoryUIModel> get inventoryItems => _inventoryItemsController;
 
   final RxBool _searchModeController = RxBool(false);
 
@@ -47,14 +48,14 @@ class InventoryController extends BaseController {
     _fetchInventoryList();
   }
 
-  void deleteInventoryItem(InventoryCardUIModel data) {
+  void deleteInventoryItem(InventoryUIModel data) {
     callDataService(
-      _inventoryRepository.deleteInventory(id: data.id.toString()),
+      _inventoryRepository.deleteInventory(id: data.id),
       onSuccess: (e) => _deleteSuccessHandler(data),
     );
   }
 
-  void _deleteSuccessHandler(InventoryCardUIModel data) {
+  void _deleteSuccessHandler(InventoryUIModel data) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
     _inventoryItemsController
         .removeWhere((element) => element.itemId == data.itemId);
@@ -76,13 +77,14 @@ class InventoryController extends BaseController {
   }
 
   void _handleFetchInventoryListSuccessResponse(
-      InventoryListResponse response) {
+      List<InventoryEntityData> response) {
+    List<InventoryUIModel> list = [];
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
-    List<InventoryCardUIModel> list = response.inventoryList
-            ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
-            .toList() ??
-        [];
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
+    for (InventoryEntityData inventory in response) {
+      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+    }
     _inventoryItemsController(list);
   }
 
@@ -101,19 +103,20 @@ class InventoryController extends BaseController {
     );
   }
 
-  void _handleNextInventoryListSuccessResponse(InventoryListResponse response) {
+  void _handleNextInventoryListSuccessResponse(
+      List<InventoryEntityData> response) {
+    List<InventoryUIModel> list = [];
     pagingController.nextPage();
-    pagingController.isLastPage = response.next == null;
-    _inventoryItemsController.addAll(
-      response.inventoryList
-              ?.map((e) => InventoryCardUIModel.fromInventoryResponse(e))
-              .toList() ??
-          [],
-    );
+    pagingController.isLastPage =
+        response.isEmpty && response.length < AppValues.defaultPageSize;
+    for (InventoryEntityData inventory in response) {
+      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+    }
+    _inventoryItemsController.addAll(list);
   }
 
   void updateInventoryData({
-    required InventoryCardUIModel data,
+    required InventoryUIModel data,
     required String maxCount,
     required String minCount,
     required String stockCount,
@@ -125,29 +128,34 @@ class InventoryController extends BaseController {
       stockCount: stockCount,
       fixedSuggestion: fixedSuggestion,
     )) {
-      final InventoryCountUpdateRequest request = InventoryCountUpdateRequest(
-        id: data.itemId,
-        maxCount: maxCount,
-        minCount: minCount,
-        stockCount: stockCount,
+      final InventoryUpdateRequestBody request = InventoryUpdateRequestBody(
+        id: data.id,
+        itemId: data.itemId,
+        maxCount: maxCount.toInt,
+        minCount: minCount.toInt,
+        stockCount: stockCount.toInt,
         inventoryID: authRepository.getInventoryID(),
-        fixedSuggestion: fixedSuggestion,
+        stockCountChange: stockCount.toInt - data.currentStock,
+        fixedSuggestion: fixedSuggestion.toInt,
       );
       callDataService(
-        _inventoryRepository.updateInventoryData(request),
+        _inventoryRepository.updateInventoryData(data.id, request),
         onSuccess: _handleUpdateInventoryDataSuccessResponse,
       );
     }
   }
 
-  void _handleUpdateInventoryDataSuccessResponse(InventoryResponse response) {
-    for (var element in inventoryItems) {
-      if (element.itemId == response.product?.itemId.toString()) {
-        element.updateFromInventoryResponse(response);
+  void _handleUpdateInventoryDataSuccessResponse(
+      InventoryEntityData? response) {
+    if (response != null) {
+      for (var element in inventoryItems) {
+        if (element.itemId == response.itemId.toString()) {
+          element.updateFromInventoryEntityData(response);
+        }
       }
-    }
 
-    showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+      showSuccessMessage(appLocalization.messageItemUpdatedSuccessfully);
+    }
   }
 
   bool _checkValuesValidity({

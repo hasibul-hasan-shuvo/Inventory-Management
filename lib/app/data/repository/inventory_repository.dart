@@ -1,25 +1,44 @@
+import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
-import 'package:dental_inventory/app/data/model/request/inventory_count_update_request.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
+import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/data/model/response/product_retrieval_response.dart';
 
 abstract class InventoryRepository {
-  Future<InventoryListResponse> getInventoryList({
+  Future getAllInventories();
+
+  Future<List<InventoryEntityData>> getInventoryList({
     required InventoryListQueryParams queryParams,
   });
 
-  Future deleteInventory({required String id});
+  Future deleteInventoryFromServer(int id);
 
-  Future<InventoryResponse> updateInventoryData(
-      InventoryCountUpdateRequest request);
+  Future deleteInventory({required int id});
 
-  Future<InventoryResponse> getProduct(String itemId);
+  Future<List<InventoryChangesEntityData>> getAllInventoryChanges();
 
-  Future<ProductRetrievalResponse> retrieveProduct(
-      ProductsRetrievalRequestBody requestBody);
+  Future<List<DeletedInventoryEntityData>> getDeletedInventories();
+
+  Future<int> deleteIdFromDeletedInventory(int id);
+
+  Future<InventoryEntityData?> getInventoryById(int id);
+
+  Future<InventoryEntityData?> getInventoryByItemId(String itemId);
+
+  Future<InventoryEntityData?> updateInventoryData(
+    int id,
+    InventoryUpdateRequestBody request,
+  );
+
+  Future<InventoryResponse> updateInventoryDataToServer(
+      InventoryUpdateRequestBody request);
+
+  Future<int> deleteInventoryChangesById(int id);
+
+  Future<void> deleteAllInventories();
+
+  Future<void> deleteAllInventoryChanges();
 
   Future<List<GlobalInventoryResponse>> getGlobalInventoryList({
     required String query,
@@ -29,4 +48,8 @@ abstract class InventoryRepository {
 
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody);
+
+  Future<InventoryListResponse> getInventoryListFromRemote({
+    required InventoryListQueryParams queryParams,
+  });
 }

@@ -164,7 +164,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
       isIncludeCountInCart: pageArguments.isIncludeCountInCart,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _inventoryRepository.getInventoryListFromRemote(
         queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
@@ -193,7 +193,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
       isIncludeCountInCart: pageArguments.isIncludeCountInCart,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _inventoryRepository.getInventoryListFromRemote(
         queryParams: queryParams,
       ),
       onSuccess: _handleNextInventoryListSuccessResponse,

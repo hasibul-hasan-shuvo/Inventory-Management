@@ -45,7 +45,6 @@ class ShoppingCartSelectableInventoriesView
       onChangeSearchMode: controller.changeSearchMode,
       updateSearchQuery: (value) {
         controller.updateSearchQuery(value);
-        closeKeyboard();
       },
     );
   }

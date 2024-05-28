@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
@@ -49,10 +50,7 @@ abstract class DateParser {
 
     String formattedDate = "";
     try {
-      var dateTimeLocal = dateTime.toLocal();
-
-      formattedDate =
-          DateFormat(outputDateFormat, localeName).format(dateTimeLocal);
+      formattedDate = DateFormat(outputDateFormat, localeName).format(dateTime);
     } catch (e) {
       Logger().e("$e");
     }
@@ -60,5 +58,15 @@ abstract class DateParser {
     return formattedDate;
   }
 
+  static DateTime getDateTimeFromDateString(String? date) {
+    if (date.isNullOrEmpty) return getCurrentDateTime;
+
+    DateTime convertedDateTime = DateTime.parse(date!);
+
+    return convertedDateTime;
+  }
+
   static DateTime get getCurrentDateTime => DateTime.now();
+
+  static DateTime get getCurrentUtcDateTime => DateTime.now().toUtc();
 }

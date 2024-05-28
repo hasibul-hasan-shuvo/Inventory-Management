@@ -23,7 +23,9 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   BuildContext? _context;
 
   GlobalInventoriesView() {
+    logger.i("GlobalInventory");
     ZebraScanner().addScannerDelegate((String? code) {
+      logger.i("GlobalScanned: $code");
       closeKeyboard();
       controller.onScanned(code);
     });
@@ -41,7 +43,6 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
           updateSearchQuery: (value) {
-            closeKeyboard();
             controller.updateSearchQuery(value);
           },
         ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/request/confirm_order_delivery_request_body.dart';
+import 'package:dental_inventory/app/data/model/request/order_details_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/order_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/order_items_response.dart';
 import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
@@ -49,10 +50,14 @@ class OrderRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<OrderItemsResponse> getOrderItems(int orderId) {
+  Future<OrderItemsResponse> getOrderItems(
+    int orderId,
+    OrderDetailsQueryParams queryParams,
+  ) {
     try {
       var dioCall = dioClient.get(
         '${EndPoints.orders}/$orderId/',
+        queryParameters: queryParams.toJson(),
       );
 
       return callApiWithErrorParser(dioCall)

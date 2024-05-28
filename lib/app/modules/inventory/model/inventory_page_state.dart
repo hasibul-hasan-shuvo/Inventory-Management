@@ -1,10 +1,10 @@
-import 'package:dental_inventory/app/modules/inventory/model/inventory_card_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 
 import '../../login/models/auth_page_state.dart';
 
 class InventoryPageState {
   final PageStatus pageStatus;
-  final List<InventoryCardUIModel> inventoryList;
+  final List<InventoryUIModel> inventoryList;
 
   InventoryPageState({
     required this.pageStatus,
@@ -25,7 +25,7 @@ class InventoryPageState {
     );
   }
 
-  factory InventoryPageState.success(List<InventoryCardUIModel> inventoryList) {
+  factory InventoryPageState.success(List<InventoryUIModel> inventoryList) {
     return InventoryPageState(
       pageStatus: PageStatus.success,
       inventoryList: inventoryList,

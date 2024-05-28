@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
@@ -26,6 +27,14 @@ class GlobalInventoriesController extends BaseController {
 
   final Rx<GlobalUnavailableProductUiModel?> alternativeInventoryController =
       Rx(null);
+
+  @override
+  void onClose() {
+    super.onClose();
+    ZebraScanner().close();
+    addInventoryController.close();
+    alternativeInventoryController.close();
+  }
 
   void changeSearchMode() {
     _searchModeController(!isSearchable);

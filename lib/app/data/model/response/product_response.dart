@@ -12,4 +12,14 @@ class ProductResponse {
   String? itemId;
   String? imageUrl;
   num? price;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'item_id': itemId,
+      'image_url': imageUrl,
+      'price': price,
+    };
+  }
 }

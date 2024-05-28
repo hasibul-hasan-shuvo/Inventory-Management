@@ -1,8 +1,12 @@
 import 'package:dental_inventory/app/core/model/login_request_body.dart';
-import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
+import 'package:dental_inventory/app/data/local/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/model/response/login_response.dart';
 import 'package:dental_inventory/app/data/model/response/user_response.dart';
 import 'package:dental_inventory/app/data/remote/auth_remote_data_source.dart';
+import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_count_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_in_repository.dart';
+import 'package:dental_inventory/app/data/repository/product_out_repository.dart';
 import 'package:get/get.dart';
 
 import 'auth_repository.dart';
@@ -11,6 +15,10 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource =
       Get.find<AuthRemoteDataSource>();
   final AuthLocalDataSource _localDataSource = Get.find<AuthLocalDataSource>();
+  final InventoryRepository _inventoryRepository = Get.find();
+  final ProductInRepository _productInRepository = Get.find();
+  final ProductOutRepository _productOutRepository = Get.find();
+  final ProductCountRepository _productCountRepository = Get.find();
 
   @override
   Future<LoginResponse> login({required LoginRequestBody requestBody}) {
@@ -28,6 +36,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   void logout() {
+    _inventoryRepository.deleteAllInventories();
+    _inventoryRepository.deleteAllInventoryChanges();
+    _productInRepository.deleteProducts();
+    _productOutRepository.deleteProducts();
+    _productCountRepository.deleteProducts();
     _localDataSource.removeUserData();
   }
 
@@ -54,6 +67,16 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   String getInventoryID() {
     return _localDataSource.getInventoryID().toString();
+  }
+
+  @override
+  bool getIsUserAccountSet() {
+    return _localDataSource.getIsUserAccountSet();
+  }
+
+  @override
+  void setIsUserAccountSet() {
+    return _localDataSource.setIsUserAccountSet();
   }
 
   Future<UserResponse> _getAndSaveUserData() {

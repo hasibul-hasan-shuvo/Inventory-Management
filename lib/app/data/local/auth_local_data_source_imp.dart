@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dental_inventory/app/data/local/preference/auth_local_data_source.dart';
+import 'package:dental_inventory/app/data/local/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/app/data/model/response/user_response.dart';
 import 'package:get/get.dart';
@@ -44,9 +44,26 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
 
   @override
   void removeUserData() {
+    _preferenceManager.remove(PreferenceManager.INVENTORY_LAST_SYNC_TIME_STAMP);
+    _preferenceManager
+        .remove(PreferenceManager.SHOPPING_CART_LAST_SYNC_TIME_STAMP);
     _preferenceManager.remove(PreferenceManager.KEY_TOKEN);
     _preferenceManager.remove(PreferenceManager.REFRESH_TOKEN);
     _preferenceManager.remove(PreferenceManager.INVENTORY_ID);
     _preferenceManager.remove(PreferenceManager.USER_DATA);
+    _preferenceManager.remove(PreferenceManager.IS_USER_ACCOUNT_SET);
+  }
+
+  @override
+  bool getIsUserAccountSet() {
+    return _preferenceManager.getBool(PreferenceManager.IS_USER_ACCOUNT_SET);
+  }
+
+  @override
+  void setIsUserAccountSet() {
+    return _preferenceManager.setBool(
+      PreferenceManager.IS_USER_ACCOUNT_SET,
+      true,
+    );
   }
 }

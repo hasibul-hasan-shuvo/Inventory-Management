@@ -44,6 +44,7 @@
   "logOut": "Logg ut",
   "logOutMessage:": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
+  "messageAccountSetup": "Vennligst vent mens\nvi setter opp\nkontoen din",
   "messageAddedToShoppingCart": "Lagt til i handlekurv",
   "messageCodeNotFound": "QR-kode eller strekkode ikke funnet",
   "messageConfirmDelivery": "Har du mottatt alle produkter i god stand?",
@@ -61,6 +62,8 @@
     }
   },
   "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
+  "messageItemNotFound": "Element ikke funnet!",
+  "messageItemOutOfStock": "Vare utsolgt!",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",

@@ -1,6 +1,7 @@
-import 'package:dental_inventory/app/data/model/request/products_retrieval_request_body.dart';
-import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
+import 'dart:convert';
+
+import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class ScannedProductUiModel {
   late final int id;
@@ -10,51 +11,24 @@ class ScannedProductUiModel {
   late int number;
   late final int available;
 
-  ScannedProductUiModel.fromProductResponseModelWithDefaultNumber(
-      InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
-    number = 1;
-    available = response.stockCount ?? 0;
-  }
+  ScannedProductUiModel.fromScannedProductEntityData(
+    ScannedProductEntityData data, {
+    bool addStockCount = false,
+  }) {
+    ProductResponse product =
+        ProductResponse.fromJson(jsonDecode(data.product));
 
-  ScannedProductUiModel.fromProductResponseModel(InventoryResponse response) {
-    id = response.id ?? -1;
-    itemId = response.product?.itemId ?? '';
-    name = response.product?.name ?? '';
-    imageUrl = response.product?.imageUrl ?? '';
-    number = response.stockCount ?? 0;
-    available = response.stockCount ?? 0;
-  }
-
-  ScannedProductUiModel.addProductFromInventory(
-      SelectableInventoryItemUiModel data) {
     id = data.id;
-    itemId = data.itemId;
-    name = data.name;
-    imageUrl = data.imageUrl;
-    number = data.number;
-    available = data.available;
+    itemId = product.itemId ?? '';
+    name = product.name ?? '';
+    imageUrl = product.imageUrl ?? '';
+    number = addStockCount
+        ? data.stockCount + data.stockCountChange
+        : data.stockCountChange;
+    available = data.stockCount;
   }
 
   void updateNumber(int newNumber) {
     number = newNumber;
-  }
-
-  ScannedProductsRequestBody toScannedProductsRequestBodyWithCountChange(
-      bool isPositive) {
-    return ScannedProductsRequestBody(
-      itemId: itemId,
-      countChange: isPositive ? number : number * -1,
-    );
-  }
-
-  ScannedProductsRequestBody toScannedProductsRequestBodyWithCurrentStock() {
-    return ScannedProductsRequestBody(
-      itemId: itemId,
-      currentStock: number,
-    );
   }
 }

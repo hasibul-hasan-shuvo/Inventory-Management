@@ -14,4 +14,8 @@ abstract class AuthLocalDataSource {
   void storeUserData(UserResponse data);
 
   void removeUserData();
+
+  bool getIsUserAccountSet();
+
+  void setIsUserAccountSet();
 }
