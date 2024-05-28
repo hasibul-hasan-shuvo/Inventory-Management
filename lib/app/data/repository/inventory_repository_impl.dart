@@ -151,7 +151,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
   @override
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody) {
-    return _remoteDataSource.createInventory(requestBody);
+    return _remoteDataSource.createInventory(requestBody).then((value) {
+      _syncInventories();
+
+      return value;
+    });
   }
 
   void _syncInventories() {
