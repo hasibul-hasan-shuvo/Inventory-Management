@@ -7,7 +7,6 @@ import 'package:dental_inventory/app/data/model/response/inventory_response.dart
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class SelectableInventoryItemUiModel {
-  late final int id;
   late final String itemId;
   late final String name;
   late final String imageUrl;
@@ -20,23 +19,15 @@ class SelectableInventoryItemUiModel {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 
-    ConnectedCartItemUiModel connectedCartItemUiModel =
-        ConnectedCartItemUiModel.fromConnectedCartItemResponse(
-      ConnectedCartItemResponse.fromJson(jsonDecode(data.connectedCartItem)),
-    );
-
-    id = data.id;
     itemId = product.itemId ?? '';
     name = product.name ?? '';
     imageUrl = product.imageUrl ?? '';
     number = 0;
     available = data.stockCount;
-    connectedCartItem = connectedCartItemUiModel;
   }
 
   SelectableInventoryItemUiModel.fromShoppingProductResponseModel(
       InventoryResponse response) {
-    id = response.id ?? -1;
     itemId = response.product?.itemId ?? '';
     name = response.product?.name ?? '';
     imageUrl = response.product?.imageUrl ?? '';

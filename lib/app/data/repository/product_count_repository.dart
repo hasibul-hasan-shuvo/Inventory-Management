@@ -1,16 +1,16 @@
 import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
 
 abstract class ProductCountRepository {
-  Future<ScannedProductEntityData?> addProductByInventoryId(
-      int id, int stockCountChange);
+  Future<ScannedProductEntityData?> addProductByItemId(
+      String itemId, int stockCountChange);
 
-  Future<ScannedProductEntityData?> getProductById(String itemId);
+  Future<ScannedProductEntityData?> getProductByItemId(String itemId);
 
   Future<List<ScannedProductEntityData>> getProducts();
 
-  Future<int> updateProduct(int id, int stockCountChange);
+  Future<int> updateProduct(String itemId, int stockCountChange);
 
-  Future<int> deleteProductById(int id);
+  Future<int> deleteProductByItemId(String itemId);
 
   Future<void> deleteProducts();
 

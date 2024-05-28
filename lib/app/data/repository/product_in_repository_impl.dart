@@ -16,22 +16,22 @@ class ProductInRepositoryImpl implements ProductInRepository {
   final ProductInLocalDataSource _localDataSource = Get.find();
 
   @override
-  Future<ScannedProductEntityData?> addProductByInventoryId(
-      int id, int stockCountChange) {
+  Future<ScannedProductEntityData?> addProductByItemId(
+      String itemId, int stockCountChange) {
     ProductInScannedItemEntityCompanion scannedProduct =
         ProductInScannedItemEntityCompanion.insert(
-      id: drift.Value(id),
+      itemId: itemId,
       stockCountChange: stockCountChange,
       modified: drift.Value(DateParser.getCurrentUtcDateTime),
     );
 
     return _localDataSource.insertProduct(scannedProduct).then((value) {
-      return _localDataSource.getProductById(id);
+      return _localDataSource.getProductByItemId(itemId);
     });
   }
 
   @override
-  Future<ScannedProductEntityData?> getProductById(String itemId) {
+  Future<ScannedProductEntityData?> getProductByItemId(String itemId) {
     return _inventoryRepository
         .getInventoryByItemId(itemId)
         .then((InventoryEntityData? inventory) {
@@ -39,7 +39,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
         throw NotFoundException('', '');
       }
 
-      return addProductByInventoryId(inventory.id, 1);
+      return addProductByItemId(itemId, 1);
     });
   }
 
@@ -49,10 +49,10 @@ class ProductInRepositoryImpl implements ProductInRepository {
   }
 
   @override
-  Future<int> updateProduct(int id, int stockCountChange) {
+  Future<int> updateProduct(String itemId, int stockCountChange) {
     ProductInScannedItemEntityCompanion product =
         ProductInScannedItemEntityCompanion(
-      id: drift.Value(id),
+      itemId: drift.Value(itemId),
       stockCountChange: drift.Value(stockCountChange),
       modified: drift.Value(DateParser.getCurrentUtcDateTime),
     );
@@ -61,8 +61,8 @@ class ProductInRepositoryImpl implements ProductInRepository {
   }
 
   @override
-  Future<int> deleteProductById(int id) {
-    return _localDataSource.deleteProductById(id);
+  Future<int> deleteProductByItemId(String itemId) {
+    return _localDataSource.deleteProductByItemId(itemId);
   }
 
   @override
@@ -80,18 +80,14 @@ class ProductInRepositoryImpl implements ProductInRepository {
       for (ScannedProductUiModel product in scannedList) {
         try {
           InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
-            id: product.id,
             itemId: product.itemId,
             stockCount: product.available + product.number,
             stockCountChange: product.number,
           );
 
-          await _inventoryRepository.updateInventoryData(
-            product.id,
-            requestBody,
-          );
+          await _inventoryRepository.updateInventoryData(requestBody);
 
-          await deleteProductById(product.id);
+          await deleteProductByItemId(product.itemId);
         } catch (e) {
           BuildConfig.instance.config.logger.e("RevertAllItemsError: $e");
         }

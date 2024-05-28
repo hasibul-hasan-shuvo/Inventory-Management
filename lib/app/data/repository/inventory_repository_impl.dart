@@ -54,29 +54,26 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryEntityData?> getInventoryById(int id) {
-    return _localDataSource.getInventoryById(id);
-  }
-
-  @override
   Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
     return _localDataSource.getInventoryByItemId(itemId);
   }
 
   @override
   Future<InventoryEntityData?> updateInventoryData(
-      int id, InventoryUpdateRequestBody request) {
+      InventoryUpdateRequestBody request) {
     InventoryEntityCompanion inventory = request.toInventoryEntityCompanion();
     InventoryChangesEntityCompanion inventoryChanges =
         request.toInventoryChangesEntityCompanion();
 
-    return _localDataSource.updateInventory(id, inventory).then((_) {
+    return _localDataSource
+        .updateInventory(request.itemId, inventory)
+        .then((_) {
       return _localDataSource
           .insertInventoryChanges(inventoryChanges)
           .then((_) {
         _syncInventories();
 
-        return getInventoryById(id);
+        return getInventoryByItemId(request.itemId);
       });
     });
   }
@@ -88,8 +85,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<int> deleteInventoryChangesById(int id) {
-    return _localDataSource.deleteInventoryChangesById(id);
+  Future<int> deleteInventoryChangesByItemId(String itemId) {
+    return _localDataSource.deleteInventoryChangesByItemId(itemId);
   }
 
   @override
@@ -98,17 +95,19 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future deleteInventory({required int id}) {
-    return _localDataSource.deleteInventory(id).then((_) {
-      return _localDataSource
-          .addInventoryIdToDeletedInventoryEntity(
-        DeletedInventoryEntityCompanion.insert(
-          id: drift.Value(id),
-        ),
-      )
-          .then((_) {
-        _syncInventories();
-      });
+  Future deleteInventory({required int? id, required String itemId}) {
+    return _localDataSource.deleteInventory(itemId).then((_) {
+      if (id != null) {
+        return _localDataSource
+            .addInventoryIdToDeletedInventoryEntity(
+          DeletedInventoryEntityCompanion.insert(
+            id: drift.Value(id),
+          ),
+        )
+            .then((_) {
+          _syncInventories();
+        });
+      }
     });
   }
 
@@ -151,7 +150,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
   @override
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody) {
-    return _remoteDataSource.createInventory(requestBody);
+    return _remoteDataSource.createInventory(requestBody).then((value) {
+      _syncInventories();
+
+      return value;
+    });
   }
 
   void _syncInventories() {

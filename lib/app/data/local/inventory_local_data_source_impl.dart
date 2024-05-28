@@ -35,19 +35,15 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   }
 
   @override
-  Future<InventoryEntityData?> getInventoryById(int id) {
-    return _dao.getInventoryById(id);
-  }
-
-  @override
   Future<InventoryEntityData?> getInventoryByItemId(String itemId) {
     return _dao.getInventoryByItemId(itemId);
   }
 
   @override
-  Future<int> updateInventory(int id, InventoryEntityCompanion inventory) {
+  Future<int> updateInventory(
+      String itemId, InventoryEntityCompanion inventory) {
     return _dao.updateInventory(
-      id,
+      itemId,
       inventory,
     );
   }
@@ -59,8 +55,8 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   }
 
   @override
-  Future<int> deleteInventoryChangesById(int id) {
-    return _dao.deleteInventoryChangesById(id);
+  Future<int> deleteInventoryChangesByItemId(String itemId) {
+    return _dao.deleteInventoryChangesById(itemId);
   }
 
   @override
@@ -69,8 +65,8 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   }
 
   @override
-  Future<int> deleteInventory(int id) {
-    return _dao.deleteInventoryById(id);
+  Future<int> deleteInventory(String itemId) {
+    return _dao.deleteInventoryByItemId(itemId);
   }
 
   @override

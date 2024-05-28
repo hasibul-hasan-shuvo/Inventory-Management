@@ -2,7 +2,7 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
 
 abstract class ProductInLocalDataSource {
-  Future<ScannedProductEntityData?> getProductById(int id);
+  Future<ScannedProductEntityData?> getProductByItemId(String itemId);
 
   Future<List<ScannedProductEntityData>> getProducts();
 
@@ -10,7 +10,7 @@ abstract class ProductInLocalDataSource {
 
   Future<int> updateProduct(ProductInScannedItemEntityCompanion product);
 
-  Future<int> deleteProductById(int id);
+  Future<int> deleteProductByItemId(String itemId);
 
   Future<void> deleteProducts();
 }

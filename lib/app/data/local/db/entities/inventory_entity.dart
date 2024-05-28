@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 class InventoryEntity extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().nullable()();
 
   TextColumn get itemId => text()();
 
@@ -9,17 +9,13 @@ class InventoryEntity extends Table {
 
   TextColumn get product => text()();
 
-  TextColumn get connectedCartItem => text()();
+  IntColumn get maxCount => integer().nullable()();
 
-  IntColumn get maxCount => integer()();
+  IntColumn get minCount => integer().nullable()();
 
-  IntColumn get minCount => integer()();
+  IntColumn get stockCount => integer().withDefault(const Constant(0))();
 
-  IntColumn get stockCount => integer()();
-
-  IntColumn get fixedSuggestion => integer()();
-
-  IntColumn get inventory => integer()();
+  IntColumn get fixedSuggestion => integer().nullable()();
 
   DateTimeColumn get created =>
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
@@ -28,5 +24,5 @@ class InventoryEntity extends Table {
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
   @override
-  Set<Column<Object>>? get primaryKey => {id};
+  Set<Column<Object>>? get primaryKey => {itemId};
 }

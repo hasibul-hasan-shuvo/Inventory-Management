@@ -11,23 +11,19 @@ abstract class InventoryLocalDataSource {
   Future<List<InventoryEntityData>> getInventories(
       InventoryListQueryParams queryParams);
 
-  Future<InventoryEntityData?> getInventoryById(int id);
-
   Future<InventoryEntityData?> getInventoryByItemId(String itemId);
 
   Future<int> updateInventory(
-    int id,
-    InventoryEntityCompanion inventory,
-  );
+      String itemId, InventoryEntityCompanion inventory);
 
   Future<int> insertInventoryChanges(
       InventoryChangesEntityCompanion inventoryChanges);
 
-  Future<int> deleteInventoryChangesById(int id);
+  Future<int> deleteInventoryChangesByItemId(String itemId);
 
   Future<List<InventoryChangesEntityData>> getAllInventoryChanges();
 
-  Future<int> deleteInventory(int id);
+  Future<int> deleteInventory(String itemId);
 
   Future<int> addInventoryIdToDeletedInventoryEntity(
       DeletedInventoryEntityCompanion inventory);

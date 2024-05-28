@@ -64,7 +64,7 @@ class ProductInController extends BaseController
     int number = numberString.toInt;
 
     if (number == 0) {
-      _removeProduct(data.id, data.itemId);
+      _removeProduct(data.itemId);
     } else {
       _updateProduct(data, number);
     }
@@ -81,7 +81,7 @@ class ProductInController extends BaseController
 
   void _getProduct(String itemId) {
     callDataService(
-      _repository.getProductById(itemId),
+      _repository.getProductByItemId(itemId),
       onSuccess: _handleGetProductSuccessResponse,
     );
   }
@@ -118,7 +118,7 @@ class ProductInController extends BaseController
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
     if (inventoryData.number == 0) {
-      _removeProduct(inventoryData.id, inventoryData.itemId);
+      _removeProduct(inventoryData.itemId);
     } else {
       bool isItemExist = false;
       for (ScannedProductUiModel product in scannedProducts) {
@@ -137,17 +137,17 @@ class ProductInController extends BaseController
 
   void _addProductFromInventory(SelectableInventoryItemUiModel inventory) {
     callDataService(
-      _repository.addProductByInventoryId(
-        inventory.id,
+      _repository.addProductByItemId(
+        inventory.itemId,
         inventory.number,
       ),
       onSuccess: _handleGetProductSuccessResponse,
     );
   }
 
-  void _removeProduct(int id, String itemId) {
+  void _removeProduct(String itemId) {
     callDataService(
-      _repository.deleteProductById(id),
+      _repository.deleteProductByItemId(itemId),
       onSuccess: (_) => removeProductByItemId(itemId),
     );
   }
@@ -155,7 +155,7 @@ class ProductInController extends BaseController
   void _updateProduct(ScannedProductUiModel product, int stockCountChange) {
     callDataService(
       _repository.updateProduct(
-        product.id,
+        product.itemId,
         stockCountChange,
       ),
       onSuccess: (_) {

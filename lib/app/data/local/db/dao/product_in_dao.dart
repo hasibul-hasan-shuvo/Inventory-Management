@@ -20,14 +20,14 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
 
   Future<int> updateProduct(ProductInScannedItemEntityCompanion product) {
     return (update(productInScannedItemEntity)
-          ..where((tbl) => tbl.id.equals(product.id.value)))
+          ..where((tbl) => tbl.itemId.equals(product.itemId.value)))
         .write(product);
   }
 
   Future<List<ScannedProductEntityData>> getProducts() {
     final query = select(productInScannedItemEntity).join([
       leftOuterJoin(inventoryEntity,
-          inventoryEntity.id.equalsExp(productInScannedItemEntity.id))
+          inventoryEntity.itemId.equalsExp(productInScannedItemEntity.itemId))
     ]);
 
     return query.get().then((rows) {
@@ -37,7 +37,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
         InventoryEntityData inventory = e.readTable(inventoryEntity);
 
         return ScannedProductEntityData(
-          id: scannedProduct.id,
+          itemId: scannedProduct.itemId,
           product: inventory.product,
           stockCountChange: scannedProduct.stockCountChange,
           stockCount: inventory.stockCount,
@@ -46,12 +46,12 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
-  Future<ScannedProductEntityData?> getProductById(int id) {
+  Future<ScannedProductEntityData?> getProductByItemId(String itemId) {
     final query = select(productInScannedItemEntity).join([
       leftOuterJoin(inventoryEntity,
-          inventoryEntity.id.equalsExp(productInScannedItemEntity.id))
+          inventoryEntity.itemId.equalsExp(productInScannedItemEntity.itemId))
     ])
-      ..where(productInScannedItemEntity.id.equals(id));
+      ..where(productInScannedItemEntity.itemId.equals(itemId));
 
     return query.getSingleOrNull().then((row) {
       if (row != null) {
@@ -60,7 +60,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
         InventoryEntityData inventory = row.readTable(inventoryEntity);
 
         return ScannedProductEntityData(
-          id: scannedProduct.id,
+          itemId: scannedProduct.itemId,
           product: inventory.product,
           stockCountChange: scannedProduct.stockCountChange,
           stockCount: inventory.stockCount,
@@ -71,9 +71,9 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
-  Future<int> deleteProductById(int id) {
+  Future<int> deleteProductByItemId(String itemId) {
     return (delete(productInScannedItemEntity)
-          ..where((tbl) => tbl.id.equals(id)))
+          ..where((tbl) => tbl.itemId.equals(itemId)))
         .go();
   }
 

@@ -47,7 +47,7 @@ class ShoppingCartSelectableInventoryEditDialogView extends StatelessWidget
 
   Widget _getProductTopView() {
     return ProductTopView(
-      id: data.id.toString(),
+      id: data.itemId.toString(),
       name: data.name,
       imageUrl: data.imageUrl,
     );
@@ -78,7 +78,7 @@ class ShoppingCartSelectableInventoryEditDialogView extends StatelessWidget
             suggestionLabel ?? appLocalization.labelSuggestion,
             (data.connectedCartItem == null
                     ? 0
-                    : data.connectedCartItem!.quantity)
+                    : data.connectedCartItem?.quantity)
                 .toString(),
           ),
           const Divider(),
