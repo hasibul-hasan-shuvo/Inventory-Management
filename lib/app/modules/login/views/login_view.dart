@@ -9,6 +9,7 @@ import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -55,20 +56,18 @@ class LoginView extends BaseView<LoginController> {
           padding: const EdgeInsets.all(AppValues.padding),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildEmailTextField(),
-                SizedBox(
-                  height: AppValues.height_16.h,
-                ),
-                _buildPasswordTextField(),
-                SizedBox(
-                  height: AppValues.margin_20.h,
-                ),
-                _buildSignInButton()
-              ],
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildEmailTextField(),
+                  SizedBox(height: AppValues.height_16.h),
+                  _buildPasswordTextField(),
+                  SizedBox(height: AppValues.margin_20.h),
+                  _buildSignInButton()
+                ],
+              ),
             ),
           ),
         ),
@@ -88,6 +87,10 @@ class LoginView extends BaseView<LoginController> {
       },
       maxLength: AppValues.maxEmailLength,
       inputAction: TextInputAction.next,
+      autofillHints: const [
+        AutofillHints.email,
+        AutofillHints.username,
+      ],
     );
   }
 
@@ -104,6 +107,7 @@ class LoginView extends BaseView<LoginController> {
       maxLength: AppValues.maxPasswordLength,
       inputAction: TextInputAction.go,
       onSubmit: (_) => _onLoginButtonTap(),
+      autofillHints: const [AutofillHints.password],
     );
   }
 
@@ -158,6 +162,7 @@ class LoginView extends BaseView<LoginController> {
   void _onLoginButtonTap() {
     closeKeyboard();
     if (_formKey.currentState!.validate()) {
+      TextInput.finishAutofillContext();
       controller.login();
     }
   }

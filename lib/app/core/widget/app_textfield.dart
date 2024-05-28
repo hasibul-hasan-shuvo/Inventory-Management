@@ -25,6 +25,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
     this.maxLength,
     this.inputAction,
     this.onSubmit,
+    this.autofillHints = const [],
   }) : super(key: key) {
     _isObscured = RxBool(obscureText);
   }
@@ -43,6 +44,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
   final int? maxLength;
   final TextInputAction? inputAction;
   final OnSubmitCallback? onSubmit;
+  final List<String> autofillHints;
 
   late final RxBool _isObscured;
 
@@ -69,6 +71,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
             maxLength: maxLength,
             textInputAction: inputAction,
             onFieldSubmitted: onSubmit,
+            autofillHints: autofillHints,
           ),
         )
       ],
