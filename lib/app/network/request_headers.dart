@@ -52,6 +52,8 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
             DioException(requestOptions: err.requestOptions, error: e),
             handler,
           );
+
+          return;
         }
       }
     }
