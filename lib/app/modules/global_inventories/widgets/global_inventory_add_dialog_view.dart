@@ -49,14 +49,17 @@ class GlobalInventoryAddDialogView extends StatelessWidget
 
   Widget _buildQuantityStatus() {
     return ElevatedContainer(
-      height: AppValues.space_110.h,
       bgColor: theme.colorScheme.background,
       borderRadius: AppValues.radius_6.r,
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildMaxMinEditor(),
+          Container(
+            height: AppValues.space_110,
+            width: AppValues.dividerWidth.w,
+            color: theme.dividerColor,
+          ),
           _buildCurrentAndSuggestionEditor(),
         ],
       ),
@@ -69,22 +72,17 @@ class GlobalInventoryAddDialogView extends StatelessWidget
       child: Padding(
         padding: EdgeInsets.all(AppValues.halfPadding.sp),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: TextFieldWithTitle(
-                controller: fixedSuggestionController,
-                title: appLocalization.fixedProposal,
-              ),
+            TextFieldWithTitle(
+              controller: fixedSuggestionController,
+              title: appLocalization.fixedProposal,
             ),
             SizedBox(height: AppValues.margin_10.h),
-            Expanded(
-              child: TextFieldWithTitle(
-                controller: stockCountController,
-                title: appLocalization.inventory,
-              ),
+            TextFieldWithTitle(
+              controller: stockCountController,
+              title: appLocalization.inventory,
             ),
           ],
         ),
@@ -95,36 +93,23 @@ class GlobalInventoryAddDialogView extends StatelessWidget
   Widget _buildMaxMinEditor() {
     return Expanded(
       flex: 3,
-      child: Row(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(AppValues.halfPadding.sp),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: TextFieldWithTitle(
-                    controller: minController,
-                    title: appLocalization.min,
-                  ),
-                ),
-                SizedBox(height: AppValues.margin_10.h),
-                Expanded(
-                  child: TextFieldWithTitle(
-                    controller: maxController,
-                    title: appLocalization.max,
-                  ),
-                ),
-              ],
+      child: Padding(
+        padding: EdgeInsets.all(AppValues.halfPadding.sp),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFieldWithTitle(
+              controller: minController,
+              title: appLocalization.min,
             ),
-          ),
-          Container(
-            height: AppValues.space_110,
-            width: AppValues.dividerWidth.w,
-            color: theme.dividerColor,
-          ),
-        ],
+            SizedBox(height: AppValues.margin_10.h),
+            TextFieldWithTitle(
+              controller: maxController,
+              title: appLocalization.max,
+            ),
+          ],
+        ),
       ),
     );
   }

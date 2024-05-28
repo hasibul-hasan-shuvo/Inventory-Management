@@ -23,7 +23,9 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   BuildContext? _context;
 
   GlobalInventoriesView() {
+    logger.i("GlobalInventory");
     ZebraScanner().addScannerDelegate((String? code) {
+      logger.i("GlobalScanned: $code");
       closeKeyboard();
       controller.onScanned(code);
     });

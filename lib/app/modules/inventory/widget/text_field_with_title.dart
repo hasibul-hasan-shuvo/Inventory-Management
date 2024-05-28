@@ -31,7 +31,7 @@ class TextFieldWithTitle extends StatelessWidget with BaseWidgetMixin {
               style: textTheme.bodyMedium,
             ),
           ),
-        if (title.isNotNullOrEmpty) const SizedBox(width: AppValues.margin_10),
+        if (title.isNotNullOrEmpty) SizedBox(width: AppValues.margin_4.w),
         SizedBox(
           width: AppValues.margin_40.w,
           height: AppValues.margin_30.w,
