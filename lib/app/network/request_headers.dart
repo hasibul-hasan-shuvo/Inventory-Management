@@ -48,6 +48,10 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
           }
         } catch (e) {
           BuildConfig.instance.config.logger.e("TokenRefreshException: $e");
+          super.onError(
+            DioException(requestOptions: err.requestOptions, error: e),
+            handler,
+          );
         }
       }
     }
