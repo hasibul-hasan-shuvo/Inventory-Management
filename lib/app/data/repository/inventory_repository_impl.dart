@@ -157,4 +157,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
   void _syncInventories() {
     DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
   }
+
+  @override
+  Future<InventoryListResponse> getInventoryListFromRemote(
+      {required InventoryListQueryParams queryParams}) {
+    return _remoteDataSource.getInventoryList(queryParams: queryParams);
+  }
 }

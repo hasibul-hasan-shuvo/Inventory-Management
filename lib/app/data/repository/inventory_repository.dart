@@ -48,4 +48,8 @@ abstract class InventoryRepository {
 
   Future<InventoryResponse> createInventory(
       CreateInventoryRequestBody requestBody);
+
+  Future<InventoryListResponse> getInventoryListFromRemote({
+    required InventoryListQueryParams queryParams,
+  });
 }
