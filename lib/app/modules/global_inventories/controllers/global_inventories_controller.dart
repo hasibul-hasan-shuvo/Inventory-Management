@@ -31,16 +31,9 @@ class GlobalInventoriesController extends BaseController {
   @override
   void onClose() {
     super.onClose();
-    logger.d("Closing global inventories controllers");
+    ZebraScanner().close();
     addInventoryController.close();
     alternativeInventoryController.close();
-  }
-
-  @override
-  InternalFinalCallback<void> get onDelete {
-    ZebraScanner().close();
-
-    return super.onDelete;
   }
 
   void changeSearchMode() {

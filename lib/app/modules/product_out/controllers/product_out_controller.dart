@@ -20,10 +20,9 @@ class ProductOutController extends BaseController
   }
 
   @override
-  InternalFinalCallback<void> get onDelete {
+  void onClose() {
+    super.onClose();
     ZebraScanner().close();
-
-    return super.onDelete;
   }
 
   void _getAllScannedProducts() {
