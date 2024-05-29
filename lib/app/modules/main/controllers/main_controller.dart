@@ -1,3 +1,4 @@
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/data/model/response/home_counters_response.dart';
 import 'package:dental_inventory/app/data/repository/home_repository.dart';
@@ -23,6 +24,20 @@ class MainController extends BaseController {
   void onInit() {
     super.onInit();
     _getHomeMenuItems();
+    getCounters();
+    _subscribeDataSyncStream();
+  }
+
+  void _subscribeDataSyncStream() {
+    DataSyncManager().isDataSynced.listen((isSynced) {
+      if (isSynced) {
+        refreshController.refreshCompleted();
+      }
+    });
+  }
+
+  void onRefresh() {
+    DataSyncManager().syncAllDataWithServer();
     getCounters();
   }
 
