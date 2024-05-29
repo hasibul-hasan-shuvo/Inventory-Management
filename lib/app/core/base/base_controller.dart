@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/base/paging_controller.dart';
+import 'package:dental_inventory/app/core/model/connection_status.dart';
+import 'package:dental_inventory/app/core/services/connectivity_manager.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/network/exceptions/out_of_stock_exception.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
@@ -73,15 +76,69 @@ abstract class BaseController extends GetxController {
 
   showSuccessMessage(String msg) => _successMessageController(msg);
 
+  final Rx<ConnectionStatus> _connectionStatusController =
+      Rx(ConnectionStatus.NONE);
+
+  ConnectionStatus get connectionStatus => _connectionStatusController.value;
+  StreamSubscription? _connectionStreamSubscription;
+  Timer? _connectionStatusTimer;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _manageConnectionStatus();
+  }
+
+  @override
+  void onClose() {
+    if (_connectionStatusTimer?.isActive == true) {
+      _connectionStatusTimer?.cancel();
+    }
+    _connectionStreamSubscription?.cancel();
+    _connectionStatusController.close();
+    _messageController.close();
+    _successMessageController.close();
+    _errorMessageController.close();
+    _refreshController.close();
+    _pageSateController.close();
+    super.onClose();
+  }
+
+  void _manageConnectionStatus() {
+    if (!ConnectivityManager().isOnline) {
+      _triggerConnectionStatus(ConnectivityManager().isOnline);
+    }
+    _connectionStreamSubscription =
+        ConnectivityManager().connectivityStream.listen((isOnline) {
+      _triggerConnectionStatus(isOnline);
+    });
+  }
+
+  void _triggerConnectionStatus(bool isOnline) {
+    _connectionStatusController
+        .trigger(isOnline ? ConnectionStatus.ONLINE : ConnectionStatus.OFFLINE);
+
+    if (isOnline) {
+      _connectionStatusTimer?.cancel();
+      _connectionStatusTimer =
+          Timer(const Duration(seconds: AppValues.onlineStatusVisibleTime), () {
+        _connectionStatusController.trigger(ConnectionStatus.NONE);
+      });
+    }
+  }
+
   // ignore: long-parameter-list
+  // ignore: long-method
   dynamic callDataService<T>(
     Future<T> future, {
     Function(Exception exception)? onError,
     Function(T response)? onSuccess,
     Function? onStart,
     Function? onComplete,
+    bool enableErrorMessage = true,
   }) async {
     Exception? _exception;
+    String dataServiceErrorMessage = '';
 
     onStart == null ? showLoading() : onStart();
 
@@ -95,39 +152,41 @@ abstract class BaseController extends GetxController {
       return response;
     } on ServiceUnavailableException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } on UnauthorizedException catch (exception) {
       logout();
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } on TimeoutException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message ?? 'Timeout exception');
+      dataServiceErrorMessage = exception.message ?? 'Timeout exception';
     } on NetworkException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } on JsonFormatException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } on NotFoundException catch (exception) {
       _exception = exception;
-      showErrorMessage(
-        exception.message.isEmpty
-            ? appLocalization.messageItemNotFound
-            : exception.message,
-      );
+      dataServiceErrorMessage = exception.message.isEmpty
+          ? appLocalization.messageItemNotFound
+          : exception.message;
     } on ApiException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } on OutOfStockException catch (exception) {
       _exception = exception;
-      showErrorMessage(appLocalization.messageItemOutOfStock);
+      dataServiceErrorMessage = appLocalization.messageItemOutOfStock;
     } on AppException catch (exception) {
       _exception = exception;
-      showErrorMessage(exception.message);
+      dataServiceErrorMessage = exception.message;
     } catch (error) {
       _exception = AppException(message: "$error");
       logger.e("Controller>>>>>> error $error");
+    }
+
+    if (dataServiceErrorMessage.isNotEmpty && enableErrorMessage) {
+      showErrorMessage(dataServiceErrorMessage);
     }
 
     if (onError != null) onError(_exception);
@@ -143,13 +202,5 @@ abstract class BaseController extends GetxController {
         Get.offAllNamed(Routes.SPLASH);
       }
     });
-  }
-
-  @override
-  void onClose() {
-    _messageController.close();
-    _refreshController.close();
-    _pageSateController.close();
-    super.onClose();
   }
 }

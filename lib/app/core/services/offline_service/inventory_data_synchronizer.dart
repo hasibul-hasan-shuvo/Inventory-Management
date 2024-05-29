@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/services/offline_service/data_synchronizer.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
@@ -39,15 +40,11 @@ class InventoryDataSynchronizer implements DataSynchronizer {
       for (InventoryChangesEntityData inventoryChanges
           in inventoryChangesList) {
         try {
-          InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
-            itemId: inventoryChanges.itemId,
-            minCount: inventoryChanges.minCount,
-            maxCount: inventoryChanges.maxCount,
-            stockCountChange: inventoryChanges.stockCountChange,
-            fixedSuggestion: inventoryChanges.fixedSuggestion,
-          );
-          await _inventoryRepository.updateInventoryDataToServer(requestBody);
-          _logger.d("ChangesList: $inventoryChangesList");
+          if (inventoryChanges.id == null) {
+            await _createInventoryToServer(inventoryChanges);
+          } else {
+            await _updateInventoryToServer(inventoryChanges);
+          }
           await _inventoryRepository
               .deleteInventoryChangesByItemId(inventoryChanges.itemId);
         } catch (e) {
@@ -57,6 +54,31 @@ class InventoryDataSynchronizer implements DataSynchronizer {
 
       return inventoryChangesList;
     });
+  }
+
+  Future _createInventoryToServer(InventoryChangesEntityData inventoryChanges) {
+    CreateInventoryRequestBody requestBody = CreateInventoryRequestBody(
+      itemId: inventoryChanges.itemId,
+      minCount: inventoryChanges.minCount?.toString(),
+      maxCount: inventoryChanges.maxCount?.toString(),
+      stockCount: inventoryChanges.stockCountChange.toString(),
+      fixedSuggestion: inventoryChanges.fixedSuggestion?.toString(),
+    );
+
+    return _inventoryRepository.createInventory(requestBody);
+  }
+
+  Future _updateInventoryToServer(InventoryChangesEntityData inventoryChanges) {
+    InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
+      id: inventoryChanges.id,
+      itemId: inventoryChanges.itemId,
+      minCount: inventoryChanges.minCount,
+      maxCount: inventoryChanges.maxCount,
+      stockCountChange: inventoryChanges.stockCountChange,
+      fixedSuggestion: inventoryChanges.fixedSuggestion,
+    );
+
+    return _inventoryRepository.updateInventoryDataToServer(requestBody);
   }
 
   Future _updateDeletedInventories() {

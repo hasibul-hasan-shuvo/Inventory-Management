@@ -86,6 +86,7 @@ class ProductCountRepositoryImpl implements ProductCountRepository {
           }
 
           InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
+            id: product.id,
             itemId: product.itemId,
             stockCount: totalCount,
             stockCountChange: product.number,

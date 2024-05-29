@@ -1,6 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/model/connection_status.dart';
 import 'package:dental_inventory/app/core/model/page_state.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
+import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/connection_status_view.dart';
 import 'package:dental_inventory/app/core/widget/loading.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +43,9 @@ abstract class BaseView<Controller extends BaseController>
       child: Stack(
         children: [
           annotatedRegion(context),
+          Obx(() => controller.pageState == PageState.LOADING
+              ? _showLoading()
+              : Container()),
           Obx(() => controller.pageState == PageState.LOADING
               ? _showLoading()
               : Container()),
@@ -95,7 +101,19 @@ abstract class BaseView<Controller extends BaseController>
       bottom: useBottomSafeArea,
       child: GestureDetector(
         onTap: _onTapGestureDetector,
-        child: body(context),
+        child: Stack(
+          children: [
+            body(context),
+            Positioned(
+              top: AppValues.margin_zero,
+              left: AppValues.margin_zero,
+              right: AppValues.margin_zero,
+              child: Obx(
+                () => _getConnectionStatusView(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -147,6 +165,33 @@ abstract class BaseView<Controller extends BaseController>
     });
 
     return Container();
+  }
+
+  Widget _getConnectionStatusView() {
+    switch (controller.connectionStatus) {
+      case ConnectionStatus.NONE:
+        return const SizedBox.shrink();
+      case ConnectionStatus.OFFLINE:
+        return _getOfflineStatusView();
+      case ConnectionStatus.ONLINE:
+        return _getOnlineStatusView();
+    }
+  }
+
+  Widget _getOfflineStatusView() {
+    return ConnectionStatusView(
+      message: appLocalization.messageConnectionOffline,
+      color: Colors.red,
+      icon: Icons.cloud_off,
+    );
+  }
+
+  Widget _getOnlineStatusView() {
+    return ConnectionStatusView(
+      message: appLocalization.messageConnectionOnline,
+      color: Colors.green,
+      icon: Icons.verified_user_outlined,
+    );
   }
 
   void showToast(String message) {

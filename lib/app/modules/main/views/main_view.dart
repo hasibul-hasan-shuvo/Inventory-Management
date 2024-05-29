@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/main/model/item_home_menu_ui_model.dart';
 import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
 import 'package:dental_inventory/app/modules/main/widget/item_home_menu_view.dart';
@@ -23,17 +24,21 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget body(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: AppValues.margin.h),
-          _getMenuGridView(),
-          SizedBox(height: AppValues.smallMargin.h),
-          _getItemRetrievalOptionView(),
-          SizedBox(height: AppValues.margin.h),
-        ],
-      ).marginSymmetric(
-        horizontal: AppValues.margin.w,
+    return PagingView(
+      controller: controller.refreshController,
+      onRefresh: controller.onRefresh,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: AppValues.margin.h),
+            _getMenuGridView(),
+            SizedBox(height: AppValues.smallMargin.h),
+            _getItemRetrievalOptionView(),
+            SizedBox(height: AppValues.margin.h),
+          ],
+        ).marginSymmetric(
+          horizontal: AppValues.margin.w,
+        ),
       ),
     );
   }

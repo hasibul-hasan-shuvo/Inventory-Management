@@ -120,4 +120,5 @@ abstract class AppValues {
   static const int maxCountValue = 999;
 
   static const int dataSyncDeBouncerTime = 5;
+  static const int onlineStatusVisibleTime = 3;
 }

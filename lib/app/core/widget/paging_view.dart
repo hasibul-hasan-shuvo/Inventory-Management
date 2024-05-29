@@ -42,7 +42,7 @@ class PagingView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget get _header => MaterialClassicHeader(
-        color: theme.primaryColor,
+        color: theme.colorScheme.primary,
         backgroundColor: theme.cardColor,
       );
 }

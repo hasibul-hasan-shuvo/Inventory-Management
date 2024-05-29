@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_strings.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_text_field.dart';
@@ -173,7 +174,11 @@ class LoginView extends BaseView<LoginController> {
         Get.offAllNamed(Routes.ACCOUNT_SETUP);
         controller.resetAuthPageState();
       } else if (state.status == PageStatus.error) {
-        controller.showErrorMessage(state.message ?? '');
+        if (state.message.isNotNullOrEmpty) {
+          controller.showErrorMessage(state.message ?? 'Something wrong');
+        } else {
+          controller.showErrorMessage('Something wrong');
+        }
         controller.resetAuthPageState();
       }
     });

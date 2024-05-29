@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class ConnectivityManager {
   static final ConnectivityManager _instance = ConnectivityManager._internal();
@@ -11,8 +11,9 @@ class ConnectivityManager {
     _initConnectivity();
   }
 
-  final Connectivity _connectivity = Connectivity();
-  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
+  final InternetConnectionChecker _connectionChecker =
+      InternetConnectionChecker();
+  StreamSubscription<InternetConnectionStatus>? _connectivitySubscription;
   bool _isOnline = false;
 
   bool get isOnline => _isOnline;
@@ -23,29 +24,31 @@ class ConnectivityManager {
   Stream<bool> get connectivityStream => _connectivityStreamController.stream;
 
   void _initConnectivity() {
-    _connectivitySubscription = _connectivity.onConnectivityChanged
-        .listen((List<ConnectivityResult> result) {
-      _isOnline = _hasInternetConnection(result);
-      _connectivityStreamController.add(_isOnline);
+    _connectivitySubscription = _connectionChecker.onStatusChange
+        .listen((InternetConnectionStatus status) {
+      _updateOnlineStatus(_hasConnection(status));
     });
     _checkInitialConnectivity();
   }
 
-  void _checkInitialConnectivity() async {
-    _connectivity.checkConnectivity().then((result) {
-      _isOnline = _hasInternetConnection(result);
-      _connectivityStreamController.add(_isOnline);
+  void _checkInitialConnectivity() {
+    _connectionChecker.hasConnection.then((isConnected) {
+      _updateOnlineStatus(isConnected);
     });
   }
 
-  bool _hasInternetConnection(List<ConnectivityResult> connectivityResult) {
-    if (connectivityResult.contains(ConnectivityResult.mobile) ||
-        connectivityResult.contains(ConnectivityResult.wifi) ||
-        connectivityResult.contains(ConnectivityResult.ethernet)) {
-      return true;
+  bool _hasConnection(InternetConnectionStatus status) {
+    switch (status) {
+      case InternetConnectionStatus.connected:
+        return true;
+      case InternetConnectionStatus.disconnected:
+        return false;
     }
+  }
 
-    return false;
+  void _updateOnlineStatus(bool status) {
+    _isOnline = status;
+    _connectivityStreamController.add(_isOnline);
   }
 
   void dispose() {
