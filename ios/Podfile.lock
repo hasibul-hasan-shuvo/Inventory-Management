@@ -1,7 +1,4 @@
 PODS:
-  - connectivity_plus (0.0.1):
-    - Flutter
-    - FlutterMacOS
   - Firebase/CoreOnly (10.22.0):
     - FirebaseCore (= 10.22.0)
   - firebase_core (2.26.0):
@@ -108,7 +105,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -140,8 +136,6 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  connectivity_plus:
-    :path: ".symlinks/plugins/connectivity_plus/darwin"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
@@ -162,7 +156,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_core: 8e100adc478919c6f3224f854ce8fa0bd98e36fd
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
