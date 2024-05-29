@@ -42,7 +42,7 @@ abstract class InventoryRepository {
 
   Future<GlobalInventoryResponse> getGlobalInventory(String id);
 
-  Future<InventoryResponse> createInventory(
+  Future<InventoryEntityData?> createInventory(
       CreateInventoryRequestBody requestBody);
 
   Future<InventoryListResponse> getInventoryListFromRemote({

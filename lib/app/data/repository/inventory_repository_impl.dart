@@ -68,9 +68,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
     return _localDataSource
         .updateInventory(request.itemId, inventory)
         .then((_) {
-      return _localDataSource
-          .insertInventoryChanges(inventoryChanges)
-          .then((_) {
+      return _insertInventoryChanges(inventoryChanges).then((_) {
         _syncInventories();
 
         return getInventoryByItemId(request.itemId);
@@ -148,22 +146,35 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryResponse> createInventory(
+  Future<InventoryEntityData?> createInventory(
       CreateInventoryRequestBody requestBody) {
-    return _remoteDataSource.createInventory(requestBody).then((value) {
-      _syncInventories();
+    return _insertInventoryChanges(
+            requestBody.toInventoryChangesEntityCompanion())
+        .then(
+      (_) => _localDataSource
+          .insertInventory(requestBody.toInventoryEntityCompanion())
+          .then(
+        (_) {
+          _syncInventories();
 
-      return value;
-    });
+          return getInventoryByItemId(requestBody.itemId);
+        },
+      ),
+    );
   }
 
-  void _syncInventories() {
-    DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
+  Future<int> _insertInventoryChanges(
+      InventoryChangesEntityCompanion inventoryChanges) {
+    return _localDataSource.insertInventoryChanges(inventoryChanges);
   }
 
   @override
   Future<InventoryListResponse> getInventoryListFromRemote(
       {required InventoryListQueryParams queryParams}) {
     return _remoteDataSource.getInventoryList(queryParams: queryParams);
+  }
+
+  void _syncInventories() {
+    DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
   }
 }

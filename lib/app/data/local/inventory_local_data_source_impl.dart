@@ -24,6 +24,11 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   }
 
   @override
+  Future<int> insertInventory(InventoryEntityCompanion inventory) {
+    return _dao.insertInventory(inventory);
+  }
+
+  @override
   Future insertAllInventories(List<InventoryEntityCompanion> inventories) {
     return _dao.insertAllInventories(inventories);
   }

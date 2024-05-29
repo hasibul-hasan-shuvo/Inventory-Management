@@ -6,6 +6,8 @@ abstract class InventoryLocalDataSource {
 
   void setLastSyncTimeStamp(String lastSyncTimeStamp);
 
+  Future<int> insertInventory(InventoryEntityCompanion inventory);
+
   Future insertAllInventories(List<InventoryEntityCompanion> inventories);
 
   Future<List<InventoryEntityData>> getInventories(
