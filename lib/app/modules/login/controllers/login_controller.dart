@@ -13,9 +13,9 @@ class LoginController extends BaseController {
 
   @override
   void onClose() {
-    super.onClose();
     logger.d("Closing login view");
     authPageState.close();
+    super.onClose();
   }
 
   void login() {
@@ -36,8 +36,10 @@ class LoginController extends BaseController {
   }
 
   void _onLoginError(Exception error) {
-    authPageState.value = AuthPageState.failed(
-      error is BaseException ? error.message : error.toString(),
+    authPageState.trigger(
+      AuthPageState.failed(
+        error is BaseException ? error.message : error.toString(),
+      ),
     );
   }
 
