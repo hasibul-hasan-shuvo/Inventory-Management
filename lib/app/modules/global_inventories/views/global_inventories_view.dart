@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
-import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
@@ -71,12 +70,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   }
 
   Widget _getPlaceHolder() {
-    return GestureDetector(
-      onTap: closeKeyboard,
-      child: EmptyListPlaceHolder(
-        message: appLocalization.placeHolderEmptyInventory,
-      ),
-    );
+    return const SizedBox.shrink();
   }
 
   Widget _getInventoryList() {
