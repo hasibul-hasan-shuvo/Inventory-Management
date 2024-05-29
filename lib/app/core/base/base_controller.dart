@@ -91,6 +91,9 @@ abstract class BaseController extends GetxController {
 
   @override
   void onClose() {
+    if (_connectionStatusTimer?.isActive == true) {
+      _connectionStatusTimer?.cancel();
+    }
     _connectionStreamSubscription?.cancel();
     _connectionStatusController.close();
     _messageController.close();
