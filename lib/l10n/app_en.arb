@@ -47,6 +47,8 @@
   "messageAccountSetup": "Please wait while\nwe’re setting up\nyour account",
   "messageAddedToShoppingCart": "Added to shopping cart",
   "messageCodeNotFound": "Qrcode or Barcode not found",
+  "messageConnectionOffline": "No internet connection",
+  "messageConnectionOnline": "Back online",
   "messageConfirmDelivery": "Have you received all the product correctly?",
   "messageConfirmOrder": "Do you want to confirm the order?",
   "messageCreateInventory": "Do you want to add this item in inventories?",

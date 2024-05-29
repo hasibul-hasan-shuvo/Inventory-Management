@@ -112,6 +112,7 @@ class MainController extends BaseController {
     callDataService(
       _repository.getHomeMenuCounters(),
       onSuccess: _handleHomeCountersSuccessResponse,
+      enableErrorMessage: false,
       onStart: () => logger.d("Fetching home counters"),
       onComplete: () => logger.d("Fetched home counters"),
     );

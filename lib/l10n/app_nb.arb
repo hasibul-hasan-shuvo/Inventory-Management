@@ -47,6 +47,8 @@
   "messageAccountSetup": "Vennligst vent mens\nvi setter opp\nkontoen din",
   "messageAddedToShoppingCart": "Lagt til i handlekurv",
   "messageCodeNotFound": "QR-kode eller strekkode ikke funnet",
+  "messageConnectionOffline": "Ingen internettilkobling",
+  "messageConnectionOnline": "På nettet igjen",
   "messageConfirmDelivery": "Har du mottatt alle produkter i god stand?",
   "messageConfirmOrder": "Vil du bekrefte bestillingen?",
   "messageCreateInventory": "Vil du legge til denne varen i varelager?",
