@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/data/model/response/home_counters_response.dart';
@@ -20,6 +22,8 @@ class MainController extends BaseController {
 
   Map<String, int?> get badges => _badgesController;
 
+  StreamSubscription? _dataSyncStreamSubscription;
+
   @override
   void onInit() {
     super.onInit();
@@ -28,8 +32,15 @@ class MainController extends BaseController {
     _subscribeDataSyncStream();
   }
 
+  @override
+  void onClose() {
+    _dataSyncStreamSubscription?.cancel();
+    super.onClose();
+  }
+
   void _subscribeDataSyncStream() {
-    DataSyncManager().isDataSynced.listen((isSynced) {
+    _dataSyncStreamSubscription =
+        DataSyncManager().isDataSynced.listen((isSynced) {
       if (isSynced) {
         refreshController.refreshCompleted();
       }
