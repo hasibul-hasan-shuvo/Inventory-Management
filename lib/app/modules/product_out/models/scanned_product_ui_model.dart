@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/data/model/response/product_entity_data.dar
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
 class ScannedProductUiModel {
+  int? id;
   late final String itemId;
   late final String name;
   late final String imageUrl;
@@ -17,6 +18,7 @@ class ScannedProductUiModel {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 
+    id = data.id;
     itemId = product.itemId ?? '';
     name = product.name ?? '';
     imageUrl = product.imageUrl ?? '';

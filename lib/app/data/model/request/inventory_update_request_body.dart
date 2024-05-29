@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:drift/drift.dart';
 
 class InventoryUpdateRequestBody {
+  int? id;
   String itemId;
   int? maxCount;
   int? minCount;
@@ -12,6 +13,7 @@ class InventoryUpdateRequestBody {
 
   InventoryUpdateRequestBody({
     required this.itemId,
+    this.id,
     this.maxCount,
     this.minCount,
     this.stockCount,
@@ -34,12 +36,13 @@ class InventoryUpdateRequestBody {
 
   InventoryChangesEntityCompanion toInventoryChangesEntityCompanion() {
     return InventoryChangesEntityCompanion.insert(
+      id: id != null ? Value(id) : const Value.absent(),
       itemId: itemId,
-      maxCount: maxCount != null ? Value(maxCount!) : const Value.absent(),
-      minCount: minCount != null ? Value(minCount!) : const Value.absent(),
+      maxCount: maxCount != null ? Value(maxCount) : const Value.absent(),
+      minCount: minCount != null ? Value(minCount) : const Value.absent(),
       stockCountChange: Value(stockCountChange ?? 0),
       fixedSuggestion: fixedSuggestion != null
-          ? Value(fixedSuggestion!)
+          ? Value(fixedSuggestion)
           : const Value.absent(),
       modified: Value(DateParser.getCurrentUtcDateTime),
     );

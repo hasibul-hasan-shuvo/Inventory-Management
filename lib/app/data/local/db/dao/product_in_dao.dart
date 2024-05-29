@@ -37,6 +37,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
         InventoryEntityData inventory = e.readTable(inventoryEntity);
 
         return ScannedProductEntityData(
+          id: inventory.id,
           itemId: scannedProduct.itemId,
           product: inventory.product,
           stockCountChange: scannedProduct.stockCountChange,
@@ -60,6 +61,7 @@ class ProductInDao extends DatabaseAccessor<AppDatabase>
         InventoryEntityData inventory = row.readTable(inventoryEntity);
 
         return ScannedProductEntityData(
+          id: inventory.id,
           itemId: scannedProduct.itemId,
           product: inventory.product,
           stockCountChange: scannedProduct.stockCountChange,

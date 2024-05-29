@@ -80,6 +80,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
       for (ScannedProductUiModel product in scannedList) {
         try {
           InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
+            id: product.id,
             itemId: product.itemId,
             stockCount: product.available + product.number,
             stockCountChange: product.number,
