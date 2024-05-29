@@ -35,7 +35,7 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   }
 
   Widget _getPlaceHolder() {
-    return const SizedBox.shrink();
+    return Container();
   }
 
   Widget _getSuggestedOrdersListView() {
