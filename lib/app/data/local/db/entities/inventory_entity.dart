@@ -17,6 +17,10 @@ class InventoryEntity extends Table {
 
   IntColumn get fixedSuggestion => integer().nullable()();
 
+  BoolColumn get isAvailable => boolean().withDefault(const Constant(true))();
+
+  TextColumn get alternativeItemId => text().nullable()();
+
   DateTimeColumn get created =>
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 

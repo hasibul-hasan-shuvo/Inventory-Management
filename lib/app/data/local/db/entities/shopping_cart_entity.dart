@@ -5,8 +5,6 @@ class ShoppingCartEntity extends Table {
 
   IntColumn get cartId => integer().nullable()();
 
-  TextColumn get product => text()();
-
   IntColumn get quantity => integer()();
 
   DateTimeColumn get modified =>
