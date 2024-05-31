@@ -4,6 +4,7 @@ import 'package:dental_inventory/app/core/services/offline_service/data_sync_man
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/data/model/response/home_counters_response.dart';
 import 'package:dental_inventory/app/data/repository/home_repository.dart';
+import 'package:dental_inventory/app/modules/main/controllers/bottom_nav_controller.dart';
 import 'package:dental_inventory/app/modules/main/model/item_home_menu_ui_model.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import '/app/core/base/base_controller.dart';
 
 class MainController extends BaseController {
+  final BottomNavController bottomNavController = BottomNavController();
   final HomeRepository _repository = Get.find();
 
   final RxList<ItemHomeMenuUiModel> _menuListController =
@@ -35,6 +37,9 @@ class MainController extends BaseController {
   @override
   void onClose() {
     _dataSyncStreamSubscription?.cancel();
+    _menuListController.close();
+    _badgesController.close();
+    bottomNavController.onClose();
     super.onClose();
   }
 

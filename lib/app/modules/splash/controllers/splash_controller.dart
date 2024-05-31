@@ -16,6 +16,12 @@ class SplashController extends BaseController {
     _navigateToNextPage();
   }
 
+  @override
+  void onClose() {
+    navigationController.close();
+    super.onClose();
+  }
+
   Future<void> _navigateToNextPage() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       String token = _authRepository.getAccessToken();

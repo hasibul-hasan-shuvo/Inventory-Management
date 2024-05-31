@@ -35,6 +35,14 @@ class SelectableInventoryListController extends BaseController {
     fetchInventoryList();
   }
 
+  @override
+  void onClose() {
+    _inventoryItemsController.close();
+    _searchModeController.close();
+    searchQuery.close();
+    super.onClose();
+  }
+
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
       _getNextSuggestedOrders();

@@ -100,6 +100,7 @@ abstract class BaseController extends GetxController {
     _errorMessageController.close();
     _refreshController.close();
     _pageSateController.close();
+    pagingController.close();
     super.onClose();
   }
 

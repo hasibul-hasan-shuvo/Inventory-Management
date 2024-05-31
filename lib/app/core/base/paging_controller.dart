@@ -32,4 +32,9 @@ class PagingController<T> {
   previousPage() {
     pageNumber--;
   }
+
+  void close() {
+    _lastPageController.close();
+    _nextPageLoaderController.close();
+  }
 }

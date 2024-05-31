@@ -13,11 +13,12 @@ typedef OnBottomNavItemSelected = Function(MenuCode menuCode);
 class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
   BottomNavBar({
     Key? key,
+    required this.controller,
     required this.onItemSelected,
   }) : super(key: key);
 
   final OnBottomNavItemSelected onItemSelected;
-  final navController = BottomNavController();
+  final BottomNavController controller;
   final Key bottomNavKey = GlobalKey();
 
   @override
@@ -34,9 +35,9 @@ class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
         backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
         selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
         unselectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
-        currentIndex: navController.selectedIndex,
+        currentIndex: controller.selectedIndex,
         onTap: (index) {
-          navController.updateSelectedIndex(index);
+          controller.updateSelectedIndex(index);
           onItemSelected(navItems[index].menuCode);
         },
       ),

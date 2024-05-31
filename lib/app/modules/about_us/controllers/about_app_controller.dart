@@ -14,6 +14,12 @@ class AboutAppController extends BaseController {
     _getAppVersion();
   }
 
+  @override
+  void onClose() {
+    _versionController.close();
+    super.onClose();
+  }
+
   void _getAppVersion() {
     PackageInfo.fromPlatform().then((info) {
       _versionController("${appLocalization.version}: ${info.version}");

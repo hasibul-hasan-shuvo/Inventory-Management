@@ -20,6 +20,15 @@ class DeliveryController extends BaseController {
     _getOrders();
   }
 
+  @override
+  void onClose() {
+    for (var element in _orderListController) {
+      element.close();
+    }
+    _orderListController.close();
+    super.onClose();
+  }
+
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
       _getNextOrders();
