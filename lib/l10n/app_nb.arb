@@ -63,6 +63,7 @@
       }
     }
   },
+  "messageInventoryAlreadyExist": "Produktet er allerede i beholdningen.",
   "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemNotFound": "Element ikke funnet!",
   "messageItemOutOfStock": "Vare utsolgt!",

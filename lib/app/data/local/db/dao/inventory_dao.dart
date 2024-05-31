@@ -3,6 +3,8 @@ import 'package:dental_inventory/app/data/local/db/entities/deleted_inventory_en
 import 'package:dental_inventory/app/data/local/db/entities/inventory_changes_entity.dart';
 import 'package:dental_inventory/app/data/local/db/entities/inventory_entity.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
+import 'package:dental_inventory/app/network/exceptions/duplicate_unique_field_exception.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:drift/drift.dart';
 
 part 'inventory_dao.g.dart';
@@ -16,8 +18,18 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
     with _$InventoryDaoMixin {
   InventoryDao(super.attachedDatabase);
 
-  Future<int> insertInventory(InventoryEntityCompanion inventory) {
-    return into(inventoryEntity).insertOnConflictUpdate(inventory);
+  Future<int> insertInventory(InventoryEntityCompanion inventory) async {
+    try {
+      int id = await into(inventoryEntity).insert(
+        inventory,
+        mode: InsertMode.insertOrAbort,
+      );
+
+      return id;
+    } catch (e) {
+      BuildConfig.instance.config.logger.e("InsertInventoryException: $e");
+      throw DuplicateUniqueFieldException();
+    }
   }
 
   Future<void> insertAllInventories(

@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/model/connection_status.dart';
 import 'package:dental_inventory/app/core/services/connectivity_manager.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
+import 'package:dental_inventory/app/network/exceptions/duplicate_unique_field_exception.dart';
 import 'package:dental_inventory/app/network/exceptions/out_of_stock_exception.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
@@ -177,6 +178,9 @@ abstract class BaseController extends GetxController {
     } on OutOfStockException catch (exception) {
       _exception = exception;
       dataServiceErrorMessage = appLocalization.messageItemOutOfStock;
+    } on DuplicateUniqueFieldException catch (exception) {
+      _exception = exception;
+      dataServiceErrorMessage = appLocalization.messageInventoryAlreadyExist;
     } on AppException catch (exception) {
       _exception = exception;
       dataServiceErrorMessage = exception.message;
