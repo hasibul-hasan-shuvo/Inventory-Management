@@ -67,9 +67,7 @@ abstract class BaseController extends GetxController {
 
   String get errorMessage => _errorMessageController.value;
 
-  showErrorMessage(String msg) {
-    _errorMessageController(msg);
-  }
+  showErrorMessage(String msg) => _errorMessageController(msg);
 
   final _successMessageController = ''.obs;
 
@@ -209,4 +207,6 @@ abstract class BaseController extends GetxController {
       }
     });
   }
+
+  bool get isDarkMode => Get.isPlatformDarkMode || Get.isDarkMode;
 }

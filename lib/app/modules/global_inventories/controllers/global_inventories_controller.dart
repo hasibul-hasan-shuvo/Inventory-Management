@@ -151,7 +151,7 @@ class GlobalInventoriesController extends BaseController {
     if (response != null) {
       showSuccessMessage(appLocalization.messageCreateInventorySuccessful);
     } else {
-      showSuccessMessage(appLocalization.error);
+      showErrorMessage(appLocalization.error);
     }
   }
 
