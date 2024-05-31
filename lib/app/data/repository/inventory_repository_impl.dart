@@ -77,7 +77,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryResponse> updateInventoryDataToServer(
+  Future<InventoryResponse> updateInventoryDataInServer(
       InventoryUpdateRequestBody request) {
     return _remoteDataSource.updateInventoryData(request);
   }
@@ -163,15 +163,21 @@ class InventoryRepositoryImpl implements InventoryRepository {
     );
   }
 
-  Future<int> _insertInventoryChanges(
-      InventoryChangesEntityCompanion inventoryChanges) {
-    return _localDataSource.insertInventoryChanges(inventoryChanges);
+  @override
+  Future<InventoryResponse> createInventoryInServer(
+      CreateInventoryRequestBody requestBody) {
+    return _remoteDataSource.createInventory(requestBody);
   }
 
   @override
   Future<InventoryListResponse> getInventoryListFromRemote(
       {required InventoryListQueryParams queryParams}) {
     return _remoteDataSource.getInventoryList(queryParams: queryParams);
+  }
+
+  Future<int> _insertInventoryChanges(
+      InventoryChangesEntityCompanion inventoryChanges) {
+    return _localDataSource.insertInventoryChanges(inventoryChanges);
   }
 
   void _syncInventories() {

@@ -1,4 +1,11 @@
 class ProductResponse {
+  ProductResponse({
+    this.id,
+    this.name,
+    this.itemId,
+    this.imageUrl,
+    this.price,
+  });
   ProductResponse.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];

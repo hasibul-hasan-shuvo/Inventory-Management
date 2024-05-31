@@ -183,6 +183,7 @@ abstract class BaseController extends GetxController {
     } catch (error) {
       _exception = AppException(message: "$error");
       logger.e("Controller>>>>>> error $error");
+      dataServiceErrorMessage = "$error";
     }
 
     if (dataServiceErrorMessage.isNotEmpty && enableErrorMessage) {

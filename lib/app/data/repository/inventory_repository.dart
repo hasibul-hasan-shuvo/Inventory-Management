@@ -27,7 +27,7 @@ abstract class InventoryRepository {
   Future<InventoryEntityData?> updateInventoryData(
       InventoryUpdateRequestBody request);
 
-  Future<InventoryResponse> updateInventoryDataToServer(
+  Future<InventoryResponse> updateInventoryDataInServer(
       InventoryUpdateRequestBody request);
 
   Future<int> deleteInventoryChangesByItemId(String itemId);
@@ -43,6 +43,9 @@ abstract class InventoryRepository {
   Future<GlobalInventoryResponse> getGlobalInventory(String id);
 
   Future<InventoryEntityData?> createInventory(
+      CreateInventoryRequestBody requestBody);
+
+  Future<InventoryResponse> createInventoryInServer(
       CreateInventoryRequestBody requestBody);
 
   Future<InventoryListResponse> getInventoryListFromRemote({

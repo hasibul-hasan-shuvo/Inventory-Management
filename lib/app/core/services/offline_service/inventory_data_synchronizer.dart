@@ -65,7 +65,7 @@ class InventoryDataSynchronizer implements DataSynchronizer {
       fixedSuggestion: inventoryChanges.fixedSuggestion?.toString(),
     );
 
-    return _inventoryRepository.createInventory(requestBody);
+    return _inventoryRepository.createInventoryInServer(requestBody);
   }
 
   Future _updateInventoryToServer(InventoryChangesEntityData inventoryChanges) {
@@ -78,7 +78,7 @@ class InventoryDataSynchronizer implements DataSynchronizer {
       fixedSuggestion: inventoryChanges.fixedSuggestion,
     );
 
-    return _inventoryRepository.updateInventoryDataToServer(requestBody);
+    return _inventoryRepository.updateInventoryDataInServer(requestBody);
   }
 
   Future _updateDeletedInventories() {
