@@ -39,7 +39,7 @@ class MainController extends BaseController {
     _dataSyncStreamSubscription?.cancel();
     _menuListController.close();
     _badgesController.close();
-    bottomNavController.close();
+    bottomNavController.onClose();
     super.onClose();
   }
 

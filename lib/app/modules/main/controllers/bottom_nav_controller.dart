@@ -7,7 +7,9 @@ class BottomNavController extends GetxController {
 
   int get selectedIndex => _selectedIndexController.value;
 
-  void close() {
+  @override
+  void onClose() {
     _selectedIndexController.close();
+    super.onClose();
   }
 }
