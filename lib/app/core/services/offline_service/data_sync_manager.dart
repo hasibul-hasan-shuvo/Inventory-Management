@@ -30,6 +30,14 @@ class DataSyncManager {
   }
 
   void syncAllDataWithServer() {
+    _syncData(DataSynchronizerKey.values);
+  }
+
+  void syncDataWithServer(List<DataSynchronizerKey> keys) {
+    _syncData(keys);
+  }
+
+  void _syncData(List<DataSynchronizerKey> keys) {
     if (!_isSyncing && _connectivityManager.isOnline) {
       _startDeBouncer();
       startLoader();
@@ -38,20 +46,6 @@ class DataSyncManager {
         synchronizer.syncData().then(
               (value) => updateLoader(DataSynchronizerKey.values.length),
               onError: (_) => updateLoader(DataSynchronizerKey.values.length),
-            );
-      }
-    }
-  }
-
-  void syncDataWithServer(List<DataSynchronizerKey> keys) {
-    if (_connectivityManager.isOnline && !_isSyncing) {
-      _startDeBouncer();
-      startLoader();
-      for (DataSynchronizerKey key in keys) {
-        DataSynchronizer synchronizer = DataSynchronizer.create(key);
-        synchronizer.syncData().then(
-              (value) => updateLoader(keys.length),
-              onError: (_) => updateLoader(keys.length),
             );
       }
     }
