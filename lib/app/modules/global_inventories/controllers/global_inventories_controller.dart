@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
@@ -118,8 +121,16 @@ class GlobalInventoriesController extends BaseController {
       stockCount: stockCount,
       fixedSuggestion: fixedSuggestion,
     )) {
+      ProductResponse product = ProductResponse(
+        itemId: data.itemId,
+        name: data.name,
+        imageUrl: data.imageUrl,
+      );
+      String productJsonString = jsonEncode(product.toJson());
       CreateInventoryRequestBody requestBody = CreateInventoryRequestBody(
         itemId: data.itemId,
+        productName: data.name,
+        product: productJsonString,
         maxCount: maxCount,
         minCount: minCount,
         stockCount: stockCount,
@@ -137,7 +148,7 @@ class GlobalInventoriesController extends BaseController {
     if (response != null) {
       showSuccessMessage(appLocalization.messageCreateInventorySuccessful);
     } else {
-      showSuccessMessage(appLocalization.error);
+      showErrorMessage(appLocalization.error);
     }
   }
 

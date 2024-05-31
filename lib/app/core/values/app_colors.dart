@@ -8,6 +8,8 @@ abstract class AppColors {
   static const Color lightGreyColor = Color(0xFFC4C4C4);
   static const Color errorColor = Color(0xFFE36161);
   static const Color errorColorDark = Color(0xFFffb4ab);
+  static const Color colorRed = Color(0xFFEB001B);
+  static const Color colorGreen = Color(0xFF6AB452);
 
   static const Color defaultRippleColor = Color(0x0338686A);
 
@@ -32,4 +34,10 @@ abstract class AppColors {
   static const Color homeOptionBackground = Color(0xFF62C6C6);
   static const Color loginScreenIconColor = Color(0xffD9D9D9);
   static const Color bgDismissibleItem = Color(0xFF80DB7E);
+  static const Color bgSnackBarErrorDark = Color(0xFF1E1E1E);
+  static const Color bgSnackBarSuccessDark = Color(0xFF0E1F00);
+  static const Color bgSnackBarWarningDark = Color(0xFF150900);
+  static const Color bgSnackBarErrorLight = Color(0xFFF9E1DC);
+  static const Color bgSnackBarSuccessLight = Color(0xFFE4F6DF);
+  static const Color bgSnackBarWarningLight = Color(0xFFFCF3EA);
 }

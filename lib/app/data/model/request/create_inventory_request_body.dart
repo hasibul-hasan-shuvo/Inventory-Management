@@ -6,6 +6,8 @@ import 'package:drift/drift.dart';
 class CreateInventoryRequestBody {
   CreateInventoryRequestBody({
     required this.itemId,
+    this.productName = '',
+    this.product = '{}',
     this.maxCount,
     this.minCount,
     this.stockCount,
@@ -13,6 +15,8 @@ class CreateInventoryRequestBody {
   });
 
   String itemId;
+  String productName;
+  String product;
   String? maxCount;
   String? minCount;
   String? stockCount;
@@ -20,12 +24,17 @@ class CreateInventoryRequestBody {
 
   InventoryEntityCompanion toInventoryEntityCompanion() {
     return InventoryEntityCompanion(
+      itemId: Value(itemId),
+      productName: Value(productName),
+      product: Value(product),
       maxCount: maxCount != null ? Value(maxCount.toInt) : const Value.absent(),
       minCount: minCount != null ? Value(minCount.toInt) : const Value.absent(),
       stockCount: Value(stockCount.toInt),
       fixedSuggestion: fixedSuggestion != null
           ? Value(fixedSuggestion.toInt)
           : const Value.absent(),
+      created: Value(DateParser.getCurrentUtcDateTime),
+      modified: Value(DateParser.getCurrentUtcDateTime),
     );
   }
 
