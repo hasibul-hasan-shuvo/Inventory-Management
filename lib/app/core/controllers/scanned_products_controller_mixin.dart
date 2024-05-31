@@ -27,4 +27,8 @@ mixin ScannedProductsControllerMixin {
   }
 
   void onProductSelect(SelectableInventoryItemUiModel inventoryData);
+
+  void closeScannedProductsControllers() {
+    _scannedProductsController.close();
+  }
 }

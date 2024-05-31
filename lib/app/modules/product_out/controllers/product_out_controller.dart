@@ -21,8 +21,9 @@ class ProductOutController extends BaseController
 
   @override
   void onClose() {
-    super.onClose();
+    closeScannedProductsControllers();
     ZebraScanner().close();
+    super.onClose();
   }
 
   void _getAllScannedProducts() {

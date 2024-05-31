@@ -20,6 +20,12 @@ class SuggestedOrdersController extends BaseController {
     _getSuggestedOrders();
   }
 
+  @override
+  void onClose() {
+    _suggestedOrdersController.close();
+    super.onClose();
+  }
+
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
       _getNextSuggestedOrders();

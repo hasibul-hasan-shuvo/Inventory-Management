@@ -35,6 +35,8 @@ class MainController extends BaseController {
   @override
   void onClose() {
     _dataSyncStreamSubscription?.cancel();
+    _menuListController.close();
+    _badgesController.close();
     super.onClose();
   }
 

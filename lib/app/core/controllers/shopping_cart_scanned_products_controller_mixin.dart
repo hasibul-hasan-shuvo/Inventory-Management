@@ -58,4 +58,9 @@ mixin ShoppingCartScannedProductsControllerMixin {
   }
 
   void onItemAdded(ShoppingCartResponse response);
+
+  void closeShoppingCartScannedProductsController() {
+    _shoppingCartItemsController.close();
+    newCartItemArrivedController.close();
+  }
 }

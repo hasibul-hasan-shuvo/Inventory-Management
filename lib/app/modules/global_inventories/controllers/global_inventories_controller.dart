@@ -35,6 +35,9 @@ class GlobalInventoriesController extends BaseController {
   void onClose() {
     super.onClose();
     ZebraScanner().close();
+    _searchModeController.close();
+    _searchQueryController.close();
+    _inventoriesController.close();
     addInventoryController.close();
     alternativeInventoryController.close();
   }

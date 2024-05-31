@@ -53,4 +53,8 @@ class OrderUiModel {
   void toggleExpandedStatus() {
     _isExpandedController(!isExpanded);
   }
+
+  void close() {
+    _itemsController.close();
+  }
 }
