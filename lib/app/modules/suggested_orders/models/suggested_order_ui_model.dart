@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
+import 'package:get/get.dart';
 
 class SuggestedOrderUiModel {
   late final int id;
@@ -11,7 +12,9 @@ class SuggestedOrderUiModel {
   late final int? fixedSuggestion;
   late int suggestion;
   late final int count;
-  late final num price;
+  late final RxNum _priceController = RxNum(0.0);
+
+  num get price => _priceController.value;
 
   SuggestedOrderUiModel.fromSuggestedOrderResponse(
       SuggestedOrderResponse response) {
@@ -22,7 +25,7 @@ class SuggestedOrderUiModel {
     min = response.minCount ?? 0;
     max = response.maxCount ?? 0;
     count = response.stockCount ?? 0;
-    price = response.product?.price ?? 0.0;
+    _priceController(response.product?.price ?? 0.0);
     suggestion = response.suggestedOrderCount ?? 0;
   }
 
@@ -30,10 +33,18 @@ class SuggestedOrderUiModel {
     suggestion = newSuggestion;
   }
 
+  void updatePrice(num? newPrice) {
+    _priceController(newPrice ?? 0.0);
+  }
+
   AddShoppingCartItemRequestBody toAddShoppingCartItemRequestBody() {
     return AddShoppingCartItemRequestBody(
       itemId: itemId,
       quantity: suggestion,
     );
+  }
+
+  void close() {
+    _priceController.close();
   }
 }

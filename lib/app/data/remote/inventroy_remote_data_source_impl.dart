@@ -56,7 +56,8 @@ class InventoryRemoteDataSourceImpl extends BaseRemoteSource
   @override
   Future<InventoryResponse> getProduct(String itemId) {
     String endpoint = '${EndPoints.inventoryItems}/$itemId/';
-    var dioCall = dioClient.get(endpoint, queryParameters: {"id": itemId});
+    var dioCall =
+        dioClient.get(endpoint, queryParameters: {"include_price": true});
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _parseInventoryResponse(response));

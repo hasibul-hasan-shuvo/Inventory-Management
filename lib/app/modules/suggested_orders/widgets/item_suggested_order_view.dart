@@ -159,6 +159,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   void _onTapEdit(BuildContext context) {
+    _controller.getProductPrice(data);
     TextEditingController suggestionController = TextEditingController();
     suggestionController.text = data.suggestion.toString();
 
@@ -167,14 +168,16 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
       builder: (_) {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
-          content: InventoryOrderEditDialogContentView(
-            numberController: suggestionController,
-            id: data.itemId,
-            name: data.name,
-            imageUrl: data.imageUrl,
-            count: data.count,
-            suggestion: data.suggestion,
-            price: data.price,
+          content: Obx(
+            () => InventoryOrderEditDialogContentView(
+              numberController: suggestionController,
+              id: data.itemId,
+              name: data.name,
+              imageUrl: data.imageUrl,
+              count: data.count,
+              suggestion: data.suggestion,
+              price: data.price,
+            ),
           ),
           positiveButtonText: appLocalization.buttonTextAddToCart,
           onPositiveButtonTap: () {
