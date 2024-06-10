@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
@@ -22,6 +23,9 @@ class SuggestedOrdersController extends BaseController {
 
   @override
   void onClose() {
+    for (var element in _suggestedOrdersController) {
+      element.close();
+    }
     _suggestedOrdersController.close();
     super.onClose();
   }
@@ -120,5 +124,22 @@ class SuggestedOrdersController extends BaseController {
 
   void rebuildList() {
     _suggestedOrdersController.refresh();
+  }
+
+  void getProductPrice(SuggestedOrderUiModel data) {
+    if (data.price == 0.0) {
+      callDataService(
+        _repository.getSuggestedOrderWithPrice(data.itemId),
+        onSuccess: (response) =>
+            _handleGetProductPriceSuccessResponse(data, response),
+        onStart: () => logger.d("Fetched product price"),
+        onComplete: () => logger.d("Product price fetched"),
+      );
+    }
+  }
+
+  void _handleGetProductPriceSuccessResponse(
+      SuggestedOrderUiModel data, InventoryResponse response) {
+    data.updatePrice(response.product?.price);
   }
 }

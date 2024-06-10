@@ -185,7 +185,9 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   }
 
   String _getTotalPrice() {
-    return (_suggestionController.value * price).toStringAsFixed(2);
+    return price == 0 && _suggestionController.value > 0
+        ? "-.--"
+        : (_suggestionController.value * price).toStringAsFixed(2);
   }
 
   bool get _isDecrementButtonEnabled => _suggestionController.value > 0;
