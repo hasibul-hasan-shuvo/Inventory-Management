@@ -45,7 +45,10 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget? bottomNavigationBar() {
-    return BottomNavBar(onItemSelected: _onMenuSelected);
+    return BottomNavBar(
+      controller: controller.bottomNavController,
+      onItemSelected: _onMenuSelected,
+    );
   }
 
   Widget _getMenuGridView() {

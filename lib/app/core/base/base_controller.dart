@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/model/connection_status.dart';
 import 'package:dental_inventory/app/core/services/connectivity_manager.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
+import 'package:dental_inventory/app/network/exceptions/duplicate_unique_field_exception.dart';
 import 'package:dental_inventory/app/network/exceptions/out_of_stock_exception.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,9 +67,7 @@ abstract class BaseController extends GetxController {
 
   String get errorMessage => _errorMessageController.value;
 
-  showErrorMessage(String msg) {
-    _errorMessageController(msg);
-  }
+  showErrorMessage(String msg) => _errorMessageController(msg);
 
   final _successMessageController = ''.obs;
 
@@ -101,6 +100,7 @@ abstract class BaseController extends GetxController {
     _errorMessageController.close();
     _refreshController.close();
     _pageSateController.close();
+    pagingController.close();
     super.onClose();
   }
 
@@ -177,12 +177,16 @@ abstract class BaseController extends GetxController {
     } on OutOfStockException catch (exception) {
       _exception = exception;
       dataServiceErrorMessage = appLocalization.messageItemOutOfStock;
+    } on DuplicateUniqueFieldException catch (exception) {
+      _exception = exception;
+      dataServiceErrorMessage = appLocalization.messageInventoryAlreadyExist;
     } on AppException catch (exception) {
       _exception = exception;
       dataServiceErrorMessage = exception.message;
     } catch (error) {
       _exception = AppException(message: "$error");
       logger.e("Controller>>>>>> error $error");
+      dataServiceErrorMessage = "$error";
     }
 
     if (dataServiceErrorMessage.isNotEmpty && enableErrorMessage) {
@@ -203,4 +207,6 @@ abstract class BaseController extends GetxController {
       }
     });
   }
+
+  bool get isDarkMode => Get.isPlatformDarkMode || Get.isDarkMode;
 }

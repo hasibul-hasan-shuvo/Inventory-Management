@@ -57,6 +57,22 @@ class $InventoryEntityTable extends InventoryEntity
   late final GeneratedColumn<int> fixedSuggestion = GeneratedColumn<int>(
       'fixed_suggestion', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _isAvailableMeta =
+      const VerificationMeta('isAvailable');
+  @override
+  late final GeneratedColumn<bool> isAvailable = GeneratedColumn<bool>(
+      'is_available', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_available" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _alternativeItemIdMeta =
+      const VerificationMeta('alternativeItemId');
+  @override
+  late final GeneratedColumn<String> alternativeItemId =
+      GeneratedColumn<String>('alternative_item_id', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _createdMeta =
       const VerificationMeta('created');
   @override
@@ -83,6 +99,8 @@ class $InventoryEntityTable extends InventoryEntity
         minCount,
         stockCount,
         fixedSuggestion,
+        isAvailable,
+        alternativeItemId,
         created,
         modified
       ];
@@ -140,6 +158,18 @@ class $InventoryEntityTable extends InventoryEntity
           fixedSuggestion.isAcceptableOrUnknown(
               data['fixed_suggestion']!, _fixedSuggestionMeta));
     }
+    if (data.containsKey('is_available')) {
+      context.handle(
+          _isAvailableMeta,
+          isAvailable.isAcceptableOrUnknown(
+              data['is_available']!, _isAvailableMeta));
+    }
+    if (data.containsKey('alternative_item_id')) {
+      context.handle(
+          _alternativeItemIdMeta,
+          alternativeItemId.isAcceptableOrUnknown(
+              data['alternative_item_id']!, _alternativeItemIdMeta));
+    }
     if (data.containsKey('created')) {
       context.handle(_createdMeta,
           created.isAcceptableOrUnknown(data['created']!, _createdMeta));
@@ -173,6 +203,10 @@ class $InventoryEntityTable extends InventoryEntity
           .read(DriftSqlType.int, data['${effectivePrefix}stock_count'])!,
       fixedSuggestion: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion']),
+      isAvailable: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_available'])!,
+      alternativeItemId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}alternative_item_id']),
       created: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
       modified: attachedDatabase.typeMapping
@@ -196,6 +230,8 @@ class InventoryEntityData extends DataClass
   final int? minCount;
   final int stockCount;
   final int? fixedSuggestion;
+  final bool isAvailable;
+  final String? alternativeItemId;
   final DateTime created;
   final DateTime modified;
   const InventoryEntityData(
@@ -207,6 +243,8 @@ class InventoryEntityData extends DataClass
       this.minCount,
       required this.stockCount,
       this.fixedSuggestion,
+      required this.isAvailable,
+      this.alternativeItemId,
       required this.created,
       required this.modified});
   @override
@@ -227,6 +265,10 @@ class InventoryEntityData extends DataClass
     map['stock_count'] = Variable<int>(stockCount);
     if (!nullToAbsent || fixedSuggestion != null) {
       map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
+    }
+    map['is_available'] = Variable<bool>(isAvailable);
+    if (!nullToAbsent || alternativeItemId != null) {
+      map['alternative_item_id'] = Variable<String>(alternativeItemId);
     }
     map['created'] = Variable<DateTime>(created);
     map['modified'] = Variable<DateTime>(modified);
@@ -249,6 +291,10 @@ class InventoryEntityData extends DataClass
       fixedSuggestion: fixedSuggestion == null && nullToAbsent
           ? const Value.absent()
           : Value(fixedSuggestion),
+      isAvailable: Value(isAvailable),
+      alternativeItemId: alternativeItemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alternativeItemId),
       created: Value(created),
       modified: Value(modified),
     );
@@ -266,6 +312,9 @@ class InventoryEntityData extends DataClass
       minCount: serializer.fromJson<int?>(json['minCount']),
       stockCount: serializer.fromJson<int>(json['stockCount']),
       fixedSuggestion: serializer.fromJson<int?>(json['fixedSuggestion']),
+      isAvailable: serializer.fromJson<bool>(json['isAvailable']),
+      alternativeItemId:
+          serializer.fromJson<String?>(json['alternativeItemId']),
       created: serializer.fromJson<DateTime>(json['created']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -282,6 +331,8 @@ class InventoryEntityData extends DataClass
       'minCount': serializer.toJson<int?>(minCount),
       'stockCount': serializer.toJson<int>(stockCount),
       'fixedSuggestion': serializer.toJson<int?>(fixedSuggestion),
+      'isAvailable': serializer.toJson<bool>(isAvailable),
+      'alternativeItemId': serializer.toJson<String?>(alternativeItemId),
       'created': serializer.toJson<DateTime>(created),
       'modified': serializer.toJson<DateTime>(modified),
     };
@@ -296,6 +347,8 @@ class InventoryEntityData extends DataClass
           Value<int?> minCount = const Value.absent(),
           int? stockCount,
           Value<int?> fixedSuggestion = const Value.absent(),
+          bool? isAvailable,
+          Value<String?> alternativeItemId = const Value.absent(),
           DateTime? created,
           DateTime? modified}) =>
       InventoryEntityData(
@@ -309,6 +362,10 @@ class InventoryEntityData extends DataClass
         fixedSuggestion: fixedSuggestion.present
             ? fixedSuggestion.value
             : this.fixedSuggestion,
+        isAvailable: isAvailable ?? this.isAvailable,
+        alternativeItemId: alternativeItemId.present
+            ? alternativeItemId.value
+            : this.alternativeItemId,
         created: created ?? this.created,
         modified: modified ?? this.modified,
       );
@@ -323,6 +380,8 @@ class InventoryEntityData extends DataClass
           ..write('minCount: $minCount, ')
           ..write('stockCount: $stockCount, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
+          ..write('isAvailable: $isAvailable, ')
+          ..write('alternativeItemId: $alternativeItemId, ')
           ..write('created: $created, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -330,8 +389,19 @@ class InventoryEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, itemId, productName, product, maxCount,
-      minCount, stockCount, fixedSuggestion, created, modified);
+  int get hashCode => Object.hash(
+      id,
+      itemId,
+      productName,
+      product,
+      maxCount,
+      minCount,
+      stockCount,
+      fixedSuggestion,
+      isAvailable,
+      alternativeItemId,
+      created,
+      modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -344,6 +414,8 @@ class InventoryEntityData extends DataClass
           other.minCount == this.minCount &&
           other.stockCount == this.stockCount &&
           other.fixedSuggestion == this.fixedSuggestion &&
+          other.isAvailable == this.isAvailable &&
+          other.alternativeItemId == this.alternativeItemId &&
           other.created == this.created &&
           other.modified == this.modified);
 }
@@ -357,6 +429,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
   final Value<int?> minCount;
   final Value<int> stockCount;
   final Value<int?> fixedSuggestion;
+  final Value<bool> isAvailable;
+  final Value<String?> alternativeItemId;
   final Value<DateTime> created;
   final Value<DateTime> modified;
   final Value<int> rowid;
@@ -369,6 +443,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     this.minCount = const Value.absent(),
     this.stockCount = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
+    this.isAvailable = const Value.absent(),
+    this.alternativeItemId = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -382,6 +458,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     this.minCount = const Value.absent(),
     this.stockCount = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
+    this.isAvailable = const Value.absent(),
+    this.alternativeItemId = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -397,6 +475,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     Expression<int>? minCount,
     Expression<int>? stockCount,
     Expression<int>? fixedSuggestion,
+    Expression<bool>? isAvailable,
+    Expression<String>? alternativeItemId,
     Expression<DateTime>? created,
     Expression<DateTime>? modified,
     Expression<int>? rowid,
@@ -410,6 +490,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       if (minCount != null) 'min_count': minCount,
       if (stockCount != null) 'stock_count': stockCount,
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
+      if (isAvailable != null) 'is_available': isAvailable,
+      if (alternativeItemId != null) 'alternative_item_id': alternativeItemId,
       if (created != null) 'created': created,
       if (modified != null) 'modified': modified,
       if (rowid != null) 'rowid': rowid,
@@ -425,6 +507,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       Value<int?>? minCount,
       Value<int>? stockCount,
       Value<int?>? fixedSuggestion,
+      Value<bool>? isAvailable,
+      Value<String?>? alternativeItemId,
       Value<DateTime>? created,
       Value<DateTime>? modified,
       Value<int>? rowid}) {
@@ -437,6 +521,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
       minCount: minCount ?? this.minCount,
       stockCount: stockCount ?? this.stockCount,
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
+      isAvailable: isAvailable ?? this.isAvailable,
+      alternativeItemId: alternativeItemId ?? this.alternativeItemId,
       created: created ?? this.created,
       modified: modified ?? this.modified,
       rowid: rowid ?? this.rowid,
@@ -470,6 +556,12 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
     if (fixedSuggestion.present) {
       map['fixed_suggestion'] = Variable<int>(fixedSuggestion.value);
     }
+    if (isAvailable.present) {
+      map['is_available'] = Variable<bool>(isAvailable.value);
+    }
+    if (alternativeItemId.present) {
+      map['alternative_item_id'] = Variable<String>(alternativeItemId.value);
+    }
     if (created.present) {
       map['created'] = Variable<DateTime>(created.value);
     }
@@ -493,6 +585,8 @@ class InventoryEntityCompanion extends UpdateCompanion<InventoryEntityData> {
           ..write('minCount: $minCount, ')
           ..write('stockCount: $stockCount, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
+          ..write('isAvailable: $isAvailable, ')
+          ..write('alternativeItemId: $alternativeItemId, ')
           ..write('created: $created, ')
           ..write('modified: $modified, ')
           ..write('rowid: $rowid')
@@ -1037,7 +1131,6 @@ class $ProductInScannedItemEntityTable extends ProductInScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductInScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
@@ -1270,7 +1363,6 @@ class $ProductOutScannedItemEntityTable extends ProductOutScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductOutScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
@@ -1503,7 +1595,6 @@ class $ProductCountScannedItemEntityTable extends ProductCountScannedItemEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProductCountScannedItemEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
@@ -1734,7 +1825,6 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ShoppingCartEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
@@ -1745,12 +1835,6 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
   late final GeneratedColumn<int> cartId = GeneratedColumn<int>(
       'cart_id', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _productMeta =
-      const VerificationMeta('product');
-  @override
-  late final GeneratedColumn<String> product = GeneratedColumn<String>(
-      'product', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _quantityMeta =
       const VerificationMeta('quantity');
   @override
@@ -1766,8 +1850,7 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
   @override
-  List<GeneratedColumn> get $columns =>
-      [itemId, cartId, product, quantity, modified];
+  List<GeneratedColumn> get $columns => [itemId, cartId, quantity, modified];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1788,12 +1871,6 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
     if (data.containsKey('cart_id')) {
       context.handle(_cartIdMeta,
           cartId.isAcceptableOrUnknown(data['cart_id']!, _cartIdMeta));
-    }
-    if (data.containsKey('product')) {
-      context.handle(_productMeta,
-          product.isAcceptableOrUnknown(data['product']!, _productMeta));
-    } else if (isInserting) {
-      context.missing(_productMeta);
     }
     if (data.containsKey('quantity')) {
       context.handle(_quantityMeta,
@@ -1818,8 +1895,6 @@ class $ShoppingCartEntityTable extends ShoppingCartEntity
           .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
       cartId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}cart_id']),
-      product: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}product'])!,
       quantity: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}quantity'])!,
       modified: attachedDatabase.typeMapping
@@ -1837,13 +1912,11 @@ class ShoppingCartEntityData extends DataClass
     implements Insertable<ShoppingCartEntityData> {
   final String itemId;
   final int? cartId;
-  final String product;
   final int quantity;
   final DateTime modified;
   const ShoppingCartEntityData(
       {required this.itemId,
       this.cartId,
-      required this.product,
       required this.quantity,
       required this.modified});
   @override
@@ -1853,7 +1926,6 @@ class ShoppingCartEntityData extends DataClass
     if (!nullToAbsent || cartId != null) {
       map['cart_id'] = Variable<int>(cartId);
     }
-    map['product'] = Variable<String>(product);
     map['quantity'] = Variable<int>(quantity);
     map['modified'] = Variable<DateTime>(modified);
     return map;
@@ -1864,7 +1936,6 @@ class ShoppingCartEntityData extends DataClass
       itemId: Value(itemId),
       cartId:
           cartId == null && nullToAbsent ? const Value.absent() : Value(cartId),
-      product: Value(product),
       quantity: Value(quantity),
       modified: Value(modified),
     );
@@ -1876,7 +1947,6 @@ class ShoppingCartEntityData extends DataClass
     return ShoppingCartEntityData(
       itemId: serializer.fromJson<String>(json['itemId']),
       cartId: serializer.fromJson<int?>(json['cartId']),
-      product: serializer.fromJson<String>(json['product']),
       quantity: serializer.fromJson<int>(json['quantity']),
       modified: serializer.fromJson<DateTime>(json['modified']),
     );
@@ -1887,7 +1957,6 @@ class ShoppingCartEntityData extends DataClass
     return <String, dynamic>{
       'itemId': serializer.toJson<String>(itemId),
       'cartId': serializer.toJson<int?>(cartId),
-      'product': serializer.toJson<String>(product),
       'quantity': serializer.toJson<int>(quantity),
       'modified': serializer.toJson<DateTime>(modified),
     };
@@ -1896,13 +1965,11 @@ class ShoppingCartEntityData extends DataClass
   ShoppingCartEntityData copyWith(
           {String? itemId,
           Value<int?> cartId = const Value.absent(),
-          String? product,
           int? quantity,
           DateTime? modified}) =>
       ShoppingCartEntityData(
         itemId: itemId ?? this.itemId,
         cartId: cartId.present ? cartId.value : this.cartId,
-        product: product ?? this.product,
         quantity: quantity ?? this.quantity,
         modified: modified ?? this.modified,
       );
@@ -1911,7 +1978,6 @@ class ShoppingCartEntityData extends DataClass
     return (StringBuffer('ShoppingCartEntityData(')
           ..write('itemId: $itemId, ')
           ..write('cartId: $cartId, ')
-          ..write('product: $product, ')
           ..write('quantity: $quantity, ')
           ..write('modified: $modified')
           ..write(')'))
@@ -1919,14 +1985,13 @@ class ShoppingCartEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(itemId, cartId, product, quantity, modified);
+  int get hashCode => Object.hash(itemId, cartId, quantity, modified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ShoppingCartEntityData &&
           other.itemId == this.itemId &&
           other.cartId == this.cartId &&
-          other.product == this.product &&
           other.quantity == this.quantity &&
           other.modified == this.modified);
 }
@@ -1935,14 +2000,12 @@ class ShoppingCartEntityCompanion
     extends UpdateCompanion<ShoppingCartEntityData> {
   final Value<String> itemId;
   final Value<int?> cartId;
-  final Value<String> product;
   final Value<int> quantity;
   final Value<DateTime> modified;
   final Value<int> rowid;
   const ShoppingCartEntityCompanion({
     this.itemId = const Value.absent(),
     this.cartId = const Value.absent(),
-    this.product = const Value.absent(),
     this.quantity = const Value.absent(),
     this.modified = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1950,17 +2013,14 @@ class ShoppingCartEntityCompanion
   ShoppingCartEntityCompanion.insert({
     required String itemId,
     this.cartId = const Value.absent(),
-    required String product,
     required int quantity,
     this.modified = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : itemId = Value(itemId),
-        product = Value(product),
         quantity = Value(quantity);
   static Insertable<ShoppingCartEntityData> custom({
     Expression<String>? itemId,
     Expression<int>? cartId,
-    Expression<String>? product,
     Expression<int>? quantity,
     Expression<DateTime>? modified,
     Expression<int>? rowid,
@@ -1968,7 +2028,6 @@ class ShoppingCartEntityCompanion
     return RawValuesInsertable({
       if (itemId != null) 'item_id': itemId,
       if (cartId != null) 'cart_id': cartId,
-      if (product != null) 'product': product,
       if (quantity != null) 'quantity': quantity,
       if (modified != null) 'modified': modified,
       if (rowid != null) 'rowid': rowid,
@@ -1978,14 +2037,12 @@ class ShoppingCartEntityCompanion
   ShoppingCartEntityCompanion copyWith(
       {Value<String>? itemId,
       Value<int?>? cartId,
-      Value<String>? product,
       Value<int>? quantity,
       Value<DateTime>? modified,
       Value<int>? rowid}) {
     return ShoppingCartEntityCompanion(
       itemId: itemId ?? this.itemId,
       cartId: cartId ?? this.cartId,
-      product: product ?? this.product,
       quantity: quantity ?? this.quantity,
       modified: modified ?? this.modified,
       rowid: rowid ?? this.rowid,
@@ -2000,9 +2057,6 @@ class ShoppingCartEntityCompanion
     }
     if (cartId.present) {
       map['cart_id'] = Variable<int>(cartId.value);
-    }
-    if (product.present) {
-      map['product'] = Variable<String>(product.value);
     }
     if (quantity.present) {
       map['quantity'] = Variable<int>(quantity.value);
@@ -2021,7 +2075,6 @@ class ShoppingCartEntityCompanion
     return (StringBuffer('ShoppingCartEntityCompanion(')
           ..write('itemId: $itemId, ')
           ..write('cartId: $cartId, ')
-          ..write('product: $product, ')
           ..write('quantity: $quantity, ')
           ..write('modified: $modified, ')
           ..write('rowid: $rowid')
@@ -2038,7 +2091,6 @@ class $ShoppingCartChangesEntityTable extends ShoppingCartChangesEntity
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ShoppingCartChangesEntityTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
   @override
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
@@ -2308,6 +2360,8 @@ typedef $$InventoryEntityTableInsertCompanionBuilder = InventoryEntityCompanion
   Value<int?> minCount,
   Value<int> stockCount,
   Value<int?> fixedSuggestion,
+  Value<bool> isAvailable,
+  Value<String?> alternativeItemId,
   Value<DateTime> created,
   Value<DateTime> modified,
   Value<int> rowid,
@@ -2322,6 +2376,8 @@ typedef $$InventoryEntityTableUpdateCompanionBuilder = InventoryEntityCompanion
   Value<int?> minCount,
   Value<int> stockCount,
   Value<int?> fixedSuggestion,
+  Value<bool> isAvailable,
+  Value<String?> alternativeItemId,
   Value<DateTime> created,
   Value<DateTime> modified,
   Value<int> rowid,
@@ -2356,6 +2412,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             Value<int?> minCount = const Value.absent(),
             Value<int> stockCount = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
+            Value<bool> isAvailable = const Value.absent(),
+            Value<String?> alternativeItemId = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -2369,6 +2427,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             minCount: minCount,
             stockCount: stockCount,
             fixedSuggestion: fixedSuggestion,
+            isAvailable: isAvailable,
+            alternativeItemId: alternativeItemId,
             created: created,
             modified: modified,
             rowid: rowid,
@@ -2382,6 +2442,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             Value<int?> minCount = const Value.absent(),
             Value<int> stockCount = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
+            Value<bool> isAvailable = const Value.absent(),
+            Value<String?> alternativeItemId = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -2395,6 +2457,8 @@ class $$InventoryEntityTableTableManager extends RootTableManager<
             minCount: minCount,
             stockCount: stockCount,
             fixedSuggestion: fixedSuggestion,
+            isAvailable: isAvailable,
+            alternativeItemId: alternativeItemId,
             created: created,
             modified: modified,
             rowid: rowid,
@@ -2457,6 +2521,16 @@ class $$InventoryEntityTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<bool> get isAvailable => $state.composableBuilder(
+      column: $state.table.isAvailable,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get alternativeItemId => $state.composableBuilder(
+      column: $state.table.alternativeItemId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<DateTime> get created => $state.composableBuilder(
       column: $state.table.created,
       builder: (column, joinBuilders) =>
@@ -2508,6 +2582,16 @@ class $$InventoryEntityTableOrderingComposer
 
   ColumnOrderings<int> get fixedSuggestion => $state.composableBuilder(
       column: $state.table.fixedSuggestion,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isAvailable => $state.composableBuilder(
+      column: $state.table.isAvailable,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get alternativeItemId => $state.composableBuilder(
+      column: $state.table.alternativeItemId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -2852,7 +2936,6 @@ class $$ProductInScannedItemEntityTableProcessedTableManager
 class $$ProductInScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
   $$ProductInScannedItemEntityTableFilterComposer(super.$state);
-
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -2872,7 +2955,6 @@ class $$ProductInScannedItemEntityTableFilterComposer
 class $$ProductInScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ProductInScannedItemEntityTable> {
   $$ProductInScannedItemEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -2967,7 +3049,6 @@ class $$ProductOutScannedItemEntityTableProcessedTableManager
 class $$ProductOutScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
   $$ProductOutScannedItemEntityTableFilterComposer(super.$state);
-
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -2987,7 +3068,6 @@ class $$ProductOutScannedItemEntityTableFilterComposer
 class $$ProductOutScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ProductOutScannedItemEntityTable> {
   $$ProductOutScannedItemEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3083,7 +3163,6 @@ class $$ProductCountScannedItemEntityTableProcessedTableManager
 class $$ProductCountScannedItemEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ProductCountScannedItemEntityTable> {
   $$ProductCountScannedItemEntityTableFilterComposer(super.$state);
-
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3104,7 +3183,6 @@ class $$ProductCountScannedItemEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase,
         $ProductCountScannedItemEntityTable> {
   $$ProductCountScannedItemEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3125,7 +3203,6 @@ typedef $$ShoppingCartEntityTableInsertCompanionBuilder
     = ShoppingCartEntityCompanion Function({
   required String itemId,
   Value<int?> cartId,
-  required String product,
   required int quantity,
   Value<DateTime> modified,
   Value<int> rowid,
@@ -3134,7 +3211,6 @@ typedef $$ShoppingCartEntityTableUpdateCompanionBuilder
     = ShoppingCartEntityCompanion Function({
   Value<String> itemId,
   Value<int?> cartId,
-  Value<String> product,
   Value<int> quantity,
   Value<DateTime> modified,
   Value<int> rowid,
@@ -3163,7 +3239,6 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<String> itemId = const Value.absent(),
             Value<int?> cartId = const Value.absent(),
-            Value<String> product = const Value.absent(),
             Value<int> quantity = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -3171,7 +3246,6 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
               ShoppingCartEntityCompanion(
             itemId: itemId,
             cartId: cartId,
-            product: product,
             quantity: quantity,
             modified: modified,
             rowid: rowid,
@@ -3179,7 +3253,6 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
           getInsertCompanionBuilder: ({
             required String itemId,
             Value<int?> cartId = const Value.absent(),
-            required String product,
             required int quantity,
             Value<DateTime> modified = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -3187,7 +3260,6 @@ class $$ShoppingCartEntityTableTableManager extends RootTableManager<
               ShoppingCartEntityCompanion.insert(
             itemId: itemId,
             cartId: cartId,
-            product: product,
             quantity: quantity,
             modified: modified,
             rowid: rowid,
@@ -3211,7 +3283,6 @@ class $$ShoppingCartEntityTableProcessedTableManager
 class $$ShoppingCartEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ShoppingCartEntityTable> {
   $$ShoppingCartEntityTableFilterComposer(super.$state);
-
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3219,11 +3290,6 @@ class $$ShoppingCartEntityTableFilterComposer
 
   ColumnFilters<int> get cartId => $state.composableBuilder(
       column: $state.table.cartId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get product => $state.composableBuilder(
-      column: $state.table.product,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -3241,7 +3307,6 @@ class $$ShoppingCartEntityTableFilterComposer
 class $$ShoppingCartEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ShoppingCartEntityTable> {
   $$ShoppingCartEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3249,11 +3314,6 @@ class $$ShoppingCartEntityTableOrderingComposer
 
   ColumnOrderings<int> get cartId => $state.composableBuilder(
       column: $state.table.cartId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get product => $state.composableBuilder(
-      column: $state.table.product,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -3346,7 +3406,6 @@ class $$ShoppingCartChangesEntityTableProcessedTableManager
 class $$ShoppingCartChangesEntityTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ShoppingCartChangesEntityTable> {
   $$ShoppingCartChangesEntityTableFilterComposer(super.$state);
-
   ColumnFilters<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>
@@ -3366,7 +3425,6 @@ class $$ShoppingCartChangesEntityTableFilterComposer
 class $$ShoppingCartChangesEntityTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ShoppingCartChangesEntityTable> {
   $$ShoppingCartChangesEntityTableOrderingComposer(super.$state);
-
   ColumnOrderings<String> get itemId => $state.composableBuilder(
       column: $state.table.itemId,
       builder: (column, joinBuilders) =>

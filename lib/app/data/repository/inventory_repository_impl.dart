@@ -77,7 +77,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryResponse> updateInventoryDataToServer(
+  Future<InventoryResponse> updateInventoryDataInServer(
       InventoryUpdateRequestBody request) {
     return _remoteDataSource.updateInventoryData(request);
   }
@@ -148,30 +148,41 @@ class InventoryRepositoryImpl implements InventoryRepository {
   @override
   Future<InventoryEntityData?> createInventory(
       CreateInventoryRequestBody requestBody) {
-    return _insertInventoryChanges(
-            requestBody.toInventoryChangesEntityCompanion())
+    return _localDataSource
+        .insertInventory(requestBody.toInventoryEntityCompanion())
         .then(
-      (_) => _localDataSource
-          .insertInventory(requestBody.toInventoryEntityCompanion())
-          .then(
-        (_) {
-          _syncInventories();
+          (_) => _insertInventoryChanges(
+                  requestBody.toInventoryChangesEntityCompanion())
+              .then(
+            (_) {
+              _syncInventories();
 
-          return getInventoryByItemId(requestBody.itemId);
-        },
-      ),
-    );
+              return getInventoryByItemId(requestBody.itemId);
+            },
+          ),
+        );
   }
 
-  Future<int> _insertInventoryChanges(
-      InventoryChangesEntityCompanion inventoryChanges) {
-    return _localDataSource.insertInventoryChanges(inventoryChanges);
+  @override
+  Future<InventoryResponse> createInventoryInServer(
+      CreateInventoryRequestBody requestBody) {
+    return _remoteDataSource.createInventory(requestBody).then((value) {
+      _localDataSource.updateInventory(
+          requestBody.itemId, value.toInventoryEntityCompanion());
+
+      return value;
+    });
   }
 
   @override
   Future<InventoryListResponse> getInventoryListFromRemote(
       {required InventoryListQueryParams queryParams}) {
     return _remoteDataSource.getInventoryList(queryParams: queryParams);
+  }
+
+  Future<int> _insertInventoryChanges(
+      InventoryChangesEntityCompanion inventoryChanges) {
+    return _localDataSource.insertInventoryChanges(inventoryChanges);
   }
 
   void _syncInventories() {

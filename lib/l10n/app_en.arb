@@ -63,6 +63,7 @@
       }
     }
   },
+  "messageInventoryAlreadyExist": "The product is already in stock.",
   "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemNotFound": "Item not found!",
   "messageItemOutOfStock": "Item out of stock!",

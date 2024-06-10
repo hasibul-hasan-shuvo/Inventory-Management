@@ -70,7 +70,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
   }
 
   Widget _getPlaceHolder() {
-    return const SizedBox.shrink();
+    return Container();
   }
 
   Widget _getInventoryList() {

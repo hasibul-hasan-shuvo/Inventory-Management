@@ -38,6 +38,14 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
     fetchInventoryList();
   }
 
+  @override
+  void onClose() {
+    _inventoryItemsController.close();
+    _searchModeController.close();
+    searchQuery.close();
+    super.onClose();
+  }
+
   Future<void> _addCartItem(
     SelectableInventoryItemUiModel data,
     int quantity,

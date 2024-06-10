@@ -9,7 +9,7 @@ import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -50,13 +50,13 @@ abstract class BaseView<Controller extends BaseController>
               ? _showLoading()
               : Container()),
           Obx(() => controller.successMessage.isNotEmpty
-              ? showSuccessSnackBar(controller.successMessage)
+              ? showSuccessSnackBar(context, controller.successMessage)
               : Container()),
           Obx(() => controller.errorMessage.isNotEmpty
-              ? showErrorSnackBar(controller.errorMessage)
+              ? showErrorSnackBar(context, controller.errorMessage)
               : Container()),
           Obx(() => controller.message.isNotEmpty
-              ? showSnackBar(controller.message)
+              ? showSnackBar(context, controller.message)
               : Container()),
           Container(),
         ],
@@ -124,47 +124,89 @@ abstract class BaseView<Controller extends BaseController>
     }
   }
 
-  Widget showSuccessSnackBar(String message) {
+  Widget showSuccessSnackBar(BuildContext context, String message) {
+    final snackBar = _getSnackBar(
+      message,
+      Icons.done,
+      AppColors.colorGreen,
+      controller.isDarkMode
+          ? AppColors.bgSnackBarSuccessDark
+          : AppColors.bgSnackBarSuccessLight,
+    );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      logger.d("Success message showing: $message");
-      Get.snackbar(
-        appLocalization.success,
-        message,
-        colorText: AppColors.colorWhite,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       controller.showSuccessMessage('');
     });
 
     return Container();
   }
 
-  Widget showErrorSnackBar(String message) {
+  Widget showErrorSnackBar(BuildContext context, String message) {
+    final snackBar = _getSnackBar(
+      message,
+      Icons.warning_amber_outlined,
+      AppColors.colorRed,
+      controller.isDarkMode
+          ? AppColors.bgSnackBarErrorDark
+          : AppColors.bgSnackBarErrorLight,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Get.snackbar(
-        appLocalization.error,
-        message,
-        colorText: AppColors.colorWhite,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       controller.showErrorMessage('');
     });
 
     return Container();
   }
 
-  Widget showSnackBar(String message) {
+  Widget showSnackBar(BuildContext context, String message) {
+    final snackBar = _getSnackBar(
+      message,
+      Icons.warning_amber,
+      Colors.orangeAccent,
+      controller.isDarkMode
+          ? AppColors.bgSnackBarWarningDark
+          : AppColors.bgSnackBarWarningLight,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Get.snackbar(
-        appLocalization.status,
-        message,
-        colorText: AppColors.colorWhite,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      controller.showMessage('');
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      controller.showSuccessMessage('');
     });
 
     return Container();
+  }
+
+  SnackBar _getSnackBar(
+    String message,
+    IconData icon,
+    Color color,
+    Color backgroundColor,
+  ) {
+    return SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            icon,
+            color: color,
+          ),
+          SizedBox(width: AppValues.margin.w),
+          Expanded(
+            child: Text(
+              message,
+              style: textTheme.bodyLarge?.copyWith(color: color),
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: backgroundColor,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: color, width: 1),
+        borderRadius: BorderRadius.circular(AppValues.smallRadius.r),
+      ),
+    );
   }
 
   Widget _getConnectionStatusView() {
@@ -192,11 +234,6 @@ abstract class BaseView<Controller extends BaseController>
       color: Colors.green,
       icon: Icons.verified_user_outlined,
     );
-  }
-
-  void showToast(String message) {
-    Fluttertoast.showToast(
-        msg: message, toastLength: Toast.LENGTH_SHORT, timeInSecForIosWeb: 1);
   }
 
   Color pageBackgroundColor() {

@@ -21,8 +21,9 @@ class ItemCountController extends BaseController
 
   @override
   void onClose() {
-    super.onClose();
     ZebraScanner().close();
+    closeScannedProductsControllers();
+    super.onClose();
   }
 
   void _getAllScannedProducts() {
