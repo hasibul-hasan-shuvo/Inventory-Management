@@ -11,8 +11,6 @@
         <li>Fixed - Inventory not updating immediately while order marking as received.</li>
     </ul>
 </details>
-<br>
-<br>
 <h2>v1.0.0</h2>
 <details>
     <summary>Changes</summary>
