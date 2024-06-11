@@ -13,8 +13,6 @@
 </details>
 <br>
 <br>
-<br>
-<br>
 <h2>v1.0.0</h2>
 <details>
     <summary>Changes</summary>
