@@ -1,4 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/values/order_status.dart';
 import 'package:dental_inventory/app/data/model/request/confirm_order_delivery_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/order_details_query_params.dart';
@@ -54,6 +56,7 @@ class DeliveryDetailsController extends BaseController {
 
   void _handleConfirmOrderDeliver(bool isSuccess) {
     if (isSuccess) {
+      DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
       Get.back(result: true);
     }
   }
