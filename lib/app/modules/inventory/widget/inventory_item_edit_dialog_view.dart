@@ -10,7 +10,7 @@ import '../../../core/values/app_values.dart';
 
 // ignore: must_be_immutable
 class InventoryItemEditDialogView extends StatelessWidget with BaseWidgetMixin {
-  InventoryUIModel inventoryData;
+  InventoryUiModel inventoryData;
   final TextEditingController minController;
   final TextEditingController maxController;
   final TextEditingController fixedSuggestionController;

@@ -65,7 +65,7 @@ class InventoryView extends BaseView<InventoryController> {
     );
   }
 
-  Widget _buildInventoryCard(InventoryUIModel inventoryData) =>
+  Widget _buildInventoryCard(InventoryUiModel inventoryData) =>
       ItemInventoryCard(data: inventoryData);
 
   Widget _getPlaceHolder() {

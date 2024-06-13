@@ -9,10 +9,10 @@ import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
-  final RxList<InventoryUIModel> _inventoryItemsController =
+  final RxList<InventoryUiModel> _inventoryItemsController =
       RxList.empty(growable: true);
 
-  List<InventoryUIModel> get inventoryItems => _inventoryItemsController;
+  List<InventoryUiModel> get inventoryItems => _inventoryItemsController;
 
   final RxBool _searchModeController = RxBool(false);
 
@@ -56,7 +56,7 @@ class InventoryController extends BaseController {
     _fetchInventoryList();
   }
 
-  void deleteInventoryItem(InventoryUIModel data) {
+  void deleteInventoryItem(InventoryUiModel data) {
     callDataService(
       _inventoryRepository.deleteInventory(
         id: data.id,
@@ -66,7 +66,7 @@ class InventoryController extends BaseController {
     );
   }
 
-  void _deleteSuccessHandler(InventoryUIModel data) {
+  void _deleteSuccessHandler(InventoryUiModel data) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
     _inventoryItemsController
         .removeWhere((element) => element.itemId == data.itemId);
@@ -89,12 +89,12 @@ class InventoryController extends BaseController {
 
   void _handleFetchInventoryListSuccessResponse(
       List<InventoryEntityData> response) {
-    List<InventoryUIModel> list = [];
+    List<InventoryUiModel> list = [];
     pagingController.nextPage();
     pagingController.isLastPage =
         response.isEmpty && response.length < AppValues.defaultPageSize;
     for (InventoryEntityData inventory in response) {
-      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+      list.add(InventoryUiModel.fromInventoryEntityData(inventory));
     }
     _inventoryItemsController(list);
   }
@@ -116,18 +116,18 @@ class InventoryController extends BaseController {
 
   void _handleNextInventoryListSuccessResponse(
       List<InventoryEntityData> response) {
-    List<InventoryUIModel> list = [];
+    List<InventoryUiModel> list = [];
     pagingController.nextPage();
     pagingController.isLastPage =
         response.isEmpty && response.length < AppValues.defaultPageSize;
     for (InventoryEntityData inventory in response) {
-      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+      list.add(InventoryUiModel.fromInventoryEntityData(inventory));
     }
     _inventoryItemsController.addAll(list);
   }
 
   void updateInventoryData({
-    required InventoryUIModel data,
+    required InventoryUiModel data,
     required String maxCount,
     required String minCount,
     required String stockCount,

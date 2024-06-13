@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
-class InventoryUIModel {
+class InventoryUiModel {
   late final int? id;
   late final String itemId;
   late final String name;
@@ -16,7 +16,7 @@ class InventoryUIModel {
   late final bool isAvailable;
   late final String alternativeItemId;
 
-  InventoryUIModel.fromInventoryEntityData(InventoryEntityData data) {
+  InventoryUiModel.fromInventoryEntityData(InventoryEntityData data) {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 

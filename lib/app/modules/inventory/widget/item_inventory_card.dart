@@ -15,7 +15,7 @@ import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
-  final InventoryUIModel data;
+  final InventoryUiModel data;
   final InventoryController _controller = Get.find<InventoryController>();
 
   ItemInventoryCard({
