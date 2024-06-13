@@ -1,42 +1,46 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/values/app_icons.dart';
 import '../../../core/widget/app_dialog.dart';
-import '../../../core/widget/asset_image_view.dart';
 import '../../../core/widget/network_image_view.dart';
 import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
-class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
+class ItemUnavailableInventoryView extends StatelessWidget
+    with BaseWidgetMixin {
   final InventoryUiModel data;
   final InventoryController _controller = Get.find<InventoryController>();
 
-  ItemInventoryCard({
+  ItemUnavailableInventoryView({
     required this.data,
   });
 
   @override
   Widget body(BuildContext context) {
     return ElevatedContainer(
-      child: Row(
-        children: [
-          _buildProductImage(),
-          SizedBox(width: AppValues.margin_10.w),
-          _buildQuantityRow(),
-          SizedBox(width: AppValues.margin_10.w),
-          _buildEditButton(
-            onTap: () {
-              _buildDialog(context);
-            },
-          )
-        ],
+      child: Container(
+        color: Colors.amber.withOpacity(0.2),
+        child: Ripple(
+          onTap: () {},
+          child: Row(
+            children: [
+              _buildProductImage(),
+              SizedBox(width: AppValues.margin_10.w),
+              _buildQuantityRow(),
+              SizedBox(width: AppValues.margin_10.w),
+              _getUnavailableTag(),
+              SizedBox(width: AppValues.margin_10.w),
+            ],
+          ),
+        ),
       ),
     ).marginOnly(bottom: AppValues.smallMargin.h);
   }
@@ -93,15 +97,19 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _buildEditButton({required VoidCallback onTap}) {
-    return IconButton(
-      onPressed: onTap,
-      icon: AssetImageView(
-        fileName: AppIcons.edit,
-        height: AppValues.iconDefaultSize.h,
-        width: AppValues.iconDefaultSize.w,
-        color: theme.iconTheme.color,
-      ),
+  Widget _getUnavailableTag() {
+    return ElevatedContainer(
+      borderRadius: AppValues.radius_6.r,
+      bgColor: theme.primaryColor,
+      width: AppValues.iconSize_40.w,
+      child: Text(
+        appLocalization.tagUnavailableProduct,
+        style: textTheme.bodySmall?.copyWith(
+          fontSize: FontSize.extraSmall.sp,
+          color: theme.colorScheme.onPrimary,
+        ),
+        textAlign: TextAlign.center,
+      ).paddingAll(AppValues.padding_4.r),
     );
   }
 
@@ -119,12 +127,16 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
           SizedBox(height: AppValues.margin_10.h),
           Row(
             children: [
-              Text(
-                "${appLocalization.available}: ${data.currentStock}",
-                style: textTheme.bodySmall,
+              Expanded(
+                flex: 1,
+                child: Text(
+                  "${appLocalization.available}: ${data.currentStock}",
+                  style: textTheme.bodySmall,
+                ),
               ),
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
+                flex: 2,
                 child: Text(
                   appLocalization.inventoryMaxMin(data.min, data.max),
                   style: textTheme.bodySmall,

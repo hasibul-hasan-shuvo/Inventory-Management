@@ -5,6 +5,7 @@ import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/item_unavailable_inventory_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -66,7 +67,9 @@ class InventoryView extends BaseView<InventoryController> {
   }
 
   Widget _buildInventoryCard(InventoryUiModel inventoryData) =>
-      ItemInventoryCard(data: inventoryData);
+      inventoryData.isAvailable
+          ? ItemInventoryCard(data: inventoryData)
+          : ItemUnavailableInventoryView(data: inventoryData);
 
   Widget _getPlaceHolder() {
     return GestureDetector(
