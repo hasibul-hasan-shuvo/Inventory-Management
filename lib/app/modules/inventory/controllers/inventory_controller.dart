@@ -23,6 +23,8 @@ class InventoryController extends BaseController {
   final InventoryRepository _inventoryRepository =
       Get.find<InventoryRepository>();
 
+  final Rx replacementProductController = Rx(null);
+
   @override
   void onInit() {
     super.onInit();

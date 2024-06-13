@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/widget/app_dialog.dart';
 import '../../../core/widget/network_image_view.dart';
-import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemUnavailableInventoryView extends StatelessWidget
@@ -43,49 +41,6 @@ class ItemUnavailableInventoryView extends StatelessWidget
         ),
       ),
     ).marginOnly(bottom: AppValues.smallMargin.h);
-  }
-
-  void _buildDialog(BuildContext context) {
-    TextEditingController minController = TextEditingController();
-    TextEditingController maxController = TextEditingController();
-    TextEditingController fixedSuggestionController = TextEditingController();
-    TextEditingController stockCountController = TextEditingController();
-
-    minController.text = data.min.toString();
-    maxController.text = data.max.toString();
-    fixedSuggestionController.text = data.fixedOrderSuggestions.toString();
-    stockCountController.text = data.currentStock.toString();
-
-    showDialog(
-      context: context,
-      builder: (_) => AppDialog(
-        title: appLocalization.editProduct,
-        content: InventoryItemEditDialogView(
-          inventoryData: data,
-          minController: minController,
-          maxController: maxController,
-          fixedSuggestionController: fixedSuggestionController,
-          stockCountController: stockCountController,
-        ),
-        negativeButtonIcon: Icons.delete_outline,
-        negativeButtonText: appLocalization.deleteProduct,
-        positiveButtonText: appLocalization.updateProduct,
-        willPopOnNegativeButtonTap: false,
-        onPositiveButtonTap: () {
-          _controller.updateInventoryData(
-            data: data,
-            minCount: minController.text,
-            maxCount: maxController.text,
-            fixedSuggestion: fixedSuggestionController.text,
-            stockCount: stockCountController.text,
-          );
-        },
-        onNegativeButtonTap: () {
-          Get.back();
-          _onDeleteProductTap(context);
-        },
-      ),
-    );
   }
 
   Widget _buildProductImage() {
@@ -148,23 +103,5 @@ class ItemUnavailableInventoryView extends StatelessWidget
         ],
       ),
     );
-  }
-
-  void _onDeleteProductTap(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AppDialog(
-        title: appLocalization.titleDeleteInventory,
-        message: appLocalization.messageDeleteInventory,
-        isCancelable: false,
-        negativeButtonText: appLocalization.no,
-        positiveButtonText: appLocalization.yes,
-        onPositiveButtonTap: _onConfirmDelete,
-      ),
-    );
-  }
-
-  void _onConfirmDelete() {
-    _controller.deleteInventoryItem(data);
   }
 }

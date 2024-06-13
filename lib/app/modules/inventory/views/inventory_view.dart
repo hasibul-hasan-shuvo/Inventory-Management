@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
@@ -14,6 +15,7 @@ import '../controllers/inventory_controller.dart';
 
 // ignore: must_be_immutable
 class InventoryView extends BaseView<InventoryController> {
+  BuildContext? _context;
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return PreferredSize(
@@ -26,6 +28,8 @@ class InventoryView extends BaseView<InventoryController> {
 
   @override
   Widget body(BuildContext context) {
+    _context;
+
     return Obx(() {
       return controller.isPageLoading && controller.inventoryItems.isEmpty
           ? const SizedBox.shrink()
@@ -78,5 +82,24 @@ class InventoryView extends BaseView<InventoryController> {
         message: appLocalization.placeHolderEmptyInventory,
       ),
     );
+  }
+
+  void _subscribeUnavailableProductControllers() {}
+
+  void _buildDialog(InventoryUiModel data) {
+    if (_context != null) {
+      showDialog(
+        context: _context!,
+        builder: (_) => AppDialog(
+          title: appLocalization.titleUnavailableProduct,
+          content: Container(),
+          negativeButtonIcon: Icons.close,
+          negativeButtonText: appLocalization.cancel,
+          positiveButtonText: appLocalization.buttonTextAddProduct,
+          willPopOnNegativeButtonTap: false,
+          onPositiveButtonTap: () {},
+        ),
+      );
+    }
   }
 }
