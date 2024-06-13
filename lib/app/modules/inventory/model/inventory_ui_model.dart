@@ -13,6 +13,8 @@ class InventoryUIModel {
   late int currentStock;
   late int fixedOrderSuggestions;
   late final double price;
+  late final bool isAvailable;
+  late final String alternativeItemId;
 
   InventoryUIModel.fromInventoryEntityData(InventoryEntityData data) {
     ProductResponse product =
@@ -27,6 +29,8 @@ class InventoryUIModel {
     currentStock = data.stockCount;
     fixedOrderSuggestions = data.fixedSuggestion ?? 0;
     price = product.price?.toDouble() ?? 0.0;
+    isAvailable = data.isAvailable;
+    alternativeItemId = data.alternativeItemId ?? '';
   }
 
   updateFromInventoryEntityData(InventoryEntityData response) {
