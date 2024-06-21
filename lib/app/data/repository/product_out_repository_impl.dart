@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/utils/date_parser.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/product_out_local_data_source.dart';
@@ -104,6 +106,8 @@ class ProductOutRepositoryImpl implements ProductOutRepository {
           BuildConfig.instance.config.logger.e("RetrievedAllItemsError: $e");
         }
       }
+
+      DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
 
       return getProducts();
     });

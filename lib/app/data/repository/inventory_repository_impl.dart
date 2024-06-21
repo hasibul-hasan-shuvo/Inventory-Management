@@ -69,8 +69,6 @@ class InventoryRepositoryImpl implements InventoryRepository {
         .updateInventory(request.itemId, inventory)
         .then((_) {
       return _insertInventoryChanges(inventoryChanges).then((_) {
-        _syncInventories();
-
         return getInventoryByItemId(request.itemId);
       });
     });
