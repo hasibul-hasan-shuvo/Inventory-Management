@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/controllers/global_inventories_controller.dart';
@@ -47,7 +48,7 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _getName(),
-          SizedBox(height: AppValues.margin_4.h),
+          SizedBox(height: AppValues.margin_6.h),
           _getId(),
         ],
       ),
@@ -57,8 +58,8 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
   Widget _getName() {
     return Text(
       data.name,
-      style: textTheme.titleMedium,
-      maxLines: 2,
+      style: textTheme.labelMedium,
+      maxLines: 5,
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -66,7 +67,7 @@ class ItemGlobalInventoryView extends StatelessWidget with BaseWidgetMixin {
   Widget _getId() {
     return Text(
       "#${data.itemId}",
-      style: textTheme.bodySmall,
+      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );

@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
@@ -112,22 +113,26 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         children: [
           Text(
             data.name,
-            style: textTheme.titleMedium,
-            maxLines: 2,
+            style: textTheme.labelMedium,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: AppValues.margin_10.h),
           Row(
             children: [
               Expanded(
-                child:
-                    Text("${appLocalization.available}: ${data.currentStock}"),
+                child: Text(
+                  "${appLocalization.available}: ${data.currentStock}",
+                  style: textTheme.bodySmall
+                      ?.copyWith(fontSize: FontSize.labelSmall.sp),
+                ),
               ),
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
                 child: Text(
                   "${appLocalization.max}: ${data.max} ${appLocalization.min}: ${data.min}",
-                  style: textTheme.bodySmall,
+                  style: textTheme.bodySmall
+                      ?.copyWith(fontSize: FontSize.labelSmall.sp),
                 ),
               ),
             ],
