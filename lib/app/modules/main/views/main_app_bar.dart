@@ -23,9 +23,13 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(right: AppValues.smallMargin),
-        child: AssetImageView(
-          fileName: AppImages.jacobsenLogo,
-          height: AppValues.mainAppBarLogoHeight,
+        child: Row(
+          children: [
+            AssetImageView(
+              fileName: AppImages.jacobsenLogo,
+              height: AppValues.mainAppBarLogoHeight,
+            ),
+          ],
         ),
       ),
       actions: isLogOutVisible ? _buildActions(context) : null,
