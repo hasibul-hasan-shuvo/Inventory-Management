@@ -1,4 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
@@ -159,6 +161,8 @@ class InventoryController extends BaseController {
 
   void _handleUpdateInventoryDataSuccessResponse(
       InventoryEntityData? response) {
+    DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
+
     if (response != null) {
       for (var element in inventoryItems) {
         if (element.itemId == response.itemId.toString()) {
