@@ -61,6 +61,10 @@ class DataSyncManager {
     if (_loadCounter >= totalCount) {
       isDataSynced.trigger(true);
       _loadCounter = 0;
+      _isSyncing = false;
+      if (_deBouncer?.isActive == true) {
+        _deBouncer?.cancel();
+      }
     }
   }
 
