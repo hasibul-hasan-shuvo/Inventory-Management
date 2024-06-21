@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
@@ -59,6 +60,7 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildInventoryName(),
+          SizedBox(height: AppValues.margin_10.h),
           _buildIdAndCountView(),
         ],
       ),
@@ -68,8 +70,8 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
   Widget _buildInventoryName() {
     return Text(
       inventoryData.name,
-      style: textTheme.titleMedium,
-      maxLines: 2,
+      style: textTheme.labelMedium,
+      maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -105,7 +107,7 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
     return Expanded(
       child: Text(
         "#${inventoryData.itemId}",
-        style: textTheme.bodySmall,
+        style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
       ),
     );
   }
