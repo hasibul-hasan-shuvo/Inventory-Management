@@ -22,7 +22,8 @@ class AboutAppController extends BaseController {
 
   void _getAppVersion() {
     PackageInfo.fromPlatform().then((info) {
-      _versionController("${appLocalization.version}: ${info.version}");
+      _versionController(
+          "${appLocalization.version}: ${info.version}.${info.buildNumber}");
     });
   }
 }
