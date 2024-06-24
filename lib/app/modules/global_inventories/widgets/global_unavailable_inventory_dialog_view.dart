@@ -1,6 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/widget/product_top_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_top_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

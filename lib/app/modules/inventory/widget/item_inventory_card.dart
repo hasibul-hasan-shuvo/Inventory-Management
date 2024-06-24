@@ -1,7 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:flutter/material.dart';
@@ -111,28 +112,21 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            data.name,
-            style: textTheme.labelMedium,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+          ProductNameView(name: data.name),
           SizedBox(height: AppValues.margin_10.h),
           Row(
             children: [
               Expanded(
-                child: Text(
-                  "${appLocalization.available}: ${data.currentStock}",
-                  style: textTheme.bodySmall
-                      ?.copyWith(fontSize: FontSize.labelSmall.sp),
+                child: LabelAndCountView(
+                  label: appLocalization.available,
+                  count: data.currentStock.toString(),
                 ),
               ),
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
-                child: Text(
-                  "${appLocalization.max}: ${data.max} ${appLocalization.min}: ${data.min}",
-                  style: textTheme.bodySmall
-                      ?.copyWith(fontSize: FontSize.labelSmall.sp),
+                child: LabelAndCountView(
+                  label:
+                      "${appLocalization.max}: ${data.max} ${appLocalization.min}: ${data.min}",
                 ),
               ),
             ],
