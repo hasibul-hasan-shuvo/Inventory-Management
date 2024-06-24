@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
+import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/utils/date_parser.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/local/product_in_local_data_source.dart';
@@ -77,6 +79,7 @@ class ProductInRepositoryImpl implements ProductInRepository {
           .map((e) => ScannedProductUiModel.fromScannedProductEntityData(e))
           .toList();
 
+      BuildConfig.instance.config.logger.d("ScannedProducts: $scannedList");
       for (ScannedProductUiModel product in scannedList) {
         try {
           InventoryUpdateRequestBody requestBody = InventoryUpdateRequestBody(
@@ -93,6 +96,8 @@ class ProductInRepositoryImpl implements ProductInRepository {
           BuildConfig.instance.config.logger.e("RevertAllItemsError: $e");
         }
       }
+
+      DataSyncManager().syncDataWithServer([DataSynchronizerKey.INVENTORY]);
 
       return getProducts();
     });
