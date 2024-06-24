@@ -1,6 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class LabelAndCountView extends StatelessWidget with BaseWidgetMixin {
@@ -20,13 +22,15 @@ class LabelAndCountView extends StatelessWidget with BaseWidgetMixin {
         Expanded(
           child: Text(
             "$label:",
-            style: textTheme.bodySmall,
+            style:
+                textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
           ),
         ),
         if (count.isNotNullOrEmpty)
           Text(
             "$count",
-            style: textTheme.bodySmall,
+            style:
+                textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
             textAlign: TextAlign.right,
           ),
       ],

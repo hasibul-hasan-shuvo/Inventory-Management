@@ -1,8 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 //ignore: must_be_immutable
 class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
@@ -25,7 +27,6 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
     return Row(
       children: [
         _getImage(),
-        SizedBox(width: AppValues.padding.w),
         _getDetails(),
       ],
     );
@@ -52,20 +53,20 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _getProductName(),
-          SizedBox(height: AppValues.margin_2.h),
+          SizedBox(height: AppValues.margin_4.h),
           _getProductId(),
-          SizedBox(height: AppValues.margin_2.h),
+          SizedBox(height: AppValues.margin_4.h),
           _getQuantity(),
         ],
-      ),
+      ).marginSymmetric(horizontal: AppValues.smallMargin.w),
     );
   }
 
   Widget _getProductName() {
     return Text(
       productName,
-      style: textTheme.titleMedium,
-      maxLines: 2,
+      style: textTheme.labelMedium,
+      maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -73,7 +74,7 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   Widget _getProductId() {
     return Text(
       "#$productId",
-      style: textTheme.bodyMedium,
+      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
@@ -82,7 +83,7 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   Widget _getQuantity() {
     return Text(
       "${appLocalization.total}: $productQuantity",
-      style: textTheme.bodyMedium,
+      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
