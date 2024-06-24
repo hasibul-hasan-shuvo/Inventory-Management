@@ -1,7 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,19 +56,13 @@ class ProductTopView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getName() {
-    return Text(
-      name,
-      style: textTheme.labelMedium,
+    return ProductNameView(
+      name: name,
       maxLines: 5,
-      overflow: TextOverflow.ellipsis,
     );
   }
 
   Widget _getIdView() {
-    return Text(
-      "#$id",
-      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
-      maxLines: 1,
-    );
+    return ProductIdView(id: id);
   }
 }
