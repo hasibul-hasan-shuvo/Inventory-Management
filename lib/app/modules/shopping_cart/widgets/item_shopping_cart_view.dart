@@ -1,12 +1,13 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
@@ -65,11 +66,9 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getInventoryName() {
-    return Text(
-      data.name,
-      style: textTheme.labelMedium,
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
+    return ProductNameView(
+      name: data.name,
+      maxLines: 2,
     );
   }
 
@@ -101,18 +100,16 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getIdView() {
     return Expanded(
-      child: Text(
-        "#${data.itemId}",
-        style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
+      child: ProductIdView(
+        id: data.itemId,
       ),
     );
   }
 
   Widget _getPriceView() {
     return Expanded(
-      child: Text(
-        _getPrice(),
-        style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
+      child: LabelAndCountView(
+        label: _getPrice(),
       ),
     );
   }

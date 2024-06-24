@@ -1,10 +1,10 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
-import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/controllers/shopping_cart_selectable_inventories_controller.dart';
@@ -105,30 +105,18 @@ class ShoppingCartItemSelectableInventoryCard extends StatelessWidget
 
   Widget _buildIdView() {
     return Expanded(
-      child: Text(
-        "#${inventoryData.itemId}",
-        style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
+      child: ProductIdView(
+        id: inventoryData.itemId,
       ),
     );
   }
 
   Widget _buildLabelAndCount(String label, [String? count]) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            "$label:",
-            style: textTheme.bodySmall,
-          ),
-        ),
-        if (count.isNotNullOrEmpty)
-          Text(
-            "$count",
-            style: textTheme.bodySmall,
-            textAlign: TextAlign.right,
-          ),
-      ],
-    );
+    return LabelAndCountView(
+      label: label,
+      count: count,
+      spaceBetween: true,
+    ).marginOnly(right: AppValues.smallMargin.w);
   }
 
   void _onTapEdit(BuildContext context) {
