@@ -113,7 +113,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ProductNameView(name: data.name),
-          SizedBox(height: AppValues.margin_10.h),
+          SizedBox(height: AppValues.margin_2.h),
           Row(
             children: [
               Expanded(
