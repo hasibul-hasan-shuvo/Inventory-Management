@@ -1,12 +1,13 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/product_out/controllers/product_out_controller.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
@@ -68,12 +69,7 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getInventoryName() {
-    return Text(
-      data.name,
-      style: textTheme.labelMedium,
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
-    );
+    return ProductNameView(name: data.name);
   }
 
   Widget _getIdAndNumberView() {
@@ -104,9 +100,8 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getIdView() {
     return Expanded(
-      child: Text(
-        "#${data.itemId}",
-        style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
+      child: ProductIdView(
+        id: data.itemId,
       ),
     );
   }
@@ -116,7 +111,8 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
       child: LabelAndCountView(
         label: label,
         count: count,
-      ),
+        spaceBetween: true,
+      ).marginOnly(right: AppValues.smallMargin.w),
     );
   }
 

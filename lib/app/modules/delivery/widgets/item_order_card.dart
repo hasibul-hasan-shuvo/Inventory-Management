@@ -1,7 +1,9 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/values/font_size.dart';
+import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -63,29 +65,17 @@ class ItemOrderCard extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getProductName() {
-    return Text(
-      productName,
-      style: textTheme.labelMedium,
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
-    );
+    return ProductNameView(name: productName);
   }
 
   Widget _getProductId() {
-    return Text(
-      "#$productId",
-      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
+    return ProductIdView(id: productId);
   }
 
   Widget _getQuantity() {
-    return Text(
-      "${appLocalization.total}: $productQuantity",
-      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
+    return LabelAndCountView(
+      label: appLocalization.total,
+      count: productQuantity,
     );
   }
 }
