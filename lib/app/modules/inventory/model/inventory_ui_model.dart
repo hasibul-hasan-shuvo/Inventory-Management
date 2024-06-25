@@ -29,7 +29,7 @@ class InventoryUiModel {
     currentStock = data.stockCount;
     fixedOrderSuggestions = data.fixedSuggestion ?? 0;
     price = product.price?.toDouble() ?? 0.0;
-    isAvailable = false; //data.isAvailable;
+    isAvailable = data.isAvailable;
     alternativeItemId = data.alternativeItemId ?? '';
   }
 

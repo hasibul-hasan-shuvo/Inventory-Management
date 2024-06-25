@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
+import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/inventory/controllers/inventory_controller.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
