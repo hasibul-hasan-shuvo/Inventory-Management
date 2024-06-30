@@ -3,6 +3,7 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+import 'package:dental_inventory/app/data/model/response/shopping_cart_total_price_response.dart';
 import 'package:dental_inventory/app/data/remote/shopping_cart_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
@@ -103,5 +104,22 @@ class ShoppingCartRemoteDataSourceImpl extends BaseRemoteSource
 
   bool _handleAddAllItemsInShoppingCartResponse(Response<dynamic> response) {
     return response.statusCode == HttpStatus.created;
+  }
+
+  @override
+  Future<ShoppingCartTotalPriceResponse> getTotalPrice() {
+    try {
+      var dioCall = dioClient.get(EndPoints.shoppingCartTotalPrice);
+
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseTotalPriceResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  ShoppingCartTotalPriceResponse _parseTotalPriceResponse(
+      Response<dynamic> response) {
+    return ShoppingCartTotalPriceResponse.fromJson(response.data);
   }
 }
