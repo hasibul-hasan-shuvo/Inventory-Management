@@ -15,4 +15,5 @@ abstract class FontSize {
   static const double bodyLarge = 16;
   static const double bodyMedium = 14;
   static const double bodySmall = 12;
+  static const double extraSmall = 6;
 }

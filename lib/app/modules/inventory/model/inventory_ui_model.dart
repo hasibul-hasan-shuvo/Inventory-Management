@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/response/product_response.dart';
 
-class InventoryUIModel {
+class InventoryUiModel {
   late final int? id;
   late final String itemId;
   late final String name;
@@ -13,8 +13,10 @@ class InventoryUIModel {
   late int currentStock;
   late int fixedOrderSuggestions;
   late final double price;
+  late final bool isAvailable;
+  late final String alternativeItemId;
 
-  InventoryUIModel.fromInventoryEntityData(InventoryEntityData data) {
+  InventoryUiModel.fromInventoryEntityData(InventoryEntityData data) {
     ProductResponse product =
         ProductResponse.fromJson(jsonDecode(data.product));
 
@@ -27,6 +29,8 @@ class InventoryUIModel {
     currentStock = data.stockCount;
     fixedOrderSuggestions = data.fixedSuggestion ?? 0;
     price = product.price?.toDouble() ?? 0.0;
+    isAvailable = data.isAvailable;
+    alternativeItemId = data.alternativeItemId ?? '';
   }
 
   updateFromInventoryEntityData(InventoryEntityData response) {
@@ -35,4 +39,7 @@ class InventoryUIModel {
     currentStock = response.stockCount;
     fixedOrderSuggestions = response.fixedSuggestion ?? 0;
   }
+
+  bool get hasAlternativeValidId =>
+      alternativeItemId.length <= 8 && alternativeItemId.isNotEmpty;
 }

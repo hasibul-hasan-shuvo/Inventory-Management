@@ -12,6 +12,8 @@ class ProductResponse {
     itemId = json['item_id'];
     imageUrl = json['image_url'];
     price = json['price'];
+    isAvailable = json['is_available'];
+    alternativeProductId = json['alternative_product_id'];
   }
 
   int? id;
@@ -19,6 +21,8 @@ class ProductResponse {
   String? itemId;
   String? imageUrl;
   num? price;
+  bool? isAvailable;
+  String? alternativeProductId;
 
   Map<String, dynamic> toJson() {
     return {
@@ -27,6 +31,8 @@ class ProductResponse {
       'item_id': itemId,
       'image_url': imageUrl,
       'price': price,
+      'is_available': isAvailable,
+      'alternative_product_id': alternativeProductId,
     };
   }
 }

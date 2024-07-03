@@ -4,7 +4,7 @@ import '../../login/models/auth_page_state.dart';
 
 class InventoryPageState {
   final PageStatus pageStatus;
-  final List<InventoryUIModel> inventoryList;
+  final List<InventoryUiModel> inventoryList;
 
   InventoryPageState({
     required this.pageStatus,
@@ -25,7 +25,7 @@ class InventoryPageState {
     );
   }
 
-  factory InventoryPageState.success(List<InventoryUIModel> inventoryList) {
+  factory InventoryPageState.success(List<InventoryUiModel> inventoryList) {
     return InventoryPageState(
       pageStatus: PageStatus.success,
       inventoryList: inventoryList,

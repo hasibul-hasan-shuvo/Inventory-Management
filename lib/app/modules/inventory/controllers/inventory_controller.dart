@@ -1,20 +1,27 @@
+import 'dart:convert';
+
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
-  final RxList<InventoryUIModel> _inventoryItemsController =
+  final RxList<InventoryUiModel> _inventoryItemsController =
       RxList.empty(growable: true);
 
-  List<InventoryUIModel> get inventoryItems => _inventoryItemsController;
+  List<InventoryUiModel> get inventoryItems => _inventoryItemsController;
 
   final RxBool _searchModeController = RxBool(false);
 
@@ -22,8 +29,15 @@ class InventoryController extends BaseController {
 
   final RxString searchQuery = ''.obs;
 
-  final InventoryRepository _inventoryRepository =
-      Get.find<InventoryRepository>();
+  final InventoryRepository _repository = Get.find<InventoryRepository>();
+
+  final Rx<ReplaceableInventoryUiModel?> replaceableInventoryController =
+      Rx(null);
+
+  final Rx<InventoryUiModel?> noReplaceableInventoryController = Rx(null);
+
+  final Rx<InventoryUiModel?> replaceableInvalidAlternativeInventoryController =
+      Rx(null);
 
   @override
   void onInit() {
@@ -36,6 +50,9 @@ class InventoryController extends BaseController {
     _inventoryItemsController.close();
     _searchModeController.close();
     searchQuery.close();
+    replaceableInventoryController.close();
+    noReplaceableInventoryController.close();
+    replaceableInvalidAlternativeInventoryController.close();
     super.onClose();
   }
 
@@ -58,9 +75,9 @@ class InventoryController extends BaseController {
     _fetchInventoryList();
   }
 
-  void deleteInventoryItem(InventoryUIModel data) {
+  void deleteInventoryItem(InventoryUiModel data) {
     callDataService(
-      _inventoryRepository.deleteInventory(
+      _repository.deleteInventory(
         id: data.id,
         itemId: data.itemId,
       ),
@@ -68,7 +85,7 @@ class InventoryController extends BaseController {
     );
   }
 
-  void _deleteSuccessHandler(InventoryUIModel data) {
+  void _deleteSuccessHandler(InventoryUiModel data) {
     showSuccessMessage(appLocalization.deleteSuccessMessage);
     _inventoryItemsController
         .removeWhere((element) => element.itemId == data.itemId);
@@ -82,7 +99,7 @@ class InventoryController extends BaseController {
       page: pagingController.pageNumber,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _repository.getInventoryList(
         queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
@@ -91,12 +108,12 @@ class InventoryController extends BaseController {
 
   void _handleFetchInventoryListSuccessResponse(
       List<InventoryEntityData> response) {
-    List<InventoryUIModel> list = [];
+    List<InventoryUiModel> list = [];
     pagingController.nextPage();
     pagingController.isLastPage =
         response.isEmpty && response.length < AppValues.defaultPageSize;
     for (InventoryEntityData inventory in response) {
-      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+      list.add(InventoryUiModel.fromInventoryEntityData(inventory));
     }
     _inventoryItemsController(list);
   }
@@ -107,7 +124,7 @@ class InventoryController extends BaseController {
       page: pagingController.pageNumber,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _repository.getInventoryList(
         queryParams: queryParams,
       ),
       onSuccess: _handleNextInventoryListSuccessResponse,
@@ -118,18 +135,18 @@ class InventoryController extends BaseController {
 
   void _handleNextInventoryListSuccessResponse(
       List<InventoryEntityData> response) {
-    List<InventoryUIModel> list = [];
+    List<InventoryUiModel> list = [];
     pagingController.nextPage();
     pagingController.isLastPage =
         response.isEmpty && response.length < AppValues.defaultPageSize;
     for (InventoryEntityData inventory in response) {
-      list.add(InventoryUIModel.fromInventoryEntityData(inventory));
+      list.add(InventoryUiModel.fromInventoryEntityData(inventory));
     }
     _inventoryItemsController.addAll(list);
   }
 
   void updateInventoryData({
-    required InventoryUIModel data,
+    required InventoryUiModel data,
     required String maxCount,
     required String minCount,
     required String stockCount,
@@ -151,7 +168,7 @@ class InventoryController extends BaseController {
         fixedSuggestion: fixedSuggestion.toInt,
       );
       callDataService(
-        _inventoryRepository.updateInventoryData(request),
+        _repository.updateInventoryData(request),
         onSuccess: _handleUpdateInventoryDataSuccessResponse,
       );
     }
@@ -228,5 +245,85 @@ class InventoryController extends BaseController {
 
   void _showInvalidValueErrorMessage(String itemName) {
     showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
+  }
+
+  void onTapUnavailableInventory(InventoryUiModel data) {
+    if (data.alternativeItemId.isEmpty) {
+      noReplaceableInventoryController.trigger(data);
+    } else if (!data.hasAlternativeValidId) {
+      replaceableInvalidAlternativeInventoryController.trigger(data);
+    } else {
+      _getAlternativeInventory(data);
+    }
+  }
+
+  void clearReplaceableInventoryController() {
+    replaceableInventoryController(null);
+  }
+
+  void clearNoReplaceableInventoryController() {
+    noReplaceableInventoryController(null);
+  }
+
+  void clearReplaceableInvalidAlternativeController() {
+    replaceableInvalidAlternativeInventoryController(null);
+  }
+
+  void _getAlternativeInventory(InventoryUiModel unavailableInventory) {
+    callDataService(
+      _repository.getGlobalInventory(unavailableInventory.alternativeItemId),
+      onSuccess: (response) =>
+          _handleGetAlternativeInventoryDataSuccessResponse(
+        response,
+        unavailableInventory,
+      ),
+    );
+  }
+
+  void _handleGetAlternativeInventoryDataSuccessResponse(
+    GlobalInventoryResponse response,
+    InventoryUiModel unavailableInventory,
+  ) {
+    replaceableInventoryController.trigger(
+      ReplaceableInventoryUiModel(
+        unavailableInventory: unavailableInventory,
+        availableInventory:
+            GlobalInventoryUiModel.fromGlobalInventoryResponse(response),
+      ),
+    );
+  }
+
+  void replaceInventory(ReplaceableInventoryUiModel data) {
+    ProductResponse product = ProductResponse(
+      itemId: data.availableInventory.itemId,
+      name: data.availableInventory.name,
+      imageUrl: data.availableInventory.imageUrl,
+    );
+    String productJsonString = jsonEncode(product.toJson());
+    CreateInventoryRequestBody newInventory = CreateInventoryRequestBody(
+      itemId: data.availableInventory.itemId,
+      productName: data.availableInventory.name,
+      product: productJsonString,
+      maxCount: data.unavailableInventory.max.toString(),
+      minCount: data.unavailableInventory.min.toString(),
+      stockCount: data.unavailableInventory.currentStock.toString(),
+      fixedSuggestion:
+          data.unavailableInventory.fixedOrderSuggestions.toString(),
+    );
+    callDataService(
+      _repository.replaceInventory(
+        oldInventoryId: data.unavailableInventory.id,
+        oldInventoryItemId: data.unavailableInventory.itemId,
+        newInventory: newInventory,
+      ),
+      onSuccess: _handleReplaceInventoryResponse,
+    );
+  }
+
+  void _handleReplaceInventoryResponse(InventoryEntityData? newInventory) {
+    if (newInventory != null) {
+      showSuccessMessage(appLocalization.messageReplaceInventorySuccessful);
+      _fetchInventoryList();
+    }
   }
 }
