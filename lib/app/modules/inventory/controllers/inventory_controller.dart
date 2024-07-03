@@ -6,7 +6,9 @@ import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
+import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:get/get.dart';
@@ -23,8 +25,7 @@ class InventoryController extends BaseController {
 
   final RxString searchQuery = ''.obs;
 
-  final InventoryRepository _inventoryRepository =
-      Get.find<InventoryRepository>();
+  final InventoryRepository _repository = Get.find<InventoryRepository>();
 
   final Rx<ReplaceableInventoryUiModel?> replaceableInventoryController =
       Rx(null);
@@ -72,7 +73,7 @@ class InventoryController extends BaseController {
 
   void deleteInventoryItem(InventoryUiModel data) {
     callDataService(
-      _inventoryRepository.deleteInventory(
+      _repository.deleteInventory(
         id: data.id,
         itemId: data.itemId,
       ),
@@ -94,7 +95,7 @@ class InventoryController extends BaseController {
       page: pagingController.pageNumber,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _repository.getInventoryList(
         queryParams: queryParams,
       ),
       onSuccess: _handleFetchInventoryListSuccessResponse,
@@ -119,7 +120,7 @@ class InventoryController extends BaseController {
       page: pagingController.pageNumber,
     );
     callDataService(
-      _inventoryRepository.getInventoryList(
+      _repository.getInventoryList(
         queryParams: queryParams,
       ),
       onSuccess: _handleNextInventoryListSuccessResponse,
@@ -163,7 +164,7 @@ class InventoryController extends BaseController {
         fixedSuggestion: fixedSuggestion.toInt,
       );
       callDataService(
-        _inventoryRepository.updateInventoryData(request),
+        _repository.updateInventoryData(request),
         onSuccess: _handleUpdateInventoryDataSuccessResponse,
       );
     }
@@ -265,10 +266,25 @@ class InventoryController extends BaseController {
   }
 
   void _getAlternativeInventory(InventoryUiModel unavailableInventory) {
+    callDataService(
+      _repository.getGlobalInventory(unavailableInventory.alternativeItemId),
+      onSuccess: (response) =>
+          _handleGetAlternativeInventoryDataSuccessResponse(
+        response,
+        unavailableInventory,
+      ),
+    );
+  }
+
+  void _handleGetAlternativeInventoryDataSuccessResponse(
+    GlobalInventoryResponse response,
+    InventoryUiModel unavailableInventory,
+  ) {
     replaceableInventoryController.trigger(
       ReplaceableInventoryUiModel(
         unavailableInventory: unavailableInventory,
-        availableInventory: unavailableInventory,
+        availableInventory:
+            GlobalInventoryUiModel.fromGlobalInventoryResponse(response),
       ),
     );
   }
