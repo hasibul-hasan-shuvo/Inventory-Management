@@ -322,6 +322,7 @@ class InventoryController extends BaseController {
 
   void _handleReplaceInventoryResponse(InventoryEntityData? newInventory) {
     if (newInventory != null) {
+      showSuccessMessage(appLocalization.messageReplaceInventorySuccessful);
       _fetchInventoryList();
     }
   }

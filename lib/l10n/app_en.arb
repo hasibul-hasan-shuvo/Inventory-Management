@@ -83,6 +83,7 @@
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "messageMaxCountThresholdValidation": "Number can't be more than 999",
   "messageMaxMinValidation": "Max value can't less than min value",
+  "messageReplaceInventorySuccessful": "Item replaced successfully",
   "messageUnavailableInventory": "No replacement product found. Please\nContact customer service.",
   "messageUnavailableProduct": "{name} is unfortunately not available",
   "@messageUnavailableProduct": {
