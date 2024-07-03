@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/services/offline_service/models/data_synchronizer_key.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
+import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
@@ -290,7 +294,35 @@ class InventoryController extends BaseController {
   }
 
   void replaceInventory(ReplaceableInventoryUiModel data) {
-    logger.d(
-        "Replacing... ${data.availableInventory.itemId} with ${data.unavailableInventory.itemId}");
+    ProductResponse product = ProductResponse(
+      itemId: data.availableInventory.itemId,
+      name: data.availableInventory.name,
+      imageUrl: data.availableInventory.imageUrl,
+    );
+    String productJsonString = jsonEncode(product.toJson());
+    CreateInventoryRequestBody newInventory = CreateInventoryRequestBody(
+      itemId: data.availableInventory.itemId,
+      productName: data.availableInventory.name,
+      product: productJsonString,
+      maxCount: data.unavailableInventory.max.toString(),
+      minCount: data.unavailableInventory.min.toString(),
+      stockCount: data.unavailableInventory.currentStock.toString(),
+      fixedSuggestion:
+          data.unavailableInventory.fixedOrderSuggestions.toString(),
+    );
+    callDataService(
+      _repository.replaceInventory(
+        oldInventoryId: data.unavailableInventory.id,
+        oldInventoryItemId: data.unavailableInventory.itemId,
+        newInventory: newInventory,
+      ),
+      onSuccess: _handleReplaceInventoryResponse,
+    );
+  }
+
+  void _handleReplaceInventoryResponse(InventoryEntityData? newInventory) {
+    if (newInventory != null) {
+      _fetchInventoryList();
+    }
   }
 }
