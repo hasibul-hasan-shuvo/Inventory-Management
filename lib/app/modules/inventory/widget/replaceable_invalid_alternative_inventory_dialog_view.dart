@@ -38,6 +38,8 @@ class ReplaceableInvalidAlternativeInventoryDialogView extends StatelessWidget
     return Text(
       data.alternativeItemId,
       style: textTheme.titleMedium,
+      maxLines: 8,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
