@@ -272,4 +272,9 @@ class InventoryController extends BaseController {
       ),
     );
   }
+
+  void replaceInventory(ReplaceableInventoryUiModel data) {
+    logger.d(
+        "Replacing... ${data.availableInventory.itemId} with ${data.unavailableInventory.itemId}");
+  }
 }

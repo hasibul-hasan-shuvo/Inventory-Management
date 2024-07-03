@@ -9,6 +9,9 @@ import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.
 import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_unavailable_inventory_view.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/no_replaceable_inventory_dialog_view.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/replaceable_invalid_alternative_inventory_dialog_view.dart';
+import 'package:dental_inventory/app/modules/inventory/widget/replaceable_inventory_dialog_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -115,15 +118,13 @@ class InventoryView extends BaseView<InventoryController> {
         context: _context!,
         builder: (_) => AppDialog(
           title: appLocalization.titleUnavailableProduct,
-          content: Container(
-            child: Text(data.availableInventory.name),
-          ),
+          content: ReplaceableInventoryDialogView(data: data),
           negativeButtonIcon: Icons.close,
           negativeButtonText: appLocalization.cancel,
           positiveButtonText: appLocalization.buttonTextAddProduct,
           isCancelable: false,
           headerColor: AppColors.errorColor,
-          onPositiveButtonTap: () {},
+          onPositiveButtonTap: () => controller.replaceInventory(data),
         ),
       );
       controller.clearReplaceableInventoryController();
@@ -137,9 +138,7 @@ class InventoryView extends BaseView<InventoryController> {
           builder: (_) {
             return AppDialog(
               title: appLocalization.titleUnavailableProduct,
-              content: Container(
-                child: Text("No replacement"),
-              ),
+              content: NoReplaceableInventoryDialogView(data: data),
               negativeButtonIcon: Icons.close,
               negativeButtonText: appLocalization.cancel,
               isCancelable: false,
@@ -157,9 +156,7 @@ class InventoryView extends BaseView<InventoryController> {
         context: _context!,
         builder: (_) => AppDialog(
           title: appLocalization.titleUnavailableProduct,
-          content: Container(
-            child: Text(data.alternativeItemId),
-          ),
+          content: ReplaceableInvalidAlternativeInventoryDialogView(data: data),
           negativeButtonIcon: Icons.close,
           negativeButtonText: appLocalization.cancel,
           isCancelable: false,
