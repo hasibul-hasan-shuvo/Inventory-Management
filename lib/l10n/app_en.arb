@@ -66,7 +66,7 @@
   "messageInventoryAlreadyExist": "The product is already in stock.",
   "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemNotFound": "Item not found!",
-  "messageItemOutOfStock": "Item out of stock!",
+  "messageItemOutOfStock": "The item is empty in your warehouse, correct your stock balance to the correct quantity before you can select it from your stock",
   "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
