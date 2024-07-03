@@ -39,4 +39,7 @@ class InventoryUiModel {
     currentStock = response.stockCount;
     fixedOrderSuggestions = response.fixedSuggestion ?? 0;
   }
+
+  bool get hasAlternativeValidId =>
+      alternativeItemId.length <= 8 && alternativeItemId.isNotEmpty;
 }

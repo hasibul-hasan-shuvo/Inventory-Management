@@ -8,6 +8,7 @@ import 'package:dental_inventory/app/data/model/request/inventory_list_query_par
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:get/get.dart';
 
 class InventoryController extends BaseController {
@@ -25,7 +26,13 @@ class InventoryController extends BaseController {
   final InventoryRepository _inventoryRepository =
       Get.find<InventoryRepository>();
 
-  final Rx replacementProductController = Rx(null);
+  final Rx<ReplaceableInventoryUiModel?> replaceableInventoryController =
+      Rx(null);
+
+  final Rx<InventoryUiModel?> noReplaceableInventoryController = Rx(null);
+
+  final Rx<InventoryUiModel?> replaceableInvalidAlternativeInventoryController =
+      Rx(null);
 
   @override
   void onInit() {
@@ -38,6 +45,9 @@ class InventoryController extends BaseController {
     _inventoryItemsController.close();
     _searchModeController.close();
     searchQuery.close();
+    replaceableInventoryController.close();
+    noReplaceableInventoryController.close();
+    replaceableInvalidAlternativeInventoryController.close();
     super.onClose();
   }
 
@@ -230,5 +240,36 @@ class InventoryController extends BaseController {
 
   void _showInvalidValueErrorMessage(String itemName) {
     showErrorMessage(appLocalization.messageInvalidItemNumber(itemName));
+  }
+
+  void onTapUnavailableInventory(InventoryUiModel data) {
+    if (data.alternativeItemId.isEmpty) {
+      noReplaceableInventoryController.trigger(data);
+    } else if (!data.hasAlternativeValidId) {
+      replaceableInvalidAlternativeInventoryController.trigger(data);
+    } else {
+      _getAlternativeInventory(data);
+    }
+  }
+
+  void clearReplaceableInventoryController() {
+    replaceableInventoryController(null);
+  }
+
+  void clearNoReplaceableInventoryController() {
+    noReplaceableInventoryController(null);
+  }
+
+  void clearReplaceableInvalidAlternativeController() {
+    replaceableInvalidAlternativeInventoryController(null);
+  }
+
+  void _getAlternativeInventory(InventoryUiModel unavailableInventory) {
+    replaceableInventoryController.trigger(
+      ReplaceableInventoryUiModel(
+        unavailableInventory: unavailableInventory,
+        availableInventory: unavailableInventory,
+      ),
+    );
   }
 }

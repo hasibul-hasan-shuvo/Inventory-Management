@@ -1,10 +1,12 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
+import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_inventory_card.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/item_unavailable_inventory_view.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,11 @@ import '../controllers/inventory_controller.dart';
 // ignore: must_be_immutable
 class InventoryView extends BaseView<InventoryController> {
   BuildContext? _context;
+
+  InventoryView() {
+    _subscribeUnavailableInventoryControllers();
+  }
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return PreferredSize(
@@ -28,7 +35,7 @@ class InventoryView extends BaseView<InventoryController> {
 
   @override
   Widget body(BuildContext context) {
-    _context;
+    _context = context;
 
     return Obx(() {
       return controller.isPageLoading && controller.inventoryItems.isEmpty
@@ -84,22 +91,82 @@ class InventoryView extends BaseView<InventoryController> {
     );
   }
 
-  void _subscribeUnavailableProductControllers() {}
+  void _subscribeUnavailableInventoryControllers() {
+    controller.replaceableInventoryController.listen((data) {
+      if (data != null) {
+        _showReplaceableInventoryDialog(data);
+      }
+    });
+    controller.noReplaceableInventoryController.listen((data) {
+      if (data != null) {
+        _showNoReplaceableInventoryDialog(data);
+      }
+    });
+    controller.replaceableInvalidAlternativeInventoryController.listen((data) {
+      if (data != null) {
+        _showReplaceableInvalidAlternativeInventoryDialog(data);
+      }
+    });
+  }
 
-  void _buildDialog(InventoryUiModel data) {
+  void _showReplaceableInventoryDialog(ReplaceableInventoryUiModel data) {
     if (_context != null) {
       showDialog(
         context: _context!,
         builder: (_) => AppDialog(
           title: appLocalization.titleUnavailableProduct,
-          content: Container(),
+          content: Container(
+            child: Text(data.availableInventory.name),
+          ),
           negativeButtonIcon: Icons.close,
           negativeButtonText: appLocalization.cancel,
           positiveButtonText: appLocalization.buttonTextAddProduct,
-          willPopOnNegativeButtonTap: false,
+          isCancelable: false,
+          headerColor: AppColors.errorColor,
           onPositiveButtonTap: () {},
         ),
       );
+      controller.clearReplaceableInventoryController();
+    }
+  }
+
+  void _showNoReplaceableInventoryDialog(InventoryUiModel data) {
+    if (_context != null) {
+      showDialog(
+          context: _context!,
+          builder: (_) {
+            return AppDialog(
+              title: appLocalization.titleUnavailableProduct,
+              content: Container(
+                child: Text("No replacement"),
+              ),
+              negativeButtonIcon: Icons.close,
+              negativeButtonText: appLocalization.cancel,
+              isCancelable: false,
+              headerColor: AppColors.errorColor,
+            );
+          });
+      controller.clearNoReplaceableInventoryController();
+    }
+  }
+
+  void _showReplaceableInvalidAlternativeInventoryDialog(
+      InventoryUiModel data) {
+    if (_context != null) {
+      showDialog(
+        context: _context!,
+        builder: (_) => AppDialog(
+          title: appLocalization.titleUnavailableProduct,
+          content: Container(
+            child: Text(data.alternativeItemId),
+          ),
+          negativeButtonIcon: Icons.close,
+          negativeButtonText: appLocalization.cancel,
+          isCancelable: false,
+          headerColor: AppColors.errorColor,
+        ),
+      );
+      controller.clearReplaceableInvalidAlternativeController();
     }
   }
 }
