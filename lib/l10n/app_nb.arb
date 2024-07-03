@@ -83,6 +83,7 @@
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
+  "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst \nkontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "@messageUnavailableProduct": {
     "placeholders": {
