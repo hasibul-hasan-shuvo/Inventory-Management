@@ -41,7 +41,9 @@
 		2CAF841B568540E2E8BDBB35 /* Pods-Runner.profile-jacobsenprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-jacobsenprod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-jacobsenprod.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		451364A7BB00BA6B3F1D7BE6 /* Pods-Runner.debug-jacobsendev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-jacobsendev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-jacobsendev.xcconfig"; sourceTree = "<group>"; };
+		475CE6207B65F67D31783829 /* Pods-Runner.profile-dabprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-dabprod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-dabprod.xcconfig"; sourceTree = "<group>"; };
 		49EDFE43A4CC39F0D3291653 /* Pods-Runner.debug-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dev.xcconfig"; sourceTree = "<group>"; };
+		61F901B78D35F027C420B732 /* Pods-Runner.debug-dabprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dabprod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dabprod.xcconfig"; sourceTree = "<group>"; };
 		6A1C60764DBB3BD76B4AE92C /* Pods-Runner.release-dabdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-dabdev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-dabdev.xcconfig"; sourceTree = "<group>"; };
 		6CEC810BF8A41D45E0086DC7 /* Pods-Runner.debug-dabdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dabdev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dabdev.xcconfig"; sourceTree = "<group>"; };
 		714D588DB5E4D602E6AA9618 /* Pods-Runner.profile-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-dev.xcconfig"; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		B05D2433FE2F0C3D93CA7A9A /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		D4F32D75836888AD1CFF6064 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7784D7AF5FA29B01E0B9A65 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		D78AFE35BE7C18B868A9EE8E /* Pods-Runner.release-dabprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-dabprod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-dabprod.xcconfig"; sourceTree = "<group>"; };
 		EB354C79B52C4A8E463EABB8 /* Pods-Runner.profile-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-prod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-prod.xcconfig"; sourceTree = "<group>"; };
 		EC500E40BC7F3AA86F2F3068 /* Pods-Runner.release-jacobsendev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-jacobsendev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-jacobsendev.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +110,9 @@
 				6CEC810BF8A41D45E0086DC7 /* Pods-Runner.debug-dabdev.xcconfig */,
 				6A1C60764DBB3BD76B4AE92C /* Pods-Runner.release-dabdev.xcconfig */,
 				215FF98B3828FFF3C17746CA /* Pods-Runner.profile-dabdev.xcconfig */,
+				61F901B78D35F027C420B732 /* Pods-Runner.debug-dabprod.xcconfig */,
+				D78AFE35BE7C18B868A9EE8E /* Pods-Runner.release-dabprod.xcconfig */,
+				475CE6207B65F67D31783829 /* Pods-Runner.profile-dabprod.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -409,6 +415,239 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
+		};
+		6B0B256F2C3C2AEC002AE033 /* Debug-dabProd */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = "Dental Inventory";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-dabProd";
+		};
+		6B0B25702C3C2AEC002AE033 /* Debug-dabProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
+			buildSettings = {
+				APP_NAME = "DAB Shop";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconJacobsen;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = U64TMK8U7U;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = no.inventorymanagement.dab;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug-dabProd";
+		};
+		6B0B25712C3C2B05002AE033 /* Release-dabProd */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = "Dental Inventory";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-dabProd";
+		};
+		6B0B25722C3C2B05002AE033 /* Release-dabProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				APP_NAME = "DAB Shop";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconJacobsen;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = U64TMK8U7U;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = no.inventorymanagement.dab;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release-dabProd";
+		};
+		6B0B25732C3C2B15002AE033 /* Profile-dabProd */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = "Dental Inventory";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Profile-dabProd";
+		};
+		6B0B25742C3C2B15002AE033 /* Profile-dabProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				APP_NAME = "DAB Shop";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconJacobsen;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = U64TMK8U7U;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = no.inventorymanagement.dab;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Profile-dabProd";
 		};
 		6B90CB072C3C266800A375FD /* Debug-dabDev */ = {
 			isa = XCBuildConfiguration;
@@ -1285,14 +1524,17 @@
 			buildConfigurations = (
 				97C147031CF9000F007C117D /* Debug */,
 				E011C6622750F66000705115 /* Debug-jacobsenProd */,
+				6B0B256F2C3C2AEC002AE033 /* Debug-dabProd */,
 				E011C6602750F61C00705115 /* Debug-jacobsenDev */,
 				6B90CB072C3C266800A375FD /* Debug-dabDev */,
 				97C147041CF9000F007C117D /* Release */,
 				E011C6662750F67700705115 /* Release-jacobsenProd */,
+				6B0B25712C3C2B05002AE033 /* Release-dabProd */,
 				E011C6642750F66D00705115 /* Release-jacobsenDev */,
 				6B90CB092C3C268B00A375FD /* Release-dabDev */,
 				249021D3217E4FDB00AE95B9 /* Profile */,
 				E011C66A2750F68700705115 /* Profile-jacobsenProd */,
+				6B0B25732C3C2B15002AE033 /* Profile-dabProd */,
 				E011C6682750F68000705115 /* Profile-jacobsenDev */,
 				6B90CB0B2C3C26A500A375FD /* Profile-dabDev */,
 			);
@@ -1304,14 +1546,17 @@
 			buildConfigurations = (
 				97C147061CF9000F007C117D /* Debug */,
 				E011C6632750F66000705115 /* Debug-jacobsenProd */,
+				6B0B25702C3C2AEC002AE033 /* Debug-dabProd */,
 				E011C6612750F61C00705115 /* Debug-jacobsenDev */,
 				6B90CB082C3C266800A375FD /* Debug-dabDev */,
 				97C147071CF9000F007C117D /* Release */,
 				E011C6672750F67700705115 /* Release-jacobsenProd */,
+				6B0B25722C3C2B05002AE033 /* Release-dabProd */,
 				E011C6652750F66D00705115 /* Release-jacobsenDev */,
 				6B90CB0A2C3C268B00A375FD /* Release-dabDev */,
 				249021D4217E4FDB00AE95B9 /* Profile */,
 				E011C66B2750F68700705115 /* Profile-jacobsenProd */,
+				6B0B25742C3C2B15002AE033 /* Profile-dabProd */,
 				E011C6692750F68000705115 /* Profile-jacobsenDev */,
 				6B90CB0C2C3C26A500A375FD /* Profile-dabDev */,
 			);
