@@ -13,7 +13,7 @@ import '/flavors/environment.dart';
 
 void main() async {
   EnvConfig devConfig = EnvConfig(
-    appName: "DAB Dev",
+    appName: "DAB Shop",
     baseUrl: "https://devinventorymanagement.azurewebsites.net",
     shouldCollectCrashLog: true,
   );
