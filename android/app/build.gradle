@@ -111,6 +111,16 @@ android {
             dimension "default"
             applicationIdSuffix ".jacobsen"
         }
+        dabDev {
+            resValue "string", "app_name", "DAB Shop Dev"
+            dimension "default"
+            applicationIdSuffix ".dab.dev"
+        }
+        dabProd {
+            resValue "string", "app_name", "DAB Shop"
+            dimension "default"
+            applicationIdSuffix ".dab"
+        }
     }
     namespace 'no.inventorymanagement'
     lint {
