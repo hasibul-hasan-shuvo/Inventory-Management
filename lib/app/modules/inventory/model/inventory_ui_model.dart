@@ -41,5 +41,5 @@ class InventoryUiModel {
   }
 
   bool get hasAlternativeValidId =>
-      alternativeItemId.length <= 8 && alternativeItemId.isNotEmpty;
+      alternativeItemId.length <= 15 && alternativeItemId.isNotEmpty;
 }
