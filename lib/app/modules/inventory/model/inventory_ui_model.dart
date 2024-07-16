@@ -30,7 +30,7 @@ class InventoryUiModel {
     fixedOrderSuggestions = data.fixedSuggestion ?? 0;
     price = product.price?.toDouble() ?? 0.0;
     isAvailable = data.isAvailable;
-    alternativeItemId = data.alternativeItemId ?? '';
+    alternativeItemId = data.alternativeItemId?.trim() ?? '';
   }
 
   updateFromInventoryEntityData(InventoryEntityData response) {
