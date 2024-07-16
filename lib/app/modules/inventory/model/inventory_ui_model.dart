@@ -30,7 +30,7 @@ class InventoryUiModel {
     fixedOrderSuggestions = data.fixedSuggestion ?? 0;
     price = product.price?.toDouble() ?? 0.0;
     isAvailable = data.isAvailable;
-    alternativeItemId = data.alternativeItemId ?? '';
+    alternativeItemId = data.alternativeItemId?.trim() ?? '';
   }
 
   updateFromInventoryEntityData(InventoryEntityData response) {
@@ -41,5 +41,5 @@ class InventoryUiModel {
   }
 
   bool get hasAlternativeValidId =>
-      alternativeItemId.length <= 8 && alternativeItemId.isNotEmpty;
+      alternativeItemId.length <= 15 && alternativeItemId.isNotEmpty;
 }

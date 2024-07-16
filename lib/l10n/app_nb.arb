@@ -77,7 +77,7 @@
   "messageInventoryAlreadyExist": "Produktet er allerede i beholdningen.",
   "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemNotFound": "Element ikke funnet!",
-  "messageItemOutOfStock": "Varen er tom på ditt lager, korriger din lagersaldo til riktig antall før du kan velge denne ut fra ditt lager",
+  "messageItemOutOfStock": "Tomt for varen på lager, vennligst korriger varelageret.",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
