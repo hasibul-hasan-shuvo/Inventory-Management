@@ -68,7 +68,7 @@ Map<String, String> envValues = {
 
   // Jacobsen IOS prod environment variables
   "JACOBSEN_PROD_FIREBASE_IOS_API_KEY":
-      "AIzaSyCHeqRBGGtGn7SAXmXSzzJFXCey3c0Xq4s",
+      "AIzaSyBYvAbbD5HqRnixe8spGVf1orX8J-brqFQ",
   "JACOBSEN_PROD_FIREBASE_IOS_APP_ID":
       "1:762030093709:ios:258ae35e6b663162e2b9c4",
   "JACOBSEN_PROD_FIREBASE_IOS_MESSAGING_SENDER_ID": "762030093709",
@@ -81,9 +81,9 @@ Map<String, String> envValues = {
 
   // Jacobsen IOS dev environment variables
   "JACOBSEN_DEV_FIREBASE_IOS_API_KEY":
-      "AIzaSyCHeqRBGGtGn7SAXmXSzzJFXCey3c0Xq4s",
+      "AIzaSyBYvAbbD5HqRnixe8spGVf1orX8J-brqFQ",
   "JACOBSEN_DEV_FIREBASE_IOS_APP_ID":
-      "1:405784364085:ios:00397143778e3aca045d7c",
+      "1:762030093709:ios:3081c2d6bfa3bdcae2b9c4",
   "JACOBSEN_DEV_FIREBASE_IOS_MESSAGING_SENDER_ID": "762030093709",
   "JACOBSEN_DEV_FIREBASE_IOS_PROJECT_ID": "inventorymanagement-54c7e",
   "JACOBSEN_DEV_FIREBASE_IOS_STORAGE_BUCKET":
