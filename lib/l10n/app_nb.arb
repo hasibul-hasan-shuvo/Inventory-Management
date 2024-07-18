@@ -84,7 +84,7 @@
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
   "messageReplaceInventorySuccessful": "Varen ble erstattet",
-  "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst \nkontakt kundeservice.",
+  "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst kontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "@messageUnavailableProduct": {
     "placeholders": {
