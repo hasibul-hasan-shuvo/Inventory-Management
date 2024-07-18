@@ -30,6 +30,8 @@ abstract class BaseView<Controller extends BaseController>
 
   ThemeData get theme => _theme;
 
+  AppColors appColors = BuildConfig.instance.config.appColors;
+
   Widget body(BuildContext context);
 
   PreferredSizeWidget? appBar(BuildContext context);
@@ -128,10 +130,10 @@ abstract class BaseView<Controller extends BaseController>
     final snackBar = _getSnackBar(
       message,
       Icons.done,
-      AppColors.colorGreen,
+      appColors.colorGreen,
       controller.isDarkMode
-          ? AppColors.bgSnackBarSuccessDark
-          : AppColors.bgSnackBarSuccessLight,
+          ? appColors.bgSnackBarSuccessDark
+          : appColors.bgSnackBarSuccessLight,
     );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -145,10 +147,10 @@ abstract class BaseView<Controller extends BaseController>
     final snackBar = _getSnackBar(
       message,
       Icons.warning_amber_outlined,
-      AppColors.colorRed,
+      appColors.colorRed,
       controller.isDarkMode
-          ? AppColors.bgSnackBarErrorDark
-          : AppColors.bgSnackBarErrorLight,
+          ? appColors.bgSnackBarErrorDark
+          : appColors.bgSnackBarErrorLight,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -165,8 +167,8 @@ abstract class BaseView<Controller extends BaseController>
       Icons.warning_amber,
       Colors.orangeAccent,
       controller.isDarkMode
-          ? AppColors.bgSnackBarWarningDark
-          : AppColors.bgSnackBarWarningLight,
+          ? appColors.bgSnackBarWarningDark
+          : appColors.bgSnackBarWarningLight,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

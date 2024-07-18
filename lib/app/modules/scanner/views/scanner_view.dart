@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -47,9 +46,9 @@ class ScannerView extends BaseView<ScannerController> {
         child: MobileScanner(
           controller: _scannerController,
           onDetect: _onDetect,
-          overlay: const Icon(
+          overlay: Icon(
             Icons.add,
-            color: AppColors.colorWhite,
+            color: appColors.colorWhite,
           ),
         ),
       ),
@@ -74,14 +73,14 @@ class ScannerView extends BaseView<ScannerController> {
         heroTag: 'torch',
         backgroundColor: state == TorchState.on
             ? theme.colorScheme.primary
-            : AppColors.basicGrey,
+            : appColors.basicGrey,
         onPressed: _onPressedTorch,
         child: AssetImageView(
           fileName: AppIcons.torch,
           height: AppValues.iconDefaultSize.h,
           color: state == TorchState.on
               ? theme.colorScheme.onPrimary
-              : AppColors.colorWhite,
+              : appColors.colorWhite,
         ),
       ),
     );
@@ -93,13 +92,13 @@ class ScannerView extends BaseView<ScannerController> {
         onPressed: _isBarCodeDetected ? _onPressedDoneButton : null,
         backgroundColor: _isBarCodeDetected
             ? theme.colorScheme.primary
-            : AppColors.basicGrey,
+            : appColors.basicGrey,
         child: Icon(
           Icons.done,
           size: AppValues.iconDefaultSize.h,
           color: _isBarCodeDetected
               ? theme.colorScheme.onPrimary
-              : AppColors.colorWhite,
+              : appColors.colorWhite,
         ),
       ),
     );

@@ -10,7 +10,6 @@ import 'package:dental_inventory/app/modules/global_inventories/widgets/global_i
 import 'package:dental_inventory/app/modules/global_inventories/widgets/global_unavailable_inventory_dialog_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/widgets/item_global_inventory_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -167,7 +166,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           return AppDialog(
             title: appLocalization.titleUnavailableProduct,
             content: GlobalUnavailableInventoryDialogView(data: data),
-            headerColor: AppColors.errorColor,
+            headerColor: appColors.errorColor,
             isCancelable: false,
             negativeButtonIcon: Icons.close,
             negativeButtonText: appLocalization.cancel,

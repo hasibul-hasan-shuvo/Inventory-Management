@@ -1,43 +1,79 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const Color pageBackground = Color(0xFFFAFBFD);
+  final Color pageBackground;
+  final Color colorWhite;
+  final Color colorBlack;
+  final Color lightGreyColor;
+  final Color errorColor;
+  final Color errorColorDark;
+  final Color colorRed;
+  final Color colorGreen;
+  final Color defaultRippleColor;
+  final Color primary;
+  final Color primaryDark;
+  final Color bgPageLight;
+  final Color bgPageDark;
+  final Color bgCardLight;
+  final Color bgCardDark;
+  final Color appBarTextLight;
+  final Color appBarTextDark;
+  final Color textPrimaryLight;
+  final Color textPrimaryDark;
+  final Color textPrimaryButton;
+  final Color divider;
+  final Color dividerDark;
+  final Color basicGrey;
+  final Color basicGreyDark;
+  final Color errorContainerLight;
+  final Color errorContainerDark;
+  final Color loaderBackground;
+  final Color secondaryColor;
+  final Color loginScreenIconColor;
+  final Color bgDismissibleItem;
+  final Color bgSnackBarErrorDark;
+  final Color bgSnackBarSuccessDark;
+  final Color bgSnackBarWarningDark;
+  final Color bgSnackBarErrorLight;
+  final Color bgSnackBarSuccessLight;
+  final Color bgSnackBarWarningLight;
 
-  static const Color colorWhite = Color(0xFFFFFFFF);
-  static const Color colorBlack = Color(0xFF000000);
-  static const Color lightGreyColor = Color(0xFFC4C4C4);
-  static const Color errorColor = Color(0xFFE36161);
-  static const Color errorColorDark = Color(0xFFffb4ab);
-  static const Color colorRed = Color(0xFFEB001B);
-  static const Color colorGreen = Color(0xFF6AB452);
-
-  static const Color defaultRippleColor = Color(0x0338686A);
-
-  static const Color primary = Color(0xFF21404C);
-  static const Color primaryDark = Color(0xFF21404C);
-  static const Color bgPageLight = Color(0xFFF9F8F4);
-  static const Color bgPageDark = Color(0xFF191c1d);
-  static const Color bgCardLight = colorWhite;
-  static const Color bgCardDark = Color(0xFF354a53);
-  static const Color appBarTextLight = colorWhite;
-  static const Color appBarTextDark = colorWhite;
-  static const Color textPrimaryLight = colorBlack;
-  static const Color textPrimaryDark = colorWhite;
-  static const Color textPrimaryButton = colorWhite;
-  static const Color divider = Color(0xffb1b9bb);
-  static const Color dividerDark = Color(0xFF8a9296);
-  static const Color basicGrey = Color(0xFF66708C);
-  static const Color basicGreyDark = Color(0xFFFFFFFF);
-  static const Color errorContainerLight = Color(0xFFffdad6);
-  static const Color errorContainerDark = Color(0xFF93000a);
-  static const Color loaderBackground = Color(0x32000000);
-  static const Color homeOptionBackground = Color(0xFF62C6C6);
-  static const Color loginScreenIconColor = Color(0xffD9D9D9);
-  static const Color bgDismissibleItem = Color(0xFF80DB7E);
-  static const Color bgSnackBarErrorDark = Color(0xFF1E1E1E);
-  static const Color bgSnackBarSuccessDark = Color(0xFF0E1F00);
-  static const Color bgSnackBarWarningDark = Color(0xFF150900);
-  static const Color bgSnackBarErrorLight = Color(0xFFF9E1DC);
-  static const Color bgSnackBarSuccessLight = Color(0xFFE4F6DF);
-  static const Color bgSnackBarWarningLight = Color(0xFFFCF3EA);
+  const AppColors({
+    required this.primary,
+    required this.primaryDark,
+    required this.secondaryColor,
+    this.pageBackground = const Color(0xFFFAFBFD),
+    this.colorWhite = const Color(0xFFFFFFFF),
+    this.colorBlack = const Color(0xFF000000),
+    this.lightGreyColor = const Color(0xFFC4C4C4),
+    this.errorColor = const Color(0xFFE36161),
+    this.errorColorDark = const Color(0xFFffb4ab),
+    this.colorRed = const Color(0xFFEB001B),
+    this.colorGreen = const Color(0xFF6AB452),
+    this.defaultRippleColor = const Color(0x0338686A),
+    this.bgPageLight = const Color(0xFFF9F8F4),
+    this.bgPageDark = const Color(0xFF191c1d),
+    this.bgCardLight = Colors.white,
+    this.bgCardDark = const Color(0xFF354a53),
+    this.appBarTextLight = Colors.white,
+    this.appBarTextDark = Colors.white,
+    this.textPrimaryLight = Colors.black,
+    this.textPrimaryDark = Colors.white,
+    this.textPrimaryButton = Colors.white,
+    this.divider = const Color(0xffb1b9bb),
+    this.dividerDark = const Color(0xFF8a9296),
+    this.basicGrey = const Color(0xFF66708C),
+    this.basicGreyDark = const Color(0xFFFFFFFF),
+    this.errorContainerLight = const Color(0xFFffdad6),
+    this.errorContainerDark = const Color(0xFF93000a),
+    this.loaderBackground = const Color(0x32000000),
+    this.loginScreenIconColor = const Color(0xffD9D9D9),
+    this.bgDismissibleItem = const Color(0xFF80DB7E),
+    this.bgSnackBarErrorDark = const Color(0xFF1E1E1E),
+    this.bgSnackBarSuccessDark = const Color(0xFF0E1F00),
+    this.bgSnackBarWarningDark = const Color(0xFF150900),
+    this.bgSnackBarErrorLight = const Color(0xFFF9E1DC),
+    this.bgSnackBarSuccessLight = const Color(0xFFE4F6DF),
+    this.bgSnackBarWarningLight = const Color(0xFFFCF3EA),
+  });
 }

@@ -5,7 +5,6 @@ import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/main/controllers/main_controller.dart';
 import 'package:dental_inventory/app/modules/main/model/item_home_menu_ui_model.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,7 +22,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return ElevatedContainer(
-      bgColor: AppColors.homeOptionBackground,
+      bgColor: theme.colorScheme.secondary,
       borderRadius: AppValues.radius_6.r,
       child: Ripple(
         rippleRadius: AppValues.radius_6.r,
@@ -65,7 +64,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
                         child: Text(
                           '${_controller.badges[data.badgeKey]}',
                           style: textTheme.labelSmall
-                              ?.copyWith(color: AppColors.colorWhite),
+                              ?.copyWith(color: appColors.colorWhite),
                           maxLines: 1,
                         ),
                       ),
@@ -78,7 +77,7 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
     return Center(
       child: AssetImageView(
         fileName: data.icon,
-        color: AppColors.primary,
+        color: theme.colorScheme.onSecondary,
         height: AppValues.iconLargeSize.h,
       ),
     );
@@ -87,7 +86,8 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
   Widget _getTitle() {
     return Text(
       data.title,
-      style: textTheme.bodyMedium?.copyWith(color: AppColors.primary),
+      style:
+          textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSecondary),
       textAlign: TextAlign.center,
     );
   }
@@ -101,9 +101,9 @@ class ItemHomeMenuView extends StatelessWidget with BaseWidgetMixin {
     }
   }
 
-  BoxDecoration get _badgeDecoration => const BoxDecoration(
+  BoxDecoration get _badgeDecoration => BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.primary,
+        color: appColors.primary,
       );
 
   bool get _isBadgeAvailable =>

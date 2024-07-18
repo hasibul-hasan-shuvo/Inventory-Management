@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../themes/app_colors.dart';
 import '../base/base_widget_mixin.dart';
 import '../values/app_values.dart';
 
@@ -37,7 +36,7 @@ class SearchAbleAppBar extends StatelessWidget
   @override
   Widget body(BuildContext context) => AppBar(
         iconTheme:
-            Theme.of(context).iconTheme.copyWith(color: AppColors.colorWhite),
+            Theme.of(context).iconTheme.copyWith(color: appColors.colorWhite),
         leading: IconButton(
           onPressed: () {
             onBackButtonClick != null ? onBackButtonClick!() : Get.back();
@@ -91,10 +90,10 @@ class SearchAbleAppBar extends StatelessWidget
       ),
       maxLines: 1,
       textInputAction: TextInputAction.search,
-      cursorColor: AppColors.colorWhite,
+      cursorColor: appColors.colorWhite,
       onSubmitted: _onSubmitted,
       onChanged: _onChanged,
-      style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
+      style: textTheme.bodyLarge?.copyWith(color: appColors.colorWhite),
     );
   }
 

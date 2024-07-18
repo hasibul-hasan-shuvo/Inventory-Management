@@ -3,27 +3,30 @@ import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
 import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:dental_inventory/themes/app_theme_data.dart';
+import 'package:dental_inventory/themes/dab_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DabAppThemeData implements AppThemeData {
+  final AppColors _colors = DabAppColors();
+
   @override
   ThemeData getDarkTheme() {
     return ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.dark,
-      primaryColor: AppColors.primaryDark,
-      primaryColorDark: AppColors.bgCardDark,
-      primaryColorLight: AppColors.primary,
+      primaryColor: _colors.primaryDark,
+      primaryColorDark: _colors.bgCardDark,
+      primaryColorLight: _colors.primary,
       buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      cardColor: AppColors.bgCardDark,
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      indicatorColor: AppColors.colorWhite,
-      dividerColor: AppColors.dividerDark,
-      dividerTheme: const DividerThemeData(color: AppColors.dividerDark),
-      hintColor: AppColors.basicGreyDark,
-      dialogBackgroundColor: AppColors.bgPageDark,
-      scaffoldBackgroundColor: AppColors.bgPageDark,
+      cardColor: _colors.bgCardDark,
+      iconTheme: IconThemeData(color: _colors.colorWhite),
+      indicatorColor: _colors.colorWhite,
+      dividerColor: _colors.dividerDark,
+      dividerTheme: DividerThemeData(color: _colors.dividerDark),
+      hintColor: _colors.basicGreyDark,
+      dialogBackgroundColor: _colors.bgPageDark,
+      scaffoldBackgroundColor: _colors.bgPageDark,
       textTheme: _textThemeDark,
       appBarTheme: _appBarThemeDark,
       fontFamily: _getFont(),
@@ -45,18 +48,18 @@ class DabAppThemeData implements AppThemeData {
     return ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.light,
-      primaryColor: AppColors.primary,
-      primaryColorDark: AppColors.primaryDark,
-      primaryColorLight: AppColors.primary,
-      cardColor: AppColors.bgCardLight,
-      iconTheme: const IconThemeData(color: AppColors.colorBlack),
-      indicatorColor: AppColors.colorBlack,
+      primaryColor: _colors.primary,
+      primaryColorDark: _colors.primaryDark,
+      primaryColorLight: _colors.primary,
+      cardColor: _colors.bgCardLight,
+      iconTheme: IconThemeData(color: _colors.colorBlack),
+      indicatorColor: _colors.colorBlack,
       buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      dividerColor: AppColors.divider,
-      dividerTheme: const DividerThemeData(color: AppColors.divider),
-      hintColor: AppColors.basicGrey,
-      dialogBackgroundColor: AppColors.bgPageLight,
-      scaffoldBackgroundColor: AppColors.bgPageLight,
+      dividerColor: _colors.divider,
+      dividerTheme: DividerThemeData(color: _colors.divider),
+      hintColor: _colors.basicGrey,
+      dialogBackgroundColor: _colors.bgPageLight,
+      scaffoldBackgroundColor: _colors.bgPageLight,
       textTheme: _textThemeLight,
       appBarTheme: _appBarThemeLight,
       fontFamily: _getFont(),
@@ -73,103 +76,143 @@ class DabAppThemeData implements AppThemeData {
     );
   }
 
-  static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
+  BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
       BottomNavigationBarThemeData(
-        backgroundColor: AppColors.primaryDark,
-        selectedItemColor: AppColors.colorWhite,
-        unselectedItemColor: AppColors.lightGreyColor,
-        selectedLabelStyle: labelMediumTextStyleDark,
-        unselectedLabelStyle: labelMediumTextStyleDark,
+        backgroundColor: _colors.primaryDark,
+        selectedItemColor: _colors.colorWhite,
+        unselectedItemColor: _colors.lightGreyColor,
+        selectedLabelStyle:
+            labelMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        unselectedLabelStyle:
+            labelMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
       );
 
-  static BottomNavigationBarThemeData get _bottomNavigationBarThemeDataLight =>
+  BottomNavigationBarThemeData get _bottomNavigationBarThemeDataLight =>
       BottomNavigationBarThemeData(
-        backgroundColor: AppColors.primary,
-        selectedItemColor: AppColors.colorWhite,
-        unselectedItemColor: AppColors.lightGreyColor,
-        selectedLabelStyle: labelMediumTextStyle,
-        unselectedLabelStyle: labelMediumTextStyle,
+        backgroundColor: _colors.primary,
+        selectedItemColor: _colors.colorWhite,
+        unselectedItemColor: _colors.lightGreyColor,
+        selectedLabelStyle:
+            labelMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        unselectedLabelStyle:
+            labelMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
       );
 
-  static AppBarTheme get _appBarThemeDark => AppBarTheme(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.primaryDark,
+  AppBarTheme get _appBarThemeDark => AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: _colors.primaryDark,
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        iconTheme: const IconThemeData(color: AppColors.colorWhite),
-        backgroundColor: AppColors.primaryDark,
+        iconTheme: IconThemeData(color: _colors.colorWhite),
+        backgroundColor: _colors.primaryDark,
         titleTextStyle: appBarTextStyleDark.copyWith(
           fontFamily: _getFont(),
+          color: _colors.appBarTextDark,
         ),
       );
 
-  static AppBarTheme get _appBarThemeLight => AppBarTheme(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.primary,
+  AppBarTheme get _appBarThemeLight => AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: _colors.primary,
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        iconTheme: const IconThemeData(color: AppColors.colorWhite),
-        backgroundColor: AppColors.primary,
-        titleTextStyle: appBarTextStyle.copyWith(fontFamily: _getFont()),
+        iconTheme: IconThemeData(color: _colors.colorWhite),
+        backgroundColor: _colors.primary,
+        titleTextStyle: appBarTextStyle.copyWith(
+          fontFamily: _getFont(),
+          color: _colors.appBarTextLight,
+        ),
       );
 
-  static ColorScheme get _colorSchemeDark => const ColorScheme.dark(
+  ColorScheme get _colorSchemeDark => ColorScheme.dark(
         brightness: Brightness.dark,
-        primary: AppColors.colorWhite,
-        background: AppColors.bgPageDark,
-        onBackground: AppColors.colorWhite,
-        error: AppColors.errorColorDark,
-        errorContainer: AppColors.errorContainerDark,
+        primary: _colors.colorWhite,
+        secondary: _colors.secondaryColor,
+        onSecondary: _colors.colorBlack,
+        background: _colors.bgPageDark,
+        onBackground: _colors.colorWhite,
+        error: _colors.errorColorDark,
+        errorContainer: _colors.errorContainerDark,
       );
 
-  static ColorScheme get _colorSchemeLight => const ColorScheme.light(
+  ColorScheme get _colorSchemeLight => ColorScheme.light(
         brightness: Brightness.light,
-        primary: AppColors.primary,
-        background: AppColors.bgPageLight,
-        onBackground: AppColors.primary,
-        error: AppColors.errorColor,
-        errorContainer: AppColors.errorContainerLight,
+        primary: _colors.primary,
+        secondary: _colors.secondaryColor,
+        onSecondary: _colors.colorBlack,
+        background: _colors.bgPageLight,
+        onBackground: _colors.primary,
+        error: _colors.errorColor,
+        errorContainer: _colors.errorContainerLight,
       );
 
-  static TextTheme get _textThemeDark => TextTheme(
-        displaySmall: displaySmallTextStyleDark,
-        displayMedium: displayMediumTextStyleDark,
-        displayLarge: displayLargeTextStyleDark,
-        headlineSmall: headlineSmallTextStyleDark,
-        headlineMedium: headlineMediumTextStyleDark,
-        headlineLarge: headlineLargeTextStyleDark,
-        titleSmall: titleSmallTextStyleDark,
-        titleMedium: titleMediumTextStyleDark,
-        titleLarge: titleLargeTextStyleDark,
-        bodySmall: bodySmallTextStyleDark,
-        bodyMedium: bodyMediumTextStyleDark,
-        bodyLarge: bodyLargeTextStyleDark,
-        labelSmall: labelSmallTextStyleDark,
-        labelMedium: labelMediumTextStyleDark,
-        labelLarge: labelLargeTextStyleDark,
+  TextTheme get _textThemeDark => TextTheme(
+        displaySmall:
+            displaySmallTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        displayMedium:
+            displayMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        displayLarge:
+            displayLargeTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        headlineSmall:
+            headlineSmallTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        headlineMedium: headlineMediumTextStyleDark.copyWith(
+            color: _colors.textPrimaryDark),
+        headlineLarge:
+            headlineLargeTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        titleSmall:
+            titleSmallTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        titleMedium:
+            titleMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        titleLarge:
+            titleLargeTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        bodySmall:
+            bodySmallTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        bodyMedium:
+            bodyMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        bodyLarge:
+            bodyLargeTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        labelSmall:
+            labelSmallTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        labelMedium:
+            labelMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
+        labelLarge:
+            labelLargeTextStyleDark.copyWith(color: _colors.textPrimaryDark),
       );
 
-  static TextTheme get _textThemeLight => TextTheme(
-        displaySmall: displaySmallTextStyle,
-        displayMedium: displayMediumTextStyle,
-        displayLarge: displayLargeTextStyle,
-        headlineSmall: headlineSmallTextStyle,
-        headlineMedium: headlineMediumTextStyle,
-        headlineLarge: headlineLargeTextStyle,
-        titleSmall: titleSmallTextStyle,
-        titleMedium: titleMediumTextStyle,
-        titleLarge: titleLargeTextStyle,
-        bodySmall: bodySmallTextStyle,
-        bodyMedium: bodyMediumTextStyle,
-        bodyLarge: bodyLargeTextStyle,
-        labelSmall: labelSmallTextStyle,
-        labelMedium: labelMediumTextStyle,
-        labelLarge: labelLargeTextStyle,
+  TextTheme get _textThemeLight => TextTheme(
+        displaySmall:
+            displaySmallTextStyle.copyWith(color: _colors.textPrimaryLight),
+        displayMedium:
+            displayMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        displayLarge:
+            displayLargeTextStyle.copyWith(color: _colors.textPrimaryLight),
+        headlineSmall:
+            headlineSmallTextStyle.copyWith(color: _colors.textPrimaryLight),
+        headlineMedium:
+            headlineMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        headlineLarge:
+            headlineLargeTextStyle.copyWith(color: _colors.textPrimaryLight),
+        titleSmall:
+            titleSmallTextStyle.copyWith(color: _colors.textPrimaryLight),
+        titleMedium:
+            titleMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        titleLarge:
+            titleLargeTextStyle.copyWith(color: _colors.textPrimaryLight),
+        bodySmall: bodySmallTextStyle.copyWith(color: _colors.textPrimaryLight),
+        bodyMedium:
+            bodyMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        bodyLarge: bodyLargeTextStyle.copyWith(color: _colors.textPrimaryLight),
+        labelSmall:
+            labelSmallTextStyle.copyWith(color: _colors.textPrimaryLight),
+        labelMedium:
+            labelMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
+        labelLarge:
+            labelLargeTextStyle.copyWith(color: _colors.textPrimaryLight),
       );
 
-  static BottomSheetThemeData get _bottomSheetThemeDataLight =>
+  BottomSheetThemeData get _bottomSheetThemeDataLight =>
       const BottomSheetThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -181,7 +224,7 @@ class DabAppThemeData implements AppThemeData {
         shadowColor: Colors.black12,
       );
 
-  static BottomSheetThemeData get _bottomSheetThemeDataDark =>
+  BottomSheetThemeData get _bottomSheetThemeDataDark =>
       const BottomSheetThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -193,39 +236,41 @@ class DabAppThemeData implements AppThemeData {
         shadowColor: Colors.black12,
       );
 
-  static DialogTheme get _dialogThemeLight => DialogTheme(
+  DialogTheme get _dialogThemeLight => DialogTheme(
         shadowColor: Colors.black12,
-        backgroundColor: AppColors.bgCardLight,
+        backgroundColor: _colors.bgCardLight,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppValues.smallRadius),
         ),
       );
 
-  static DialogTheme get _dialogThemeDark => DialogTheme(
+  DialogTheme get _dialogThemeDark => DialogTheme(
         shadowColor: Colors.black12,
-        backgroundColor: AppColors.bgCardDark,
+        backgroundColor: _colors.bgCardDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppValues.smallRadius),
         ),
       );
 
-  static PopupMenuThemeData get _popupMenuThemeLight => PopupMenuThemeData(
-        color: AppColors.bgPageLight,
+  PopupMenuThemeData get _popupMenuThemeLight => PopupMenuThemeData(
+        color: _colors.bgPageLight,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppValues.radius),
         ),
-        textStyle: titleMediumTextStyle,
+        textStyle:
+            titleMediumTextStyle.copyWith(color: _colors.textPrimaryLight),
       );
 
-  static PopupMenuThemeData get _popupMenuThemeDark => PopupMenuThemeData(
-        color: AppColors.bgPageDark,
+  PopupMenuThemeData get _popupMenuThemeDark => PopupMenuThemeData(
+        color: _colors.bgPageDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppValues.radius),
         ),
-        textStyle: titleMediumTextStyleDark,
+        textStyle:
+            titleMediumTextStyleDark.copyWith(color: _colors.textPrimaryDark),
       );
 
-  static String _getFont() {
+  String _getFont() {
     return 'Roboto';
   }
 }

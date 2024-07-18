@@ -1,3 +1,4 @@
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:dental_inventory/themes/app_theme_data.dart';
 import 'package:logger/logger.dart';
 
@@ -7,6 +8,7 @@ class EnvConfig {
   final String appName;
   final String baseUrl;
   final bool shouldCollectCrashLog;
+  final AppColors appColors;
   final AppThemeData themeData;
 
   late final Logger logger;
@@ -15,6 +17,7 @@ class EnvConfig {
     required this.appName,
     required this.baseUrl,
     required this.themeData,
+    required this.appColors,
     this.shouldCollectCrashLog = false,
   }) {
     logger = Logger(
