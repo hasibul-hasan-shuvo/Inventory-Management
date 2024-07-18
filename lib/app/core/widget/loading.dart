@@ -1,7 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:flutter/material.dart';
 
-import '/app/core/values/app_colors.dart';
+import '../../../themes/app_colors.dart';
 
 // ignore: must_be_immutable
 class Loading extends StatelessWidget with BaseWidgetMixin {

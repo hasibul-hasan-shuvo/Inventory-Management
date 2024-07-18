@@ -1,12 +1,14 @@
 import 'package:dental_inventory/app/core/utils/transitions.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/text_styles.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
+import 'package:dental_inventory/themes/app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AppThemeData {
-  static ThemeData getDarkTheme() {
+class JacobsenAppThemeData implements AppThemeData {
+  @override
+  ThemeData getDarkTheme() {
     return ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.dark,
@@ -38,7 +40,8 @@ class AppThemeData {
     );
   }
 
-  static ThemeData getLightTheme() {
+  @override
+  ThemeData getLightTheme() {
     return ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.light,

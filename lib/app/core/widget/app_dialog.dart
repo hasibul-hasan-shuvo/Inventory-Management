@@ -1,8 +1,8 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_primary_button.dart';
 import 'package:dental_inventory/app/core/widget/app_secondary_button.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

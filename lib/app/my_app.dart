@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dental_inventory/app/core/base/app_theme_data.dart';
 import 'package:dental_inventory/app/core/model/theme.dart';
 import 'package:dental_inventory/app/core/services/offline_service/data_sync_manager.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
@@ -82,9 +81,9 @@ class _MyAppState extends State<MyApp> {
     _envConfig.logger.i("Saved Theme: $savedTheme");
 
     if (savedTheme == AppTheme.DARK.name) {
-      return AppThemeData.getDarkTheme();
+      return _envConfig.themeData.getDarkTheme();
     } else if (savedTheme == AppTheme.LIGHT.name) {
-      return AppThemeData.getLightTheme();
+      return _envConfig.themeData.getLightTheme();
     } else {
       return _getThemeSameAsSystem();
     }
@@ -92,8 +91,8 @@ class _MyAppState extends State<MyApp> {
 
   ThemeData _getThemeSameAsSystem() {
     return Get.isPlatformDarkMode
-        ? AppThemeData.getDarkTheme()
-        : AppThemeData.getLightTheme();
+        ? _envConfig.themeData.getDarkTheme()
+        : _envConfig.themeData.getLightTheme();
   }
 
   void _localizeApp() {

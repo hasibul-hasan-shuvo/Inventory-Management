@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
@@ -13,6 +12,7 @@ import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/controllers/suggested_orders_controller.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
