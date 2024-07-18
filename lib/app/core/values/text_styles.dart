@@ -2,7 +2,7 @@ import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '/app/core/values/app_colors.dart';
+import '../../../themes/app_colors.dart';
 
 final TextStyle appBarTextStyle = TextStyle(
   fontSize: FontSize.titleLarge.sp,

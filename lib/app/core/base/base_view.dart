@@ -1,11 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/model/connection_status.dart';
 import 'package:dental_inventory/app/core/model/page_state.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/connection_status_view.dart';
 import 'package:dental_inventory/app/core/widget/loading.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

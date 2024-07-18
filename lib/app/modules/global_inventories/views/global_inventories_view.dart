@@ -1,6 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
@@ -11,6 +10,7 @@ import 'package:dental_inventory/app/modules/global_inventories/widgets/global_i
 import 'package:dental_inventory/app/modules/global_inventories/widgets/global_unavailable_inventory_dialog_view.dart';
 import 'package:dental_inventory/app/modules/global_inventories/widgets/item_global_inventory_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

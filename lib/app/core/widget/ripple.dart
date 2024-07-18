@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
+import 'package:flutter/material.dart';
 
 class Ripple extends StatelessWidget {
   final Function()? onTap;
