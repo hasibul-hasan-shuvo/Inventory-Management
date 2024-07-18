@@ -12,7 +12,6 @@ import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/controllers/suggested_orders_controller.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -139,13 +138,13 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getDismissibleBackground() {
     return ElevatedContainer(
-      bgColor: AppColors.bgDismissibleItem,
+      bgColor: appColors.bgDismissibleItem,
       child: Row(
         children: [
           Icon(
             Icons.add_shopping_cart,
             size: AppValues.iconDefaultSize.r,
-            color: AppColors.colorBlack,
+            color: appColors.colorBlack,
           ).paddingSymmetric(
             vertical: AppValues.padding.h,
             horizontal: AppValues.padding.w,

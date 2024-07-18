@@ -1,6 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,7 +35,7 @@ class ConnectionStatusView extends StatelessWidget with BaseWidgetMixin {
     return Icon(
       icon,
       size: AppValues.iconSize_14.r,
-      color: AppColors.colorWhite,
+      color: appColors.colorWhite,
     );
   }
 
@@ -44,7 +43,7 @@ class ConnectionStatusView extends StatelessWidget with BaseWidgetMixin {
     return Flexible(
       child: Text(
         message,
-        style: textTheme.labelSmall?.copyWith(color: AppColors.colorWhite),
+        style: textTheme.labelSmall?.copyWith(color: appColors.colorWhite),
       ),
     );
   }

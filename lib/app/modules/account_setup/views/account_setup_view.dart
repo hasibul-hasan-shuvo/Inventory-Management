@@ -1,7 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_assets.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -15,7 +14,7 @@ class AccountSetupView extends BaseView<AccountSetupController> {
 
   @override
   Color pageBackgroundColor() {
-    return AppColors.primary;
+    return appColors.primary;
   }
 
   @override
@@ -43,7 +42,7 @@ class AccountSetupView extends BaseView<AccountSetupController> {
   Widget _getMessageView() {
     return Text(
       appLocalization.messageAccountSetup,
-      style: textTheme.headlineSmall?.copyWith(color: AppColors.colorWhite),
+      style: textTheme.headlineSmall?.copyWith(color: appColors.colorWhite),
       textAlign: TextAlign.center,
     );
   }

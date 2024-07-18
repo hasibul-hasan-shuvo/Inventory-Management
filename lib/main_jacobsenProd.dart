@@ -1,6 +1,7 @@
 import 'package:dental_inventory/app/core/services/firebase_service.dart';
 import 'package:dental_inventory/app/core/values/environment_values.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
+import 'package:dental_inventory/themes/jacobsen_app_colors.dart';
 import 'package:dental_inventory/themes/jacobsen_app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,6 +18,7 @@ void main() async {
     appName: "Jacobsen Dental",
     baseUrl: "https://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net",
     themeData: JacobsenAppThemeData(),
+    appColors: JacobsenAppColors(),
     shouldCollectCrashLog: true,
   );
 

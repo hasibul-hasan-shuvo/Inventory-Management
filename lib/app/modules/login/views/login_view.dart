@@ -8,7 +8,6 @@ import 'package:dental_inventory/app/core/widget/app_text_field.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/login/models/auth_page_state.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +33,7 @@ class LoginView extends BaseView<LoginController> {
   @override
   Widget? bottomNavigationBar() {
     return Container(
-      color: AppColors.primary,
+      color: appColors.primary,
       height: AppBar().preferredSize.height.h,
       child: Padding(
         padding: const EdgeInsets.all(AppValues.padding),
@@ -126,14 +125,14 @@ class LoginView extends BaseView<LoginController> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.email_outlined,
-              color: AppColors.loginScreenIconColor,
+              color: appColors.loginScreenIconColor,
             ),
             SizedBox(width: AppValues.smallMargin.w),
             Text(
               AppStrings.email,
-              style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite),
+              style: labelSmallTextStyle.copyWith(color: appColors.colorWhite),
             ),
           ],
         ),
@@ -148,11 +147,11 @@ class LoginView extends BaseView<LoginController> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.call, color: AppColors.loginScreenIconColor),
+            Icon(Icons.call, color: appColors.loginScreenIconColor),
             SizedBox(width: AppValues.smallMargin.w),
             Text(
               AppStrings.phoneNumber,
-              style: labelSmallTextStyle.copyWith(color: AppColors.colorWhite),
+              style: labelSmallTextStyle.copyWith(color: appColors.colorWhite),
             ),
           ],
         ),

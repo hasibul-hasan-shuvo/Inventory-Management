@@ -7,7 +7,6 @@ import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product/product_top_view.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
-import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -102,7 +101,7 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
           width: AppValues.iconLargeSize.h,
           color: _isDecrementButtonEnabled
               ? theme.colorScheme.primary
-              : AppColors.basicGrey,
+              : appColors.basicGrey,
         ),
       ),
     );
@@ -118,7 +117,7 @@ class ProductOutItemEditDialogContentView extends StatelessWidget
           width: AppValues.iconLargeSize.h,
           color: _isIncrementButtonEnabled
               ? theme.colorScheme.primary
-              : AppColors.basicGrey,
+              : appColors.basicGrey,
         ),
       ),
     );

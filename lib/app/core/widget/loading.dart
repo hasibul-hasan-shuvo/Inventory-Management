@@ -1,8 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:flutter/material.dart';
 
-import '../../../themes/app_colors.dart';
-
 // ignore: must_be_immutable
 class Loading extends StatelessWidget with BaseWidgetMixin {
   Loading({Key? key}) : super(key: key);
@@ -10,7 +8,7 @@ class Loading extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return Container(
-      color: AppColors.loaderBackground,
+      color: appColors.loaderBackground,
       child: Center(
         child: _getIconWithProgressIndicator(),
       ),
