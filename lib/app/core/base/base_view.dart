@@ -216,9 +216,13 @@ abstract class BaseView<Controller extends BaseController>
       case ConnectionStatus.NONE:
         return const SizedBox.shrink();
       case ConnectionStatus.OFFLINE:
-        return _getOfflineStatusView();
+        return showNetworkStatus
+            ? _getOfflineStatusView()
+            : const SizedBox.shrink();
       case ConnectionStatus.ONLINE:
-        return _getOnlineStatusView();
+        return showNetworkStatus
+            ? _getOnlineStatusView()
+            : const SizedBox.shrink();
     }
   }
 
@@ -283,6 +287,8 @@ abstract class BaseView<Controller extends BaseController>
   bool get useBottomSafeArea => true;
 
   bool get activeGestureDetector => true;
+
+  bool get showNetworkStatus => true;
 
   void closeKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();

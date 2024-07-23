@@ -10,6 +10,7 @@ class EnvConfig {
   final bool shouldCollectCrashLog;
   final AppColors appColors;
   final AppThemeData themeData;
+  final String appLogo;
 
   late final Logger logger;
 
@@ -18,6 +19,7 @@ class EnvConfig {
     required this.baseUrl,
     required this.themeData,
     required this.appColors,
+    required this.appLogo,
     this.shouldCollectCrashLog = false,
   }) {
     logger = Logger(

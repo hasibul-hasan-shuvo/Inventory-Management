@@ -1,9 +1,9 @@
 import 'package:dental_inventory/app/core/values/app_icons.dart';
-import 'package:dental_inventory/app/core/values/app_images.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/modules/main/controllers/main_controller.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -21,12 +21,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      title: const Padding(
-        padding: EdgeInsets.only(right: AppValues.smallMargin),
+      title: Padding(
+        padding: const EdgeInsets.only(right: AppValues.smallMargin),
         child: Row(
           children: [
             AssetImageView(
-              fileName: AppImages.jacobsenLogo,
+              fileName: BuildConfig.instance.config.appLogo,
               height: AppValues.mainAppBarLogoHeight,
             ),
           ],
