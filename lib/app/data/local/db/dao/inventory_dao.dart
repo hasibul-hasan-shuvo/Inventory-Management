@@ -56,6 +56,10 @@ class InventoryDao extends DatabaseAccessor<AppDatabase>
             inventoryEntity.stockCount
                 .isBiggerOrEqualValue(queryParams.minAvailableQuantity ?? 0);
 
+    if (queryParams.excludeUnavailableInventory) {
+      condition = condition & inventoryEntity.isAvailable.isValue(true);
+    }
+
     final query = select(inventoryEntity)
       ..where((tbl) => condition)
       ..orderBy(orders)
