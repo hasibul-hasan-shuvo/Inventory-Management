@@ -119,10 +119,10 @@ class InventoryView extends BaseView<InventoryController> {
         builder: (_) => AppDialog(
           title: appLocalization.titleUnavailableProduct,
           content: ReplaceableInventoryDialogView(data: data),
-          negativeButtonIcon: Icons.close,
-          negativeButtonText: appLocalization.cancel,
+          negativeButtonIcon: Icons.delete_outline,
+          negativeButtonText: appLocalization.deleteProduct,
           positiveButtonText: appLocalization.buttonTextAddProduct,
-          isCancelable: false,
+          isCancelable: true,
           headerColor: AppColors.errorColor,
           onPositiveButtonTap: () => controller.replaceInventory(data),
         ),

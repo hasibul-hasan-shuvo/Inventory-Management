@@ -15,7 +15,10 @@ import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
+import 'package:dental_inventory/app/network/exceptions/api_exception.dart';
+import 'package:dental_inventory/app/network/exceptions/base_exception.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
 
 class InventoryController extends BaseController {
   final RxList<InventoryUiModel> _inventoryItemsController =
@@ -277,6 +280,13 @@ class InventoryController extends BaseController {
         response,
         unavailableInventory,
       ),
+      onError: (e) {
+        if (e is ApiException && e.httpCode == HttpStatus.notFound) {
+          noReplaceableInventoryController.trigger(unavailableInventory);
+        } else {
+          showErrorMessage(e is BaseException ? e.message : e.toString());
+        }
+      },
     );
   }
 
