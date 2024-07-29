@@ -275,6 +275,7 @@ class InventoryController extends BaseController {
   void _getAlternativeInventory(InventoryUiModel unavailableInventory) {
     callDataService(
       _repository.getGlobalInventory(unavailableInventory.alternativeItemId),
+      enableErrorMessage: false,
       onSuccess: (response) =>
           _handleGetAlternativeInventoryDataSuccessResponse(
         response,
