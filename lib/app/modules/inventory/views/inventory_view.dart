@@ -119,11 +119,13 @@ class InventoryView extends BaseView<InventoryController> {
         builder: (_) => AppDialog(
           title: appLocalization.titleUnavailableProduct,
           content: ReplaceableInventoryDialogView(data: data),
-          negativeButtonIcon: Icons.close,
-          negativeButtonText: appLocalization.cancel,
+          negativeButtonIcon: Icons.delete_outline,
+          negativeButtonText: appLocalization.deleteProduct,
           positiveButtonText: appLocalization.buttonTextAddProduct,
-          isCancelable: false,
+          isCancelable: true,
           headerColor: AppColors.errorColor,
+          onNegativeButtonTap: () =>
+              controller.deleteInventoryItem(data.unavailableInventory),
           onPositiveButtonTap: () => controller.replaceInventory(data),
         ),
       );
@@ -141,8 +143,10 @@ class InventoryView extends BaseView<InventoryController> {
               content: NoReplaceableInventoryDialogView(data: data),
               negativeButtonIcon: Icons.close,
               negativeButtonText: appLocalization.cancel,
+              positiveButtonText: appLocalization.deleteProduct,
               isCancelable: false,
               headerColor: AppColors.errorColor,
+              onPositiveButtonTap: () => controller.deleteInventoryItem(data),
             );
           });
       controller.clearNoReplaceableInventoryController();
@@ -159,8 +163,10 @@ class InventoryView extends BaseView<InventoryController> {
           content: ReplaceableInvalidAlternativeInventoryDialogView(data: data),
           negativeButtonIcon: Icons.close,
           negativeButtonText: appLocalization.cancel,
+          positiveButtonText: appLocalization.deleteProduct,
           isCancelable: false,
           headerColor: AppColors.errorColor,
+          onPositiveButtonTap: () => controller.deleteInventoryItem(data),
         ),
       );
       controller.clearReplaceableInvalidAlternativeController();
