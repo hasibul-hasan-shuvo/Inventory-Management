@@ -6,6 +6,7 @@ class ProductResponse {
     this.imageUrl,
     this.price,
   });
+
   ProductResponse.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
@@ -14,6 +15,8 @@ class ProductResponse {
     price = json['price'];
     isAvailable = json['is_available'];
     alternativeProductId = json['alternative_product_id'];
+    taxRate = json['tax_rate'].toDouble();
+    priceWithTax = json['price_with_tax'];
   }
 
   int? id;
@@ -23,6 +26,8 @@ class ProductResponse {
   num? price;
   bool? isAvailable;
   String? alternativeProductId;
+  double? taxRate;
+  double? priceWithTax;
 
   Map<String, dynamic> toJson() {
     return {
