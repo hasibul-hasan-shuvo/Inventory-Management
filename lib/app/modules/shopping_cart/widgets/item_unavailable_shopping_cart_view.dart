@@ -30,17 +30,14 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
       height: AppValues.itemImageHeight.h,
       child: Container(
         color: Colors.amber.withOpacity(0.2),
-        child: Ripple(
-          onTap: () => _controller.deleteCartItem(data),
-          child: Row(
-            children: [
-              _getImageView(),
-              SizedBox(width: AppValues.smallMargin.w),
-              _getItemDetails(),
-              _getUnavailableTag(),
-              SizedBox(width: AppValues.margin_10.w),
-            ],
-          ),
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getUnavailableTag(),
+            SizedBox(width: AppValues.margin_10.w),
+          ],
         ),
       ),
     ).marginOnly(bottom: AppValues.margin_6.h);
@@ -129,18 +126,21 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
   }
 
   Widget _getUnavailableTag() {
-    return ElevatedContainer(
-      borderRadius: AppValues.radius_6.r,
-      bgColor: theme.primaryColor,
-      width: AppValues.iconSize_40.w,
-      child: Text(
-        appLocalization.removeItem,
-        style: textTheme.bodySmall?.copyWith(
-          fontSize: FontSize.extraSmall.sp,
-          color: theme.colorScheme.onPrimary,
-        ),
-        textAlign: TextAlign.center,
-      ).paddingAll(AppValues.extraSmallPadding.r),
+    return Ripple(
+      onTap: () => _controller.deleteCartItem(data),
+      child: ElevatedContainer(
+        borderRadius: AppValues.radius_6.r,
+        bgColor: theme.primaryColor,
+        width: AppValues.iconSize_40.w,
+        child: Text(
+          appLocalization.removeItem,
+          style: textTheme.bodySmall?.copyWith(
+            fontSize: FontSize.extraSmall.sp,
+            color: theme.colorScheme.onPrimary,
+          ),
+          textAlign: TextAlign.center,
+        ).paddingAll(AppValues.extraSmallPadding.r),
+      ),
     );
   }
 
