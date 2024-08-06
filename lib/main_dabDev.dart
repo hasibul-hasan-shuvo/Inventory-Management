@@ -17,7 +17,7 @@ import '/flavors/environment.dart';
 void main() async {
   EnvConfig devConfig = EnvConfig(
     appName: "DAB Shop Dev",
-    baseUrl: "https://devinventorymanagement.azurewebsites.net",
+    baseUrl: "https://dab-inventorybe-dev-webapp.azurewebsites.net",
     themeData: DabAppThemeData(),
     appColors: DabAppColors(),
     appLogo: AppImages.dabLogo,
