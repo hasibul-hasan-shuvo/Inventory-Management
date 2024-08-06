@@ -165,5 +165,6 @@
   "version": "Version",
   "visitingAddress": "Visiting Address",
   "yes": "Yes",
-  "workshop": "Workshop"
+  "workshop": "Workshop",
+  "removeItem": "Remove Item"
 }

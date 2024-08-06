@@ -8,6 +8,7 @@ import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_unavailable_shopping_cart_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/shopping_cart_total_price_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/model/shopping_cart_selectable_inventory_page_arguments.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
@@ -91,7 +92,10 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   Widget _getItemBuilder(BuildContext context, int index) {
-    return ItemShoppingCartView(data: controller.shoppingCartItems[index]);
+    return controller.shoppingCartItems[index].isAvailable
+        ? ItemShoppingCartView(data: controller.shoppingCartItems[index])
+        : ItemUnavailableShoppingCartView(
+            data: controller.shoppingCartItems[index]);
   }
 
   void _onPressedScanner() {

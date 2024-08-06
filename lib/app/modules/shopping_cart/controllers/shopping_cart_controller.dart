@@ -140,7 +140,7 @@ class ShoppingCartController extends BaseController
     }
     int cartCount = count.toInt;
     if (cartCount <= 0) {
-      _deleteCartItem(data);
+      deleteCartItem(data);
     } else {
       _updateCartItem(data, cartCount);
     }
@@ -164,7 +164,7 @@ class ShoppingCartController extends BaseController
     );
   }
 
-  void _deleteCartItem(ShoppingCartUiModel data) {
+  void deleteCartItem(ShoppingCartUiModel data) {
     callDataService(
       _repository.deleteItemFromShoppingCart(
         data.id.toString(),

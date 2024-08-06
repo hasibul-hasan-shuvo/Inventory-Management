@@ -166,5 +166,6 @@
   "version": "Versjon",
   "visitingAddress": "Besøksadresse",
   "yes": "Ja",
-  "workshop": "Verksted"
+  "workshop": "Verksted",
+  "removeItem": "Fjern Vare"
 }
