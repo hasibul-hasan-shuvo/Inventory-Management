@@ -15,7 +15,7 @@ class ProductResponse {
     price = json['price'];
     isAvailable = json['is_available'];
     alternativeProductId = json['alternative_product_id'];
-    taxRate = json['tax_rate'].toDouble();
+    taxRate = json['tax_rate']?.toDouble();
     priceWithTax = json['price_with_tax'];
   }
 
