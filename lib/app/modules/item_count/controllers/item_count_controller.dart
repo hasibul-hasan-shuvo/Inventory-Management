@@ -134,24 +134,20 @@ class ItemCountController extends BaseController
 
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
-    if (inventoryData.number == 0) {
-      removeProduct(inventoryData.itemId);
-    } else {
-      bool isItemExist = false;
-      for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == inventoryData.itemId) {
-          isItemExist = true;
-          _updateProduct(
-            product,
-            inventoryData.number - inventoryData.available,
-          );
-          break;
-        }
+    bool isItemExist = false;
+    for (ScannedProductUiModel product in scannedProducts) {
+      if (product.itemId == inventoryData.itemId) {
+        isItemExist = true;
+        _updateProduct(
+          product,
+          inventoryData.number - inventoryData.available,
+        );
+        break;
       }
+    }
 
-      if (!isItemExist) {
-        _addProductFromInventory(inventoryData);
-      }
+    if (!isItemExist) {
+      _addProductFromInventory(inventoryData);
     }
   }
 
