@@ -13,10 +13,16 @@ import 'package:dio/dio.dart';
 class OrderRemoteDataSourceImpl extends BaseRemoteSource
     implements OrderRemoteDataSource {
   @override
-  Future<bool> placeOrder() {
+  Future<bool> placeOrder({bool removeUnavailableProducts = false}) {
     try {
+      String endpoint = EndPoints.placeOrder;
+
+      if (removeUnavailableProducts) {
+        endpoint = "$endpoint?remove_unavailable_products";
+      }
+
       var dioCall = dioClient.put(
-        EndPoints.placeOrder,
+        endpoint,
       );
 
       return callApiWithErrorParser(dioCall)

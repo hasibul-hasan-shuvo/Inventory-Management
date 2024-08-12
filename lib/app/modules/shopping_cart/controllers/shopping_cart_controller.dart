@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/shopping_cart_scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
@@ -8,6 +10,7 @@ import 'package:dental_inventory/app/data/model/response/shopping_cart_total_pri
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_total_price_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
+import 'package:dental_inventory/app/network/exceptions/api_exception.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartController extends BaseController
@@ -18,6 +21,8 @@ class ShoppingCartController extends BaseController
       Rx(ShoppingCartTotalPriceUiModel.empty());
 
   ShoppingCartTotalPriceUiModel get totalPrice => _totalPriceController.value;
+
+  final RxBool unavailableProductOrderErrorController = RxBool(false);
 
   @override
   void onInit() {
@@ -31,6 +36,7 @@ class ShoppingCartController extends BaseController
   void onClose() {
     closeShoppingCartScannedProductsController();
     _totalPriceController.close();
+    unavailableProductOrderErrorController.close();
     super.onClose();
   }
 
@@ -44,6 +50,10 @@ class ShoppingCartController extends BaseController
   @override
   void onItemAdded(ShoppingCartResponse response) {
     onRefresh();
+  }
+
+  void clearUnavailableProductOrderErrorController() {
+    unavailableProductOrderErrorController(false);
   }
 
   void onRefresh() {
@@ -122,11 +132,21 @@ class ShoppingCartController extends BaseController
         []);
   }
 
-  void confirmOrder() {
+  void confirmOrder({bool removeUnavailableProducts = false}) {
     callDataService(
-      _repository.placeOrder(),
+      _repository.placeOrder(
+        removeUnavailableProducts: removeUnavailableProducts,
+      ),
+      enableErrorMessage: false,
       onSuccess: handleConfirmOrderSuccessResponse,
+      onError: _handleConfirmOrderError,
     );
+  }
+
+  void _handleConfirmOrderError(Exception e) {
+    if (e is ApiException && e.httpCode == HttpStatus.conflict) {
+      unavailableProductOrderErrorController.trigger(true);
+    }
   }
 
   void updateCartCount(ShoppingCartUiModel data, String count) {

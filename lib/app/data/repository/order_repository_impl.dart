@@ -11,8 +11,9 @@ class OrderRepositoryImpl implements OrderRepository {
   final OrderRemoteDataSource _remoteDataSource = Get.find();
 
   @override
-  Future<bool> placeOrder() {
-    return _remoteDataSource.placeOrder();
+  Future<bool> placeOrder({bool removeUnavailableProducts = false}) {
+    return _remoteDataSource.placeOrder(
+        removeUnavailableProducts: removeUnavailableProducts);
   }
 
   @override

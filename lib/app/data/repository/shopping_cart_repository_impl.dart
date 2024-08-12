@@ -38,8 +38,10 @@ class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
   }
 
   @override
-  Future<bool> placeOrder() {
-    return _orderRepository.placeOrder();
+  Future<bool> placeOrder({bool removeUnavailableProducts = false}) {
+    return _orderRepository.placeOrder(
+      removeUnavailableProducts: removeUnavailableProducts,
+    );
   }
 
   @override

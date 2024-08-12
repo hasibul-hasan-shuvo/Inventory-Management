@@ -15,7 +15,7 @@ abstract class ShoppingCartRepository {
 
   Future<bool> addAllItemsInShoppingCart();
 
-  Future<bool> placeOrder();
+  Future<bool> placeOrder({bool removeUnavailableProducts = false});
 
   Future<ShoppingCartTotalPriceResponse> getTotalPrice();
 }

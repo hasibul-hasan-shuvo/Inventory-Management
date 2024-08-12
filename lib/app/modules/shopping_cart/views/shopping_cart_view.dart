@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
@@ -26,6 +27,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   ShoppingCartView() {
     ZebraScanner().addScannerDelegate(controller.onScanned);
     _subscribeNewCartItemArrivedController();
+    _subscribeUnavailableProductOrderErrorController();
   }
 
   @override
@@ -187,6 +189,34 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
               cartController.text,
             );
           },
+        );
+      },
+    );
+  }
+
+  void _subscribeUnavailableProductOrderErrorController() {
+    controller.unavailableProductOrderErrorController.listen((bool showError) {
+      if (showError) {
+        _showUnavailableProductOrderErrorDialog();
+      }
+    });
+  }
+
+  void _showUnavailableProductOrderErrorDialog() {
+    showDialog(
+      context: _context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleUnavailableShoppingCartProducts,
+          message: appLocalization.messageUnavailableShoppingCartProducts,
+          headerColor: AppColors.errorColor,
+          isCancelable: false,
+          positiveButtonText: appLocalization.buttonTextRemoveItems,
+          onPositiveButtonTap: () {
+            controller.confirmOrder(removeUnavailableProducts: true);
+          },
+          negativeButtonText: appLocalization.cancel,
+          negativeButtonIcon: Icons.close,
         );
       },
     );
