@@ -100,6 +100,7 @@ class SelectableInventoryListController extends BaseController {
       search: searchQuery.value,
       page: pagingController.pageNumber,
       minAvailableQuantity: pageArguments.minAvailableProduct,
+      excludeUnavailableInventory: true,
     );
     callDataService(
       _inventoryRepository.getInventoryList(

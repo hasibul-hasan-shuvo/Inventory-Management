@@ -25,7 +25,7 @@ class ProductTopView extends StatelessWidget with BaseWidgetMixin {
       child: Row(
         children: [
           _getImageView(),
-          SizedBox(width: AppValues.margin.w),
+          SizedBox(width: AppValues.smallMargin.w),
           _getNameAndId(),
         ],
       ),

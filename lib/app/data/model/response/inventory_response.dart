@@ -66,6 +66,8 @@ class InventoryResponse {
       minCount: Value(minCount),
       stockCount: Value(stockCount ?? 0),
       fixedSuggestion: Value(fixedSuggestion),
+      isAvailable: Value(product?.isAvailable ?? true),
+      alternativeItemId: Value(product?.alternativeProductId ?? ''),
       created: Value(createdDateTime),
       modified: Value(modifiedDateTime),
     );

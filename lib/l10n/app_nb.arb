@@ -37,6 +37,17 @@
   "homeMenuSuggestedOrder": "Bestillingsforslag",
   "invalidEmail": "Ugyldig e-post",
   "inventory": "Beholdning",
+  "inventoryMaxMin": "Mellom {min} og {max}",
+  "@inventoryMaxMin": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "logIn": "Logg inn",
   "logInMessage": "Vennligst logg inn for å fortsette",
   "logInSuccessMessage": "Logget inn",
@@ -72,6 +83,8 @@
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
   "messageMaxMinValidation": "Maksverdien kan ikke være lavere enn minverdien",
+  "messageReplaceInventorySuccessful": "Varen ble erstattet",
+  "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst kontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "@messageUnavailableProduct": {
     "placeholders": {
@@ -131,6 +144,7 @@
   "settingsTheme": "tema",
   "status": "Status",
   "success": "Suksess",
+  "tagUnavailableProduct": "Bytt til alternativ vare",
   "themeDark": "Mørk",
   "themeLight": "Lys",
   "themeSystem": "System standard",
@@ -145,7 +159,7 @@
   "titleItemRetrieval": "Varer ut",
   "titleItemRevertRetrieval": "Varer inn",
   "titleScannerView": "Strekkodeskanner",
-  "titleUnavailableProduct": "Produkter er utilgjengelig!",
+  "titleUnavailableProduct": "Produktet er utilgjengelig!",
   "total": "Totalt",
   "updateProduct": "Oppdater produkt",
   "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",

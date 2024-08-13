@@ -51,4 +51,10 @@ abstract class InventoryRepository {
   Future<InventoryListResponse> getInventoryListFromRemote({
     required InventoryListQueryParams queryParams,
   });
+
+  Future<InventoryEntityData?> replaceInventory({
+    required int? oldInventoryId,
+    required String oldInventoryItemId,
+    required CreateInventoryRequestBody newInventory,
+  });
 }
