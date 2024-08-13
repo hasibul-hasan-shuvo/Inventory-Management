@@ -7,6 +7,7 @@
   "bottomNavLogOut": "Logg ut",
   "buttonTextAddProduct": "Legg til produkt",
   "buttonTextAddToCart": "Legg i handlekurv",
+  "buttonTextRemoveItems": "Fjern varer",
   "buttonTextSaveChanges": "Lagre endringer",
   "cancel": "Avbryt",
   "consumables": "Forbruksmateriell",
@@ -77,7 +78,7 @@
   "messageInventoryAlreadyExist": "Produktet er allerede i beholdningen.",
   "messageInventoryUnavailable": "Den valgte beholdningen er utilgjengelig",
   "messageItemNotFound": "Element ikke funnet!",
-  "messageItemOutOfStock": "Vare utsolgt!",
+  "messageItemOutOfStock": "Tomt for varen på lager, vennligst korriger varelageret.",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
@@ -86,6 +87,7 @@
   "messageReplaceInventorySuccessful": "Varen ble erstattet",
   "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst kontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
+  "messageUnavailableShoppingCartProducts": "Ett eller flere produkter i handlekurven er utilgjengelig. Vennligst fjern varene fra handlekurven for å fortsette.",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -160,11 +162,13 @@
   "titleItemRevertRetrieval": "Varer inn",
   "titleScannerView": "Strekkodeskanner",
   "titleUnavailableProduct": "Produktet er utilgjengelig!",
+  "titleUnavailableShoppingCartProducts": "Produkter er utilgjengelig!",
   "total": "Totalt",
   "updateProduct": "Oppdater produkt",
   "userNameValidator": "Brukernavnet kan bare inneholde bokstaver, tall og understrek (_) og må være mellom 8 og 30 tegn langt",
   "version": "Versjon",
   "visitingAddress": "Besøksadresse",
   "yes": "Ja",
-  "workshop": "Verksted"
+  "workshop": "Verksted",
+  "removeItem": "Fjern Vare"
 }

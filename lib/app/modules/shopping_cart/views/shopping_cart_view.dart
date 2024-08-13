@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
@@ -8,6 +9,8 @@ import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_shopping_cart_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/widgets/item_unavailable_shopping_cart_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/widgets/shopping_cart_total_price_view.dart';
 import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/model/shopping_cart_selectable_inventory_page_arguments.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
@@ -24,6 +27,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   ShoppingCartView() {
     ZebraScanner().addScannerDelegate(controller.onScanned);
     _subscribeNewCartItemArrivedController();
+    _subscribeUnavailableProductOrderErrorController();
   }
 
   @override
@@ -41,12 +45,21 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
           ? const SizedBox.shrink()
           : controller.shoppingCartItems.isEmpty
               ? _getPlaceHolder()
-              : PagingView(
-                  controller: controller.refreshController,
-                  enablePullUp: controller.pagingController.canLoadNextPage(),
-                  onRefresh: controller.onRefresh,
-                  onLoading: controller.onLoading,
-                  child: _getSuggestedOrdersListView(),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ShoppingCartTotalPriceView(),
+                    Expanded(
+                      child: PagingView(
+                        controller: controller.refreshController,
+                        enablePullUp:
+                            controller.pagingController.canLoadNextPage(),
+                        onRefresh: controller.onRefresh,
+                        onLoading: controller.onLoading,
+                        child: _getSuggestedOrdersListView(),
+                      ),
+                    ),
+                  ],
                 ),
     );
   }
@@ -81,7 +94,10 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   }
 
   Widget _getItemBuilder(BuildContext context, int index) {
-    return ItemShoppingCartView(data: controller.shoppingCartItems[index]);
+    return controller.shoppingCartItems[index].isAvailable
+        ? ItemShoppingCartView(data: controller.shoppingCartItems[index])
+        : ItemUnavailableShoppingCartView(
+            data: controller.shoppingCartItems[index]);
   }
 
   void _onPressedScanner() {
@@ -173,6 +189,34 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
               cartController.text,
             );
           },
+        );
+      },
+    );
+  }
+
+  void _subscribeUnavailableProductOrderErrorController() {
+    controller.unavailableProductOrderErrorController.listen((bool showError) {
+      if (showError) {
+        _showUnavailableProductOrderErrorDialog();
+      }
+    });
+  }
+
+  void _showUnavailableProductOrderErrorDialog() {
+    showDialog(
+      context: _context,
+      builder: (_) {
+        return AppDialog(
+          title: appLocalization.titleUnavailableShoppingCartProducts,
+          message: appLocalization.messageUnavailableShoppingCartProducts,
+          headerColor: AppColors.errorColor,
+          isCancelable: false,
+          positiveButtonText: appLocalization.buttonTextRemoveItems,
+          onPositiveButtonTap: () {
+            controller.confirmOrder(removeUnavailableProducts: true);
+          },
+          negativeButtonText: appLocalization.cancel,
+          negativeButtonIcon: Icons.close,
         );
       },
     );

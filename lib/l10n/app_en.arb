@@ -7,6 +7,7 @@
   "bottomNavLogOut": "Log Out",
   "buttonTextAddProduct": "Add product",
   "buttonTextAddToCart": "Add to cart",
+  "buttonTextRemoveItems": "Remove items",
   "buttonTextSaveChanges": "Save changes",
   "cancel": "Cancel",
   "consumables": "Consumables",
@@ -77,7 +78,7 @@
   "messageInventoryAlreadyExist": "The product is already in stock.",
   "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemNotFound": "Item not found!",
-  "messageItemOutOfStock": "Item out of stock!",
+  "messageItemOutOfStock": "The item is empty in your warehouse, please correct your stock balance.",
   "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
@@ -86,6 +87,7 @@
   "messageReplaceInventorySuccessful": "Item replaced successfully",
   "messageUnavailableInventory": "No replacement product found. Please Contact customer service.",
   "messageUnavailableProduct": "{name} is unfortunately not available",
+  "messageUnavailableShoppingCartProducts": "One or more products in the shopping cart are unavailable. Please remove the items from the shopping cart to continue.",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -159,11 +161,13 @@
   "titleItemRevertRetrieval": "Goods are getting in",
   "titleScannerView": "Barcode scanner",
   "titleUnavailableProduct": "Product is unavailable!",
+  "titleUnavailableShoppingCartProducts": "Products are unavailable!",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
   "version": "Version",
   "visitingAddress": "Visiting Address",
   "yes": "Yes",
-  "workshop": "Workshop"
+  "workshop": "Workshop",
+  "removeItem": "Remove Item"
 }

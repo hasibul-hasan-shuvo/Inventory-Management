@@ -1,5 +1,6 @@
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+import 'package:dental_inventory/app/data/model/response/shopping_cart_total_price_response.dart';
 import 'package:dental_inventory/app/data/remote/shopping_cart_remote_data_source.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
@@ -37,7 +38,14 @@ class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
   }
 
   @override
-  Future<bool> placeOrder() {
-    return _orderRepository.placeOrder();
+  Future<bool> placeOrder({bool removeUnavailableProducts = false}) {
+    return _orderRepository.placeOrder(
+      removeUnavailableProducts: removeUnavailableProducts,
+    );
+  }
+
+  @override
+  Future<ShoppingCartTotalPriceResponse> getTotalPrice() {
+    return _remoteDataSource.getTotalPrice();
   }
 }
