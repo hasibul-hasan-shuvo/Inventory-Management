@@ -70,7 +70,7 @@ android {
         applicationId "no.inventorymanagement"
         minSdk 21
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         compileSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
