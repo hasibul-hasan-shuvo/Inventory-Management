@@ -158,7 +158,7 @@
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
   "titleScannerView": "Barcode scanner",
-  "titleUnavailableProduct": "Products are unavailable!",
+  "titleUnavailableProduct": "Product is unavailable!",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
