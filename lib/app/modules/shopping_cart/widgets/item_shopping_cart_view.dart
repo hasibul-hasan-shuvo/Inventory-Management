@@ -140,7 +140,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
 
   String _getPrice() {
     return "${appLocalization.currency}. "
-        "${(data.cartCount * data.price).toStringAsFixed(2)}";
+        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
   }
 
   void _onTapEdit(BuildContext context) {

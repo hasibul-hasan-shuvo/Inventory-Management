@@ -10,6 +10,8 @@ class ShoppingCartUiModel {
   late final int count;
   late final num price;
   late final bool isAvailable;
+  late final double taxRate;
+  late final double priceWithTax;
 
   ShoppingCartUiModel.fromShoppingCartResponse(ShoppingCartResponse response) {
     id = response.id ?? -1;
@@ -20,6 +22,8 @@ class ShoppingCartUiModel {
     price = response.product?.price ?? 0.0;
     cartCount = response.quantity ?? 0;
     isAvailable = response.product?.isAvailable ?? false;
+    taxRate = response.product?.taxRate ?? 0.0;
+    priceWithTax = response.product?.priceWithTax ?? 0.0;
   }
 
   void updateCartCount(int newCount) {

@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
+import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
@@ -136,7 +137,7 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
           appLocalization.removeItem,
           style: textTheme.bodySmall?.copyWith(
             fontSize: FontSize.extraSmall.sp,
-            color: theme.colorScheme.onPrimary,
+            color: AppColors.colorWhite,
           ),
           textAlign: TextAlign.center,
         ).paddingAll(AppValues.extraSmallPadding.r),
@@ -146,6 +147,6 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
 
   String _getPrice() {
     return "${appLocalization.currency}. "
-        "${(data.cartCount * data.price).toStringAsFixed(2)}";
+        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
   }
 }
