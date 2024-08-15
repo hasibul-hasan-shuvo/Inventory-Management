@@ -40,7 +40,10 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
           Flexible(
             child: Text(
               title,
-              style: textTheme.bodyMedium,
+              style: theme.outlinedButtonTheme.style?.textStyle?.resolve(
+                  onPress != null
+                      ? {MaterialState.focused}
+                      : {MaterialState.disabled}),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
