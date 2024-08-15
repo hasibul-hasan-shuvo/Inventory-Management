@@ -26,7 +26,9 @@ abstract class AppColors {
   final Color basicGrey;
   final Color basicGreyDark;
   final Color errorContainerLight;
+  final Color onErrorContainerLight;
   final Color errorContainerDark;
+  final Color onErrorContainerDark;
   final Color loaderBackground;
   final Color secondaryColor;
   final Color loginScreenIconColor;
@@ -65,7 +67,9 @@ abstract class AppColors {
     this.basicGrey = const Color(0xFF66708C),
     this.basicGreyDark = const Color(0xFFFFFFFF),
     this.errorContainerLight = const Color(0xFFffdad6),
+    this.onErrorContainerLight = const Color(0xFF000000),
     this.errorContainerDark = const Color(0xFF93000a),
+    this.onErrorContainerDark = const Color(0xFFFFFFFF),
     this.loaderBackground = const Color(0x32000000),
     this.loginScreenIconColor = const Color(0xffD9D9D9),
     this.bgDismissibleItem = const Color(0xFF80DB7E),

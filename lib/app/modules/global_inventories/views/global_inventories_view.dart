@@ -166,7 +166,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           return AppDialog(
             title: appLocalization.titleUnavailableProduct,
             content: GlobalUnavailableInventoryDialogView(data: data),
-            headerColor: appColors.errorColor,
+            headerColor: theme.colorScheme.errorContainer,
             isCancelable: false,
             negativeButtonIcon: Icons.close,
             negativeButtonText: appLocalization.cancel,
