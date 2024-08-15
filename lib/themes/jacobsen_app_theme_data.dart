@@ -19,6 +19,7 @@ class JacobsenAppThemeData implements AppThemeData {
       primaryColorDark: _colors.bgCardDark,
       primaryColorLight: _colors.primary,
       buttonTheme: const ButtonThemeData(alignedDropdown: true),
+      outlinedButtonTheme: _outlinedButtonThemeDataDark,
       cardColor: _colors.bgCardDark,
       iconTheme: IconThemeData(color: _colors.colorWhite),
       indicatorColor: _colors.colorWhite,
@@ -55,6 +56,7 @@ class JacobsenAppThemeData implements AppThemeData {
       iconTheme: IconThemeData(color: _colors.colorBlack),
       indicatorColor: _colors.colorBlack,
       buttonTheme: const ButtonThemeData(alignedDropdown: true),
+      outlinedButtonTheme: _outlinedButtonThemeDataLight,
       dividerColor: _colors.divider,
       dividerTheme: DividerThemeData(color: _colors.divider),
       hintColor: _colors.basicGrey,
@@ -75,6 +77,38 @@ class JacobsenAppThemeData implements AppThemeData {
           const FloatingActionButtonThemeData(shape: CircleBorder()),
     );
   }
+
+  OutlinedButtonThemeData get _outlinedButtonThemeDataDark =>
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: _colors.colorWhite,
+          textStyle: bodyMediumTextStyle.copyWith(
+            color: _colors.colorWhite,
+          ),
+        ).copyWith(
+          side: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? null
+                : BorderSide(color: _colors.colorWhite),
+          ),
+        ),
+      );
+
+  OutlinedButtonThemeData get _outlinedButtonThemeDataLight =>
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: _colors.primary,
+          textStyle: bodyMediumTextStyle.copyWith(
+            color: _colors.primary,
+          ),
+        ).copyWith(
+          side: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? null
+                : BorderSide(color: _colors.primary),
+          ),
+        ),
+      );
 
   BottomNavigationBarThemeData get _bottomNavigationBarThemeDataDark =>
       BottomNavigationBarThemeData(
