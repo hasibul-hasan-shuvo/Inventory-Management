@@ -1,6 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/values/app_assets.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -34,7 +34,7 @@ class AccountSetupView extends BaseView<AccountSetupController> {
 
   Widget _getLoaderView() {
     return Lottie.asset(
-      AppAssets.accountSetupAnimation,
+      BuildConfig.instance.config.accountSetupAnimation,
       repeat: true,
     );
   }
