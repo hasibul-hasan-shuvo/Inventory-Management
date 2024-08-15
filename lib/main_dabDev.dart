@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/services/firebase_service.dart';
+import 'package:dental_inventory/app/core/values/app_assets.dart';
 import 'package:dental_inventory/app/core/values/app_images.dart';
 import 'package:dental_inventory/app/core/values/environment_values.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
@@ -21,6 +22,7 @@ void main() async {
     themeData: DabAppThemeData(),
     appColors: DabAppColors(),
     appLogo: AppImages.dabLogo,
+    accountSetupAnimation: AppAssets.dabAccountSetupAnimation,
     shouldCollectCrashLog: true,
   );
 

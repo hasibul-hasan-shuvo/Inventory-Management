@@ -11,6 +11,7 @@ class EnvConfig {
   final AppColors appColors;
   final AppThemeData themeData;
   final String appLogo;
+  final String accountSetupAnimation;
 
   late final Logger logger;
 
@@ -20,6 +21,7 @@ class EnvConfig {
     required this.themeData,
     required this.appColors,
     required this.appLogo,
+    required this.accountSetupAnimation,
     this.shouldCollectCrashLog = false,
   }) {
     logger = Logger(
