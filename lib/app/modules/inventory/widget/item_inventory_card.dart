@@ -17,7 +17,7 @@ import 'inventory_item_edit_dialog_view.dart';
 
 // ignore: must_be_immutable
 class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
-  final InventoryUIModel data;
+  final InventoryUiModel data;
   final InventoryController _controller = Get.find<InventoryController>();
 
   ItemInventoryCard({
@@ -113,7 +113,7 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ProductNameView(name: data.name),
-          SizedBox(height: AppValues.margin_10.h),
+          SizedBox(height: AppValues.margin_2.h),
           Row(
             children: [
               Expanded(
@@ -125,12 +125,11 @@ class ItemInventoryCard extends StatelessWidget with BaseWidgetMixin {
               SizedBox(width: AppValues.margin_10.w),
               Expanded(
                 child: LabelAndCountView(
-                  label:
-                      "${appLocalization.max}: ${data.max} ${appLocalization.min}: ${data.min}",
+                  label: appLocalization.inventoryMaxMin(data.min, data.max),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

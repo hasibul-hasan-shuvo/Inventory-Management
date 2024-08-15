@@ -178,6 +178,19 @@ class InventoryRepositoryImpl implements InventoryRepository {
     return _remoteDataSource.getInventoryList(queryParams: queryParams);
   }
 
+  @override
+  Future<InventoryEntityData?> replaceInventory(
+      {required int? oldInventoryId,
+      required String oldInventoryItemId,
+      required CreateInventoryRequestBody newInventory}) {
+    return createInventory(newInventory).then(
+      (replacedInventory) => deleteInventory(
+        id: oldInventoryId,
+        itemId: oldInventoryItemId,
+      ).then((value) => replacedInventory),
+    );
+  }
+
   Future<int> _insertInventoryChanges(
       InventoryChangesEntityCompanion inventoryChanges) {
     return _localDataSource.insertInventoryChanges(inventoryChanges);

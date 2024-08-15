@@ -170,6 +170,7 @@ class ShoppingCartSelectableInventoriesController extends BaseController {
       search: searchQuery.value,
       page: pagingController.pageNumber,
       isIncludeCountInCart: pageArguments.isIncludeCountInCart,
+      excludeUnavailableInventory: true,
     );
     callDataService(
       _inventoryRepository.getInventoryListFromRemote(

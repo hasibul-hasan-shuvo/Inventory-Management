@@ -11,4 +11,6 @@ abstract class EndPoints {
   static const String orders = '/shopping/orders';
   static const String globalInventory = '/inventory/search-products/';
   static const String homeCounters = '/inventory/miscellaneous-counts/';
+  static const String shoppingCartTotalPrice =
+      '/shopping/active-cart/total-price/';
 }

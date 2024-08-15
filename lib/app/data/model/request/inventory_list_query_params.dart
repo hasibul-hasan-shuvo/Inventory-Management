@@ -8,6 +8,7 @@ class InventoryListQueryParams {
     this.minAvailableQuantity,
     this.isIncludeCountInCart = false,
     this.lastModifiedDate,
+    this.excludeUnavailableInventory = false,
   });
 
   String? search;
@@ -16,6 +17,7 @@ class InventoryListQueryParams {
   int? minAvailableQuantity;
   bool isIncludeCountInCart;
   String? lastModifiedDate;
+  bool excludeUnavailableInventory;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -32,6 +34,8 @@ class InventoryListQueryParams {
       map['modified_after'] = lastModifiedDate;
     }
     map['no_page'] = true;
+
+    map['exclude_outdated_products'] = excludeUnavailableInventory;
 
     return map;
   }

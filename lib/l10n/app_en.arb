@@ -1,12 +1,13 @@
 {
   "accounting": "Accounting",
-  "available": "Available",
+  "available": "Qty",
   "bottomNavAboutApp": "About App",
   "bottomNavContactUs": "Contact Us",
   "bottomNavHome": "Home",
   "bottomNavLogOut": "Log Out",
   "buttonTextAddProduct": "Add product",
   "buttonTextAddToCart": "Add to cart",
+  "buttonTextRemoveItems": "Remove items",
   "buttonTextSaveChanges": "Save changes",
   "cancel": "Cancel",
   "consumables": "Consumables",
@@ -37,6 +38,17 @@
   "homeMenuSuggestedOrder": "Suggested order",
   "invalidEmail": "Invalid Email",
   "inventory": "Inventory",
+  "inventoryMaxMin": "Between {min} and {max}",
+  "@inventoryMaxMin": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "logIn": "Log In",
   "logInMessage": "Please log in to continue",
   "logInSuccessMessage": "Logged in successfully",
@@ -66,13 +78,16 @@
   "messageInventoryAlreadyExist": "The product is already in stock.",
   "messageInventoryUnavailable": "The selected inventory is unavailable",
   "messageItemNotFound": "Item not found!",
-  "messageItemOutOfStock": "Item out of stock!",
+  "messageItemOutOfStock": "The item is empty in your warehouse, please correct your stock balance.",
   "messageItemOutValidation": "Number can't be more than remaining stock",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "messageMaxCountThresholdValidation": "Number can't be more than 999",
   "messageMaxMinValidation": "Max value can't less than min value",
+  "messageReplaceInventorySuccessful": "Item replaced successfully",
+  "messageUnavailableInventory": "No replacement product found. Please Contact customer service.",
   "messageUnavailableProduct": "{name} is unfortunately not available",
+  "messageUnavailableShoppingCartProducts": "One or more products in the shopping cart are unavailable. Please remove the items from the shopping cart to continue.",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -130,6 +145,7 @@
   "settingsTheme": "Theme",
   "status": "Status",
   "success": "Success",
+  "tagUnavailableProduct": "Switch to an alternative product",
   "themeDark": "Dark",
   "themeLight": "Light",
   "themeSystem": "System Default",
@@ -144,12 +160,14 @@
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
   "titleScannerView": "Barcode scanner",
-  "titleUnavailableProduct": "Products are unavailable!",
+  "titleUnavailableProduct": "Product is unavailable!",
+  "titleUnavailableShoppingCartProducts": "Products are unavailable!",
   "total": "Total",
   "updateProduct": "Update Product",
   "userNameValidator": "Username can only contain letters, numbers and underscore(_) and must be of length between 8-30 characters",
   "version": "Version",
   "visitingAddress": "Visiting Address",
   "yes": "Yes",
-  "workshop": "Workshop"
+  "workshop": "Workshop",
+  "removeItem": "Remove Item"
 }

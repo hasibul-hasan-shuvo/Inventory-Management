@@ -125,36 +125,29 @@ class ItemCountController extends BaseController
 
       return;
     }
-    if (newStock.toInt == 0) {
-      _removeProduct(data.itemId);
-    } else {
-      _updateProduct(
-        data,
-        newStock.toInt - data.available,
-      );
-    }
+
+    _updateProduct(
+      data,
+      newStock.toInt - data.available,
+    );
   }
 
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
-    if (inventoryData.number == 0) {
-      _removeProduct(inventoryData.itemId);
-    } else {
-      bool isItemExist = false;
-      for (ScannedProductUiModel product in scannedProducts) {
-        if (product.itemId == inventoryData.itemId) {
-          isItemExist = true;
-          _updateProduct(
-            product,
-            inventoryData.number - inventoryData.available,
-          );
-          break;
-        }
+    bool isItemExist = false;
+    for (ScannedProductUiModel product in scannedProducts) {
+      if (product.itemId == inventoryData.itemId) {
+        isItemExist = true;
+        _updateProduct(
+          product,
+          inventoryData.number - inventoryData.available,
+        );
+        break;
       }
+    }
 
-      if (!isItemExist) {
-        _addProductFromInventory(inventoryData);
-      }
+    if (!isItemExist) {
+      _addProductFromInventory(inventoryData);
     }
   }
 
@@ -168,10 +161,12 @@ class ItemCountController extends BaseController
     );
   }
 
-  void _removeProduct(String itemId) {
-    callDataService(
+  Future removeProduct(String itemId) {
+    return callDataService(
       _repository.deleteProductByItemId(itemId),
       onSuccess: (_) => removeProductByItemId(itemId),
+      onStart: () => logger.d("Removing from item count"),
+      onComplete: () => logger.d("Removed from item count"),
     );
   }
 

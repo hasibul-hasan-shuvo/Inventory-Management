@@ -127,18 +127,19 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
                     : const SizedBox.shrink(),
               ),
               SizedBox(width: AppValues.margin_10.w),
-              Expanded(
-                flex: 1,
-                child: AppPrimaryButton(
-                  onPressed: () {
-                    onPositiveButtonTap?.call();
-                    if (willPopOnPositiveButtonTap) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  title: positiveButtonText ?? appLocalization.ok,
+              if (onPositiveButtonTap != null)
+                Expanded(
+                  flex: 1,
+                  child: AppPrimaryButton(
+                    onPressed: () {
+                      onPositiveButtonTap?.call();
+                      if (willPopOnPositiveButtonTap) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    title: positiveButtonText ?? appLocalization.ok,
+                  ),
                 ),
-              )
             ],
           ),
         ),

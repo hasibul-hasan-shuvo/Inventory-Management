@@ -1,27 +1,42 @@
+import 'dart:io';
+
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/shopping_cart_scanned_products_controller_mixin.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
+import 'package:dental_inventory/app/data/model/response/shopping_cart_total_price_response.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_total_price_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
+import 'package:dental_inventory/app/network/exceptions/api_exception.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartController extends BaseController
     with ShoppingCartScannedProductsControllerMixin {
   final ShoppingCartRepository _repository = Get.find();
 
+  final Rx<ShoppingCartTotalPriceUiModel> _totalPriceController =
+      Rx(ShoppingCartTotalPriceUiModel.empty());
+
+  ShoppingCartTotalPriceUiModel get totalPrice => _totalPriceController.value;
+
+  final RxBool unavailableProductOrderErrorController = RxBool(false);
+
   @override
   void onInit() {
     super.onInit();
     pagingController.initRefresh();
     _getCartItems(false);
+    _getTotalPrice();
   }
 
   @override
   void onClose() {
     closeShoppingCartScannedProductsController();
+    _totalPriceController.close();
+    unavailableProductOrderErrorController.close();
     super.onClose();
   }
 
@@ -37,15 +52,39 @@ class ShoppingCartController extends BaseController
     onRefresh();
   }
 
+  void clearUnavailableProductOrderErrorController() {
+    unavailableProductOrderErrorController(false);
+  }
+
   void onRefresh() {
     pagingController.initRefresh();
     _getCartItems(true);
+    _getTotalPrice();
   }
 
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
       _getNextCartItems();
     }
+  }
+
+  void _getTotalPrice() {
+    callDataService(
+      _repository.getTotalPrice(),
+      onStart: () => logger.d("Fetching total price"),
+      onComplete: () => logger.d("Fetched total price"),
+      onSuccess: _handleTotalPriceSuccessResponse,
+      enableErrorMessage: false,
+    );
+  }
+
+  void _handleTotalPriceSuccessResponse(
+      ShoppingCartTotalPriceResponse response) {
+    _totalPriceController(
+      ShoppingCartTotalPriceUiModel.fromShoppingCartTotalPriceResponse(
+        response,
+      ),
+    );
   }
 
   void _getCartItems(bool isRefreshing) {
@@ -93,11 +132,21 @@ class ShoppingCartController extends BaseController
         []);
   }
 
-  void confirmOrder() {
+  void confirmOrder({bool removeUnavailableProducts = false}) {
     callDataService(
-      _repository.placeOrder(),
+      _repository.placeOrder(
+        removeUnavailableProducts: removeUnavailableProducts,
+      ),
+      enableErrorMessage: false,
       onSuccess: handleConfirmOrderSuccessResponse,
+      onError: _handleConfirmOrderError,
     );
+  }
+
+  void _handleConfirmOrderError(Exception e) {
+    if (e is ApiException && e.httpCode == HttpStatus.conflict) {
+      unavailableProductOrderErrorController.trigger(true);
+    }
   }
 
   void updateCartCount(ShoppingCartUiModel data, String count) {
@@ -111,7 +160,7 @@ class ShoppingCartController extends BaseController
     }
     int cartCount = count.toInt;
     if (cartCount <= 0) {
-      _deleteCartItem(data);
+      deleteCartItem(data);
     } else {
       _updateCartItem(data, cartCount);
     }
@@ -128,16 +177,22 @@ class ShoppingCartController extends BaseController
         data.id.toString(),
         requestBody,
       ),
-      onSuccess: handleUpdateCartSuccessResponse,
+      onSuccess: (response) {
+        _getTotalPrice();
+        handleUpdateCartSuccessResponse(response);
+      },
     );
   }
 
-  void _deleteCartItem(ShoppingCartUiModel data) {
+  void deleteCartItem(ShoppingCartUiModel data) {
     callDataService(
       _repository.deleteItemFromShoppingCart(
         data.id.toString(),
       ),
-      onSuccess: (_) => handleDeleteCartItemSuccessResponse(data.id),
+      onSuccess: (_) {
+        _getTotalPrice();
+        handleDeleteCartItemSuccessResponse(data.id);
+      },
     );
   }
 
