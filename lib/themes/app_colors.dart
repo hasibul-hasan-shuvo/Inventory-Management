@@ -47,7 +47,7 @@ abstract class AppColors {
     this.colorBlack = const Color(0xFF000000),
     this.lightGreyColor = const Color(0xFFC4C4C4),
     this.errorColor = const Color(0xFFE36161),
-    this.errorColorDark = const Color(0xFFffb4ab),
+    this.errorColorDark = const Color(0xFFE36161),
     this.colorRed = const Color(0xFFEB001B),
     this.colorGreen = const Color(0xFF6AB452),
     this.defaultRippleColor = const Color(0x0338686A),
