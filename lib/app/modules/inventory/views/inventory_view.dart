@@ -122,7 +122,7 @@ class InventoryView extends BaseView<InventoryController> {
           negativeButtonText: appLocalization.deleteProduct,
           positiveButtonText: appLocalization.buttonTextAddProduct,
           isCancelable: true,
-          headerColor: theme.colorScheme.error,
+          headerColor: theme.colorScheme.errorContainer,
           onNegativeButtonTap: () =>
               controller.deleteInventoryItem(data.unavailableInventory),
           onPositiveButtonTap: () => controller.replaceInventory(data),
@@ -144,7 +144,7 @@ class InventoryView extends BaseView<InventoryController> {
               negativeButtonText: appLocalization.cancel,
               positiveButtonText: appLocalization.deleteProduct,
               isCancelable: false,
-              headerColor: theme.colorScheme.error,
+              headerColor: theme.colorScheme.errorContainer,
               onPositiveButtonTap: () => controller.deleteInventoryItem(data),
             );
           });
@@ -164,7 +164,7 @@ class InventoryView extends BaseView<InventoryController> {
           negativeButtonText: appLocalization.cancel,
           positiveButtonText: appLocalization.deleteProduct,
           isCancelable: false,
-          headerColor: theme.colorScheme.error,
+          headerColor: theme.colorScheme.errorContainer,
           onPositiveButtonTap: () => controller.deleteInventoryItem(data),
         ),
       );

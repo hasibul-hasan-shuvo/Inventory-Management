@@ -208,7 +208,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
         return AppDialog(
           title: appLocalization.titleUnavailableShoppingCartProducts,
           message: appLocalization.messageUnavailableShoppingCartProducts,
-          headerColor: theme.colorScheme.error,
+          headerColor: theme.colorScheme.errorContainer,
           isCancelable: false,
           positiveButtonText: appLocalization.buttonTextRemoveItems,
           onPositiveButtonTap: () {

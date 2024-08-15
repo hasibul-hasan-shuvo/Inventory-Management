@@ -135,6 +135,7 @@ class JacobsenAppThemeData implements AppThemeData {
         onBackground: _colors.colorWhite,
         error: _colors.errorColorDark,
         errorContainer: _colors.errorContainerDark,
+        onErrorContainer: _colors.onErrorContainerDark,
       );
 
   ColorScheme get _colorSchemeLight => ColorScheme.light(
@@ -146,6 +147,7 @@ class JacobsenAppThemeData implements AppThemeData {
         onBackground: _colors.primary,
         error: _colors.errorColor,
         errorContainer: _colors.errorContainerLight,
+        onErrorContainer: _colors.onErrorContainerLight,
       );
 
   TextTheme get _textThemeDark => TextTheme(
