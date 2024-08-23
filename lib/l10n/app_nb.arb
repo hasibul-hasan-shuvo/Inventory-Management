@@ -55,7 +55,7 @@
   "logInSuccessMessage": "Logget inn",
   "logInErrorMessage": "Feil brukernavn eller passord",
   "logOut": "Logg ut",
-  "logOutMessage:": "Er du sikker på at du vil logge ut?",
+  "logOutMessage": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
   "messageAccountSetup": "Vennligst vent mens\nvi setter opp\nkontoen din",
   "messageAddedToShoppingCart": "Lagt til i handlekurv",
