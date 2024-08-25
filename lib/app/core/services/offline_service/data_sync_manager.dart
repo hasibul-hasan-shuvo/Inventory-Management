@@ -41,11 +41,11 @@ class DataSyncManager {
     if (!_isSyncing && _connectivityManager.isOnline) {
       _startDeBouncer();
       startLoader();
-      for (DataSynchronizerKey key in DataSynchronizerKey.values) {
+      for (DataSynchronizerKey key in keys) {
         DataSynchronizer synchronizer = DataSynchronizer.create(key);
         synchronizer.syncData().then(
-              (value) => updateLoader(DataSynchronizerKey.values.length),
-              onError: (_) => updateLoader(DataSynchronizerKey.values.length),
+              (value) => _updateLoader(keys.length),
+              onError: (_) => _updateLoader(keys.length),
             );
       }
     }
@@ -56,7 +56,7 @@ class DataSyncManager {
     isDataSynced.trigger(false);
   }
 
-  void updateLoader(int totalCount) {
+  void _updateLoader(int totalCount) {
     _loadCounter++;
     if (_loadCounter >= totalCount) {
       isDataSynced.trigger(true);
