@@ -40,7 +40,7 @@ class DataSyncManager {
   void _syncData(List<DataSynchronizerKey> keys) {
     if (!_isSyncing && _connectivityManager.isOnline) {
       _startDeBouncer();
-      startLoader();
+      _startLoader();
       for (DataSynchronizerKey key in keys) {
         DataSynchronizer synchronizer = DataSynchronizer.create(key);
         synchronizer.syncData().then(
@@ -51,7 +51,7 @@ class DataSyncManager {
     }
   }
 
-  void startLoader() {
+  void _startLoader() {
     _loadCounter = 0;
     isDataSynced.trigger(false);
   }
