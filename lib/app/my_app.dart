@@ -96,6 +96,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _localizeApp() {
+    BuildConfig.instance.config.logger.i("Language: ${Platform.localeName}");
     String appLanguage = _preference.getString(
       PreferenceManager.LANGUAGE,
       defaultValue: Platform.localeName,
@@ -103,6 +104,8 @@ class _MyAppState extends State<MyApp> {
 
     if (appLanguage.contains(AppLanguages.en.name)) {
       appLanguage = AppLanguages.en.name;
+    } else if (appLanguage.contains(AppLanguages.sv.name)) {
+      appLanguage = AppLanguages.sv.name;
     }
 
     if (!widget._didLanguageSet) {

@@ -1,7 +1,7 @@
 enum AppLanguages {
   nb, // Norwegian
   en, // English
-  se, // Swedish
+  sv, // Swedish
 }
 
 extension AppLanguageTitle on AppLanguages {
@@ -11,7 +11,7 @@ extension AppLanguageTitle on AppLanguages {
         return "English";
       case AppLanguages.nb:
         return "Norsk Bokmål";
-      case AppLanguages.se:
+      case AppLanguages.sv:
         return "Svenska";
       default:
         return "English";
