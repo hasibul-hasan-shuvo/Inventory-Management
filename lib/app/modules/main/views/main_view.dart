@@ -1,12 +1,12 @@
 import 'package:dental_inventory/app/core/utils/url_launcher.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
-import 'package:dental_inventory/app/core/values/app_strings.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/modules/main/model/item_home_menu_ui_model.dart';
 import 'package:dental_inventory/app/modules/main/views/main_app_bar.dart';
 import 'package:dental_inventory/app/modules/main/widget/item_home_menu_view.dart';
 import 'package:dental_inventory/app/routes/app_pages.dart';
+import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -84,7 +84,7 @@ class MainView extends BaseView<MainController> {
   void _onMenuSelected(MenuCode menuCode) {
     switch (menuCode) {
       case MenuCode.HOME:
-        UrlLauncher.launchUrl(AppStrings.website);
+        UrlLauncher.launchUrl(BuildConfig.instance.config.contactInfo.website);
         break;
       case MenuCode.CONTACT_US:
         Get.toNamed(Routes.CONTACT_US);
