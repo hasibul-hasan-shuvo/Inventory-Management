@@ -116,7 +116,7 @@
   "labelSuggestion": "Forslag",
   "number": "Antall",
   "openingHourTitle": "Åpningstider og direktenummer",
-  "openingHourDabMessage": "Vi har åpningstider\nMandag-torsdag 08.00 – 17.00\nFredag 08.00 – 16.00.",
+  "openingHourDabMessage": "Vi har åpningstider\u2028Mandag-torsdag 08.00 – 17.00\u2028Fredag 08.00 – 16.00.",
   "openingHourJacobsenMessage": "Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.",
   "orderStatusActive": "Aktiv",
   "orderStatusOrdered": "Bestilt",
