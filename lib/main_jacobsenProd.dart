@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/services/firebase_service.dart';
 import 'package:dental_inventory/app/core/values/app_assets.dart';
 import 'package:dental_inventory/app/core/values/app_images.dart';
 import 'package:dental_inventory/app/core/values/environment_values.dart';
+import 'package:dental_inventory/app/core/values/jacobsen_contact_info.dart';
 import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/themes/jacobsen_app_colors.dart';
 import 'package:dental_inventory/themes/jacobsen_app_theme_data.dart';
@@ -21,6 +22,7 @@ void main() async {
     baseUrl: "https://inventorybe-prod-pjgpawjrytdxu-webapp.azurewebsites.net",
     themeData: JacobsenAppThemeData(),
     appColors: JacobsenAppColors(),
+    contactInfo: JacobsenContactInfo(),
     appLogo: AppImages.jacobsenLogo,
     accountSetupAnimation: AppAssets.jacobsenAccountSetupAnimation,
     shouldCollectCrashLog: true,
