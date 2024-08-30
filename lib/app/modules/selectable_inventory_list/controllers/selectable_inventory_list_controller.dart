@@ -8,9 +8,12 @@ import 'package:dental_inventory/app/modules/product_out/controllers/product_out
 import 'package:dental_inventory/app/modules/product_out/models/scanned_product_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_list_page_arguments.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SelectableInventoryListController extends BaseController {
+  final TextEditingController searchController = TextEditingController();
+
   final RxList<SelectableInventoryItemUiModel> _inventoryItemsController =
       RxList.empty(growable: true);
 

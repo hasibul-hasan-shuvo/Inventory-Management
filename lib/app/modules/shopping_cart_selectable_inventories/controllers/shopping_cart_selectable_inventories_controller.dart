@@ -9,9 +9,12 @@ import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/data/repository/shopping_cart_repository.dart';
 import 'package:dental_inventory/app/modules/selectable_inventory_list/model/selectable_inventory_item_ui_model.dart';
 import 'package:dental_inventory/app/modules/shopping_cart_selectable_inventories/model/shopping_cart_selectable_inventory_page_arguments.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartSelectableInventoriesController extends BaseController {
+  final TextEditingController searchController = TextEditingController();
+
   final RxList<SelectableInventoryItemUiModel> _inventoryItemsController =
       RxList.empty(growable: true);
 

@@ -10,9 +10,12 @@ import 'package:dental_inventory/app/data/model/response/product_response.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_inventory_ui_model.dart';
 import 'package:dental_inventory/app/modules/global_inventories/models/global_unavailable_product_ui_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class GlobalInventoriesController extends BaseController {
+  final TextEditingController searchController = TextEditingController();
+
   final InventoryRepository _repository = Get.find();
 
   final RxBool _searchModeController = RxBool(true);

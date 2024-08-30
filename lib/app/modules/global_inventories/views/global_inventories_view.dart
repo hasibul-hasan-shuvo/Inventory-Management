@@ -37,6 +37,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       preferredSize: AppBar().preferredSize,
       child: Obx(
         () => SearchAbleAppBar(
+          searchController: controller.searchController,
           isSearchableMode: controller.isSearchable,
           title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
