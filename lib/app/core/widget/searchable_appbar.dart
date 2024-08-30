@@ -20,9 +20,10 @@ class SearchAbleAppBar extends StatelessWidget
 
   final RxBool isSearchBoxEmpty = true.obs;
 
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController;
 
   SearchAbleAppBar({
+    required this.searchController,
     required this.isSearchableMode,
     required this.title,
     required this.onChangeSearchMode,
@@ -60,7 +61,7 @@ class SearchAbleAppBar extends StatelessWidget
   Widget _buildClearButton() {
     return IconButton(
       onPressed: () {
-        _searchController.clear();
+        searchController.clear();
         _onChanged('');
       },
       icon: Icon(
@@ -82,7 +83,7 @@ class SearchAbleAppBar extends StatelessWidget
   Widget _buildSearchTextField() {
     return TextField(
       autofocus: true,
-      controller: _searchController,
+      controller: searchController,
       decoration: InputDecoration(
         hintText: appLocalization.search,
         hintStyle: textTheme.bodyLarge?.copyWith(color: theme.hintColor),

@@ -17,10 +17,13 @@ import 'package:dental_inventory/app/modules/inventory/model/inventory_ui_model.
 import 'package:dental_inventory/app/modules/inventory/model/replaceable_inventory_ui_model.dart';
 import 'package:dental_inventory/app/network/exceptions/api_exception.dart';
 import 'package:dental_inventory/app/network/exceptions/base_exception.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
 class InventoryController extends BaseController {
+  final TextEditingController searchController = TextEditingController();
+
   final RxList<InventoryUiModel> _inventoryItemsController =
       RxList.empty(growable: true);
 
