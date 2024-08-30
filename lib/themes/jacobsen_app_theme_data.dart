@@ -80,32 +80,42 @@ class JacobsenAppThemeData implements AppThemeData {
 
   OutlinedButtonThemeData get _outlinedButtonThemeDataDark =>
       OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: _colors.colorWhite,
-          textStyle: bodyMediumTextStyle.copyWith(
-            color: _colors.colorWhite,
+        style: ButtonStyle(
+          textStyle: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? bodyMediumTextStyle.copyWith(color: Colors.grey)
+                : bodyMediumTextStyle.copyWith(color: _colors.colorWhite),
           ),
-        ).copyWith(
           side: MaterialStateProperty.resolveWith(
             (states) => states.contains(MaterialState.disabled)
-                ? null
+                ? const BorderSide(color: Colors.grey)
                 : BorderSide(color: _colors.colorWhite),
+          ),
+          iconColor: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? Colors.grey
+                : _colors.colorWhite,
           ),
         ),
       );
 
   OutlinedButtonThemeData get _outlinedButtonThemeDataLight =>
       OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: _colors.primary,
-          textStyle: bodyMediumTextStyle.copyWith(
-            color: _colors.primary,
+        style: ButtonStyle(
+          textStyle: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? bodyMediumTextStyle.copyWith(color: Colors.grey)
+                : bodyMediumTextStyle.copyWith(color: _colors.primary),
           ),
-        ).copyWith(
           side: MaterialStateProperty.resolveWith(
             (states) => states.contains(MaterialState.disabled)
-                ? null
+                ? const BorderSide(color: Colors.grey)
                 : BorderSide(color: _colors.primary),
+          ),
+          iconColor: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? Colors.grey
+                : _colors.primary,
           ),
         ),
       );

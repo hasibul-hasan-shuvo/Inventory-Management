@@ -113,16 +113,16 @@ class AppDialog extends StatelessWidget with BaseWidgetMixin {
                 flex: 1,
                 child: negativeButtonText != null
                     ? AppSecondaryButton(
+                        title: negativeButtonText ?? "",
+                        icon: negativeButtonIcon != null
+                            ? Icon(negativeButtonIcon)
+                            : const SizedBox.shrink(),
                         onPress: () {
                           onNegativeButtonTap?.call();
                           if (willPopOnNegativeButtonTap) {
                             Navigator.pop(context);
                           }
                         },
-                        title: negativeButtonText ?? "",
-                        icon: negativeButtonIcon != null
-                            ? Icon(negativeButtonIcon)
-                            : const SizedBox.shrink(),
                       )
                     : const SizedBox.shrink(),
               ),
