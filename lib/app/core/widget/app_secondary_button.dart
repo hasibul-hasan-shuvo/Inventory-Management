@@ -5,8 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
-  AppSecondaryButton(
-      {super.key, required this.onPress, required this.title, this.icon});
+  AppSecondaryButton({
+    super.key,
+    required this.title,
+    this.icon,
+    this.onPress,
+  });
 
   final VoidCallback? onPress;
   final String title;
@@ -30,9 +34,7 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
           ),
         ),
       ),
-      onPressed: () {
-        onPress?.call();
-      },
+      onPressed: onPress,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
