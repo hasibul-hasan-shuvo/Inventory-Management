@@ -10,7 +10,7 @@
   "buttonTextRemoveItems": "Ta bort varor",
   "buttonTextSaveChanges": "Spara ändringar",
   "cancel": "Avbryt",
-  "consumables": "Förbrukningsmaterial",
+  "consumables": "Kundtjänst Förbrukning",
   "contactDescriptionDab": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
   "contactDescriptionJacobsen": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
   "currency": "Kr",
@@ -25,7 +25,7 @@
   "email": "E-post",
   "enterEmail": "Ange e-post",
   "enterPassword": "Ange lösenord",
-  "equipment": "Utrustning",
+  "equipment": "Kundtjänst Utrustning",
   "fieldCannotBeEmpty": "Fältet kan inte vara tomt",
   "fixedProposal": "Fast förslag",
   "homeMenuInventory": "Lager",
@@ -171,6 +171,6 @@
   "version": "Version",
   "visitingAddress": "Besöksadress",
   "yes": "Ja",
-  "workshop": "Verkstad",
+  "workshop": "Verkstaden",
   "removeItem": "Ta bort produkt"
 }
