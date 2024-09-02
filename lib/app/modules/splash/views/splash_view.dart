@@ -23,6 +23,12 @@ class SplashView extends BaseView<SplashController> {
   bool get showNetworkStatus => false;
 
   @override
+  bool get useBottomSafeArea => false;
+
+  @override
+  bool get useTopSafeArea => false;
+
+  @override
   Widget body(BuildContext context) {
     return Container(
       color: theme.primaryColor,
