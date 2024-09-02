@@ -11,6 +11,10 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		55AFFF7FA53FF8257D455FDD /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F32D75836888AD1CFF6064 /* Pods_Runner.framework */; };
+		6B0784712C85AA4000EE46F6 /* LaunchScreenJacobsen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0784702C85AA4000EE46F6 /* LaunchScreenJacobsen.storyboard */; };
+		6B0784732C85AA5100EE46F6 /* LaunchScreenJacobsenDev.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0784722C85AA5100EE46F6 /* LaunchScreenJacobsenDev.storyboard */; };
+		6B0784752C85AA6000EE46F6 /* LaunchScreenDab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0784742C85AA6000EE46F6 /* LaunchScreenDab.storyboard */; };
+		6B0784772C85AA7300EE46F6 /* LaunchScreenDabDev.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0784762C85AA7300EE46F6 /* LaunchScreenDabDev.storyboard */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -45,6 +49,10 @@
 		49EDFE43A4CC39F0D3291653 /* Pods-Runner.debug-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dev.xcconfig"; sourceTree = "<group>"; };
 		61F901B78D35F027C420B732 /* Pods-Runner.debug-dabprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dabprod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dabprod.xcconfig"; sourceTree = "<group>"; };
 		6A1C60764DBB3BD76B4AE92C /* Pods-Runner.release-dabdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-dabdev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-dabdev.xcconfig"; sourceTree = "<group>"; };
+		6B0784702C85AA4000EE46F6 /* LaunchScreenJacobsen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenJacobsen.storyboard; sourceTree = "<group>"; };
+		6B0784722C85AA5100EE46F6 /* LaunchScreenJacobsenDev.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenJacobsenDev.storyboard; sourceTree = "<group>"; };
+		6B0784742C85AA6000EE46F6 /* LaunchScreenDab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenDab.storyboard; sourceTree = "<group>"; };
+		6B0784762C85AA7300EE46F6 /* LaunchScreenDabDev.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenDabDev.storyboard; sourceTree = "<group>"; };
 		6CEC810BF8A41D45E0086DC7 /* Pods-Runner.debug-dabdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dabdev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dabdev.xcconfig"; sourceTree = "<group>"; };
 		714D588DB5E4D602E6AA9618 /* Pods-Runner.profile-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-dev.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -153,12 +161,16 @@
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
+				6B0784702C85AA4000EE46F6 /* LaunchScreenJacobsen.storyboard */,
 				0C9B8876276726FC00AE16B5 /* Info-Release.plist */,
 				97C147021CF9000F007C117D /* Info-Debug.plist */,
 				1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */,
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				6B0784722C85AA5100EE46F6 /* LaunchScreenJacobsenDev.storyboard */,
+				6B0784742C85AA6000EE46F6 /* LaunchScreenDab.storyboard */,
+				6B0784762C85AA7300EE46F6 /* LaunchScreenDabDev.storyboard */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -226,10 +238,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B0784732C85AA5100EE46F6 /* LaunchScreenJacobsenDev.storyboard in Resources */,
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				6B0784772C85AA7300EE46F6 /* LaunchScreenDabDev.storyboard in Resources */,
 				0C9B8877276726FC00AE16B5 /* Info-Release.plist in Resources */,
+				6B0784752C85AA6000EE46F6 /* LaunchScreenDab.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				6B0784712C85AA4000EE46F6 /* LaunchScreenJacobsen.storyboard in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +421,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -487,6 +506,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDab;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,6 +587,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDab;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -640,6 +665,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDab;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -722,6 +750,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDabDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -803,6 +834,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDabDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -881,6 +915,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenDabDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1017,6 +1054,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-$(CONFIGURATION).plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1042,6 +1082,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1125,6 +1168,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsenDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1209,6 +1255,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1291,6 +1340,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsenDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1371,6 +1423,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Release.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1448,6 +1503,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsenDev;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1526,6 +1584,9 @@
 				DEVELOPMENT_TEAM = U64TMK8U7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runner/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				LAUNCH_SCREEN = LaunchScreenJacobsen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

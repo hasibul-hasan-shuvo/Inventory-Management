@@ -34,7 +34,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Using camera to scan barcode and qr code</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>${LAUNCH_SCREEN}</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
