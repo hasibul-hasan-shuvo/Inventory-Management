@@ -1,5 +1,5 @@
 {
-  "accounting": "Bokföring",
+  "accounting": "Växel",
   "available": "Antal",
   "bottomNavAboutApp": "Om appen",
   "bottomNavContactUs": "Kontakta oss",
@@ -142,7 +142,7 @@
   "remainingStockAfterWithdrawal": "Återstående lager efter uttag",
   "retry": "Försök igen",
   "search": "Sök",
-  "service": "Service",
+  "service": "Reservdelar",
   "settingsFontSize": "fontstorlek",
   "settingsLanguage": "Språk",
   "settingsTheme": "Tema",
