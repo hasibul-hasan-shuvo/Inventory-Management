@@ -63,6 +63,9 @@ class ProductTopView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getIdView() {
-    return ProductIdView(id: id);
+    return ProductIdView(
+      id: id,
+      textStyle: textTheme.titleSmall,
+    );
   }
 }
