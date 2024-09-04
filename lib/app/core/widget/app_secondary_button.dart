@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
@@ -51,7 +52,7 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
             ),
           ),
         ],
-      ),
+      ).paddingSymmetric(vertical: AppValues.padding_2.h),
     );
   }
 }
