@@ -86,4 +86,9 @@ class AuthRepositoryImpl implements AuthRepository {
       return response;
     });
   }
+
+  @override
+  UserResponse getUserData() {
+    return _localDataSource.getUserData();
+  }
 }
