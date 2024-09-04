@@ -112,6 +112,17 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Number",
   "labelSuggestion": "Suggestion",
+  "loggedInCustomerId": "Logged in as a customer\n{customerId}, {customerName}",
+  "@loggedInCustomerId": {
+    "placeholders": {
+      "customerId": {
+        "type": "String"
+      },
+      "customerName": {
+        "type": "String"
+      }
+    }
+  },
   "number": "Number",
   "openingHourTitle": "Opening hours and direct numbers",
   "openingHourMessage": "We are open from 08.00 to 16.00, Monday to Friday.",

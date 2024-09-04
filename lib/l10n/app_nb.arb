@@ -112,6 +112,17 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antall",
   "labelSuggestion": "Forslag",
+  "loggedInCustomerId": "Logget inn som kunde\n{customerId}, {customerName}",
+  "@loggedInCustomerId": {
+    "placeholders": {
+      "customerId": {
+        "type": "String"
+      },
+      "customerName": {
+        "type": "String"
+      }
+    }
+  },
   "number": "Antall",
   "openingHourTitle": "Åpningstider og direktenummer",
   "openingHourMessage": "Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.",

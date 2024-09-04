@@ -43,6 +43,14 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   }
 
   @override
+  UserResponse getUserData() {
+    String userDataString = _preferenceManager
+        .getString(PreferenceManager.USER_DATA, defaultValue: '{}');
+
+    return UserResponse.fromJson(jsonDecode(userDataString));
+  }
+
+  @override
   void removeUserData() {
     _preferenceManager.remove(PreferenceManager.INVENTORY_LAST_SYNC_TIME_STAMP);
     _preferenceManager
