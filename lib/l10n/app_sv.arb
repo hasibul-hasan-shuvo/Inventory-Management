@@ -113,6 +113,17 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antal",
   "labelSuggestion": "Förslag",
+  "loggedInCustomerId": "Inloggad som kund\n{customerId}, {customerName}",
+  "@loggedInCustomerId": {
+    "placeholders": {
+      "customerId": {
+        "type": "String"
+      },
+      "customerName": {
+        "type": "String"
+      }
+    }
+  },
   "number": "Antal",
   "openingHourTitle": "Öppettider och direktnummer",
   "openingHourDabMessage": "Vi har öppettid\u2028Måndag-Torsdag 08.00 – 17.00\u2028Fre 08.00 – 16.00.",
