@@ -24,6 +24,8 @@ class AboutAppView extends BaseView<AboutAppController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            _getLoggedInUserView(),
+            SizedBox(height: AppValues.padding.h),
             _buildTitle(context),
             SizedBox(height: AppValues.padding.h),
             _buildDescriptionOne(),
@@ -35,6 +37,19 @@ class AboutAppView extends BaseView<AboutAppController> {
             _getAppVersion(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _getLoggedInUserView() {
+    return Obx(
+      () => Text(
+        appLocalization.loggedInCustomerId(
+          controller.user.customerId,
+          controller.user.name,
+        ),
+        style: textTheme.bodySmall,
+        textAlign: TextAlign.center,
       ),
     );
   }
