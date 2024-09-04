@@ -6,17 +6,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class ProductIdView extends StatelessWidget with BaseWidgetMixin {
   final String id;
+  final TextStyle? textStyle;
 
   ProductIdView({
     super.key,
     required this.id,
+    this.textStyle,
   });
 
   @override
   Widget body(BuildContext context) {
     return Text(
       "#$id",
-      style: textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
+      style: textStyle ??
+          textTheme.bodySmall?.copyWith(fontSize: FontSize.labelSmall.sp),
       maxLines: 1,
     );
   }
