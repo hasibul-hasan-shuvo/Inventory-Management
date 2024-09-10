@@ -177,7 +177,7 @@
   "titleUnavailableProduct": "Produkten är inte tillgänglig!",
   "titleUnavailableShoppingCartProducts": "Produkterna är inte tillgängliga!",
   "total": "Totalt",
-  "updateProduct": "Uppdatera produkten",
+  "updateProduct": "Spara",
   "userNameValidator": "Användarnamnet får bara innehålla bokstäver, siffror och understreck (_) och måste vara mellan 8 och 30 tecken långt",
   "version": "Version",
   "visitingAddress": "Besöksadress",
