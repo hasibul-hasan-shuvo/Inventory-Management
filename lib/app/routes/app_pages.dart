@@ -10,6 +10,8 @@ import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
 import '../modules/delivery_details/bindings/delivery_details_binding.dart';
 import '../modules/delivery_details/views/delivery_details_view.dart';
+import '../modules/fixed_suggestion/bindings/fixed_suggestion_binding.dart';
+import '../modules/fixed_suggestion/views/fixed_suggestion_view.dart';
 import '../modules/global_inventories/bindings/global_inventories_binding.dart';
 import '../modules/global_inventories/views/global_inventories_view.dart';
 import '../modules/inventory/bindings/inventory_binding.dart';
@@ -141,6 +143,11 @@ class AppPages {
       name: _Paths.ACCOUNT_SETUP,
       page: () => AccountSetupView(),
       binding: AccountSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.FIXED_SUGGESTION,
+      page: () => FixedSuggestionView(),
+      binding: FixedSuggestionBinding(),
     ),
   ];
 }

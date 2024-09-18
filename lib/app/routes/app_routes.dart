@@ -26,6 +26,7 @@ abstract class Routes {
   static const ITEM_COUNT = _Paths.ITEM_COUNT;
   static const GLOBAL_INVENTORIES = _Paths.GLOBAL_INVENTORIES;
   static const ACCOUNT_SETUP = _Paths.ACCOUNT_SETUP;
+  static const FIXED_SUGGESTION = _Paths.FIXED_SUGGESTION;
 }
 
 abstract class _Paths {
@@ -49,4 +50,5 @@ abstract class _Paths {
   static const ITEM_COUNT = '/item-count';
   static const GLOBAL_INVENTORIES = '/global-inventories';
   static const ACCOUNT_SETUP = '/account-setup';
+  static const FIXED_SUGGESTION = '/fixed-suggestion';
 }

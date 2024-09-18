@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 import '../controllers/suggested_orders_controller.dart';
 
-// ignore: must_be_immutable
 class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
