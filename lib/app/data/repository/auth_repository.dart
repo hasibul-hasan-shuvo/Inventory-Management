@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/data/model/response/login_response.dart';
+import 'package:dental_inventory/app/data/model/response/user_response.dart';
 
 import '../../core/model/login_request_body.dart';
 
@@ -18,4 +19,6 @@ abstract class AuthRepository {
   void setIsUserAccountSet();
 
   void logout();
+
+  UserResponse getUserData();
 }

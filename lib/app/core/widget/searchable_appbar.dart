@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../base/base_widget_mixin.dart';
-import '../values/app_colors.dart';
 import '../values/app_values.dart';
 
 // ignore: must_be_immutable
@@ -21,9 +20,10 @@ class SearchAbleAppBar extends StatelessWidget
 
   final RxBool isSearchBoxEmpty = true.obs;
 
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController;
 
   SearchAbleAppBar({
+    required this.searchController,
     required this.isSearchableMode,
     required this.title,
     required this.onChangeSearchMode,
@@ -37,7 +37,7 @@ class SearchAbleAppBar extends StatelessWidget
   @override
   Widget body(BuildContext context) => AppBar(
         iconTheme:
-            Theme.of(context).iconTheme.copyWith(color: AppColors.colorWhite),
+            Theme.of(context).iconTheme.copyWith(color: appColors.colorWhite),
         leading: IconButton(
           onPressed: () {
             onBackButtonClick != null ? onBackButtonClick!() : Get.back();
@@ -61,7 +61,7 @@ class SearchAbleAppBar extends StatelessWidget
   Widget _buildClearButton() {
     return IconButton(
       onPressed: () {
-        _searchController.clear();
+        searchController.clear();
         _onChanged('');
       },
       icon: Icon(
@@ -83,7 +83,7 @@ class SearchAbleAppBar extends StatelessWidget
   Widget _buildSearchTextField() {
     return TextField(
       autofocus: true,
-      controller: _searchController,
+      controller: searchController,
       decoration: InputDecoration(
         hintText: appLocalization.search,
         hintStyle: textTheme.bodyLarge?.copyWith(color: theme.hintColor),
@@ -91,10 +91,10 @@ class SearchAbleAppBar extends StatelessWidget
       ),
       maxLines: 1,
       textInputAction: TextInputAction.search,
-      cursorColor: AppColors.colorWhite,
+      cursorColor: appColors.colorWhite,
       onSubmitted: _onSubmitted,
       onChanged: _onChanged,
-      style: textTheme.bodyLarge?.copyWith(color: AppColors.colorWhite),
+      style: textTheme.bodyLarge?.copyWith(color: appColors.colorWhite),
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
@@ -105,7 +104,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
           width: AppValues.iconLargeSize.h,
           color: _isDecrementButtonEnabled
               ? theme.colorScheme.primary
-              : AppColors.basicGrey,
+              : appColors.basicGrey,
         ),
       ),
     );
@@ -121,7 +120,7 @@ class SelectableInventoryItemEditDialogView extends StatelessWidget
           width: AppValues.iconLargeSize.h,
           color: _isIncrementButtonEnabled
               ? theme.colorScheme.primary
-              : AppColors.basicGrey,
+              : appColors.basicGrey,
         ),
       ),
     );

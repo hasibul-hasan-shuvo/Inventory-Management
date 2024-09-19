@@ -1,6 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
@@ -38,6 +37,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
       preferredSize: AppBar().preferredSize,
       child: Obx(
         () => SearchAbleAppBar(
+          searchController: controller.searchController,
           isSearchableMode: controller.isSearchable,
           title: appLocalization.homeMenuSearchItem,
           onChangeSearchMode: controller.changeSearchMode,
@@ -167,7 +167,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
           return AppDialog(
             title: appLocalization.titleUnavailableProduct,
             content: GlobalUnavailableInventoryDialogView(data: data),
-            headerColor: AppColors.errorColor,
+            headerColor: theme.colorScheme.errorContainer,
             isCancelable: false,
             negativeButtonIcon: Icons.close,
             negativeButtonText: appLocalization.cancel,

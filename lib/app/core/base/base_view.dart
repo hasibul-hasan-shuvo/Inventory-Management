@@ -1,11 +1,11 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/model/connection_status.dart';
 import 'package:dental_inventory/app/core/model/page_state.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/connection_status_view.dart';
 import 'package:dental_inventory/app/core/widget/loading.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
+import 'package:dental_inventory/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,6 +29,8 @@ abstract class BaseView<Controller extends BaseController>
   late ThemeData _theme;
 
   ThemeData get theme => _theme;
+
+  AppColors appColors = BuildConfig.instance.config.appColors;
 
   Widget body(BuildContext context);
 
@@ -128,10 +130,10 @@ abstract class BaseView<Controller extends BaseController>
     final snackBar = _getSnackBar(
       message,
       Icons.done,
-      AppColors.colorGreen,
+      appColors.colorGreen,
       controller.isDarkMode
-          ? AppColors.bgSnackBarSuccessDark
-          : AppColors.bgSnackBarSuccessLight,
+          ? appColors.bgSnackBarSuccessDark
+          : appColors.bgSnackBarSuccessLight,
     );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -145,10 +147,10 @@ abstract class BaseView<Controller extends BaseController>
     final snackBar = _getSnackBar(
       message,
       Icons.warning_amber_outlined,
-      AppColors.colorRed,
+      appColors.colorRed,
       controller.isDarkMode
-          ? AppColors.bgSnackBarErrorDark
-          : AppColors.bgSnackBarErrorLight,
+          ? appColors.bgSnackBarErrorDark
+          : appColors.bgSnackBarErrorLight,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -165,8 +167,8 @@ abstract class BaseView<Controller extends BaseController>
       Icons.warning_amber,
       Colors.orangeAccent,
       controller.isDarkMode
-          ? AppColors.bgSnackBarWarningDark
-          : AppColors.bgSnackBarWarningLight,
+          ? appColors.bgSnackBarWarningDark
+          : appColors.bgSnackBarWarningLight,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -214,9 +216,13 @@ abstract class BaseView<Controller extends BaseController>
       case ConnectionStatus.NONE:
         return const SizedBox.shrink();
       case ConnectionStatus.OFFLINE:
-        return _getOfflineStatusView();
+        return showNetworkStatus
+            ? _getOfflineStatusView()
+            : const SizedBox.shrink();
       case ConnectionStatus.ONLINE:
-        return _getOnlineStatusView();
+        return showNetworkStatus
+            ? _getOnlineStatusView()
+            : const SizedBox.shrink();
     }
   }
 
@@ -281,6 +287,8 @@ abstract class BaseView<Controller extends BaseController>
   bool get useBottomSafeArea => true;
 
   bool get activeGestureDetector => true;
+
+  bool get showNetworkStatus => true;
 
   void closeKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();

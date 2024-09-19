@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class ShoppingCartTotalPriceView extends StatelessWidget with BaseWidgetMixin {
               child: Text(
                 "${appLocalization.total}: ${_controller.totalPrice.totalPrice.toStringAsFixed(2)}",
                 style: textTheme.titleMedium
-                    ?.copyWith(color: AppColors.colorWhite),
+                    ?.copyWith(color: appColors.colorWhite),
               ).marginSymmetric(
                 horizontal: AppValues.margin.w,
                 vertical: AppValues.margin_4.h,

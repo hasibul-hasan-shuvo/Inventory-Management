@@ -2,11 +2,16 @@ import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
-  AppSecondaryButton(
-      {super.key, required this.onPress, required this.title, this.icon});
+  AppSecondaryButton({
+    super.key,
+    required this.title,
+    this.icon,
+    this.onPress,
+  });
 
   final VoidCallback? onPress;
   final String title;
@@ -30,9 +35,7 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
           ),
         ),
       ),
-      onPressed: () {
-        onPress?.call();
-      },
+      onPressed: onPress,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -40,13 +43,16 @@ class AppSecondaryButton extends StatelessWidget with BaseWidgetMixin {
           Flexible(
             child: Text(
               title,
-              style: textTheme.bodyMedium,
+              style: theme.outlinedButtonTheme.style?.textStyle?.resolve(
+                  onPress != null
+                      ? {MaterialState.focused}
+                      : {MaterialState.disabled}),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
-      ),
+      ).paddingSymmetric(vertical: AppValues.padding_2.h),
     );
   }
 }

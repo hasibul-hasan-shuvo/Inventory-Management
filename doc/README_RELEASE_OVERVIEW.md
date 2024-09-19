@@ -2,6 +2,23 @@
 
 <br>
 <br>
+<h2>v1.0.3</h2>
+<details>
+    <summary>Changes</summary>
+    <ul>
+        <li>The total price in the shopping cart.</li>
+        <li>Handled unavailable products in the inventory list.</li>
+        <li>Changed the item out of the error message text</li>
+        <li>Added swipe to remove an item from the item count</li>
+        <li>Added "Delete item" button to handle unavailable products</li>
+        <li>Handle unavailable products in the shopping cart.</li>
+        <li>Changed text on unavailable products pop-up</li>
+        <li>Updated prices in shopping cart items including tax</li>
+        <li>Fixed unable to change count to zero from item count list page.</li>
+        <li>Fixed the error text is partially visible to the screen due to portrait mode of mobile device.</li>
+        <li>Fixed user is able to add expired product to shopping cart</li>
+    </ul>
+</details>
 <h2>v1.0.2</h2>
 <details>
     <summary>Changes</summary>

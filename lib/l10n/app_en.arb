@@ -11,7 +11,8 @@
   "buttonTextSaveChanges": "Save changes",
   "cancel": "Cancel",
   "consumables": "Consumables",
-  "contactDescription": "Should you have problems getting through, we have the following direct numbers for the various departments:",
+  "contactDescriptionDab": "If you should have problems, contact customer service 08-056 505 05",
+  "contactDescriptionJacobsen": "If you have problems getting through, we have the following direct numbers for the various departments:",
   "currency": "Kr",
   "deleteProduct": "Delete Product",
   "deleteSuccessMessage": "Deleted successfully",
@@ -112,9 +113,21 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Number",
   "labelSuggestion": "Suggestion",
+  "loggedInCustomerId": "Logged in as a customer\n{customerId}, {customerName}",
+  "@loggedInCustomerId": {
+    "placeholders": {
+      "customerId": {
+        "type": "String"
+      },
+      "customerName": {
+        "type": "String"
+      }
+    }
+  },
   "number": "Number",
   "openingHourTitle": "Opening hours and direct numbers",
-  "openingHourMessage": "We are open from 08.00 to 16.00, Monday to Friday.",
+  "openingHourDabMessage": "We have opening hours\u2028Monday-Thursday 08.00 – 17.00\u2028Friday 08.00 – 16.00.",
+  "openingHourJacobsenMessage": "We are open from 08.00 to 16.00, Monday to Friday.",
   "orderStatusActive": "Active",
   "orderStatusDelivered": "Delivered",
   "orderStatusPartiallyDelivered": "Partially delivered",
@@ -160,7 +173,7 @@
   "titleItemRetrieval": "Goods are taken out",
   "titleItemRevertRetrieval": "Goods are getting in",
   "titleScannerView": "Barcode scanner",
-  "titleUnavailableProduct": "Products are unavailable!",
+  "titleUnavailableProduct": "Product is unavailable!",
   "titleUnavailableShoppingCartProducts": "Products are unavailable!",
   "total": "Total",
   "updateProduct": "Update Product",

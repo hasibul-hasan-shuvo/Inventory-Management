@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
@@ -51,6 +50,7 @@ class InventoryView extends BaseView<InventoryController> {
 
   Widget _buildAppBar(BuildContext context) {
     return SearchAbleAppBar(
+      searchController: controller.searchController,
       isSearchableMode: controller.isSearchable,
       title: appLocalization.homeMenuInventory,
       onChangeSearchMode: controller.changeSearchMode,
@@ -123,7 +123,7 @@ class InventoryView extends BaseView<InventoryController> {
           negativeButtonText: appLocalization.deleteProduct,
           positiveButtonText: appLocalization.buttonTextAddProduct,
           isCancelable: true,
-          headerColor: AppColors.errorColor,
+          headerColor: theme.colorScheme.errorContainer,
           onNegativeButtonTap: () =>
               controller.deleteInventoryItem(data.unavailableInventory),
           onPositiveButtonTap: () => controller.replaceInventory(data),
@@ -145,7 +145,7 @@ class InventoryView extends BaseView<InventoryController> {
               negativeButtonText: appLocalization.cancel,
               positiveButtonText: appLocalization.deleteProduct,
               isCancelable: false,
-              headerColor: AppColors.errorColor,
+              headerColor: theme.colorScheme.errorContainer,
               onPositiveButtonTap: () => controller.deleteInventoryItem(data),
             );
           });
@@ -165,7 +165,7 @@ class InventoryView extends BaseView<InventoryController> {
           negativeButtonText: appLocalization.cancel,
           positiveButtonText: appLocalization.deleteProduct,
           isCancelable: false,
-          headerColor: AppColors.errorColor,
+          headerColor: theme.colorScheme.errorContainer,
           onPositiveButtonTap: () => controller.deleteInventoryItem(data),
         ),
       );

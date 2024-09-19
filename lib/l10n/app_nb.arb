@@ -11,7 +11,8 @@
   "buttonTextSaveChanges": "Lagre endringer",
   "cancel": "Avbryt",
   "consumables": "Forbruksmateriell",
-  "contactDescription": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
+  "contactDescriptionDab": "Hvis du skulle få problemer, kontakt kundeservice 08-056 505 05",
+  "contactDescriptionJacobsen": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
   "currency": "Kr",
   "deleteProduct": "Slett produkt",
   "deleteSuccessMessage": "Slettet",
@@ -54,7 +55,7 @@
   "logInSuccessMessage": "Logget inn",
   "logInErrorMessage": "Feil brukernavn eller passord",
   "logOut": "Logg ut",
-  "logOutMessage:": "Er du sikker på at du vil logge ut?",
+  "logOutMessage": "Er du sikker på at du vil logge ut?",
   "max": "Maks",
   "messageAccountSetup": "Vennligst vent mens\nvi setter opp\nkontoen din",
   "messageAddedToShoppingCart": "Lagt til i handlekurv",
@@ -112,9 +113,21 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antall",
   "labelSuggestion": "Forslag",
+  "loggedInCustomerId": "Logget inn som kunde\n{customerId}, {customerName}",
+  "@loggedInCustomerId": {
+    "placeholders": {
+      "customerId": {
+        "type": "String"
+      },
+      "customerName": {
+        "type": "String"
+      }
+    }
+  },
   "number": "Antall",
   "openingHourTitle": "Åpningstider og direktenummer",
-  "openingHourMessage": "Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.",
+  "openingHourDabMessage": "Vi har åpningstider\u2028Mandag-torsdag 08.00 – 17.00\u2028Fredag 08.00 – 16.00.",
+  "openingHourJacobsenMessage": "Vi har åpningstid fra 08.00 til 16.00, mandag til fredag.",
   "orderStatusActive": "Aktiv",
   "orderStatusOrdered": "Bestilt",
   "orderStatusDelivered": "Levert",

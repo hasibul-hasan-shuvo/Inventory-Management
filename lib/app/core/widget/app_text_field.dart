@@ -1,4 +1,3 @@
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,7 +95,7 @@ class AppTextField extends StatelessWidget with BaseWidgetMixin {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius),
-        borderSide: const BorderSide(color: AppColors.primary, width: 3),
+        borderSide: BorderSide(color: theme.colorScheme.primary, width: 3),
       ),
       suffixIcon: obscureText
           ? GestureDetector(

@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_icons.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
@@ -139,13 +138,13 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
 
   Widget _getDismissibleBackground() {
     return ElevatedContainer(
-      bgColor: AppColors.bgDismissibleItem,
+      bgColor: appColors.bgDismissibleItem,
       child: Row(
         children: [
           Icon(
             Icons.add_shopping_cart,
             size: AppValues.iconDefaultSize.r,
-            color: AppColors.colorBlack,
+            color: appColors.colorBlack,
           ).paddingSymmetric(
             vertical: AppValues.padding.h,
             horizontal: AppValues.padding.w,

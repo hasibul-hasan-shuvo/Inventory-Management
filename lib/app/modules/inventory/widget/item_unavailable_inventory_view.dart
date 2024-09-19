@@ -1,5 +1,4 @@
 import 'package:dental_inventory/app/core/base/base_widget_mixin.dart';
-import 'package:dental_inventory/app/core/values/app_colors.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
@@ -64,7 +63,7 @@ class ItemUnavailableInventoryView extends StatelessWidget
         appLocalization.tagUnavailableProduct,
         style: textTheme.bodySmall?.copyWith(
           fontSize: FontSize.extraSmall.sp,
-          color: AppColors.colorWhite,
+          color: appColors.colorWhite,
         ),
         textAlign: TextAlign.center,
       ).paddingAll(AppValues.padding_4.r),
