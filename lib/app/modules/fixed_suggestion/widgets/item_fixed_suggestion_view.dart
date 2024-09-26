@@ -9,7 +9,7 @@ import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/controllers/suggested_orders_controller.dart';
+import 'package:dental_inventory/app/modules/fixed_suggestion/controllers/fixed_suggestion_controller.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
-  final SuggestedOrdersController _controller = Get.find();
+  final FixedSuggestionController _controller = Get.find();
   final SuggestedOrderUiModel data;
 
   ItemFixedSuggestionView({
@@ -190,6 +190,6 @@ class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
   Future<bool> _onDismissed(DismissDirection direction) {
     return _controller
         .addToCart(data.itemId, data.suggestion.toString())
-        .then((value) => value != null);
+        .then((value) => false);
   }
 }

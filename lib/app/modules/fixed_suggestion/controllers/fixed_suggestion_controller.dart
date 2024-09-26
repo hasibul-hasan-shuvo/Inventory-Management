@@ -1,14 +1,23 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/request/list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/suggested_orders_response.dart';
 import 'package:dental_inventory/app/data/repository/suggested_orders_repository.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FixedSuggestionController extends BaseController {
   final SuggestedOrdersRepository _repository = Get.find();
+
+  final TextEditingController searchController = TextEditingController();
+
+  final RxBool _searchModeController = RxBool(false);
+
+  bool get isSearchable => _searchModeController.value;
+
   final RxList<SuggestedOrderUiModel> _suggestedOrdersController =
       RxList.empty(growable: true);
 
@@ -17,7 +26,6 @@ class FixedSuggestionController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    pagingController.initRefresh();
     _getSuggestedOrders();
   }
 
@@ -30,6 +38,18 @@ class FixedSuggestionController extends BaseController {
     super.onClose();
   }
 
+  void changeSearchMode() {
+    _searchModeController(!isSearchable);
+    searchController.text = '';
+    if (!_searchModeController.value) {
+      _getSuggestedOrders();
+    }
+  }
+
+  void updateSearchQuery(String query) {
+    _getSuggestedOrders();
+  }
+
   void onLoading() {
     if (pagingController.canLoadNextPage()) {
       _getNextSuggestedOrders();
@@ -37,10 +57,14 @@ class FixedSuggestionController extends BaseController {
   }
 
   void _getSuggestedOrders() {
+    pagingController.initRefresh();
+    ListQueryParams queryParams = ListQueryParams(
+      page: pagingController.pageNumber,
+      search: searchController.text,
+    );
+
     callDataService(
-      _repository.getSuggestedOrders(
-        pagingController.pageNumber,
-      ),
+      _repository.getFixedSuggestedOrders(queryParams),
       onSuccess: _handleSuggestedOrdersSuccessResponse,
     );
   }
@@ -57,10 +81,13 @@ class FixedSuggestionController extends BaseController {
   }
 
   void _getNextSuggestedOrders() {
+    ListQueryParams queryParams = ListQueryParams(
+      page: pagingController.pageNumber,
+      search: searchController.text,
+    );
+
     callDataService(
-      _repository.getSuggestedOrders(
-        pagingController.pageNumber,
-      ),
+      _repository.getFixedSuggestedOrders(queryParams),
       onSuccess: _handleNextSuggestedOrdersSuccessResponse,
       onStart: () => logger.d("Fetching more suggested orders"),
       onComplete: () => refreshController.loadComplete(),
@@ -102,22 +129,11 @@ class FixedSuggestionController extends BaseController {
   }
 
   void _handleAddToCartSuccessResponse(AddShoppingCartItemRequestBody data) {
-    _suggestedOrdersController.removeWhere(
-      (element) => element.itemId == data.itemId,
-    );
-    showSuccessMessage(appLocalization.messageAddedToShoppingCart);
-  }
-
-  void addToCartAll() {
-    callDataService(
-      _repository.addAllItemsInShoppingCart(),
-      onSuccess: _handleAddToCartAllSuccessResponse,
-    );
-  }
-
-  void _handleAddToCartAllSuccessResponse(bool isSuccess) {
-    if (isSuccess) {
-      _suggestedOrdersController.clear();
+    for (SuggestedOrderUiModel element in suggestedOrders) {
+      if (element.itemId == data.itemId) {
+        element.updateAvailabilityInCart(true);
+        rebuildList();
+      }
     }
     showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
