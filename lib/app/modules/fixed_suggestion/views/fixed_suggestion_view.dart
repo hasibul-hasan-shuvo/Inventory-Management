@@ -1,19 +1,23 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
-import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/widgets/item_suggested_order_view.dart';
+import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
+import 'package:dental_inventory/app/modules/fixed_suggestion/widgets/item_fixed_suggestion_in_cart_view.dart';
+import 'package:dental_inventory/app/modules/fixed_suggestion/widgets/item_fixed_suggestion_view.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../controllers/suggested_orders_controller.dart';
+import '../controllers/fixed_suggestion_controller.dart';
 
-class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
+class FixedSuggestionView extends BaseView<FixedSuggestionController> {
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => CustomAppBar(
-        appBarTitleText: appLocalization.homeMenuSuggestedOrder,
-        actions: _getActions,
+  PreferredSizeWidget? appBar(BuildContext context) => PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: Obx(
+          () => _getAppBar(context),
+        ),
       );
 
   @override
@@ -30,6 +34,18 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
                   onLoading: controller.onLoading,
                   child: _getSuggestedOrdersListView(),
                 ),
+    );
+  }
+
+  Widget _getAppBar(BuildContext context) {
+    return SearchAbleAppBar(
+      searchController: controller.searchController,
+      isSearchableMode: controller.isSearchable,
+      title: appLocalization.homeMenuFixedSuggestion,
+      onChangeSearchMode: controller.changeSearchMode,
+      updateSearchQuery: (value) {
+        controller.updateSearchQuery(value);
+      },
     );
   }
 
@@ -51,17 +67,10 @@ class SuggestedOrdersView extends BaseView<SuggestedOrdersController> {
   }
 
   Widget _getItemBuilder(BuildContext context, int index) {
-    return ItemSuggestedOrderView(data: controller.suggestedOrders[index]);
-  }
+    SuggestedOrderUiModel data = controller.suggestedOrders[index];
 
-  List<Widget> get _getActions {
-    return [
-      IconButton(
-        onPressed: controller.addToCartAll,
-        icon: const Icon(
-          Icons.done,
-        ),
-      )
-    ];
+    return data.isAvailableInCart
+        ? ItemFixedSuggestionInCartView(data: data)
+        : ItemFixedSuggestionView(data: data);
   }
 }

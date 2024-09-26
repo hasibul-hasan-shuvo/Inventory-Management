@@ -28,6 +28,7 @@
   "equipment": "Utstyr",
   "fieldCannotBeEmpty": "Feltet kan ikke være tomt",
   "fixedProposal": "Fast forslag",
+  "homeMenuFixedSuggestion": "Faste forslag",
   "homeMenuInventory": "Beholdning",
   "homeMenuInventoryCount": "Varetelling",
   "homeMenuItemRetrieval": "Varer ut",

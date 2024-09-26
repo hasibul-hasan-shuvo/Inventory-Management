@@ -28,6 +28,7 @@
   "equipment": "Equipment",
   "fieldCannotBeEmpty": "Field can't be empty",
   "fixedProposal": "Fixed Proposal",
+  "homeMenuFixedSuggestion": "Fixed suggestion",
   "homeMenuInventory": "Inventory",
   "homeMenuInventoryCount": "Inventory Count",
   "homeMenuItemRetrieval": "Item retrieval",

@@ -13,6 +13,7 @@ analyzer:
     close_sinks: error
     unnecessary_statements: warning
     non_constant_identifier_names: warning
+    must_be_immutable: ignore
 
 linter:
   rules:
