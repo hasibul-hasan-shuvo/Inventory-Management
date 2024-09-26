@@ -2,7 +2,9 @@ import 'package:dental_inventory/app/core/base/base_view.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
+import 'package:dental_inventory/app/modules/fixed_suggestion/widgets/item_fixed_suggestion_in_cart_view.dart';
 import 'package:dental_inventory/app/modules/fixed_suggestion/widgets/item_fixed_suggestion_view.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -65,6 +67,10 @@ class FixedSuggestionView extends BaseView<FixedSuggestionController> {
   }
 
   Widget _getItemBuilder(BuildContext context, int index) {
-    return ItemFixedSuggestionView(data: controller.suggestedOrders[index]);
+    SuggestedOrderUiModel data = controller.suggestedOrders[index];
+
+    return data.isAvailableInCart
+        ? ItemFixedSuggestionInCartView(data: data)
+        : ItemFixedSuggestionView(data: data);
   }
 }
