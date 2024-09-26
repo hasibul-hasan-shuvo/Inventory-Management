@@ -69,10 +69,11 @@ class MainController extends BaseController {
     );
     list.add(
       ItemHomeMenuUiModel(
-          icon: AppIcons.suggestedOrder,
-          title: appLocalization.homeMenuFixedSuggestion,
-          route: Routes.FIXED_SUGGESTION,
-          badgeKey: 'fixed_suggestion'),
+        icon: AppIcons.suggestedOrder,
+        title: appLocalization.homeMenuFixedSuggestion,
+        route: Routes.FIXED_SUGGESTION,
+        badgeKey: 'fixed_suggestions',
+      ),
     );
     list.add(
       ItemHomeMenuUiModel(
