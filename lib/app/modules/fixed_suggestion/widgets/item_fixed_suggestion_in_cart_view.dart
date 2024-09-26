@@ -5,7 +5,6 @@ import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
-import 'package:dental_inventory/app/modules/fixed_suggestion/controllers/fixed_suggestion_controller.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +13,6 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class ItemFixedSuggestionInCartView extends StatelessWidget
     with BaseWidgetMixin {
-  final FixedSuggestionController _controller = Get.find();
   final SuggestedOrderUiModel data;
 
   ItemFixedSuggestionInCartView({
