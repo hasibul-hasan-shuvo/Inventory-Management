@@ -28,6 +28,7 @@ class SuggestedOrderUiModel {
     count = response.stockCount ?? 0;
     _priceController(response.product?.price ?? 0.0);
     suggestion = response.suggestedOrderCount ?? 0;
+    fixedSuggestion = response.fixedSuggestion ?? 0;
     isAvailableInCart = (response.quantityInCart ?? 0) > 0;
   }
 

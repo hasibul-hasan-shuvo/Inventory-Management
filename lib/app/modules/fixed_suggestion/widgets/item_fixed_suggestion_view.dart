@@ -98,7 +98,7 @@ class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
           appLocalization.labelSuggestion,
-          data.suggestion.toString(),
+          data.fixedSuggestion.toString(),
         ),
       ],
     );
@@ -157,7 +157,7 @@ class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
   void _onTapEdit(BuildContext context) {
     _controller.getProductPrice(data);
     TextEditingController suggestionController = TextEditingController();
-    suggestionController.text = data.suggestion.toString();
+    suggestionController.text = data.fixedSuggestion.toString();
 
     showDialog(
       context: context,
@@ -171,7 +171,7 @@ class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
               name: data.name,
               imageUrl: data.imageUrl,
               count: data.count,
-              suggestion: data.suggestion,
+              suggestion: data.fixedSuggestion,
               price: data.price,
             ),
           ),
@@ -189,7 +189,7 @@ class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
 
   Future<bool> _onDismissed(DismissDirection direction) {
     return _controller
-        .addToCart(data.itemId, data.suggestion.toString())
+        .addToCart(data.itemId, data.fixedSuggestion.toString())
         .then((value) => false);
   }
 }
