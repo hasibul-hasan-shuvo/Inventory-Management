@@ -115,6 +115,10 @@ class FixedSuggestionController extends BaseController {
 
     int quantity = quantityString.toInt;
 
+    if (quantity == 0) {
+      return Future(() => null);
+    }
+
     AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
       itemId: itemId,
       quantity: quantity,
