@@ -58,12 +58,26 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          _getWarningMessage(),
+          SizedBox(height: AppValues.margin_4.h),
           _getInventoryName(),
           SizedBox(height: AppValues.margin_4.h),
           _getIdAndCountView(),
           _getPriceAndCartCountView(),
         ],
       ),
+    );
+  }
+
+  Widget _getWarningMessage() {
+    return Text(
+      appLocalization.messageUnavailableShoppingCartProductWarning,
+      style: textTheme.bodySmall?.copyWith(
+        fontSize: FontSize.small.sp,
+        color: appColors.errorColor,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 

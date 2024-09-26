@@ -21,7 +21,8 @@ class ShoppingCartUiModel {
     count = response.stockCount ?? 0;
     price = response.product?.price ?? 0.0;
     cartCount = response.quantity ?? 0;
-    isAvailable = response.product?.isAvailable ?? false;
+    isAvailable = false;
+    response.product?.isAvailable ?? false;
     taxRate = response.product?.taxRate ?? 0.0;
     priceWithTax = response.product?.priceWithTax ?? 0.0;
   }
