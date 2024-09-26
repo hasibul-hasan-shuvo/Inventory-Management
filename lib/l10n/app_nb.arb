@@ -89,6 +89,7 @@
   "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst kontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "messageUnavailableShoppingCartProducts": "Ett eller flere produkter i handlekurven er utilgjengelig. Vennligst fjern varene fra handlekurven for å fortsette.",
+  "messageUnavailableShoppingCartProductWarning": "Utgått produkt, erstatt varen i beholdning",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {

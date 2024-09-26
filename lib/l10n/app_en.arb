@@ -89,6 +89,7 @@
   "messageUnavailableInventory": "No replacement product found. Please Contact customer service.",
   "messageUnavailableProduct": "{name} is unfortunately not available",
   "messageUnavailableShoppingCartProducts": "One or more products in the shopping cart are unavailable. Please remove the items from the shopping cart to continue.",
+  "messageUnavailableShoppingCartProductWarning": "Discontinued product, replace the item in stock",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
