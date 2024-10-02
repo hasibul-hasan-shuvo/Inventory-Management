@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
+import 'package:dental_inventory/app/core/services/scanner/urovo_scanner.dart';
 import 'package:dental_inventory/app/core/services/scanner/zebra_scanner.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 
@@ -12,6 +13,7 @@ class ScannerService {
 
   ScannerService._internal() {
     _scanners.add(ZebraScanner());
+    _scanners.add(UrovoScanner());
   }
 
   void addScannerDelegate(ScannerDelegate delegate) {

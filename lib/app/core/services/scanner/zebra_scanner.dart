@@ -6,7 +6,7 @@ import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/services.dart';
 
-class ZebraScanner implements Scanner {
+class ZebraScanner extends Scanner {
   ScannerDelegate? _scannerDelegate;
   ErrorDelegate? _errorDelegate;
   StreamSubscription? scannerSubscription;
@@ -15,12 +15,7 @@ class ZebraScanner implements Scanner {
       EventChannel('inventorymanagement.no/scan');
 
   ZebraScanner() {
-    if (Platform.isAndroid) {
-      scannerSubscription = scanChannel.receiveBroadcastStream().listen(
-            _onEvent,
-            onError: _onError,
-          );
-    }
+    _initZebraScanner();
   }
 
   void _onEvent(event) {
@@ -55,5 +50,14 @@ class ZebraScanner implements Scanner {
   @override
   void dismiss() {
     scannerSubscription?.cancel();
+  }
+
+  void _initZebraScanner() {
+    if (Platform.isAndroid) {
+      scannerSubscription = scanChannel.receiveBroadcastStream().listen(
+            _onEvent,
+            onError: _onError,
+          );
+    }
   }
 }
