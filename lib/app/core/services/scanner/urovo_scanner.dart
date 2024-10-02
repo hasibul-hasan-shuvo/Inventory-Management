@@ -2,7 +2,6 @@ import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:laser_scanner/laser_scanner.dart';
 import 'package:laser_scanner/model/scan_result_model.dart';
-import 'package:logger/logger.dart';
 
 class UrovoScanner extends Scanner {
   UrovoScanner() {
@@ -13,7 +12,6 @@ class UrovoScanner extends Scanner {
     scannerSubscription = await LaserScanner().onListenerScanner(
       onListenerResultScanner: _onListenerResultScanner,
     );
-    Logger().d("Urovo setup");
   }
 
   void _onListenerResultScanner(ScanResultModel? result) {
