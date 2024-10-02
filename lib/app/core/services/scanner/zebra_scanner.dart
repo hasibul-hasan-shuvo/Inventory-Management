@@ -2,14 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:flutter/services.dart';
 
-typedef ScannerDelegate = Function(String? code);
-typedef ErrorDelegate = Function(Object error);
-
-class ZebraScanner {
-  static final ZebraScanner _instance = ZebraScanner._internal();
+class ZebraScanner implements Scanner {
   ScannerDelegate? _scannerDelegate;
   ErrorDelegate? _errorDelegate;
   StreamSubscription? scannerSubscription;
@@ -17,19 +14,7 @@ class ZebraScanner {
   static const EventChannel scanChannel =
       EventChannel('inventorymanagement.no/scan');
 
-  factory ZebraScanner() {
-    return _instance;
-  }
-
-  void addScannerDelegate(ScannerDelegate delegate) {
-    _scannerDelegate = delegate;
-  }
-
-  void addErrorDelegate(ErrorDelegate delegate) {
-    _errorDelegate = delegate;
-  }
-
-  ZebraScanner._internal() {
+  ZebraScanner() {
     if (Platform.isAndroid) {
       scannerSubscription = scanChannel.receiveBroadcastStream().listen(
             _onEvent,
@@ -50,12 +35,24 @@ class ZebraScanner {
     _errorDelegate?.call(error);
   }
 
+  @override
+  void addErrorDelegate(ErrorDelegate delegate) {
+    _errorDelegate = delegate;
+  }
+
+  @override
+  void addScannerDelegate(ScannerDelegate delegate) {
+    _scannerDelegate = delegate;
+  }
+
+  @override
   void close() {
     BuildConfig.instance.config.logger.i("ScannerDelegatesClosed");
     _scannerDelegate = null;
     _errorDelegate = null;
   }
 
+  @override
   void dismiss() {
     scannerSubscription?.cancel();
   }

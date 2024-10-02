@@ -1,5 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/EmptyScannedListView.dart';
 import 'package:dental_inventory/app/core/widget/custom_app_bar.dart';
@@ -16,7 +16,7 @@ import '../controllers/product_out_controller.dart';
 // ignore: must_be_immutable
 class ProductOutView extends BaseView<ProductOutController> {
   ProductOutView() {
-    ZebraScanner().addScannerDelegate(controller.onScanned);
+    ScannerService().addScannerDelegate(controller.onScanned);
   }
 
   @override
