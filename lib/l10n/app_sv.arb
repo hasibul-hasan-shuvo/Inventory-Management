@@ -28,6 +28,7 @@
   "equipment": "Kundtjänst Utrustning",
   "fieldCannotBeEmpty": "Fältet kan inte vara tomt",
   "fixedProposal": "Fast förslag",
+  "homeMenuFixedSuggestion": "Favoriter",
   "homeMenuInventory": "Lager",
   "homeMenuInventoryCount": "Inventering",
   "homeMenuItemRetrieval": "Scanna uttag",
