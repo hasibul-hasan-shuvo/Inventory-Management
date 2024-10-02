@@ -677,6 +677,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.12"
+  laser_scanner:
+    dependency: "direct main"
+    description:
+      name: laser_scanner
+      sha256: "0f902ebaa2ec8e0a721d0c5f169c042a2b95d3a8873de424274206aeb9b62a39"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   leak_tracker:
     dependency: transitive
     description:

@@ -1,5 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
-import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/barcode_scanner_floating_button.dart';
@@ -22,7 +22,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
 
   GlobalInventoriesView() {
     logger.i("GlobalInventory");
-    ZebraScanner().addScannerDelegate((String? code) {
+    ScannerService().addScannerDelegate((String? code) {
       logger.i("GlobalScanned: $code");
       closeKeyboard();
       controller.onScanned(code);
