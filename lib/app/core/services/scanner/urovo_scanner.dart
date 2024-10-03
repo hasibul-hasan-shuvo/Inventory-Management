@@ -48,8 +48,10 @@ class UrovoScanner extends Scanner {
     _scanner.enableVibrate();
   }
 
-  void _subscribeListener() {
+  void _subscribeListener() async {
     Logger().d("Subscribing listeners...");
+    await _scanner.setScanOutputMode(
+        scanOutputMode: ScanOutputMode.decodeOuputModeFocus);
     _scanner
         .onListenerScanner(
       onListenerResultScanner: _onListenerResultScanner,
@@ -57,11 +59,12 @@ class UrovoScanner extends Scanner {
         .then((StreamSubscription subscription) {
       Logger().d("Subscribed listener");
       scannerSubscription = subscription;
-      _scanner.startDecode().then((value) => Logger().d("Started decoding"););
+      // _scanner.startDecode().then((value) => Logger().d("Started decoding"));
     });
   }
 
   void _onListenerResultScanner(ScanResultModel? result) {
+    Logger().d("Listener result: $result");
     if (result == null) {
       publishError('Code not found');
 
