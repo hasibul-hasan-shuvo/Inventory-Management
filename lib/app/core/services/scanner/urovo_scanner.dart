@@ -16,6 +16,7 @@ class UrovoScanner extends Scanner {
   @override
   void dismiss() {
     super.dismiss();
+    _scanner.stopDecode();
     _scanner.closeScanner();
   }
 
@@ -46,6 +47,7 @@ class UrovoScanner extends Scanner {
     )
         .then((StreamSubscription subscription) {
       scannerSubscription = subscription;
+      _scanner.startDecode();
     });
   }
 
