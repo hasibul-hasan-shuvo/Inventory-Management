@@ -14,7 +14,7 @@
   "contactDescriptionDab": "Om du skulle få problem, kontakta kundtjänst 08-056 505 05",
   "contactDescriptionJacobsen": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
   "currency": "Kr",
-  "deleteProduct": "Ta bort produkt",
+  "deleteProduct": "Fjern element",
   "deleteSuccessMessage": "Raderad",
   "dentalTitleForAboutUsTitle": "Digital lagerhantering ger dig fullständig kontroll över ditt lager.",
   "dentalTitleForAboutUsDescriptionOne": "Använd kameran på din telefon eller surfplatta för att skanna produktens QR-kod varje gång du tar ut en enhet ur lagringret eller när du öppnar en förpackning",
@@ -28,6 +28,7 @@
   "equipment": "Kundtjänst Utrustning",
   "fieldCannotBeEmpty": "Fältet kan inte vara tomt",
   "fixedProposal": "Fast förslag",
+  "homeMenuFixedSuggestion": "Favoriter",
   "homeMenuInventory": "Lager",
   "homeMenuInventoryCount": "Inventering",
   "homeMenuItemRetrieval": "Scanna uttag",
@@ -184,5 +185,5 @@
   "visitingAddress": "Besöksadress",
   "yes": "Ja",
   "workshop": "Verkstaden",
-  "removeItem": "Ta bort produkt"
+  "removeItem": "Fjern element"
 }

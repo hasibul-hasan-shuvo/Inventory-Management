@@ -5,6 +5,8 @@ abstract class EndPoints {
   static const String inventory = '/inventory';
   static const String inventoryItems = '/inventory/items';
   static const String suggestedOrders = '/inventory/suggested-order-list/';
+  static const String fixedSuggestedOrders =
+      '/inventory/fixed-suggested-order-list/';
   static const String activeShoppingCart = '/shopping/active-cart/items/';
   static const String addShoppingCartItems = '/shopping/active-cart/add-item/';
   static const String placeOrder = '/shopping/active-cart/place-order/';

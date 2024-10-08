@@ -30,6 +30,7 @@ class SuggestedOrderResponse {
     stockCount = json['stock_count'];
     suggestedOrderCount = json['suggested_order_count'];
     fixedSuggestion = json['fixed_suggestion'];
+    quantityInCart = json['quantity_in_cart'];
   }
 
   int? id;
@@ -39,4 +40,5 @@ class SuggestedOrderResponse {
   int? stockCount;
   int? suggestedOrderCount;
   int? fixedSuggestion;
+  int? quantityInCart;
 }
