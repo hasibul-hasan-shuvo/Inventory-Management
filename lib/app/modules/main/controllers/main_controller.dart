@@ -72,7 +72,6 @@ class MainController extends BaseController {
         icon: AppIcons.suggestedOrder,
         title: appLocalization.homeMenuFixedSuggestion,
         route: Routes.FIXED_SUGGESTION,
-        badgeKey: 'fixed_suggestions',
       ),
     );
     list.add(
