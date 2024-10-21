@@ -38,6 +38,7 @@
   "homeMenuSearchItem": "Sök",
   "homeMenuShoppingCart": "Varukorg",
   "homeMenuSuggestedOrder": "Beställningsförslag",
+  "includeVat": "Inkl. moms",
   "invalidEmail": "Ogiltig e-postadress",
   "inventory": "Lager",
   "inventoryMaxMin": "Mellan {min} och {max}",

@@ -38,6 +38,7 @@
   "homeMenuSearchItem": "Search item",
   "homeMenuShoppingCart": "Shopping cart",
   "homeMenuSuggestedOrder": "Suggested order",
+  "includeVat": "Incl. VAT",
   "invalidEmail": "Invalid Email",
   "inventory": "Inventory",
   "inventoryMaxMin": "Between {min} and {max}",
