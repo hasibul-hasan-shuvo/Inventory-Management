@@ -38,7 +38,7 @@
   "homeMenuSearchItem": "Søk varer",
   "homeMenuShoppingCart": "Handlekurv",
   "homeMenuSuggestedOrder": "Bestillingsforslag",
-  "includeVat": "inkl. mva",
+  "includedVat": "inkl. mva",
   "invalidEmail": "Ugyldig e-post",
   "inventory": "Beholdning",
   "inventoryMaxMin": "Mellom {min} og {max}",
@@ -116,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antall",
   "labelSuggestion": "Forslag",
+  "labelPerUnitIncludedVat": "Per enhet, ink. mva",
   "loggedInCustomerId": "Logget inn som kunde\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {

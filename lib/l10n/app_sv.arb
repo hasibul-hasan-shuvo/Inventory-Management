@@ -38,7 +38,7 @@
   "homeMenuSearchItem": "Sök",
   "homeMenuShoppingCart": "Varukorg",
   "homeMenuSuggestedOrder": "Beställningsförslag",
-  "includeVat": "Inkl. moms",
+  "includedVat": "Inkl. moms",
   "invalidEmail": "Ogiltig e-postadress",
   "inventory": "Lager",
   "inventoryMaxMin": "Mellan {min} och {max}",
@@ -116,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antal",
   "labelSuggestion": "Förslag",
+  "labelPerUnitIncludedVat": "per enhet, inkl. moms",
   "loggedInCustomerId": "Inloggad som kund\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {
