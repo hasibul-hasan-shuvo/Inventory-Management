@@ -19,7 +19,7 @@ class ShoppingCartTotalPriceView extends StatelessWidget with BaseWidgetMixin {
           : Container(
               color: theme.primaryColor,
               child: Text(
-                "${appLocalization.total}: ${_controller.totalPrice.totalPrice.toStringAsFixed(2)} ${appLocalization.includeVat}",
+                "${appLocalization.total}: ${_controller.totalPrice.totalPrice.toStringAsFixed(2)} ${appLocalization.includedVat}",
                 style: textTheme.titleMedium
                     ?.copyWith(color: appColors.colorWhite),
               ).marginSymmetric(
