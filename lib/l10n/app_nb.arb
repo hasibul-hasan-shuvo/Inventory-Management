@@ -38,6 +38,7 @@
   "homeMenuSearchItem": "Søk varer",
   "homeMenuShoppingCart": "Handlekurv",
   "homeMenuSuggestedOrder": "Bestillingsforslag",
+  "includeVat": "inkl. mva",
   "invalidEmail": "Ugyldig e-post",
   "inventory": "Beholdning",
   "inventoryMaxMin": "Mellom {min} og {max}",
