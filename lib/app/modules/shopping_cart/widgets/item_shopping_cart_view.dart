@@ -160,7 +160,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
             count: data.count,
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
-            price: data.price,
+            price: data.priceWithTax,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
