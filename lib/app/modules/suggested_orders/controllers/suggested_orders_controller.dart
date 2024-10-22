@@ -140,6 +140,6 @@ class SuggestedOrdersController extends BaseController {
 
   void _handleGetProductPriceSuccessResponse(
       SuggestedOrderUiModel data, InventoryResponse response) {
-    data.updatePrice(response.product?.price);
+    data.updatePrice(response.product?.priceWithTax);
   }
 }
