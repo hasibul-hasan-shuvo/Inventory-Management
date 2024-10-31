@@ -23,13 +23,9 @@ class UrovoScanner extends Scanner {
   }
 
   void _initUrovoScanner() async {
-    Logger().d("Initializing Urovo scanner...");
     _scanner.isSupport().then((bool? isSupport) {
-      Logger().d("Is device supported: $isSupport");
       if (isSupport == true) {
-        Logger().d("Opening scanner...");
         _scanner.openScanner(captureImageShow: true).then((_) {
-          Logger().d("Scanner opened");
           _setTrigger();
           _enableVibrate();
           _subscribeListener();
@@ -39,27 +35,20 @@ class UrovoScanner extends Scanner {
   }
 
   void _setTrigger() {
-    Logger().d("Setting trigger mode");
-    _scanner.setTrigger(triggering: Triggering.CONTINUOUS);
+    _scanner.setTrigger(triggering: Triggering.PULSE);
   }
 
   void _enableVibrate() {
-    Logger().d("Enabling vibrate");
     _scanner.enableVibrate();
   }
 
   void _subscribeListener() async {
-    Logger().d("Subscribing listeners...");
-    await _scanner.setScanOutputMode(
-        scanOutputMode: ScanOutputMode.decodeOuputModeFocus);
     _scanner
         .onListenerScanner(
       onListenerResultScanner: _onListenerResultScanner,
     )
         .then((StreamSubscription subscription) {
-      Logger().d("Subscribed listener");
       scannerSubscription = subscription;
-      // _scanner.startDecode().then((value) => Logger().d("Started decoding"));
     });
   }
 
@@ -72,6 +61,8 @@ class UrovoScanner extends Scanner {
     }
     String? barcode = result.barcode;
     BuildConfig.instance.config.logger.d("UrovoBarcodeString: $barcode");
+
     publishScannedCode(barcode);
+    _scanner.stopDecode();
   }
 }
