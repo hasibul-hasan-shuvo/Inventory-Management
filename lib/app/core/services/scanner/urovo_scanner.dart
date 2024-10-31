@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
-import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:laser_scanner/laser_scanner.dart';
 import 'package:laser_scanner/model/scan_result_model.dart';
 import 'package:laser_scanner/utils/enum_utils.dart';
@@ -23,7 +22,7 @@ class UrovoScanner extends Scanner {
   void _initUrovoScanner() async {
     _scanner.isSupport().then((bool? isSupport) {
       if (isSupport == true) {
-        _scanner.openScanner(captureImageShow: true).then((value) {
+        _scanner.openScanner(captureImageShow: true).then((_) {
           _setTrigger();
           _enableVibrate();
           _subscribeListener();
@@ -33,7 +32,7 @@ class UrovoScanner extends Scanner {
   }
 
   void _setTrigger() {
-    _scanner.setTrigger(triggering: Triggering.CONTINUOUS);
+    _scanner.setTrigger(triggering: Triggering.PULSE);
   }
 
   void _enableVibrate() {
@@ -47,7 +46,6 @@ class UrovoScanner extends Scanner {
     )
         .then((StreamSubscription subscription) {
       scannerSubscription = subscription;
-      _scanner.startDecode();
     });
   }
 
@@ -58,7 +56,7 @@ class UrovoScanner extends Scanner {
       return;
     }
     String? barcode = result.barcode;
-    BuildConfig.instance.config.logger.d("UrovoBarcodeString: $barcode");
     publishScannedCode(barcode);
+    _scanner.stopDecode();
   }
 }
