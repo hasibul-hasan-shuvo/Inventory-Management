@@ -14,7 +14,7 @@
   "contactDescriptionDab": "Om du skulle få problem, kontakta kundtjänst 08-056 505 05",
   "contactDescriptionJacobsen": "Dersom du skulle ha problemer med å komme gjennom har vi følgende direktenummer til de ulike avdelinger:",
   "currency": "Kr",
-  "deleteProduct": "Ta bort produkt",
+  "deleteProduct": "Fjern element",
   "deleteSuccessMessage": "Raderad",
   "dentalTitleForAboutUsTitle": "Digital lagerhantering ger dig fullständig kontroll över ditt lager.",
   "dentalTitleForAboutUsDescriptionOne": "Använd kameran på din telefon eller surfplatta för att skanna produktens QR-kod varje gång du tar ut en enhet ur lagringret eller när du öppnar en förpackning",
@@ -28,6 +28,7 @@
   "equipment": "Kundtjänst Utrustning",
   "fieldCannotBeEmpty": "Fältet kan inte vara tomt",
   "fixedProposal": "Fast förslag",
+  "homeMenuFixedSuggestion": "Favoriter",
   "homeMenuInventory": "Lager",
   "homeMenuInventoryCount": "Inventering",
   "homeMenuItemRetrieval": "Scanna uttag",
@@ -37,6 +38,7 @@
   "homeMenuSearchItem": "Sök",
   "homeMenuShoppingCart": "Varukorg",
   "homeMenuSuggestedOrder": "Beställningsförslag",
+  "includedVat": "Inkl. moms",
   "invalidEmail": "Ogiltig e-postadress",
   "inventory": "Lager",
   "inventoryMaxMin": "Mellan {min} och {max}",
@@ -89,6 +91,7 @@
   "messageUnavailableInventory": "Ingen ersättningsprodukt hittades. Kontakta kundtjänst.",
   "messageUnavailableProduct": "{name} är tyvärr inte tillgänglig",
   "messageUnavailableShoppingCartProducts": "En eller flera produkter i varukorgen är inte tillgängliga. Ta bort varorna från varukorgen för att fortsätta",
+  "messageUnavailableShoppingCartProductWarning": "Utgående produkt, byt ut varan i lager",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -113,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antal",
   "labelSuggestion": "Förslag",
+  "labelPerUnitIncludedVat": "per enhet, inkl. moms",
   "loggedInCustomerId": "Inloggad som kund\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {
@@ -171,7 +175,7 @@
   "titleEditProductInAvailableCount": "Återstår i lager",
   "titleEditProductOutAvailableCount": "Återstående lager efter uttag",
   "titleEmptyScannedList": "Scanna produkt",
-  "titleItemRetrieval": "Skanna uttag",
+  "titleItemRetrieval": "Scanna uttag",
   "titleItemRevertRetrieval": "Lägg till produkt",
   "titleScannerView": "Scanna",
   "titleUnavailableProduct": "Produkten är inte tillgänglig!",
@@ -183,5 +187,5 @@
   "visitingAddress": "Besöksadress",
   "yes": "Ja",
   "workshop": "Verkstaden",
-  "removeItem": "Ta bort produkt"
+  "removeItem": "Fjern element"
 }

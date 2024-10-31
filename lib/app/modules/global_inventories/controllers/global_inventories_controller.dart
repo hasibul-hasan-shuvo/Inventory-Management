@@ -122,8 +122,8 @@ class GlobalInventoriesController extends BaseController {
     String fixedSuggestion = '',
   }) {
     if (_checkValuesValidity(
-      maxCount: maxCount,
-      minCount: minCount,
+      maxCount: maxCount.isNullOrEmpty ? '0' : maxCount,
+      minCount: minCount.isNullOrEmpty ? '0' : minCount,
       stockCount: stockCount,
       fixedSuggestion: fixedSuggestion,
     )) {

@@ -28,6 +28,7 @@
   "equipment": "Equipment",
   "fieldCannotBeEmpty": "Field can't be empty",
   "fixedProposal": "Fixed Proposal",
+  "homeMenuFixedSuggestion": "Fixed suggestion",
   "homeMenuInventory": "Inventory",
   "homeMenuInventoryCount": "Inventory Count",
   "homeMenuItemRetrieval": "Item retrieval",
@@ -37,6 +38,7 @@
   "homeMenuSearchItem": "Search item",
   "homeMenuShoppingCart": "Shopping cart",
   "homeMenuSuggestedOrder": "Suggested order",
+  "includedVat": "Incl. VAT",
   "invalidEmail": "Invalid Email",
   "inventory": "Inventory",
   "inventoryMaxMin": "Between {min} and {max}",
@@ -89,6 +91,7 @@
   "messageUnavailableInventory": "No replacement product found. Please Contact customer service.",
   "messageUnavailableProduct": "{name} is unfortunately not available",
   "messageUnavailableShoppingCartProducts": "One or more products in the shopping cart are unavailable. Please remove the items from the shopping cart to continue.",
+  "messageUnavailableShoppingCartProductWarning": "Discontinued product, replace the item in stock",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -113,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Number",
   "labelSuggestion": "Suggestion",
+  "labelPerUnitIncludedVat": "Per unit, incl. VAT",
   "loggedInCustomerId": "Logged in as a customer\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {

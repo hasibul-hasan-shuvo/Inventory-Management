@@ -9,36 +9,42 @@ import 'package:dental_inventory/app/core/widget/network_image_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
 import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
+import 'package:dental_inventory/app/modules/fixed_suggestion/controllers/fixed_suggestion_controller.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
-  final ShoppingCartController _controller = Get.find();
-  final ShoppingCartUiModel data;
+class ItemFixedSuggestionView extends StatelessWidget with BaseWidgetMixin {
+  final FixedSuggestionController _controller = Get.find();
+  final SuggestedOrderUiModel data;
 
-  ItemShoppingCartView({
+  ItemFixedSuggestionView({
     super.key,
     required this.data,
   });
 
   @override
   Widget body(BuildContext context) {
-    return ElevatedContainer(
-      height: AppValues.itemImageHeight.h,
-      child: Row(
-        children: [
-          _getImageView(),
-          SizedBox(width: AppValues.smallMargin.w),
-          _getItemDetails(),
-          _getEditButton(context),
-        ],
-      ),
-    ).marginOnly(bottom: AppValues.margin_6.h);
+    return Dismissible(
+      key: ValueKey(data.id),
+      direction: DismissDirection.startToEnd,
+      background: _getDismissibleBackground(),
+      confirmDismiss: _onDismissed,
+      child: ElevatedContainer(
+        height: AppValues.itemImageHeight.h,
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getEditButton(context),
+          ],
+        ),
+      ).marginOnly(bottom: AppValues.margin_6.h),
+    );
   }
 
   Widget _getImageView() {
@@ -59,17 +65,14 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
           _getInventoryName(),
           SizedBox(height: AppValues.margin_4.h),
           _getIdAndCountView(),
-          _getPriceAndCartCountView(),
+          _getMaxMinAndFixedSuggestionView(),
         ],
       ),
     );
   }
 
   Widget _getInventoryName() {
-    return ProductNameView(
-      name: data.name,
-      maxLines: 2,
-    );
+    return ProductNameView(name: data.name);
   }
 
   Widget _getIdAndCountView() {
@@ -85,14 +88,17 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _getPriceAndCartCountView() {
+  Widget _getMaxMinAndFixedSuggestionView() {
     return Row(
       children: [
-        _getPriceView(),
+        _getLabelAndCount(
+          appLocalization.labelMinMax,
+          "${data.min}/${data.max}",
+        ),
         SizedBox(width: AppValues.smallMargin.w),
         _getLabelAndCount(
-          appLocalization.homeMenuShoppingCart,
-          data.cartCount.toString(),
+          appLocalization.labelSuggestion,
+          data.fixedSuggestion.toString(),
         ),
       ],
     );
@@ -102,14 +108,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     return Expanded(
       child: ProductIdView(
         id: data.itemId,
-      ),
-    );
-  }
-
-  Widget _getPriceView() {
-    return Expanded(
-      child: LabelAndCountView(
-        label: _getPrice(),
       ),
     );
   }
@@ -138,39 +136,60 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  String _getPrice() {
-    return "${appLocalization.currency}. "
-        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
+  Widget _getDismissibleBackground() {
+    return ElevatedContainer(
+      bgColor: appColors.bgDismissibleItem,
+      child: Row(
+        children: [
+          Icon(
+            Icons.add_shopping_cart,
+            size: AppValues.iconDefaultSize.r,
+            color: appColors.colorBlack,
+          ).paddingSymmetric(
+            vertical: AppValues.padding.h,
+            horizontal: AppValues.padding.w,
+          ),
+        ],
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
   void _onTapEdit(BuildContext context) {
-    TextEditingController cartController = TextEditingController();
-    cartController.text = data.cartCount.toString();
+    _controller.getProductPrice(data);
+    TextEditingController suggestionController = TextEditingController();
+    suggestionController.text = data.fixedSuggestion.toString();
 
     showDialog(
       context: context,
       builder: (_) {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
-          content: InventoryOrderEditDialogContentView(
-            numberController: cartController,
-            id: data.itemId,
-            name: data.name,
-            imageUrl: data.imageUrl,
-            count: data.count,
-            suggestionLabel: appLocalization.homeMenuShoppingCart,
-            suggestion: data.cartCount,
-            price: data.priceWithTax,
+          content: Obx(
+            () => InventoryOrderEditDialogContentView(
+              numberController: suggestionController,
+              id: data.itemId,
+              name: data.name,
+              imageUrl: data.imageUrl,
+              count: data.count,
+              suggestion: data.fixedSuggestion,
+              price: data.price,
+            ),
           ),
-          positiveButtonText: appLocalization.buttonTextSaveChanges,
+          positiveButtonText: appLocalization.buttonTextAddToCart,
           onPositiveButtonTap: () {
-            _controller.updateCartCount(
-              data,
-              cartController.text,
+            _controller.addToCart(
+              data.itemId,
+              suggestionController.text,
             );
           },
         );
       },
     );
+  }
+
+  Future<bool> _onDismissed(DismissDirection direction) {
+    return _controller
+        .addToCart(data.itemId, data.fixedSuggestion.toString())
+        .then((value) => false);
   }
 }

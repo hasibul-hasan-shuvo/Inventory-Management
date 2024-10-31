@@ -1,7 +1,7 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/values/order_status.dart';
+import 'package:dental_inventory/app/data/model/request/list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/order_details_query_params.dart';
-import 'package:dental_inventory/app/data/model/request/order_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/response/order_items_response.dart';
 import 'package:dental_inventory/app/data/model/response/order_list_response.dart';
 import 'package:dental_inventory/app/data/repository/order_repository.dart';
@@ -38,7 +38,7 @@ class NotDeliveryController extends BaseController {
   }
 
   void _getOrders() {
-    OrderListQueryParams queryParams = OrderListQueryParams(
+    ListQueryParams queryParams = ListQueryParams(
       page: pagingController.pageNumber,
       status: OrderStatus.NOT_DELIVERED.toLowercaseName,
     );
@@ -68,7 +68,7 @@ class NotDeliveryController extends BaseController {
   }
 
   void _getNextOrders() {
-    OrderListQueryParams queryParams = OrderListQueryParams(
+    ListQueryParams queryParams = ListQueryParams(
       page: pagingController.pageNumber,
       status: OrderStatus.NOT_DELIVERED.toLowercaseName,
     );

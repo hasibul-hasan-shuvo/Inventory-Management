@@ -28,6 +28,7 @@
   "equipment": "Utstyr",
   "fieldCannotBeEmpty": "Feltet kan ikke være tomt",
   "fixedProposal": "Fast forslag",
+  "homeMenuFixedSuggestion": "Faste forslag",
   "homeMenuInventory": "Beholdning",
   "homeMenuInventoryCount": "Varetelling",
   "homeMenuItemRetrieval": "Varer ut",
@@ -37,6 +38,7 @@
   "homeMenuSearchItem": "Søk varer",
   "homeMenuShoppingCart": "Handlekurv",
   "homeMenuSuggestedOrder": "Bestillingsforslag",
+  "includedVat": "inkl. mva",
   "invalidEmail": "Ugyldig e-post",
   "inventory": "Beholdning",
   "inventoryMaxMin": "Mellom {min} og {max}",
@@ -89,6 +91,7 @@
   "messageUnavailableInventory": "Finnner ingen erstattningsprodukt. Venligst kontakt kundeservice.",
   "messageUnavailableProduct": "{name} er desverre ikke tilgjengelig ",
   "messageUnavailableShoppingCartProducts": "Ett eller flere produkter i handlekurven er utilgjengelig. Vennligst fjern varene fra handlekurven for å fortsette.",
+  "messageUnavailableShoppingCartProductWarning": "Utgått produkt, erstatt varen i beholdning",
   "@messageUnavailableProduct": {
     "placeholders": {
       "name": {
@@ -113,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Antall",
   "labelSuggestion": "Forslag",
+  "labelPerUnitIncludedVat": "Per enhet, ink. mva",
   "loggedInCustomerId": "Logget inn som kunde\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {

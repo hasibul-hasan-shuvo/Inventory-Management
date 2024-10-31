@@ -69,9 +69,9 @@ class MainController extends BaseController {
     );
     list.add(
       ItemHomeMenuUiModel(
-        icon: AppIcons.returnInventory,
-        title: appLocalization.homeMenuRevertItemRetrieved,
-        route: Routes.PRODUCT_IN,
+        icon: AppIcons.suggestedOrder,
+        title: appLocalization.homeMenuFixedSuggestion,
+        route: Routes.FIXED_SUGGESTION,
       ),
     );
     list.add(
