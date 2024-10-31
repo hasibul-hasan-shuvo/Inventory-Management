@@ -113,7 +113,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
         _getDecrementButton(),
         _getSuggestion(),
         _getIncrementButton(),
-        _getPriceView(),
+        _getPriceAndRemarkView(),
       ],
     );
   }
@@ -159,17 +159,33 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
     );
   }
 
-  Widget _getPriceView() {
+  Widget _getPriceAndRemarkView() {
     return Expanded(
-      child: Obx(
-        () => Text(
-          "${appLocalization.currency}. ${_getTotalPrice()}",
-          style: textTheme.titleMedium,
-          textAlign: TextAlign.right,
-        ).marginSymmetric(
-          horizontal: AppValues.margin.w,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _getPriceView(),
+          _getRemarkTextView(),
+        ],
+      ).marginSymmetric(
+        horizontal: AppValues.margin.w,
       ),
+    );
+  }
+
+  Widget _getPriceView() {
+    return Text(
+      "${appLocalization.currency}. ${_getPrice()}",
+      style: textTheme.titleSmall,
+      textAlign: TextAlign.right,
+    );
+  }
+
+  Widget _getRemarkTextView() {
+    return Text(
+      appLocalization.labelPerUnitIncludedVat,
+      style: textTheme.bodySmall,
+      textAlign: TextAlign.right,
     );
   }
 
@@ -183,10 +199,8 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
     numberController.text = _suggestionController.value.toString();
   }
 
-  String _getTotalPrice() {
-    return price == 0 && _suggestionController.value > 0
-        ? "-.--"
-        : (_suggestionController.value * price).toStringAsFixed(2);
+  String _getPrice() {
+    return price.toStringAsFixed(2);
   }
 
   bool get _isDecrementButtonEnabled => _suggestionController.value > 0;

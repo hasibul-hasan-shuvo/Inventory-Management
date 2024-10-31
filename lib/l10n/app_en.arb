@@ -38,6 +38,7 @@
   "homeMenuSearchItem": "Search item",
   "homeMenuShoppingCart": "Shopping cart",
   "homeMenuSuggestedOrder": "Suggested order",
+  "includedVat": "Incl. VAT",
   "invalidEmail": "Invalid Email",
   "inventory": "Inventory",
   "inventoryMaxMin": "Between {min} and {max}",
@@ -115,6 +116,7 @@
   "labelMinMax": "Min/Max",
   "labelNumber": "Number",
   "labelSuggestion": "Suggestion",
+  "labelPerUnitIncludedVat": "Per unit, incl. VAT",
   "loggedInCustomerId": "Logged in as a customer\n{customerId}, {customerName}",
   "@loggedInCustomerId": {
     "placeholders": {

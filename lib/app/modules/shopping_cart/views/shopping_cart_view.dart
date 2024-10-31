@@ -179,7 +179,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
             count: data.count,
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
-            price: data.price,
+            price: data.priceWithTax,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
