@@ -13,6 +13,17 @@
 </details>
 </li>
 <li>
+<h3>Fixed suggestion feature</h3>
+<details>
+    <summary>Decision</summary>
+    <h6>Date: 14 May 2024</h6>
+    <h4>Context</h4>
+    <p>Jacobsen decided to replace the Item in option with Fixed Suggestion.</p>
+    <h4>Solution</h4>
+    <p>Removed item in option and functionality and added fixed suggestion feature.</p>
+</details>
+</li>
+<li>
 <h3>Offline support</h3>
 <details>
     <summary>Decision</summary>
