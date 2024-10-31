@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
-import 'package:dental_inventory/flavors/build_config.dart';
 import 'package:laser_scanner/laser_scanner.dart';
 import 'package:laser_scanner/model/scan_result_model.dart';
 import 'package:laser_scanner/utils/enum_utils.dart';
-import 'package:logger/logger.dart';
 
 class UrovoScanner extends Scanner {
   final LaserScanner _scanner = LaserScanner();
@@ -17,7 +15,6 @@ class UrovoScanner extends Scanner {
   @override
   void dismiss() {
     super.dismiss();
-    Logger().d("Stopped decoding");
     _scanner.stopDecode();
     _scanner.closeScanner();
   }
@@ -53,15 +50,12 @@ class UrovoScanner extends Scanner {
   }
 
   void _onListenerResultScanner(ScanResultModel? result) {
-    Logger().d("Listener result: $result");
     if (result == null) {
       publishError('Code not found');
 
       return;
     }
     String? barcode = result.barcode;
-    BuildConfig.instance.config.logger.d("UrovoBarcodeString: $barcode");
-
     publishScannedCode(barcode);
     _scanner.stopDecode();
   }
