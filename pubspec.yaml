@@ -24,7 +24,6 @@ dependencies:
   flutter_staggered_grid_view: 0.7.0
   flutter_svg: 2.0.9
   flutter_widget_from_html: 0.15.2
-  fluttertoast: 8.2.4
   font_awesome_flutter: 10.6.0
   get: 4.6.6
   get_storage: 2.1.1
