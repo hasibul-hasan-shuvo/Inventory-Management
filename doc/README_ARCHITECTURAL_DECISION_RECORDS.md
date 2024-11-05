@@ -10,7 +10,7 @@
             <p>Jacobsen wants to add the Urovo device support. So they can use the app with the Urovo device as like Zebra devices.</p>
             <h4>Solution</h4>
             <p>
-                Found a Flutter library named with plaser_scanner by PluginTechWinzad. Plugin link: <a href="https://github.com/PluginTechWinzad/plaser_scanner">https://github.com/PluginTechWinzad/plaser_scanner</a><br>
+                Found a Flutter library named with plaser_scanner by PluginTechWinzad. Library link: <a href="https://github.com/PluginTechWinzad/plaser_scanner">https://github.com/PluginTechWinzad/plaser_scanner</a><br>
                 It has multiple Urovo device supports. So integrated that library.</p>
         </details>
     </li>
