@@ -2,6 +2,19 @@
 
 <ul>
     <li>
+        <h3>Urovo device support</h3>
+        <details>
+            <summary>Decision</summary>
+            <h6>Date: 22 August 2024</h6>
+            <h4>Context</h4>
+            <p>Jacobsen wants to add the Urovo device support. So they can use the app with the Urovo device as like Zebra devices.</p>
+            <h4>Solution</h4>
+            <p>
+                Found a Flutter library named with plaser_scanner by PluginTechWinzad. Plugin link: <a href="https://github.com/PluginTechWinzad/plaser_scanner">https://github.com/PluginTechWinzad/plaser_scanner</a><br>
+                It has multiple Urovo device supports. So integrated that library.</p>
+        </details>
+    </li>
+    <li>
         <h3>App white labeling</h3>
         <details>
             <summary>Decision</summary>
