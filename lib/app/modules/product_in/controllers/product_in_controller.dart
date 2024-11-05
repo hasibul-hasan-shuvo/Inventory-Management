@@ -1,6 +1,6 @@
 import 'package:dental_inventory/app/core/base/base_controller.dart';
 import 'package:dental_inventory/app/core/controllers/scanned_products_controller_mixin.dart';
-import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/response/product_entity_data.dart';
@@ -22,7 +22,7 @@ class ProductInController extends BaseController
   @override
   void onClose() {
     closeScannedProductsControllers();
-    ZebraScanner().close();
+    ScannerService().close();
     super.onClose();
   }
 
