@@ -179,10 +179,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryEntityData?> replaceInventory(
-      {required int? oldInventoryId,
-      required String oldInventoryItemId,
-      required CreateInventoryRequestBody newInventory}) {
+  Future<InventoryEntityData?> replaceInventory({
+    required int? oldInventoryId,
+    required String oldInventoryItemId,
+    required CreateInventoryRequestBody newInventory,
+  }) {
     return createInventory(newInventory).then(
       (replacedInventory) => deleteInventory(
         id: oldInventoryId,
