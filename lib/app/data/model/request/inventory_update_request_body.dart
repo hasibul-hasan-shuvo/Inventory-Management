@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/utils/date_parser.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:drift/drift.dart';
 
@@ -10,6 +11,7 @@ class InventoryUpdateRequestBody {
   int? stockCount;
   int? stockCountChange;
   int? fixedSuggestion;
+  String? replaceWith;
 
   InventoryUpdateRequestBody({
     required this.itemId,
@@ -19,6 +21,7 @@ class InventoryUpdateRequestBody {
     this.stockCount,
     this.stockCountChange,
     this.fixedSuggestion,
+    this.replaceWith,
   });
 
   String get productID => itemId;
@@ -45,11 +48,17 @@ class InventoryUpdateRequestBody {
           ? Value(fixedSuggestion)
           : const Value.absent(),
       modified: Value(DateParser.getCurrentUtcDateTime),
+      replaceWith:
+          replaceWith != null ? Value(replaceWith) : const Value.absent(),
     );
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+
+    if (replaceWith.isNotNullOrEmpty) {
+      data['item_id'] = itemId;
+    }
 
     if (maxCount != null) {
       data['max_count'] = maxCount;

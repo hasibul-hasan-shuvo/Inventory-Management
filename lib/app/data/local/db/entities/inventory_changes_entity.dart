@@ -16,6 +16,8 @@ class InventoryChangesEntity extends Table {
   DateTimeColumn get modified =>
       dateTime().withDefault(Constant(DateTime.now().toUtc()))();
 
+  TextColumn get replaceWith => text().nullable()();
+
   @override
   Set<Column<Object>>? get primaryKey => {itemId};
 }

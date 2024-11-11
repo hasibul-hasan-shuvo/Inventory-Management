@@ -12,6 +12,7 @@ class CreateInventoryRequestBody {
     this.minCount,
     this.stockCount,
     this.fixedSuggestion,
+    this.replaceWith,
   });
 
   String itemId;
@@ -21,6 +22,7 @@ class CreateInventoryRequestBody {
   String? minCount;
   String? stockCount;
   String? fixedSuggestion;
+  String? replaceWith;
 
   InventoryEntityCompanion toInventoryEntityCompanion() {
     return InventoryEntityCompanion(
@@ -48,6 +50,8 @@ class CreateInventoryRequestBody {
           ? Value(fixedSuggestion.toInt)
           : const Value.absent(),
       modified: Value(DateParser.getCurrentUtcDateTime),
+      replaceWith:
+          replaceWith != null ? Value(replaceWith) : const Value.absent(),
     );
   }
 

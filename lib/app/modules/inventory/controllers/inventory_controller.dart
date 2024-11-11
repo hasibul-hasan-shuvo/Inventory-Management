@@ -323,6 +323,7 @@ class InventoryController extends BaseController {
       stockCount: data.unavailableInventory.currentStock.toString(),
       fixedSuggestion:
           data.unavailableInventory.fixedOrderSuggestions.toString(),
+      replaceWith: data.unavailableInventory.itemId,
     );
     callDataService(
       _repository.replaceInventory(
