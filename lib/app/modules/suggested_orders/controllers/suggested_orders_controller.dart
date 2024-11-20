@@ -14,6 +14,8 @@ class SuggestedOrdersController extends BaseController {
 
   List<SuggestedOrderUiModel> get suggestedOrders => _suggestedOrdersController;
 
+  final List<SuggestedOrderUiModel> _removedItems = List.empty(growable: true);
+
   @override
   void onInit() {
     super.onInit();
@@ -78,7 +80,7 @@ class SuggestedOrdersController extends BaseController {
         []);
   }
 
-  Future addToCart(String itemId, String quantityString) {
+  Future addToCart(SuggestedOrderUiModel item, String quantityString) {
     if (!quantityString.isPositiveIntegerNumber) {
       showErrorMessage(appLocalization
           .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
@@ -88,8 +90,12 @@ class SuggestedOrdersController extends BaseController {
 
     int quantity = quantityString.toInt;
 
+    if (quantity < 1) {
+      return removeItemTemporarily(item);
+    }
+
     AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
-      itemId: itemId,
+      itemId: item.itemId,
       quantity: quantity,
     );
 
@@ -106,6 +112,14 @@ class SuggestedOrdersController extends BaseController {
       (element) => element.itemId == data.itemId,
     );
     showSuccessMessage(appLocalization.messageAddedToShoppingCart);
+  }
+
+  Future<bool> removeItemTemporarily(SuggestedOrderUiModel item) {
+    _suggestedOrdersController.remove(item);
+    _removedItems.add(item);
+    showSuccessMessage(appLocalization.messageItemRemovedTemporarily);
+
+    return Future.value(true);
   }
 
   void addToCartAll() {

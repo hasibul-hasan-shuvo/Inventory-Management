@@ -83,6 +83,7 @@
   "messageItemNotFound": "Artikeln hittades inte",
   "messageItemOutOfStock": "Tomt för varan i lager, vänligen korrigera lagret.",
   "messageItemOutValidation": "Antal kan inte vara större än kvarvarande lager",
+  "messageItemRemovedTemporarily": "Objektet har tagits bort tillfälligt",
   "messageItemsUpdateUnsuccessful": "Det gick inte att uppdatera varan",
   "messageItemUpdatedSuccessfully": "Varuuppdateringen lyckades",
   "messageMaxCountThresholdValidation": "Antalet får inte vara mer än 999",

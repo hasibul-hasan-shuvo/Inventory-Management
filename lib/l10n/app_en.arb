@@ -83,6 +83,7 @@
   "messageItemNotFound": "Item not found!",
   "messageItemOutOfStock": "The item is empty in your warehouse, please correct your stock balance.",
   "messageItemOutValidation": "Number can't be more than remaining stock",
+  "messageItemRemovedTemporarily": "The item has been removed temporarily",
   "messageItemsUpdateUnsuccessful": "Items updates failed",
   "messageItemUpdatedSuccessfully": "Item updated successfully",
   "messageMaxCountThresholdValidation": "Number can't be more than 999",
