@@ -123,8 +123,10 @@ class SuggestedOrdersController extends BaseController {
   }
 
   void addToCartAll() {
+    List<String> exemptedIds = _removedItems.map((e) => e.itemId).toList();
+
     callDataService(
-      _repository.addAllItemsInShoppingCart(),
+      _repository.addAllItemsInShoppingCart(exemptedIds),
       onSuccess: _handleAddToCartAllSuccessResponse,
     );
   }
