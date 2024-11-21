@@ -117,7 +117,7 @@ class SuggestedOrdersController extends BaseController {
   Future<bool> removeItemTemporarily(SuggestedOrderUiModel item) {
     _suggestedOrdersController.remove(item);
     _removedItems.add(item);
-    showSuccessMessage(appLocalization.messageItemRemovedTemporarily);
+    showMessage(appLocalization.messageItemRemovedTemporarily);
 
     return Future.value(true);
   }

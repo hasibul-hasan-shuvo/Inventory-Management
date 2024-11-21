@@ -83,7 +83,7 @@
   "messageItemNotFound": "Element ikke funnet!",
   "messageItemOutOfStock": "Tomt for varen på lager, vennligst korriger varelageret.",
   "messageItemOutValidation": "Antall kan ikke være mer enn gjenværende beholdning",
-  "messageItemRemovedTemporarily": "Elementet er midlertidig fjernet",
+  "messageItemRemovedTemporarily": "Vare fjernet fra bestillingsforslag",
   "messageItemsUpdateUnsuccessful": "Vareoppdateringen mislyktes",
   "messageItemUpdatedSuccessfully": "Vareoppdateringen vellykket",
   "messageMaxCountThresholdValidation": "Antall kan ikke være mer enn 999",
