@@ -108,9 +108,13 @@ class SuggestedOrdersController extends BaseController {
   }
 
   void _handleAddToCartSuccessResponse(AddShoppingCartItemRequestBody data) {
-    _suggestedOrdersController.removeWhere(
+    SuggestedOrderUiModel? addedItem =
+        _suggestedOrdersController.firstWhereOrNull(
       (element) => element.itemId == data.itemId,
     );
+    if (addedItem != null) {
+      removeItemTemporarily(addedItem);
+    }
     showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
