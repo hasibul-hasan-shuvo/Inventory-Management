@@ -26,21 +26,27 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
 
   @override
   Widget body(BuildContext context) {
-    return ElevatedContainer(
-      height: AppValues.itemImageHeight.h,
-      child: Container(
-        color: Colors.amber.withOpacity(0.2),
-        child: Row(
-          children: [
-            _getImageView(),
-            SizedBox(width: AppValues.smallMargin.w),
-            _getItemDetails(),
-            _getUnavailableTag(),
-            SizedBox(width: AppValues.margin_10.w),
-          ],
+    return Dismissible(
+      key: ValueKey(data.id),
+      direction: DismissDirection.endToStart,
+      background: _getDeleteItemBackground(),
+      confirmDismiss: (direction) => _onDismissed(direction),
+      child: ElevatedContainer(
+        height: AppValues.itemImageHeight.h,
+        child: Container(
+          color: Colors.amber.withOpacity(0.2),
+          child: Row(
+            children: [
+              _getImageView(),
+              SizedBox(width: AppValues.smallMargin.w),
+              _getItemDetails(),
+              _getUnavailableTag(),
+              SizedBox(width: AppValues.margin_10.w),
+            ],
+          ),
         ),
-      ),
-    ).marginOnly(bottom: AppValues.margin_6.h);
+      ).marginOnly(bottom: AppValues.margin_6.h),
+    );
   }
 
   Widget _getImageView() {
@@ -161,5 +167,36 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
   String _getPrice() {
     return "${appLocalization.currency}. "
         "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
+  }
+
+  Widget _getDeleteItemBackground() {
+    return ElevatedContainer(
+      bgColor: appColors.colorRed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.delete_outline,
+            size: AppValues.iconDefaultSize.r,
+            color: appColors.colorWhite,
+          ).paddingSymmetric(
+            vertical: AppValues.padding.h,
+            horizontal: AppValues.padding.w,
+          ),
+        ],
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
+  }
+
+  Future<bool> _onDismissed(DismissDirection direction) {
+    if (direction == DismissDirection.endToStart) {
+      return _handleDeleteItem();
+    }
+
+    return Future.value(false);
+  }
+
+  Future<bool> _handleDeleteItem() {
+    return _controller.deleteCartItem(data);
   }
 }

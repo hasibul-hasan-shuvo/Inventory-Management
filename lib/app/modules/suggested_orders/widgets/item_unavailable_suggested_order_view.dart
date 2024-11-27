@@ -122,15 +122,15 @@ class ItemUnavailableSuggestedOrderView extends StatelessWidget
     ).marginOnly(bottom: AppValues.margin_6.h);
   }
 
-  Future<bool> _onDismissed(DismissDirection direction) async {
+  Future<bool> _onDismissed(DismissDirection direction) {
     if (direction == DismissDirection.endToStart) {
-      return await _handleDeleteItem();
+      return _handleDeleteItem();
     }
 
-    return false;
+    return Future.value(false);
   }
 
-  Future<bool> _handleDeleteItem() async {
+  Future<bool> _handleDeleteItem() {
     return _controller.removeItemTemporarily(data);
   }
 }

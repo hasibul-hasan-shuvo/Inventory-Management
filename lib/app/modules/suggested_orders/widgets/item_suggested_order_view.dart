@@ -207,25 +207,23 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Future<bool> _onDismissed(DismissDirection direction) async {
+  Future<bool> _onDismissed(DismissDirection direction) {
     if (direction == DismissDirection.startToEnd) {
-      // Handle add to cart action
-      return await _handleAddToCart();
+      return _handleAddToCart();
     } else if (direction == DismissDirection.endToStart) {
-      // Handle delete item action
-      return await _handleDeleteItem();
+      return _handleDeleteItem();
     }
 
-    return false;
+    return Future.value(false);
   }
 
-  Future<bool> _handleAddToCart() async {
+  Future<bool> _handleAddToCart() {
     return _controller
         .addToCart(data, data.suggestion.toString())
         .then((value) => value != null);
   }
 
-  Future<bool> _handleDeleteItem() async {
+  Future<bool> _handleDeleteItem() {
     return _controller.removeItemTemporarily(data);
   }
 }

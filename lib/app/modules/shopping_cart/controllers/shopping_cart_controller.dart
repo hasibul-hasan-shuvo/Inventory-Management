@@ -184,8 +184,8 @@ class ShoppingCartController extends BaseController
     );
   }
 
-  void deleteCartItem(ShoppingCartUiModel data) {
-    callDataService(
+  Future<bool> deleteCartItem(ShoppingCartUiModel data) {
+    return callDataService(
       _repository.deleteItemFromShoppingCart(
         data.id.toString(),
       ),
