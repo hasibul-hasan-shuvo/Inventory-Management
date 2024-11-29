@@ -59,7 +59,7 @@
   "logOut": "Logga ut",
   "logOutMessage": "Är du säker på att du vill logga ut?",
   "max": "Max",
-  "messageAccountSetup": "Vänta medan\nvi konfigurerar\nitt konto",
+  "messageAccountSetup": "Vänta medan\nvi konfigurerar\nditt konto",
   "messageAddedToShoppingCart": "Lägg till i kundvagnen",
   "messageCodeNotFound": "QR-kod hittades inte",
   "messageConnectionOffline": "Ingen internetanslutning",
