@@ -4,22 +4,20 @@ import 'package:dental_inventory/app/core/values/font_size.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/label_and_count_view.dart';
 import 'package:dental_inventory/app/core/widget/network_image_view.dart';
-import 'package:dental_inventory/app/core/widget/product/product_id_view.dart';
 import 'package:dental_inventory/app/core/widget/product/product_name_view.dart';
-import 'package:dental_inventory/app/core/widget/ripple.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
-import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/controllers/suggested_orders_controller.dart';
+import 'package:dental_inventory/app/modules/suggested_orders/models/suggested_order_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class ItemUnavailableShoppingCartView extends StatelessWidget
+class ItemUnavailableSuggestedOrderView extends StatelessWidget
     with BaseWidgetMixin {
-  final ShoppingCartController _controller = Get.find();
-  final ShoppingCartUiModel data;
+  final SuggestedOrdersController _controller = Get.find();
+  final SuggestedOrderUiModel data;
 
-  ItemUnavailableShoppingCartView({
+  ItemUnavailableSuggestedOrderView({
     super.key,
     required this.data,
   });
@@ -32,18 +30,14 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
       background: _getDeleteItemBackground(),
       confirmDismiss: (direction) => _onDismissed(direction),
       child: ElevatedContainer(
+        bgColor: Colors.amber.withOpacity(0.2),
         height: AppValues.itemImageHeight.h,
-        child: Container(
-          color: Colors.amber.withOpacity(0.2),
-          child: Row(
-            children: [
-              _getImageView(),
-              SizedBox(width: AppValues.smallMargin.w),
-              _getItemDetails(),
-              _getUnavailableTag(),
-              SizedBox(width: AppValues.margin_10.w),
-            ],
-          ),
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+          ],
         ),
       ).marginOnly(bottom: AppValues.margin_6.h),
     );
@@ -68,8 +62,7 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
           SizedBox(height: AppValues.margin_4.h),
           _getInventoryName(),
           SizedBox(height: AppValues.margin_4.h),
-          _getIdAndCountView(),
-          _getPriceAndCartCountView(),
+          _getCountAndMinMaxView(),
         ],
       ),
     );
@@ -88,85 +81,26 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
   }
 
   Widget _getInventoryName() {
-    return ProductNameView(
-      name: data.name,
-      maxLines: 2,
-    );
+    return ProductNameView(name: data.name);
   }
 
-  Widget _getIdAndCountView() {
+  Widget _getCountAndMinMaxView() {
     return Row(
       children: [
-        _getIdView(),
-        SizedBox(width: AppValues.smallMargin.w),
-        _getLabelAndCount(
-          appLocalization.inventory,
-          data.count.toString(),
-        ),
-      ],
-    );
-  }
-
-  Widget _getPriceAndCartCountView() {
-    return Row(
-      children: [
-        _getPriceView(),
-        SizedBox(width: AppValues.smallMargin.w),
-        _getLabelAndCount(
-          appLocalization.homeMenuShoppingCart,
-          data.cartCount.toString(),
-        ),
-      ],
-    );
-  }
-
-  Widget _getIdView() {
-    return Expanded(
-      child: ProductIdView(
-        id: data.itemId,
-      ),
-    );
-  }
-
-  Widget _getPriceView() {
-    return Expanded(
-      child: LabelAndCountView(
-        label: _getPrice(),
-      ),
-    );
-  }
-
-  Widget _getLabelAndCount(String label, [String? count]) {
-    return Expanded(
-      child: LabelAndCountView(
-        label: label,
-        count: count,
-      ),
-    );
-  }
-
-  Widget _getUnavailableTag() {
-    return Ripple(
-      onTap: () => _controller.deleteCartItem(data),
-      child: ElevatedContainer(
-        borderRadius: AppValues.radius_6.r,
-        bgColor: theme.primaryColor,
-        width: AppValues.iconSize_40.w,
-        child: Text(
-          appLocalization.removeItem,
-          style: textTheme.bodySmall?.copyWith(
-            fontSize: FontSize.extraSmall.sp,
-            color: appColors.colorWhite,
+        Expanded(
+          child: LabelAndCountView(
+            label: appLocalization.available,
+            count: data.count.toString(),
           ),
-          textAlign: TextAlign.center,
-        ).paddingAll(AppValues.extraSmallPadding.r),
-      ),
+        ),
+        SizedBox(width: AppValues.margin_10.w),
+        Expanded(
+          child: LabelAndCountView(
+            label: appLocalization.inventoryMaxMin(data.min, data.max),
+          ),
+        ),
+      ],
     );
-  }
-
-  String _getPrice() {
-    return "${appLocalization.currency}. "
-        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
   }
 
   Widget _getDeleteItemBackground() {
@@ -197,6 +131,6 @@ class ItemUnavailableShoppingCartView extends StatelessWidget
   }
 
   Future<bool> _handleDeleteItem() {
-    return _controller.deleteCartItem(data);
+    return _controller.removeItemTemporarily(data);
   }
 }

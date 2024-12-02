@@ -90,10 +90,14 @@ class ShoppingCartRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<bool> addAllItemsInShoppingCart() {
+  Future<bool> addAllItemsInShoppingCart(List<String> exemptedIds) {
     try {
-      String endpoint = "${EndPoints.addShoppingCartItems}/all/";
-      var dioCall = dioClient.post(endpoint);
+      String endpoint =
+          "${EndPoints.addShoppingCartItems}/all/?exempted_product_ids=$exemptedIds";
+
+      var dioCall = dioClient.post(
+        endpoint,
+      );
 
       return callApiWithErrorParser(dioCall).then(
           (response) => _handleAddAllItemsInShoppingCartResponse(response));

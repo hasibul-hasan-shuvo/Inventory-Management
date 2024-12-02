@@ -28,17 +28,23 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return ElevatedContainer(
-      height: AppValues.itemImageHeight.h,
-      child: Row(
-        children: [
-          _getImageView(),
-          SizedBox(width: AppValues.smallMargin.w),
-          _getItemDetails(),
-          _getEditButton(context),
-        ],
-      ),
-    ).marginOnly(bottom: AppValues.margin_6.h);
+    return Dismissible(
+      key: ValueKey(data.id),
+      direction: DismissDirection.endToStart,
+      background: _getDeleteItemBackground(),
+      confirmDismiss: (direction) => _onDismissed(direction),
+      child: ElevatedContainer(
+        height: AppValues.itemImageHeight.h,
+        child: Row(
+          children: [
+            _getImageView(),
+            SizedBox(width: AppValues.smallMargin.w),
+            _getItemDetails(),
+            _getEditButton(context),
+          ],
+        ),
+      ).marginOnly(bottom: AppValues.margin_6.h),
+    );
   }
 
   Widget _getImageView() {
@@ -172,5 +178,36 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         );
       },
     );
+  }
+
+  Widget _getDeleteItemBackground() {
+    return ElevatedContainer(
+      bgColor: appColors.colorRed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.delete_outline,
+            size: AppValues.iconDefaultSize.r,
+            color: appColors.colorWhite,
+          ).paddingSymmetric(
+            vertical: AppValues.padding.h,
+            horizontal: AppValues.padding.w,
+          ),
+        ],
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
+  }
+
+  Future<bool> _onDismissed(DismissDirection direction) {
+    if (direction == DismissDirection.endToStart) {
+      return _handleDeleteItem();
+    }
+
+    return Future.value(false);
+  }
+
+  Future<bool> _handleDeleteItem() {
+    return _controller.deleteCartItem(data);
   }
 }

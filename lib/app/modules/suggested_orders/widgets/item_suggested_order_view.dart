@@ -30,9 +30,10 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   Widget body(BuildContext context) {
     return Dismissible(
       key: ValueKey(data.id),
-      direction: DismissDirection.startToEnd,
-      background: _getDismissibleBackground(),
-      confirmDismiss: _onDismissed,
+      direction: DismissDirection.horizontal,
+      background: _getAddToCartBackground(),
+      secondaryBackground: _getDeleteItemBackground(),
+      confirmDismiss: (direction) => _onDismissed(direction),
       child: ElevatedContainer(
         height: AppValues.itemImageHeight.h,
         child: Row(
@@ -136,7 +137,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  Widget _getDismissibleBackground() {
+  Widget _getAddToCartBackground() {
     return ElevatedContainer(
       bgColor: appColors.bgDismissibleItem,
       child: Row(
@@ -145,6 +146,25 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
             Icons.add_shopping_cart,
             size: AppValues.iconDefaultSize.r,
             color: appColors.colorBlack,
+          ).paddingSymmetric(
+            vertical: AppValues.padding.h,
+            horizontal: AppValues.padding.w,
+          ),
+        ],
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
+  }
+
+  Widget _getDeleteItemBackground() {
+    return ElevatedContainer(
+      bgColor: appColors.colorRed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.delete_outline,
+            size: AppValues.iconDefaultSize.r,
+            color: appColors.colorWhite,
           ).paddingSymmetric(
             vertical: AppValues.padding.h,
             horizontal: AppValues.padding.w,
@@ -178,7 +198,7 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
           positiveButtonText: appLocalization.buttonTextAddToCart,
           onPositiveButtonTap: () {
             _controller.addToCart(
-              data.itemId,
+              data,
               suggestionController.text,
             );
           },
@@ -188,8 +208,22 @@ class ItemSuggestedOrderView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Future<bool> _onDismissed(DismissDirection direction) {
+    if (direction == DismissDirection.startToEnd) {
+      return _handleAddToCart();
+    } else if (direction == DismissDirection.endToStart) {
+      return _handleDeleteItem();
+    }
+
+    return Future.value(false);
+  }
+
+  Future<bool> _handleAddToCart() {
     return _controller
-        .addToCart(data.itemId, data.suggestion.toString())
+        .addToCart(data, data.suggestion.toString())
         .then((value) => value != null);
+  }
+
+  Future<bool> _handleDeleteItem() {
+    return _controller.removeItemTemporarily(data);
   }
 }
