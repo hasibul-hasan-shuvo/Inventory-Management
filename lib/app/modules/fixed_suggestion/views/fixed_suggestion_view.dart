@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/paging_view.dart';
 import 'package:dental_inventory/app/core/widget/searchable_appbar.dart';
@@ -12,6 +13,9 @@ import 'package:get/get.dart';
 import '../controllers/fixed_suggestion_controller.dart';
 
 class FixedSuggestionView extends BaseView<FixedSuggestionController> {
+  FixedSuggestionView() {
+    ScannerService().addScannerDelegate(controller.onScanned);
+  }
   @override
   PreferredSizeWidget? appBar(BuildContext context) => PreferredSize(
         preferredSize: AppBar().preferredSize,
