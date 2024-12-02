@@ -341,4 +341,13 @@ class InventoryController extends BaseController {
       _fetchInventoryList();
     }
   }
+
+  void onScanned(String? code) {
+    if (code != null) {
+      _searchModeController(true);
+      searchController.text = code;
+      searchQuery(code);
+      _fetchInventoryList();
+    }
+  }
 }

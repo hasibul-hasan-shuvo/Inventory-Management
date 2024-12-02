@@ -1,4 +1,5 @@
 import 'package:dental_inventory/app/core/base/base_view.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/widget/app_dialog.dart';
 import 'package:dental_inventory/app/core/widget/empty_list_place_holder.dart';
@@ -22,6 +23,7 @@ class InventoryView extends BaseView<InventoryController> {
   BuildContext? _context;
 
   InventoryView() {
+    ScannerService().addScannerDelegate(controller.onScanned);
     _subscribeUnavailableInventoryControllers();
   }
 
