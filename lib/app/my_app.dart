@@ -104,6 +104,8 @@ class _MyAppState extends State<MyApp> {
 
     if (appLanguage.contains(AppLanguages.en.name)) {
       appLanguage = AppLanguages.en.name;
+    } else if (appLanguage.contains(AppLanguages.nb.name)) {
+      appLanguage = AppLanguages.nb.name;
     } else if (appLanguage.contains(AppLanguages.sv.name)) {
       appLanguage = AppLanguages.sv.name;
     }
