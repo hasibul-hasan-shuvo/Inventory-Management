@@ -91,7 +91,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future deleteInventory({required int? id, required String itemId}) {
+  Future deleteInventory({
+    required int? id,
+    required String itemId,
+    bool deleteFromServer = true,
+  }) {
     return _localDataSource.deleteInventory(itemId).then((_) {
       if (id != null) {
         return _localDataSource
@@ -188,6 +192,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
       (replacedInventory) => deleteInventory(
         id: oldInventoryId,
         itemId: oldInventoryItemId,
+        deleteFromServer: false,
       ).then((value) => replacedInventory),
     );
   }
