@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dental_inventory/app/core/services/scanner/scanner.dart';
 import 'package:laser_scanner/laser_scanner.dart';
@@ -21,11 +22,13 @@ class UrovoScanner extends Scanner {
   }
 
   void _initUrovoScanner() async {
-    _scanner.isSupport().then((bool? isSupport) {
-      if (isSupport == true) {
-        _scanner.openScanner(captureImageShow: true).then(onOpenCapture);
-      }
-    });
+    if (Platform.isAndroid) {
+      _scanner.isSupport().then((bool? isSupport) {
+        if (isSupport == true) {
+          _scanner.openScanner(captureImageShow: true).then(onOpenCapture);
+        }
+      });
+    }
   }
 
   void onOpenCapture(void value) async {
