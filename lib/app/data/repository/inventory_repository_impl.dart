@@ -97,7 +97,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
     bool deleteFromServer = true,
   }) {
     return _localDataSource.deleteInventory(itemId).then((_) {
-      if (id != null) {
+      if (id != null && deleteFromServer) {
         return _localDataSource
             .addInventoryIdToDeletedInventoryEntity(
           DeletedInventoryEntityCompanion.insert(
