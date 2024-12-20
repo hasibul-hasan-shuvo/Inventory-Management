@@ -14,6 +14,7 @@ class SuggestedOrderUiModel {
   late final int count;
   late final RxNum _priceController = RxNum(0.0);
   late bool isAvailableInCart;
+  late bool isAvailable;
 
   num get price => _priceController.value;
 
@@ -30,6 +31,7 @@ class SuggestedOrderUiModel {
     suggestion = response.suggestedOrderCount ?? 0;
     fixedSuggestion = response.fixedSuggestion ?? 0;
     isAvailableInCart = (response.quantityInCart ?? 0) > 0;
+    isAvailable = response.product?.isAvailable ?? false;
   }
 
   void updateSuggestion(int newSuggestion) {

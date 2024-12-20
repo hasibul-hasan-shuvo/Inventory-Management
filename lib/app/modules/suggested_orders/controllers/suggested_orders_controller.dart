@@ -14,6 +14,8 @@ class SuggestedOrdersController extends BaseController {
 
   List<SuggestedOrderUiModel> get suggestedOrders => _suggestedOrdersController;
 
+  final List<SuggestedOrderUiModel> _exemptedItems = List.empty(growable: true);
+
   @override
   void onInit() {
     super.onInit();
@@ -78,7 +80,7 @@ class SuggestedOrdersController extends BaseController {
         []);
   }
 
-  Future addToCart(String itemId, String quantityString) {
+  Future addToCart(SuggestedOrderUiModel item, String quantityString) {
     if (!quantityString.isPositiveIntegerNumber) {
       showErrorMessage(appLocalization
           .messageInvalidItemNumber(appLocalization.homeMenuShoppingCart));
@@ -88,8 +90,12 @@ class SuggestedOrdersController extends BaseController {
 
     int quantity = quantityString.toInt;
 
+    if (quantity < 1) {
+      return removeItemTemporarily(item);
+    }
+
     AddShoppingCartItemRequestBody requestBody = AddShoppingCartItemRequestBody(
-      itemId: itemId,
+      itemId: item.itemId,
       quantity: quantity,
     );
 
@@ -102,22 +108,48 @@ class SuggestedOrdersController extends BaseController {
   }
 
   void _handleAddToCartSuccessResponse(AddShoppingCartItemRequestBody data) {
-    _suggestedOrdersController.removeWhere(
+    SuggestedOrderUiModel? addedItem =
+        _suggestedOrdersController.firstWhereOrNull(
       (element) => element.itemId == data.itemId,
     );
+    if (addedItem != null) {
+      removeItemTemporarily(
+        addedItem,
+        showRemovedMessage: false,
+      );
+    }
     showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }
 
+  Future<bool> removeItemTemporarily(
+    SuggestedOrderUiModel item, {
+    bool showRemovedMessage = true,
+  }) {
+    _suggestedOrdersController.remove(item);
+    _exemptedItems.add(item);
+
+    if (showRemovedMessage) {
+      showMessage(appLocalization.messageItemRemovedTemporarily);
+    }
+
+    return Future.value(true);
+  }
+
   void addToCartAll() {
-    callDataService(
-      _repository.addAllItemsInShoppingCart(),
-      onSuccess: _handleAddToCartAllSuccessResponse,
-    );
+    if (suggestedOrders.isNotEmpty) {
+      List<String> exemptedIds = _exemptedItems.map((e) => e.itemId).toList();
+
+      callDataService(
+        _repository.addAllItemsInShoppingCart(exemptedIds),
+        onSuccess: _handleAddToCartAllSuccessResponse,
+      );
+    }
   }
 
   void _handleAddToCartAllSuccessResponse(bool isSuccess) {
     if (isSuccess) {
       _suggestedOrdersController.clear();
+      _exemptedItems.clear();
     }
     showSuccessMessage(appLocalization.messageAddedToShoppingCart);
   }

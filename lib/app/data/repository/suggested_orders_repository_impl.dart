@@ -27,8 +27,8 @@ class SuggestedOrdersRepositoryImpl implements SuggestedOrdersRepository {
   }
 
   @override
-  Future<bool> addAllItemsInShoppingCart() {
-    return _cartRepository.addAllItemsInShoppingCart();
+  Future<bool> addAllItemsInShoppingCart(List<String> exemptedIds) {
+    return _cartRepository.addAllItemsInShoppingCart(exemptedIds);
   }
 
   @override

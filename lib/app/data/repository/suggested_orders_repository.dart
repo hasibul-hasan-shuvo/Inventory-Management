@@ -10,7 +10,7 @@ abstract class SuggestedOrdersRepository {
   Future<ShoppingCartResponse> addItemToShoppingCart(
       AddShoppingCartItemRequestBody requestBody);
 
-  Future<bool> addAllItemsInShoppingCart();
+  Future<bool> addAllItemsInShoppingCart(List<String> exemptedIds);
 
   Future<InventoryResponse> getSuggestedOrderWithPrice(String itemId);
 

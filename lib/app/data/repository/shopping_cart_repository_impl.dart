@@ -33,8 +33,8 @@ class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
   }
 
   @override
-  Future<bool> addAllItemsInShoppingCart() {
-    return _remoteDataSource.addAllItemsInShoppingCart();
+  Future<bool> addAllItemsInShoppingCart(List<String> exemptedIds) {
+    return _remoteDataSource.addAllItemsInShoppingCart(exemptedIds);
   }
 
   @override
