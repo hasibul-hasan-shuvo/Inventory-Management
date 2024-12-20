@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:dental_inventory/app/core/values/app_languages.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
+import 'package:dental_inventory/app/data/local/preference/preference_manager.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/network/dio_provider.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
@@ -27,6 +31,8 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
       customHeaders['Authorization'] = 'Bearer $accessToken';
       customHeaders['InventoryID'] = inventoryID == '' ? "2" : inventoryID;
     }
+
+    customHeaders['Accept-Language'] = _getLanguageCode();
 
     return customHeaders;
   }
@@ -58,5 +64,24 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
       }
     }
     super.onError(err, handler);
+  }
+
+  String _getLanguageCode() {
+    PreferenceManager preferenceManager = Get.find();
+
+    String appLanguage = preferenceManager.getString(
+      PreferenceManager.LANGUAGE,
+      defaultValue: Platform.localeName,
+    );
+
+    if (appLanguage.contains(AppLanguages.en.name)) {
+      appLanguage = AppLanguages.en.name;
+    } else if (appLanguage.contains(AppLanguages.nb.name)) {
+      appLanguage = AppLanguages.nb.name;
+    } else if (appLanguage.contains(AppLanguages.sv.name)) {
+      appLanguage = AppLanguages.sv.name;
+    }
+
+    return appLanguage;
   }
 }

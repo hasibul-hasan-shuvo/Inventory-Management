@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
+import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_list_query_params.dart';
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
@@ -38,7 +39,9 @@ class InventoryRemoteDataSourceImpl extends BaseRemoteSource
   @override
   Future<InventoryResponse> updateInventoryData(
       InventoryUpdateRequestBody request) {
-    final endpoint = '/inventory/items/${request.productID}/update/';
+    final endpoint = '/inventory/items/'
+        '${request.replaceWith.isNotNullOrEmpty ? request.replaceWith : request.productID}'
+        '/update/';
 
     var dioCall = dioClient.put(endpoint, data: request.toJson());
     try {

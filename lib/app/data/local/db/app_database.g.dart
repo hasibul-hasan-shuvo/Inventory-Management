@@ -645,6 +645,12 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now().toUtc()));
+  static const VerificationMeta _replaceWithMeta =
+      const VerificationMeta('replaceWith');
+  @override
+  late final GeneratedColumn<String> replaceWith = GeneratedColumn<String>(
+      'replace_with', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -653,7 +659,8 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
         minCount,
         stockCountChange,
         fixedSuggestion,
-        modified
+        modified,
+        replaceWith
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -699,6 +706,12 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
       context.handle(_modifiedMeta,
           modified.isAcceptableOrUnknown(data['modified']!, _modifiedMeta));
     }
+    if (data.containsKey('replace_with')) {
+      context.handle(
+          _replaceWithMeta,
+          replaceWith.isAcceptableOrUnknown(
+              data['replace_with']!, _replaceWithMeta));
+    }
     return context;
   }
 
@@ -723,6 +736,8 @@ class $InventoryChangesEntityTable extends InventoryChangesEntity
           .read(DriftSqlType.int, data['${effectivePrefix}fixed_suggestion']),
       modified: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}modified'])!,
+      replaceWith: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}replace_with']),
     );
   }
 
@@ -741,6 +756,7 @@ class InventoryChangesEntityData extends DataClass
   final int stockCountChange;
   final int? fixedSuggestion;
   final DateTime modified;
+  final String? replaceWith;
   const InventoryChangesEntityData(
       {this.id,
       required this.itemId,
@@ -748,7 +764,8 @@ class InventoryChangesEntityData extends DataClass
       this.minCount,
       required this.stockCountChange,
       this.fixedSuggestion,
-      required this.modified});
+      required this.modified,
+      this.replaceWith});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -767,6 +784,9 @@ class InventoryChangesEntityData extends DataClass
       map['fixed_suggestion'] = Variable<int>(fixedSuggestion);
     }
     map['modified'] = Variable<DateTime>(modified);
+    if (!nullToAbsent || replaceWith != null) {
+      map['replace_with'] = Variable<String>(replaceWith);
+    }
     return map;
   }
 
@@ -785,6 +805,9 @@ class InventoryChangesEntityData extends DataClass
           ? const Value.absent()
           : Value(fixedSuggestion),
       modified: Value(modified),
+      replaceWith: replaceWith == null && nullToAbsent
+          ? const Value.absent()
+          : Value(replaceWith),
     );
   }
 
@@ -799,6 +822,7 @@ class InventoryChangesEntityData extends DataClass
       stockCountChange: serializer.fromJson<int>(json['stockCountChange']),
       fixedSuggestion: serializer.fromJson<int?>(json['fixedSuggestion']),
       modified: serializer.fromJson<DateTime>(json['modified']),
+      replaceWith: serializer.fromJson<String?>(json['replaceWith']),
     );
   }
   @override
@@ -812,6 +836,7 @@ class InventoryChangesEntityData extends DataClass
       'stockCountChange': serializer.toJson<int>(stockCountChange),
       'fixedSuggestion': serializer.toJson<int?>(fixedSuggestion),
       'modified': serializer.toJson<DateTime>(modified),
+      'replaceWith': serializer.toJson<String?>(replaceWith),
     };
   }
 
@@ -822,7 +847,8 @@ class InventoryChangesEntityData extends DataClass
           Value<int?> minCount = const Value.absent(),
           int? stockCountChange,
           Value<int?> fixedSuggestion = const Value.absent(),
-          DateTime? modified}) =>
+          DateTime? modified,
+          Value<String?> replaceWith = const Value.absent()}) =>
       InventoryChangesEntityData(
         id: id.present ? id.value : this.id,
         itemId: itemId ?? this.itemId,
@@ -833,6 +859,7 @@ class InventoryChangesEntityData extends DataClass
             ? fixedSuggestion.value
             : this.fixedSuggestion,
         modified: modified ?? this.modified,
+        replaceWith: replaceWith.present ? replaceWith.value : this.replaceWith,
       );
   @override
   String toString() {
@@ -843,14 +870,15 @@ class InventoryChangesEntityData extends DataClass
           ..write('minCount: $minCount, ')
           ..write('stockCountChange: $stockCountChange, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
-          ..write('modified: $modified')
+          ..write('modified: $modified, ')
+          ..write('replaceWith: $replaceWith')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, itemId, maxCount, minCount,
-      stockCountChange, fixedSuggestion, modified);
+      stockCountChange, fixedSuggestion, modified, replaceWith);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -861,7 +889,8 @@ class InventoryChangesEntityData extends DataClass
           other.minCount == this.minCount &&
           other.stockCountChange == this.stockCountChange &&
           other.fixedSuggestion == this.fixedSuggestion &&
-          other.modified == this.modified);
+          other.modified == this.modified &&
+          other.replaceWith == this.replaceWith);
 }
 
 class InventoryChangesEntityCompanion
@@ -873,6 +902,7 @@ class InventoryChangesEntityCompanion
   final Value<int> stockCountChange;
   final Value<int?> fixedSuggestion;
   final Value<DateTime> modified;
+  final Value<String?> replaceWith;
   final Value<int> rowid;
   const InventoryChangesEntityCompanion({
     this.id = const Value.absent(),
@@ -882,6 +912,7 @@ class InventoryChangesEntityCompanion
     this.stockCountChange = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
     this.modified = const Value.absent(),
+    this.replaceWith = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   InventoryChangesEntityCompanion.insert({
@@ -892,6 +923,7 @@ class InventoryChangesEntityCompanion
     this.stockCountChange = const Value.absent(),
     this.fixedSuggestion = const Value.absent(),
     this.modified = const Value.absent(),
+    this.replaceWith = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : itemId = Value(itemId);
   static Insertable<InventoryChangesEntityData> custom({
@@ -902,6 +934,7 @@ class InventoryChangesEntityCompanion
     Expression<int>? stockCountChange,
     Expression<int>? fixedSuggestion,
     Expression<DateTime>? modified,
+    Expression<String>? replaceWith,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -912,6 +945,7 @@ class InventoryChangesEntityCompanion
       if (stockCountChange != null) 'stock_count_change': stockCountChange,
       if (fixedSuggestion != null) 'fixed_suggestion': fixedSuggestion,
       if (modified != null) 'modified': modified,
+      if (replaceWith != null) 'replace_with': replaceWith,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -924,6 +958,7 @@ class InventoryChangesEntityCompanion
       Value<int>? stockCountChange,
       Value<int?>? fixedSuggestion,
       Value<DateTime>? modified,
+      Value<String?>? replaceWith,
       Value<int>? rowid}) {
     return InventoryChangesEntityCompanion(
       id: id ?? this.id,
@@ -933,6 +968,7 @@ class InventoryChangesEntityCompanion
       stockCountChange: stockCountChange ?? this.stockCountChange,
       fixedSuggestion: fixedSuggestion ?? this.fixedSuggestion,
       modified: modified ?? this.modified,
+      replaceWith: replaceWith ?? this.replaceWith,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -961,6 +997,9 @@ class InventoryChangesEntityCompanion
     if (modified.present) {
       map['modified'] = Variable<DateTime>(modified.value);
     }
+    if (replaceWith.present) {
+      map['replace_with'] = Variable<String>(replaceWith.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -977,6 +1016,7 @@ class InventoryChangesEntityCompanion
           ..write('stockCountChange: $stockCountChange, ')
           ..write('fixedSuggestion: $fixedSuggestion, ')
           ..write('modified: $modified, ')
+          ..write('replaceWith: $replaceWith, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2615,6 +2655,7 @@ typedef $$InventoryChangesEntityTableInsertCompanionBuilder
   Value<int> stockCountChange,
   Value<int?> fixedSuggestion,
   Value<DateTime> modified,
+  Value<String?> replaceWith,
   Value<int> rowid,
 });
 typedef $$InventoryChangesEntityTableUpdateCompanionBuilder
@@ -2626,6 +2667,7 @@ typedef $$InventoryChangesEntityTableUpdateCompanionBuilder
   Value<int> stockCountChange,
   Value<int?> fixedSuggestion,
   Value<DateTime> modified,
+  Value<String?> replaceWith,
   Value<int> rowid,
 });
 
@@ -2657,6 +2699,7 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             Value<int> stockCountChange = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<String?> replaceWith = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion(
@@ -2667,6 +2710,7 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
+            replaceWith: replaceWith,
             rowid: rowid,
           ),
           getInsertCompanionBuilder: ({
@@ -2677,6 +2721,7 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             Value<int> stockCountChange = const Value.absent(),
             Value<int?> fixedSuggestion = const Value.absent(),
             Value<DateTime> modified = const Value.absent(),
+            Value<String?> replaceWith = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               InventoryChangesEntityCompanion.insert(
@@ -2687,6 +2732,7 @@ class $$InventoryChangesEntityTableTableManager extends RootTableManager<
             stockCountChange: stockCountChange,
             fixedSuggestion: fixedSuggestion,
             modified: modified,
+            replaceWith: replaceWith,
             rowid: rowid,
           ),
         ));
@@ -2742,6 +2788,11 @@ class $$InventoryChangesEntityTableFilterComposer
       column: $state.table.modified,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get replaceWith => $state.composableBuilder(
+      column: $state.table.replaceWith,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
 class $$InventoryChangesEntityTableOrderingComposer
@@ -2779,6 +2830,11 @@ class $$InventoryChangesEntityTableOrderingComposer
 
   ColumnOrderings<DateTime> get modified => $state.composableBuilder(
       column: $state.table.modified,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get replaceWith => $state.composableBuilder(
+      column: $state.table.replaceWith,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

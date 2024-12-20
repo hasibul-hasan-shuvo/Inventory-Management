@@ -40,7 +40,8 @@ class InventoryDataSynchronizer implements DataSynchronizer {
       for (InventoryChangesEntityData inventoryChanges
           in inventoryChangesList) {
         try {
-          if (inventoryChanges.id == null) {
+          if (inventoryChanges.id == null &&
+              inventoryChanges.replaceWith.isNullOrEmpty) {
             await _createInventoryToServer(inventoryChanges);
           } else {
             await _updateInventoryToServer(inventoryChanges);
@@ -76,6 +77,7 @@ class InventoryDataSynchronizer implements DataSynchronizer {
       maxCount: inventoryChanges.maxCount,
       stockCountChange: inventoryChanges.stockCountChange,
       fixedSuggestion: inventoryChanges.fixedSuggestion,
+      replaceWith: inventoryChanges.replaceWith,
     );
 
     return _inventoryRepository.updateInventoryDataInServer(requestBody);

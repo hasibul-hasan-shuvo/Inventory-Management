@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dental_inventory/app/core/base/base_controller.dart';
-import 'package:dental_inventory/app/core/services/zebra_scanner.dart';
+import 'package:dental_inventory/app/core/services/scanner/scanner_service.dart';
 import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
 import 'package:dental_inventory/app/data/model/request/create_inventory_request_body.dart';
@@ -37,7 +37,7 @@ class GlobalInventoriesController extends BaseController {
   @override
   void onClose() {
     super.onClose();
-    ZebraScanner().close();
+    ScannerService().close();
     _searchModeController.close();
     _searchQueryController.close();
     _inventoriesController.close();

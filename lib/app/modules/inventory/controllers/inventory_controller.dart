@@ -323,6 +323,7 @@ class InventoryController extends BaseController {
       stockCount: data.unavailableInventory.currentStock.toString(),
       fixedSuggestion:
           data.unavailableInventory.fixedOrderSuggestions.toString(),
+      replaceWith: data.unavailableInventory.itemId,
     );
     callDataService(
       _repository.replaceInventory(
@@ -337,6 +338,15 @@ class InventoryController extends BaseController {
   void _handleReplaceInventoryResponse(InventoryEntityData? newInventory) {
     if (newInventory != null) {
       showSuccessMessage(appLocalization.messageReplaceInventorySuccessful);
+      _fetchInventoryList();
+    }
+  }
+
+  void onScanned(String? code) {
+    if (code != null) {
+      _searchModeController(true);
+      searchController.text = code;
+      searchQuery(code);
       _fetchInventoryList();
     }
   }

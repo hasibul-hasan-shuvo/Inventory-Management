@@ -13,7 +13,7 @@ abstract class ShoppingCartRemoteDataSource {
 
   Future<bool> deleteItemFromShoppingCart(String id);
 
-  Future<bool> addAllItemsInShoppingCart();
+  Future<bool> addAllItemsInShoppingCart(List<String> exemptedIds);
 
   Future<ShoppingCartTotalPriceResponse> getTotalPrice();
 }
