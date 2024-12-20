@@ -162,4 +162,12 @@ class FixedSuggestionController extends BaseController {
       SuggestedOrderUiModel data, InventoryResponse response) {
     data.updatePrice(response.product?.priceWithTax);
   }
+
+  void onScanned(String? code) {
+    if (code != null) {
+      _searchModeController(true);
+      searchController.text = code;
+      _getSuggestedOrders();
+    }
+  }
 }
