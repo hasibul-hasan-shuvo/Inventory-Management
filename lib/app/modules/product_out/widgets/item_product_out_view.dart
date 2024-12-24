@@ -28,20 +28,26 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    return ElevatedContainer(
-      height: AppValues.itemImageHeight.h,
-      child: Ripple(
-        onTap: _onTap,
-        child: Row(
-          children: [
-            _getImageView(),
-            SizedBox(width: AppValues.smallMargin.w),
-            _getItemDetails(),
-            _getEditButton(context),
-          ],
+    return Dismissible(
+      key: ValueKey(data.id),
+      direction: DismissDirection.endToStart,
+      background: _getDismissibleBackground(),
+      confirmDismiss: _onDismissed,
+      child: ElevatedContainer(
+        height: AppValues.itemImageHeight.h,
+        child: Ripple(
+          onTap: _onTap,
+          child: Row(
+            children: [
+              _getImageView(),
+              SizedBox(width: AppValues.smallMargin.w),
+              _getItemDetails(),
+              _getEditButton(context),
+            ],
+          ),
         ),
-      ),
-    ).marginOnly(bottom: AppValues.margin_6.h);
+      ).marginOnly(bottom: AppValues.margin_6.h),
+    );
   }
 
   Widget _getImageView() {
@@ -158,5 +164,30 @@ class ItemProductOutView extends StatelessWidget with BaseWidgetMixin {
         );
       },
     );
+  }
+
+  Widget _getDismissibleBackground() {
+    return ElevatedContainer(
+      bgColor: appColors.colorRed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.delete_outline,
+            size: AppValues.iconDefaultSize.r,
+            color: appColors.colorWhite,
+          ).paddingSymmetric(
+            vertical: AppValues.padding.h,
+            horizontal: AppValues.padding.w,
+          ),
+        ],
+      ),
+    ).marginOnly(bottom: AppValues.margin_6.h);
+  }
+
+  Future<bool> _onDismissed(DismissDirection direction) {
+    return _controller
+        .removeProduct(data.itemId)
+        .then((value) => value != null);
   }
 }
