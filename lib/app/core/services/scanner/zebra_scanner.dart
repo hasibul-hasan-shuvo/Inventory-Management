@@ -9,8 +9,15 @@ class ZebraScanner extends Scanner {
   static const EventChannel scanChannel =
       EventChannel('inventorymanagement.no/scan');
 
+  @override
+  String get manufacturer => 'Zebra';
+
   ZebraScanner() {
-    _initZebraScanner();
+    isSupported.then((bool status) {
+      if (status) {
+        _initZebraScanner();
+      }
+    });
   }
 
   void _onEvent(event) {

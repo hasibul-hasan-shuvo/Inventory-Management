@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dental_inventory/flavors/build_config.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 typedef ScannerDelegate = Function(String? code);
 typedef ErrorDelegate = Function(String error);
@@ -9,6 +11,20 @@ abstract class Scanner {
   ScannerDelegate? _scannerDelegate;
   ErrorDelegate? _errorDelegate;
   StreamSubscription? scannerSubscription;
+
+  String get manufacturer;
+
+  Future<bool> get isSupported {
+    if (Platform.isIOS) {
+      return Future.value(false);
+    } else {
+      DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+      return deviceInfoPlugin.androidInfo.then((deviceInfo) {
+        return deviceInfo.manufacturer.contains(manufacturer);
+      }).catchError((error, stackTrace) => false);
+    }
+  }
 
   void addErrorDelegate(ErrorDelegate delegate) {
     _errorDelegate = delegate;
