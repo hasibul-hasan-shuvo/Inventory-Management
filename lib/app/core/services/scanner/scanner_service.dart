@@ -12,8 +12,8 @@ class ScannerService {
   }
 
   ScannerService._internal() {
-    _scanners.add(ZebraScanner());
-    _scanners.add(UrovoScanner());
+    _addZebraScanner();
+    _addUrovoScanner();
   }
 
   void addScannerDelegate(ScannerDelegate delegate) {
@@ -38,6 +38,21 @@ class ScannerService {
   void dismiss() {
     for (var element in _scanners) {
       element.dismiss();
+    }
+  }
+
+  void _addZebraScanner() async {
+    ZebraScanner scanner = ZebraScanner();
+
+    if (await scanner.isSupported) {
+      _scanners.add(scanner);
+    }
+  }
+
+  void _addUrovoScanner() async {
+    UrovoScanner scanner = UrovoScanner();
+    if (await scanner.isSupported) {
+      _scanners.add(scanner);
     }
   }
 }

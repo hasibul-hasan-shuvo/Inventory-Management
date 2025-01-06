@@ -15,6 +15,9 @@ class UrovoScanner extends Scanner {
   }
 
   @override
+  String get manufacturer => 'Urovo';
+
+  @override
   void dismiss() {
     super.dismiss();
     _scanner.stopDecode();
