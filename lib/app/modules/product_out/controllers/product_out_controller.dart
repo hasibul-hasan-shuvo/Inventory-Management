@@ -77,7 +77,7 @@ class ProductOutController extends BaseController
     }
 
     if (number == 0) {
-      _removeProduct(data.itemId);
+      removeProduct(data.itemId);
     } else {
       _updateProduct(data, number);
     }
@@ -135,7 +135,7 @@ class ProductOutController extends BaseController
   @override
   void onProductSelect(SelectableInventoryItemUiModel inventoryData) {
     if (inventoryData.number == 0) {
-      _removeProduct(inventoryData.itemId);
+      removeProduct(inventoryData.itemId);
     } else {
       bool isItemExist = false;
       for (ScannedProductUiModel product in scannedProducts) {
@@ -162,8 +162,8 @@ class ProductOutController extends BaseController
     );
   }
 
-  void _removeProduct(String itemId) {
-    callDataService(
+  Future removeProduct(String itemId) {
+    return callDataService(
       _repository.deleteProductByItemId(itemId),
       onSuccess: (_) => removeProductByItemId(itemId),
     );
