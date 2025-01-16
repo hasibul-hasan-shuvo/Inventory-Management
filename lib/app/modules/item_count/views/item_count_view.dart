@@ -16,7 +16,7 @@ import '../controllers/item_count_controller.dart';
 // ignore: must_be_immutable
 class ItemCountView extends BaseView<ItemCountController> {
   ItemCountView() {
-    ScannerService().addScannerDelegate(controller.onScanned);
+    ScannerService.setScannerDelegate(controller.onScanned);
   }
 
   @override

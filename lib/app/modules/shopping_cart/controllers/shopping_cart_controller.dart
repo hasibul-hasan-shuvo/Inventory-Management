@@ -42,7 +42,7 @@ class ShoppingCartController extends BaseController
 
   @override
   InternalFinalCallback<void> get onDelete {
-    ScannerService().close();
+    ScannerService.close();
 
     return super.onDelete;
   }

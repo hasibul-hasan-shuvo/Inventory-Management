@@ -14,7 +14,7 @@ import '../controllers/fixed_suggestion_controller.dart';
 
 class FixedSuggestionView extends BaseView<FixedSuggestionController> {
   FixedSuggestionView() {
-    ScannerService().addScannerDelegate(controller.onScanned);
+    ScannerService.setScannerDelegate(controller.onScanned);
   }
   @override
   PreferredSizeWidget? appBar(BuildContext context) => PreferredSize(

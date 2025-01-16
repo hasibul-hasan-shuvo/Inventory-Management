@@ -24,7 +24,7 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
   late BuildContext _context;
 
   ShoppingCartView() {
-    ScannerService().addScannerDelegate(controller.onScanned);
+    ScannerService.setScannerDelegate(controller.onScanned);
     _subscribeNewCartItemArrivedController();
     _subscribeUnavailableProductOrderErrorController();
   }

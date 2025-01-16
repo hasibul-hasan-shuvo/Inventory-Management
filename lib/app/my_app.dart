@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _dataSyncManager?.dispose();
-    ScannerService().dismiss();
+    ScannerService.dismiss();
     super.dispose();
   }
 
