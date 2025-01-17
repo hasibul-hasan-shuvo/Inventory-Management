@@ -21,21 +21,18 @@ object DataWedgeConfig {
     const val CONFIG_MODE_KEY = "CONFIG_MODE"
     const val PLUGIN_CONFIG = "PLUGIN_CONFIG"
     const val PROFILE_ENABLED = "PROFILE_ENABLED"
-    const val KEYSTROKE_OUTPUT_ENABLED = "keystroke_output_enabled"
-    const val PROFILE_INTENT_ACTION = "inventorymanagement.no.SCAN"
     const val PROFILE_NAME_KEY = "PROFILE_NAME"
     const val TRUE_STRING = true.toString()
     const val FALSE_STRING = false.toString()
 
+    const val PROFILE_INTENT_ACTION = "inventorymanagement.no.SCAN"
+    const val KEYSTROKE_OUTPUT_ENABLED = "enabled"
+
     fun getBarcodeConfig(): Bundle {
         val barcodeProps = Bundle()
-
         val barcodeConfig = Bundle()
         barcodeConfig.putString(PLUGIN_NAME, PLUGIN_BARCODE)
-        barcodeConfig.putString(
-            RESET_CONFIG,
-            TRUE_STRING
-        )
+        barcodeConfig.putString(RESET_CONFIG, TRUE_STRING)
         barcodeConfig.putBundle(PARAM_LIST, barcodeProps)
 
         return barcodeConfig
@@ -43,13 +40,9 @@ object DataWedgeConfig {
 
     fun getKeystrokeConfig(): Bundle {
         val keystrokeProps = Bundle()
-
         val keystrokeConfig = Bundle()
         keystrokeConfig.putString(PLUGIN_NAME, PLUGIN_KEYSTROKE)
-        keystrokeConfig.putString(
-            KEYSTROKE_OUTPUT_ENABLED,
-            FALSE_STRING,
-        )
+        keystrokeConfig.putString(KEYSTROKE_OUTPUT_ENABLED, FALSE_STRING)
         keystrokeConfig.putBundle(PARAM_LIST, keystrokeProps)
 
         return keystrokeConfig
@@ -77,7 +70,6 @@ object DataWedgeConfig {
 
     fun getIntentConfig(): Bundle {
         val intentProps = getIntentProps()
-
         val intentConfig = Bundle()
         intentConfig.putString(PLUGIN_NAME, PLUGIN_INTENT)
         intentConfig.putString(RESET_CONFIG, TRUE_STRING)
