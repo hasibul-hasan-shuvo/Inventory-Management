@@ -165,20 +165,13 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         onTapShowPrice(data);
       },
       child: Text(
-        "Get price",
+        appLocalization.getPrice,
         style: textTheme.bodySmall,
       ),
     );
   }
 
 
-  // Widget _getPriceView() {
-  //   return Expanded(
-  //     child: LabelAndCountView(
-  //       label: _getPrice(),
-  //     ),
-  //   );
-  // }
 
   Widget _getLabelAndCount(String label, [String? count]) {
     return Expanded(
@@ -204,10 +197,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  // String _getPrice() {
-  //   return "${appLocalization.currency}. "
-  //       "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
-  // }
 
   void _onTapEdit(BuildContext context) {
     TextEditingController cartController = TextEditingController();

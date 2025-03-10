@@ -4,7 +4,6 @@ import 'package:dental_inventory/app/data/model/request/inventory_list_query_par
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
-import 'package:dental_inventory/app/data/model/response/product_price_response.dart';
 
 abstract class InventoryRepository {
   Future getAllInventories();
