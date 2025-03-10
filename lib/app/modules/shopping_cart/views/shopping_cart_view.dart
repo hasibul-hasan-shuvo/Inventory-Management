@@ -94,7 +94,9 @@ class ShoppingCartView extends BaseView<ShoppingCartController> {
 
   Widget _getItemBuilder(BuildContext context, int index) {
     return controller.shoppingCartItems[index].isAvailable
-        ? ItemShoppingCartView(data: controller.shoppingCartItems[index])
+        ? ItemShoppingCartView(
+            data: controller.shoppingCartItems[index],
+            onTapShowPrice: controller.getProductPrice)
         : ItemUnavailableShoppingCartView(
             data: controller.shoppingCartItems[index]);
   }

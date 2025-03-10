@@ -118,6 +118,8 @@ abstract class AppValues {
   static const int maxPasswordLength = 16;
   static const int maxCountLength = 3;
   static const int maxCountValue = 999;
+  static const double priceFetchingLoaderStrokeSize = 1;
+
 
   static const int dataSyncDeBouncerTime = 5;
   static const int onlineStatusVisibleTime = 3;

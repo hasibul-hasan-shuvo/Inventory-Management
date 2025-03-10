@@ -15,4 +15,6 @@ abstract class EndPoints {
   static const String homeCounters = '/inventory/miscellaneous-counts/';
   static const String shoppingCartTotalPrice =
       '/shopping/active-cart/total-price/';
+  static const String getProductPrice = '/shopping/get-product-price';
+
 }

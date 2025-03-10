@@ -8,6 +8,7 @@ import 'package:dental_inventory/app/data/model/request/inventory_list_query_par
 import 'package:dental_inventory/app/data/model/request/inventory_update_request_body.dart';
 import 'package:dental_inventory/app/data/model/response/global_inventory_response.dart';
 import 'package:dental_inventory/app/data/model/response/inventory_response.dart';
+import 'package:dental_inventory/app/data/model/response/product_price_response.dart';
 import 'package:dental_inventory/app/data/remote/inventory_remote_data_source.dart';
 import 'package:dental_inventory/app/data/repository/inventory_repository.dart';
 import 'package:drift/drift.dart' as drift;
