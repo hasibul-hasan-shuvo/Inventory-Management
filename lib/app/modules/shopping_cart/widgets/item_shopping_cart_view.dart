@@ -26,7 +26,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     super.key,
     required this.data,
     required this.onTapShowPrice,
-
   });
 
   @override
@@ -97,7 +96,7 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getPriceAndCartCountView() {
     return Row(
       children: [
-        Expanded(flex: 1,child: _getPriceView()),
+        Expanded(flex: 1, child: _getPriceView()),
         Expanded(
           flex: 1,
           child: _getLabelAndCount(
@@ -118,27 +117,26 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getPriceView() {
-    return Row(
-      children: [
-        Text(
-          "${appLocalization.currency}. ",
-          style: textTheme.bodySmall,
-        ),
-        Obx(
-              () => data.isPriceAvailable
-              ? Text(
-            data.price.toString(),
-            style: textTheme.bodySmall,
-          )
-              : _getUnavailablePriceView(),
-        ),
-      ],
-    );
+    return Obx(() => Row(
+          children: [
+            if (data.isPriceAvailable)
+              Text(
+                "${appLocalization.currency}. ",
+                style: textTheme.bodySmall,
+              ),
+            data.isPriceAvailable
+                ? Text(
+                    data.price.toString(),
+                    style: textTheme.bodySmall,
+                  )
+                : _getUnavailablePriceView(),
+          ],
+        ));
   }
 
   Widget _getUnavailablePriceView() {
     return Obx(
-          () => data.isPriceFetching
+      () => data.isPriceFetching
           ? _getPriceFetchingLoaderView()
           : _getFetchPriceButtonView(),
     );
@@ -171,8 +169,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-
-
   Widget _getLabelAndCount(String label, [String? count]) {
     return Expanded(
       child: LabelAndCountView(
@@ -196,7 +192,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
       ),
     );
   }
-
 
   void _onTapEdit(BuildContext context) {
     TextEditingController cartController = TextEditingController();
