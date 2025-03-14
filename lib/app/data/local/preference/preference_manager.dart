@@ -11,6 +11,8 @@ abstract class PreferenceManager {
       'inventory_last_sync_time_stamp';
   static const String SHOPPING_CART_LAST_SYNC_TIME_STAMP =
       'shopping_cart_last_sync_time_stamp';
+  static const String SCANNER_CAMERA_STATE = 'scanner_camera_state';
+
 
   String getString(String key, {String defaultValue = ""});
 

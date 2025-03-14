@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/local/app_settings_local_data_source.dart';
+import 'package:dental_inventory/app/data/local/app_settings_local_data_source_impl.dart';
 import 'package:dental_inventory/app/data/local/auth_local_data_source.dart';
 import 'package:dental_inventory/app/data/local/auth_local_data_source_imp.dart';
 import 'package:dental_inventory/app/data/local/db/app_database.dart';
@@ -45,6 +47,10 @@ class LocalSourceBindings implements Bindings {
 
     Get.lazyPut<ProductCountLocalDataSource>(
       () => ProductCountLocalDataSourceImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<AppSettingsLocalDataSource>(
+      () => AppSettingsLocalDataSourceImpl(),
       fenix: true,
     );
   }
