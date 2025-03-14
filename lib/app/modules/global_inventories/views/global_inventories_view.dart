@@ -22,7 +22,7 @@ class GlobalInventoriesView extends BaseView<GlobalInventoriesController> {
 
   GlobalInventoriesView() {
     logger.i("GlobalInventory");
-    ScannerService().addScannerDelegate((String? code) {
+    ScannerService.setScannerDelegate((String? code) {
       logger.i("GlobalScanned: $code");
       closeKeyboard();
       controller.onScanned(code);

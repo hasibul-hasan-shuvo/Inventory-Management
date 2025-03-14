@@ -20,10 +20,12 @@ import 'package:get/get.dart';
 class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   final ShoppingCartController _controller = Get.find();
   final ShoppingCartUiModel data;
+  final Function(ShoppingCartUiModel) onTapShowPrice;
 
   ItemShoppingCartView({
     super.key,
     required this.data,
+    required this.onTapShowPrice,
   });
 
   @override
@@ -94,11 +96,13 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getPriceAndCartCountView() {
     return Row(
       children: [
-        _getPriceView(),
-        SizedBox(width: AppValues.smallMargin.w),
-        _getLabelAndCount(
-          appLocalization.homeMenuShoppingCart,
-          data.cartCount.toString(),
+        Expanded(flex: 1, child: _getPriceView()),
+        Expanded(
+          flex: 1,
+          child: _getLabelAndCount(
+            appLocalization.homeMenuShoppingCart,
+            data.cartCount.toString(),
+          ),
         ),
       ],
     );
@@ -113,9 +117,54 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getPriceView() {
-    return Expanded(
-      child: LabelAndCountView(
-        label: _getPrice(),
+    return Obx(() => Row(
+          children: [
+            if (data.isPriceAvailable)
+              Text(
+                "${appLocalization.currency}. ",
+                style: textTheme.bodySmall,
+              ),
+            data.isPriceAvailable
+                ? Text(
+                    data.price.toString(),
+                    style: textTheme.bodySmall,
+                  )
+                : _getUnavailablePriceView(),
+          ],
+        ));
+  }
+
+  Widget _getUnavailablePriceView() {
+    return Obx(
+      () => data.isPriceFetching
+          ? _getPriceFetchingLoaderView()
+          : _getFetchPriceButtonView(),
+    );
+  }
+
+  Widget _getPriceFetchingLoaderView() {
+    return Row(
+      children: [
+        SizedBox(
+          height: AppValues.iconSize_14,
+          width: AppValues.iconSize_14,
+          child: CircularProgressIndicator(
+            strokeWidth: AppValues.priceFetchingLoaderStrokeSize.r,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getFetchPriceButtonView() {
+    return Ripple(
+      onTap: () {
+        data.changePriceStateToLoad();
+        onTapShowPrice(data);
+      },
+      child: Text(
+        appLocalization.getPrice,
+        style: textTheme.bodySmall,
       ),
     );
   }
@@ -142,11 +191,6 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
         vertical: AppValues.padding.h,
       ),
     );
-  }
-
-  String _getPrice() {
-    return "${appLocalization.currency}. "
-        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
   }
 
   void _onTapEdit(BuildContext context) {

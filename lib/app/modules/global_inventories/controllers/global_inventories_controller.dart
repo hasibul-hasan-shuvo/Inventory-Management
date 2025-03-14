@@ -37,7 +37,7 @@ class GlobalInventoriesController extends BaseController {
   @override
   void onClose() {
     super.onClose();
-    ScannerService().close();
+    ScannerService.close();
     _searchModeController.close();
     _searchQueryController.close();
     _inventoriesController.close();
