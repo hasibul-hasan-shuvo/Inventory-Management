@@ -23,7 +23,7 @@ class InventoryView extends BaseView<InventoryController> {
   BuildContext? _context;
 
   InventoryView() {
-    ScannerService().addScannerDelegate(controller.onScanned);
+    ScannerService.setScannerDelegate(controller.onScanned);
     _subscribeUnavailableInventoryControllers();
   }
 

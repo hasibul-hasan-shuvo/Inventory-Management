@@ -14,9 +14,6 @@ import '../controllers/scanner_controller.dart';
 // ignore: must_be_immutable
 class ScannerView extends BaseView<ScannerController> {
   final Rx<String?> _barCodeController = Rx(null);
-  final MobileScannerController _scannerController = MobileScannerController(
-    detectionSpeed: DetectionSpeed.noDuplicates,
-  );
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) =>
@@ -44,12 +41,14 @@ class ScannerView extends BaseView<ScannerController> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppValues.smallRadius.r),
         child: MobileScanner(
-          controller: _scannerController,
+          controller: controller.scannerController,
           onDetect: _onDetect,
-          overlay: Icon(
-            Icons.add,
-            color: appColors.colorWhite,
-          ),
+          overlayBuilder: (context, _) {
+            return Icon(
+              Icons.add,
+              color: appColors.colorWhite,
+            );
+          },
         ),
       ),
     );
@@ -60,25 +59,25 @@ class ScannerView extends BaseView<ScannerController> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         _getTorchButton(),
-        SizedBox(width: AppValues.smallMargin.w),
-        _getCheckInButton(),
+        SizedBox(width: AppValues.margin.w),
+        _getCameraSwitchButton(),
       ],
     );
   }
 
   Widget _getTorchButton() {
-    return ValueListenableBuilder(
-      valueListenable: _scannerController.torchState,
+    return ValueListenableBuilder<MobileScannerState>(
+      valueListenable: controller.scannerController,
       builder: (_, state, ___) => FloatingActionButton(
         heroTag: 'torch',
-        backgroundColor: state == TorchState.on
+        backgroundColor: state.torchState == TorchState.on
             ? theme.colorScheme.primary
             : appColors.basicGrey,
         onPressed: _onPressedTorch,
         child: AssetImageView(
           fileName: AppIcons.torch,
           height: AppValues.iconDefaultSize.h,
-          color: state == TorchState.on
+          color: state.torchState == TorchState.on
               ? theme.colorScheme.onPrimary
               : appColors.colorWhite,
         ),
@@ -86,29 +85,27 @@ class ScannerView extends BaseView<ScannerController> {
     );
   }
 
-  Widget _getCheckInButton() {
-    return Obx(
-      () => FloatingActionButton(
-        onPressed: _isBarCodeDetected ? _onPressedDoneButton : null,
-        backgroundColor: _isBarCodeDetected
-            ? theme.colorScheme.primary
-            : appColors.basicGrey,
+  Widget _getCameraSwitchButton() {
+    return ValueListenableBuilder(
+      valueListenable: controller.scannerController,
+      builder: (_, state, ___) => FloatingActionButton(
+        heroTag: 'camera',
+        backgroundColor: theme.primaryColor,
+        onPressed: controller.onPressedCameraSwitch,
         child: Icon(
-          Icons.done,
-          size: AppValues.iconDefaultSize.h,
-          color: _isBarCodeDetected
-              ? theme.colorScheme.onPrimary
-              : appColors.colorWhite,
+          Icons.cameraswitch_outlined,
+          color: appColors.colorWhite,
         ),
       ),
     );
   }
 
   void _onPressedTorch() {
-    _scannerController.toggleTorch();
+    controller.scannerController.toggleTorch();
   }
 
-  void _onPressedDoneButton() {
+  void _onScanComplete() {
+    controller.scannerController.stop();
     if (_isBarCodeDetected) {
       Get.back(result: _barCodeController.value);
     } else {
@@ -119,6 +116,7 @@ class ScannerView extends BaseView<ScannerController> {
   void _onDetect(BarcodeCapture capture) {
     if (capture.barcodes.isNotEmpty) {
       _barCodeController(capture.barcodes.first.rawValue);
+      _onScanComplete();
     } else {
       _barCodeController(null);
     }

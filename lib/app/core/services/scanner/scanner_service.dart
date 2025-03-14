@@ -4,55 +4,74 @@ import 'package:dental_inventory/app/core/services/scanner/zebra_scanner.dart';
 import 'package:dental_inventory/flavors/build_config.dart';
 
 class ScannerService {
-  static final ScannerService _instance = ScannerService._internal();
-  final List<Scanner> _scanners = List.empty(growable: true);
+  static bool isInitialized = false;
+  static final List<Scanner> _scanners = List.empty(growable: true);
 
-  factory ScannerService() {
-    return _instance;
+  static Future<bool> ensureInitialized() async {
+    try {
+      isInitialized = await _initializeScanners();
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  ScannerService._internal() {
-    _addZebraScanner();
-    _addUrovoScanner();
+  static Future<bool> _initializeScanners() async {
+    await _addZebraScanner();
+    await _addUrovoScanner();
+
+    return true;
   }
 
-  void addScannerDelegate(ScannerDelegate delegate) {
+  static Future<void> setScannerDelegate(ScannerDelegate delegate) async {
+    if (!isInitialized) {
+      await ensureInitialized();
+    }
     for (var element in _scanners) {
       element.addScannerDelegate(delegate);
     }
   }
 
-  void addErrorDelegate(ErrorDelegate delegate) {
+  static void setErrorDelegate(ErrorDelegate delegate) {
     for (var element in _scanners) {
       element.addErrorDelegate(delegate);
     }
   }
 
-  void close() {
+  static void close() {
     BuildConfig.instance.config.logger.i("ScannerDelegatesClosed");
     for (var element in _scanners) {
       element.close();
     }
   }
 
-  void dismiss() {
+  static void dismiss() {
     for (var element in _scanners) {
       element.dismiss();
     }
   }
 
-  void _addZebraScanner() async {
+  static Future<bool> _addZebraScanner() async {
     ZebraScanner scanner = ZebraScanner();
 
     if (await scanner.isSupported) {
       _scanners.add(scanner);
+
+      return true;
     }
+
+    return false;
   }
 
-  void _addUrovoScanner() async {
+  static Future<bool> _addUrovoScanner() async {
     UrovoScanner scanner = UrovoScanner();
     if (await scanner.isSupported) {
       _scanners.add(scanner);
+
+      return true;
     }
+
+    return false;
   }
 }

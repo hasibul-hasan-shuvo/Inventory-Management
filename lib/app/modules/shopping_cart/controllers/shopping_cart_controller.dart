@@ -42,7 +42,7 @@ class ShoppingCartController extends BaseController
 
   @override
   InternalFinalCallback<void> get onDelete {
-    ScannerService().close();
+    ScannerService.close();
 
     return super.onDelete;
   }
@@ -232,5 +232,15 @@ class ShoppingCartController extends BaseController
 
   void clearNewCartArrivedController() {
     newCartItemArrivedController.trigger(null);
+  }
+
+  void getProductPrice(ShoppingCartUiModel data) {
+    callDataService(
+      _repository.getProductPrice(data.itemId),
+      onSuccess: (response) => data.updatePrice((response.data?.price ?? 0).toDouble()),
+      onError: (error) => data.updatePrice(0.0),
+      onStart: () => logger.d("Fetching product price"),
+      onComplete: () => logger.d("Product price fetched"),
+    );
   }
 }
