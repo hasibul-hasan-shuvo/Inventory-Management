@@ -1,3 +1,5 @@
+import 'package:dental_inventory/app/data/repository/app_settings_repository.dart';
+import 'package:dental_inventory/app/data/repository/app_settings_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository.dart';
 import 'package:dental_inventory/app/data/repository/auth_repository_impl.dart';
 import 'package:dental_inventory/app/data/repository/home_repository.dart';
@@ -63,6 +65,10 @@ class RepositoryBindings implements Bindings {
 
     Get.lazyPut<ProductCountRepository>(
       () => ProductCountRepositoryImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<AppSettingsRepository>(
+      () => AppSettingsRepositoryImpl(),
       fenix: true,
     );
   }
