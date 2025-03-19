@@ -168,7 +168,7 @@ class ShoppingCartInventoryOrderEditDialogContentView extends StatelessWidget
   Widget _getPriceAndRemarkView() {
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _getPriceView(),
           _getRemarkTextView(),
@@ -183,7 +183,7 @@ class ShoppingCartInventoryOrderEditDialogContentView extends StatelessWidget
     return Text(
       appLocalization.labelPerUnitIncludedVat,
       style: textTheme.bodySmall,
-      textAlign: TextAlign.right,
+      textAlign: TextAlign.left,
     );
   }
 
