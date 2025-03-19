@@ -11,7 +11,7 @@ import 'package:dental_inventory/app/core/widget/product/product_name_view.dart'
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/widgets/shopping_cart_inventory_order_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -196,13 +196,14 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   void _onTapEdit(BuildContext context) {
     TextEditingController cartController = TextEditingController();
     cartController.text = data.cartCount.toString();
+    _controller.getProductPrice(data);
 
     showDialog(
       context: context,
       builder: (_) {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
-          content: InventoryOrderEditDialogContentView(
+          content: ShoppingCartInventoryOrderEditDialogContentView(
             numberController: cartController,
             id: data.itemId,
             name: data.name,
@@ -211,6 +212,8 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.priceWithTax,
+            data: data,
+            onTapShowPrice: onTapShowPrice,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
