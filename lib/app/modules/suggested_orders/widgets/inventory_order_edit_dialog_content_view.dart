@@ -112,8 +112,7 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
       children: [
         _getDecrementButton(),
         _getSuggestion(),
-        _getIncrementButton(),
-        _getPriceAndRemarkView(),
+        _getIncrementButton()
       ],
     );
   }
@@ -156,36 +155,6 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
       onChangedValue: (String value) {
         _suggestionController(value.toInt);
       },
-    );
-  }
-
-  Widget _getPriceAndRemarkView() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _getPriceView(),
-          _getRemarkTextView(),
-        ],
-      ).marginSymmetric(
-        horizontal: AppValues.margin.w,
-      ),
-    );
-  }
-
-  Widget _getPriceView() {
-    return Text(
-      "${appLocalization.currency}. ${_getPrice()}",
-      style: textTheme.titleSmall,
-      textAlign: TextAlign.right,
-    );
-  }
-
-  Widget _getRemarkTextView() {
-    return Text(
-      appLocalization.labelPerUnitIncludedVat,
-      style: textTheme.bodySmall,
-      textAlign: TextAlign.right,
     );
   }
 
