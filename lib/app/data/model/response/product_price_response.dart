@@ -19,13 +19,13 @@ class ProductPriceResponse {
 
 class ProductPriceDataResponse {
   int? customerId;
-  int? price;
-  String? productItemId; // Changed from int? to String?
+  double? price;
+  String? productItemId;
 
   ProductPriceDataResponse.fromJson(dynamic json) {
     customerId = json['customer_id'];
     price = json['price'];
-    productItemId = json['product_item_id']?.toString(); // Convert to String
+    productItemId = json['product_item_id'];
   }
 
   Map<String, dynamic> toJson() {
