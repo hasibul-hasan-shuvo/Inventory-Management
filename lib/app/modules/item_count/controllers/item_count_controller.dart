@@ -21,7 +21,7 @@ class ItemCountController extends BaseController
 
   @override
   void onClose() {
-    ScannerService().close();
+    ScannerService.close();
     closeScannedProductsControllers();
     super.onClose();
   }

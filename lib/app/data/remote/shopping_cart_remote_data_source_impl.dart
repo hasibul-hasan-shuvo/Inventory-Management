@@ -2,6 +2,7 @@ import 'package:dental_inventory/app/core/base/base_remote_source.dart';
 import 'package:dental_inventory/app/core/values/app_values.dart';
 import 'package:dental_inventory/app/core/values/end_points.dart';
 import 'package:dental_inventory/app/data/model/request/add_shopping_cart_item_request_body.dart';
+import 'package:dental_inventory/app/data/model/response/product_price_response.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_list_response.dart';
 import 'package:dental_inventory/app/data/model/response/shopping_cart_total_price_response.dart';
 import 'package:dental_inventory/app/data/remote/shopping_cart_remote_data_source.dart';
@@ -125,5 +126,22 @@ class ShoppingCartRemoteDataSourceImpl extends BaseRemoteSource
   ShoppingCartTotalPriceResponse _parseTotalPriceResponse(
       Response<dynamic> response) {
     return ShoppingCartTotalPriceResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<ProductPriceResponse> getProductPrice(String itemId) {
+    try {
+      String endpoint = '${EndPoints.getProductPrice}/$itemId';
+      var dioCall = dioClient.get(endpoint);
+
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseProductPriceResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  ProductPriceResponse _parseProductPriceResponse(Response<dynamic> response) {
+    return ProductPriceResponse.fromJson(response.data);
   }
 }

@@ -100,6 +100,7 @@ class MainActivity : FlutterActivity() {
         )
 
         val barcodeConfig = DataWedgeConfig.getBarcodeConfig()
+        val keystoreConfig = DataWedgeConfig.getKeystrokeConfig()
         val appConfig = DataWedgeConfig.getAppConfig(packageName)
         val intentConfig = DataWedgeConfig.getIntentConfig()
 
@@ -120,6 +121,15 @@ class MainActivity : FlutterActivity() {
 
         profileConfig.remove(DataWedgeConfig.PLUGIN_CONFIG)
         profileConfig.putBundle(DataWedgeConfig.PLUGIN_CONFIG, intentConfig)
+
+        dataWedgeInterface.sendCommandBundle(
+            this,
+            DataWedgeInterface.DATA_WEDGE_SEND_SET_CONFIG,
+            profileConfig
+        )
+
+        profileConfig.remove(DataWedgeConfig.PLUGIN_CONFIG)
+        profileConfig.putBundle(DataWedgeConfig.PLUGIN_CONFIG, keystoreConfig)
 
         dataWedgeInterface.sendCommandBundle(
             this,

@@ -16,7 +16,7 @@ import '../controllers/product_in_controller.dart';
 // ignore: must_be_immutable
 class ProductInView extends BaseView<ProductInController> {
   ProductInView() {
-    ScannerService().addScannerDelegate(controller.onScanned);
+    ScannerService.setScannerDelegate(controller.onScanned);
   }
 
   @override

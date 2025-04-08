@@ -5,13 +5,15 @@ import 'package:dental_inventory/app/core/values/string_extensions.dart';
 import 'package:dental_inventory/app/core/widget/asset_image_view.dart';
 import 'package:dental_inventory/app/core/widget/elevated_container.dart';
 import 'package:dental_inventory/app/core/widget/product/product_top_view.dart';
+import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/inventory/widget/text_field_with_title.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class InventoryOrderEditDialogContentView extends StatelessWidget
+class ShoppingCartInventoryOrderEditDialogContentView extends StatelessWidget
     with BaseWidgetMixin {
   final TextEditingController numberController;
   final String id;
@@ -22,8 +24,10 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
   final int? suggestion;
   final num price;
   final RxInt _suggestionController = RxInt(0);
+  final ShoppingCartUiModel data;
+  final Function(ShoppingCartUiModel) onTapShowPrice;
 
-  InventoryOrderEditDialogContentView({
+  ShoppingCartInventoryOrderEditDialogContentView({
     super.key,
     required this.numberController,
     required this.id,
@@ -33,6 +37,8 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
     this.suggestionLabel,
     required this.suggestion,
     required this.price,
+    required this.data,
+    required this.onTapShowPrice,
   }) {
     _suggestionController(numberController.text.toInt);
   }
@@ -112,7 +118,8 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
       children: [
         _getDecrementButton(),
         _getSuggestion(),
-        _getIncrementButton()
+        _getIncrementButton(),
+        _getPriceAndRemarkView(),
       ],
     );
   }
@@ -158,6 +165,28 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
     );
   }
 
+  Widget _getPriceAndRemarkView() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _getPriceView(),
+          _getRemarkTextView(),
+        ],
+      ).marginSymmetric(
+        horizontal: AppValues.margin.w,
+      ),
+    );
+  }
+
+  Widget _getRemarkTextView() {
+    return Text(
+      appLocalization.labelPerUnitIncludedVat,
+      style: textTheme.bodySmall,
+      textAlign: TextAlign.left,
+    );
+  }
+
   void _onTapDecrement() {
     _suggestionController(_suggestionController.value - 1);
     numberController.text = _suggestionController.value.toString();
@@ -176,4 +205,54 @@ class InventoryOrderEditDialogContentView extends StatelessWidget
 
   bool get _isIncrementButtonEnabled =>
       _suggestionController.value < AppValues.maxCountValue;
+
+  Widget _getPriceView() {
+    return Obx(() => Row(
+          children: [
+            if (data.isPriceAvailable)
+              Text(
+                "${appLocalization.currency}. ",
+                style: textTheme.bodySmall,
+              ),
+            data.isPriceAvailable
+                ? Text(
+                    data.price.toString(),
+                    style: textTheme.bodySmall,
+                  )
+                : _getUnavailablePriceView(),
+          ],
+        ));
+  }
+
+  Widget _getUnavailablePriceView() {
+    return  _getPriceFetchingLoaderView();
+
+  }
+
+  Widget _getPriceFetchingLoaderView() {
+    return Row(
+      children: [
+        SizedBox(
+          height: AppValues.iconSize_14,
+          width: AppValues.iconSize_14,
+          child: CircularProgressIndicator(
+            strokeWidth: AppValues.priceFetchingLoaderStrokeSize.r,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getFetchPriceButtonView() {
+    return Ripple(
+      onTap: () {
+        data.changePriceStateToLoad();
+        onTapShowPrice(data);
+      },
+      child: Text(
+        appLocalization.getPrice,
+        style: textTheme.bodySmall,
+      ),
+    );
+  }
 }

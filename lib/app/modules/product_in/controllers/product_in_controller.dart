@@ -22,7 +22,7 @@ class ProductInController extends BaseController
   @override
   void onClose() {
     closeScannedProductsControllers();
-    ScannerService().close();
+    ScannerService.close();
     super.onClose();
   }
 
