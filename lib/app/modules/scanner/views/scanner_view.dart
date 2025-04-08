@@ -88,20 +88,20 @@ class ScannerView extends BaseView<ScannerController> {
   Widget _getCheckMarkButtonOkButton() {
     return ValueListenableBuilder(
       valueListenable: controller.scannerController,
-      builder: (_, state, ___) => FloatingActionButton(
-        heroTag: 'camera',
-        backgroundColor: _isBarCodeDetected
-            ? theme.colorScheme.primary
-            : appColors.basicGrey,
-        onPressed: _onPressedDoneButton,
-        child: Icon(
-          Icons.done,
-          size: AppValues.iconDefaultSize.h,
-          color: _isBarCodeDetected
-              ? theme.colorScheme.onPrimary
-              : appColors.colorWhite,
-        ),
-      ),
+      builder: (_, state, ___) => Obx(() => FloatingActionButton(
+            heroTag: 'camera',
+            backgroundColor: _isBarCodeDetected
+                ? theme.colorScheme.primary
+                : appColors.basicGrey,
+            onPressed: _isBarCodeDetected ? _onPressedDoneButton : null,
+            child: Icon(
+              Icons.done,
+              size: AppValues.iconDefaultSize.h,
+              color: _isBarCodeDetected
+                  ? theme.colorScheme.onPrimary
+                  : appColors.colorWhite,
+            ),
+          )),
     );
   }
 
