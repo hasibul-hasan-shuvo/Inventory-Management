@@ -11,7 +11,7 @@ import 'package:dental_inventory/app/core/widget/product/product_name_view.dart'
 import 'package:dental_inventory/app/core/widget/ripple.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/controllers/shopping_cart_controller.dart';
 import 'package:dental_inventory/app/modules/shopping_cart/models/shopping_cart_ui_model.dart';
-import 'package:dental_inventory/app/modules/suggested_orders/widgets/inventory_order_edit_dialog_content_view.dart';
+import 'package:dental_inventory/app/modules/shopping_cart/widgets/shopping_cart_inventory_order_edit_dialog_content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,10 +20,12 @@ import 'package:get/get.dart';
 class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   final ShoppingCartController _controller = Get.find();
   final ShoppingCartUiModel data;
+  final Function(ShoppingCartUiModel) onTapShowPrice;
 
   ItemShoppingCartView({
     super.key,
     required this.data,
+    required this.onTapShowPrice,
   });
 
   @override
@@ -94,11 +96,13 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   Widget _getPriceAndCartCountView() {
     return Row(
       children: [
-        _getPriceView(),
-        SizedBox(width: AppValues.smallMargin.w),
-        _getLabelAndCount(
-          appLocalization.homeMenuShoppingCart,
-          data.cartCount.toString(),
+        Expanded(flex: 1, child: _getPriceView()),
+        Expanded(
+          flex: 1,
+          child: _getLabelAndCount(
+            appLocalization.homeMenuShoppingCart,
+            data.cartCount.toString(),
+          ),
         ),
       ],
     );
@@ -113,9 +117,54 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
   }
 
   Widget _getPriceView() {
-    return Expanded(
-      child: LabelAndCountView(
-        label: _getPrice(),
+    return Obx(() => Row(
+          children: [
+            if (data.isPriceAvailable)
+              Text(
+                "${appLocalization.currency}. ",
+                style: textTheme.bodySmall,
+              ),
+            data.isPriceAvailable
+                ? Text(
+                    data.price.toString(),
+                    style: textTheme.bodySmall,
+                  )
+                : _getUnavailablePriceView(),
+          ],
+        ));
+  }
+
+  Widget _getUnavailablePriceView() {
+    return Obx(
+      () => data.isPriceFetching
+          ? _getPriceFetchingLoaderView()
+          : _getFetchPriceButtonView(),
+    );
+  }
+
+  Widget _getPriceFetchingLoaderView() {
+    return Row(
+      children: [
+        SizedBox(
+          height: AppValues.iconSize_14,
+          width: AppValues.iconSize_14,
+          child: CircularProgressIndicator(
+            strokeWidth: AppValues.priceFetchingLoaderStrokeSize.r,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getFetchPriceButtonView() {
+    return Ripple(
+      onTap: () {
+        data.changePriceStateToLoad();
+        onTapShowPrice(data);
+      },
+      child: Text(
+        appLocalization.getPrice,
+        style: textTheme.bodySmall,
       ),
     );
   }
@@ -144,21 +193,17 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
     );
   }
 
-  String _getPrice() {
-    return "${appLocalization.currency}. "
-        "${(data.cartCount * data.priceWithTax).toStringAsFixed(2)}";
-  }
-
   void _onTapEdit(BuildContext context) {
     TextEditingController cartController = TextEditingController();
     cartController.text = data.cartCount.toString();
+    _controller.getProductPrice(data);
 
     showDialog(
       context: context,
       builder: (_) {
         return AppDialog(
           title: appLocalization.titleEditOrderDialog,
-          content: InventoryOrderEditDialogContentView(
+          content: ShoppingCartInventoryOrderEditDialogContentView(
             numberController: cartController,
             id: data.itemId,
             name: data.name,
@@ -167,6 +212,8 @@ class ItemShoppingCartView extends StatelessWidget with BaseWidgetMixin {
             suggestionLabel: appLocalization.homeMenuShoppingCart,
             suggestion: data.cartCount,
             price: data.priceWithTax,
+            data: data,
+            onTapShowPrice: onTapShowPrice,
           ),
           positiveButtonText: appLocalization.buttonTextSaveChanges,
           onPositiveButtonTap: () {
