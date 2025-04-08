@@ -60,7 +60,7 @@ class ScannerView extends BaseView<ScannerController> {
       children: [
         _getTorchButton(),
         SizedBox(width: AppValues.margin.w),
-        _getCameraSwitchButton(),
+        _getCheckMarkButtonOkButton(),
       ],
     );
   }
@@ -85,16 +85,21 @@ class ScannerView extends BaseView<ScannerController> {
     );
   }
 
-  Widget _getCameraSwitchButton() {
+  Widget _getCheckMarkButtonOkButton() {
     return ValueListenableBuilder(
       valueListenable: controller.scannerController,
       builder: (_, state, ___) => FloatingActionButton(
         heroTag: 'camera',
-        backgroundColor: theme.primaryColor,
-        onPressed: controller.onPressedCameraSwitch,
+        backgroundColor: _isBarCodeDetected
+            ? theme.colorScheme.primary
+            : appColors.basicGrey,
+        onPressed: _onPressedDoneButton,
         child: Icon(
-          Icons.cameraswitch_outlined,
-          color: appColors.colorWhite,
+          Icons.done,
+          size: AppValues.iconDefaultSize.h,
+          color: _isBarCodeDetected
+              ? theme.colorScheme.onPrimary
+              : appColors.colorWhite,
         ),
       ),
     );
@@ -104,23 +109,21 @@ class ScannerView extends BaseView<ScannerController> {
     controller.scannerController.toggleTorch();
   }
 
-  void _onScanComplete() {
-    controller.scannerController.stop();
-    if (_isBarCodeDetected) {
-      Get.back(result: _barCodeController.value);
-    } else {
-      controller.showErrorMessage(appLocalization.messageCodeNotFound);
-    }
-  }
-
   void _onDetect(BarcodeCapture capture) {
     if (capture.barcodes.isNotEmpty) {
       _barCodeController(capture.barcodes.first.rawValue);
-      _onScanComplete();
     } else {
       _barCodeController(null);
     }
   }
 
   bool get _isBarCodeDetected => _barCodeController.value.isNotNullOrEmpty;
+
+  void _onPressedDoneButton() {
+    if (_isBarCodeDetected) {
+      Get.back(result: _barCodeController.value);
+    } else {
+      controller.showErrorMessage(appLocalization.messageCodeNotFound);
+    }
+  }
 }
