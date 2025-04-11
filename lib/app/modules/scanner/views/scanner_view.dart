@@ -60,7 +60,7 @@ class ScannerView extends BaseView<ScannerController> {
       children: [
         _getTorchButton(),
         SizedBox(width: AppValues.margin.w),
-        _getCheckMarkButtonOkButton(),
+        _getCheckMarkOkButton(),
       ],
     );
   }
@@ -85,7 +85,7 @@ class ScannerView extends BaseView<ScannerController> {
     );
   }
 
-  Widget _getCheckMarkButtonOkButton() {
+  Widget _getCheckMarkOkButton() {
     return ValueListenableBuilder(
       valueListenable: controller.scannerController,
       builder: (_, state, ___) => Obx(() => FloatingActionButton(
